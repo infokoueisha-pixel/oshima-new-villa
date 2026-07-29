@@ -11,11 +11,12 @@ const {
   description = '森と眠る、心の再生。1975年開業の貸別荘が、15年ぶりにリノベーションして復活。伊豆大島で仲間と過ごす、静かな時間を。',
 } = Astro.props;
 
-// index.astro のセクション構成に合わせてナビゲーションを更新
+// メニュー一覧に「アクセス」を追加
 const navItems = [
   { label: 'ストーリー', href: '#story' },
   { label: '3つの魅力', href: '#experience' },
   { label: '設備・Q&A', href: '#facilities' },
+  { label: 'アクセス', href: '#access' },
 ];
 ---
 
@@ -41,13 +42,12 @@ const navItems = [
       class="fixed top-0 inset-x-0 z-50 border-b border-gray-200/80 bg-white/90 backdrop-blur-md shadow-sm"
     >
       <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
-        <!-- ★ ロゴとテキストを横並びに配置 ★ -->
         <a href="/" class="group flex items-center gap-3 transition-opacity hover:opacity-80">
           <img src="/oshima_new_villa_logo_A_N.png" alt="ロゴ" class="h-10 w-auto object-contain" />
           <span class="font-serif text-lg font-bold tracking-wider text-gray-900">大島ニュービラ</span>
         </a>
 
-        <nav class="hidden items-center gap-8 md:flex" aria-label="メインナビゲーション">
+        <nav class="hidden items-center gap-8 lg:flex" aria-label="メインナビゲーション">
           {
             navItems.map((item) => (
               <a
@@ -69,7 +69,7 @@ const navItems = [
         <!-- スマホ用予約ボタン -->
         <a
           href="#booking"
-          class="rounded-full bg-green-700 px-4 py-2 text-sm font-bold text-white shadow-md md:hidden"
+          class="rounded-full bg-green-700 px-4 py-2 text-sm font-bold text-white shadow-md lg:hidden"
         >
           予約
         </a>
@@ -85,13 +85,13 @@ const navItems = [
       <div class="mx-auto max-w-7xl px-6">
         <div class="flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
           <div class="flex flex-col items-center md:items-start">
-            <!-- ★ フッターもロゴとテキストを横並びに配置 ★ -->
             <a href="/" class="flex items-center gap-3 transition-opacity hover:opacity-80">
               <img src="/oshima_new_villa_logo_A_W.png" alt="ロゴ" class="h-12 w-auto object-contain opacity-90" />
               <span class="font-serif text-xl font-bold tracking-wider text-white">大島ニュービラ</span>
             </a>
             <p class="mt-4 text-sm text-gray-400">〒100-0101 東京都大島町元町字新込126-42</p>
           </div>
+          <!-- 運営会社・お問い合わせを削除し、メニュー一覧をループで表示 -->
           <nav class="flex flex-wrap justify-center gap-6 text-sm text-gray-400" aria-label="フッターナビゲーション">
             {
               navItems.map((item) => (
@@ -100,8 +100,6 @@ const navItems = [
                 </a>
               ))
             }
-            <a href="#" class="transition-colors hover:text-white">運営会社</a>
-            <a href="#" class="transition-colors hover:text-white">お問い合わせ</a>
           </nav>
         </div>
         <div class="mt-12 border-t border-gray-800 pt-8 text-center text-xs text-gray-500">
