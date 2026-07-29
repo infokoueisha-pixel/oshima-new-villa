@@ -1,23 +1,125 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = '大島ニュービラ | 伊豆大島の貸別荘',
+  description = '森と眠る、心の再生。1975年開業の貸別荘が、15年ぶりにリノベーションして復活。伊豆大島で仲間と過ごす、静かな時間を。',
+} = Astro.props;
+
+// index.astro のセクション構成に合わせてナビゲーションを更新
+const navItems = [
+  { label: 'ストーリー', href: '#story' },
+  { label: '3つの魅力', href: '#experience' },
+  { label: '設備・Q&A', href: '#facilities' },
+];
+---
+
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang="ja" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen flex flex-col antialiased bg-orange-50 text-gray-800">
+    <!-- ヘッダー -->
+    <header
+      class="fixed top-0 inset-x-0 z-50 border-b border-gray-200/80 bg-white/90 backdrop-blur-md shadow-sm"
+    >
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
+        <!-- ★ ロゴとテキストを横並びに配置 ★ -->
+        <a href="/" class="group flex items-center gap-3 transition-opacity hover:opacity-80">
+          <img src="/oshima_new_villa_logo_A_N.png" alt="ロゴ" class="h-10 w-auto object-contain" />
+          <span class="font-serif text-lg font-bold tracking-wider text-gray-900">大島ニュービラ</span>
+        </a>
+
+        <nav class="hidden items-center gap-8 md:flex" aria-label="メインナビゲーション">
+          {
+            navItems.map((item) => (
+              <a
+                href={item.href}
+                class="text-sm font-bold tracking-wide text-gray-600 transition-colors hover:text-green-700"
+              >
+                {item.label}
+              </a>
+            ))
+          }
+          <a
+            href="#booking"
+            class="rounded-full bg-green-700 px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-green-700/20 transition-all hover:bg-green-600 hover:shadow-lg hover:-translate-y-0.5"
+          >
+            予約する
+          </a>
+        </nav>
+
+        <!-- スマホ用予約ボタン -->
+        <a
+          href="#booking"
+          class="rounded-full bg-green-700 px-4 py-2 text-sm font-bold text-white shadow-md md:hidden"
+        >
+          予約
+        </a>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <!-- フッター -->
+    <footer class="bg-gray-900 pt-16 pb-8 text-white">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
+          <div class="flex flex-col items-center md:items-start">
+            <!-- ★ フッターもロゴとテキストを横並びに配置 ★ -->
+            <a href="/" class="flex items-center gap-3 transition-opacity hover:opacity-80">
+              <img src="/oshima_new_villa_logo_A_W.png" alt="ロゴ" class="h-12 w-auto object-contain opacity-90" />
+              <span class="font-serif text-xl font-bold tracking-wider text-white">大島ニュービラ</span>
+            </a>
+            <p class="mt-4 text-sm text-gray-400">〒100-0101 東京都大島町元町字新込126-42</p>
+          </div>
+          <nav class="flex flex-wrap justify-center gap-6 text-sm text-gray-400" aria-label="フッターナビゲーション">
+            {
+              navItems.map((item) => (
+                <a href={item.href} class="transition-colors hover:text-white">
+                  {item.label}
+                </a>
+              ))
+            }
+            <a href="#" class="transition-colors hover:text-white">運営会社</a>
+            <a href="#" class="transition-colors hover:text-white">お問い合わせ</a>
+          </nav>
+        </div>
+        <div class="mt-12 border-t border-gray-800 pt-8 text-center text-xs text-gray-500">
+          <p>&copy; {new Date().getFullYear()} Oshima New Villa. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+<style is:global>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap');
+
+  :root {
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6, .font-serif {
+    font-family: 'Noto Serif JP', serif;
+  }
 </style>

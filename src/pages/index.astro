@@ -1,11 +1,413 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const heroImages = [
+  { src: '/main.png', alt: '大島ニュービラの外観と豊かな自然' },
+  { src: '/Sea_of_Izu_Oshima.jpg', alt: '伊豆大島の美しい海と夕景' },
+  { src: '/forest.jpg', alt: '施設を囲む静かな森' },
+];
+
+const appeals = [
+  {
+    id: 'digital-detox',
+    number: '01',
+    title: '森の静寂と、仲間との時間',
+    subtitle: 'デジタルデトックス',
+    description:
+      '豪華な設備はありませんが、鳥の声に包まれた静かな森があります。夜は星空を眺め、ソファベッドも備えた広々としたリビングで、用意されたボードゲームで仲間と語り合う時間を。スマートフォンから離れ、心を整える贅沢を。',
+    image: { src: '/sofa_salvia.jpg', alt: 'ゆったりくつろげるリビングルーム' },
+    subImages: [
+      { src: '/bed_salvia.jpg', alt: 'シングルベッド4台を備えた寝室' },
+      { src: '/forest.jpg', alt: '窓の外に広がる豊かな緑' },
+    ],
+  },
+  {
+    id: 'cooking',
+    number: '02',
+    title: '充実した自炊・BBQ環境',
+    subtitle: 'ローカルな食体験',
+    description:
+      '室内キッチン（冷蔵庫・電子レンジ・炊飯器・調理器具一式）での料理や、専用の屋外炊事場「ガゼボ庵」でのBBQが可能。地元のスーパーで島ならではの食材を調達し、伊豆大島の味を自分流に楽しんでください。',
+    image: { src: '/night_bbq.jpg', alt: 'ライトアップされた夜のガゼボ庵' },
+    subImages: [
+      { src: '/day_bbq.jpg', alt: '昼間のガゼボ庵の外観' },
+      { src: '/bbq.jpg', alt: 'BBQコンロとベンチ' },
+    ],
+  },
+  {
+    id: 'checkin',
+    number: '03',
+    title: 'スマートな完全無人チェックイン',
+    subtitle: 'タブレット受付',
+    description:
+      '敷地内コンテナに設置されたタブレットで、スムーズにチェックイン。スタッフを介さない無人受付でありながら、最新のテクノロジーで快適な到着体験を。船や飛行機の時間に合わせて、深夜の到着も安心です。',
+    image: { src: '/checkin_tablet.jpg', alt: 'チェックイン用タブレット' },
+    subImages: [
+      { src: '/day_salvia.jpg', alt: '日中の建物の様子' },
+      { src: '/mihara.jpg', alt: '伊豆大島の大自然' },
+    ],
+  },
+];
+
+const galleryImages = [
+  { src: '/main.png', alt: '大島ニュービラ全景', span: 'col-span-2 row-span-2' },
+  { src: '/old_brochure.png', alt: '昔のパンフレット', span: '' },
+  { src: '/bed_salvia.jpg', alt: 'ベッドルーム', span: '' },
+  { src: '/night_bbq.jpg', alt: '夜のBBQスペース', span: '' },
+  { src: '/Sea_of_Izu_Oshima.jpg', alt: '伊豆大島の海', span: '' },
+];
 ---
 
 <Layout>
-	<Welcome />
+  <!-- Hero -->
+  <section class="relative flex min-h-screen items-center justify-center overflow-hidden" aria-label="ヒーロー">
+    <!-- Background slider -->
+    <div class="absolute inset-0" aria-hidden="true">
+      {
+        heroImages.map((img, i) => (
+          <img
+            src={img.src}
+            alt=""
+            class:list={[
+              'hero-slide absolute inset-0 h-full w-full object-cover',
+              i === 0 && 'opacity-100',
+              i !== 0 && 'opacity-0',
+            ]}
+            loading={i === 0 ? 'eager' : 'lazy'}
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+          />
+        ))
+      }
+    </div>
+
+    <!-- Light warm overlay (明るく開放的なオーバーレイに変更) -->
+    <div class="absolute inset-0 bg-white/40" aria-hidden="true"></div>
+
+    <div class="relative z-10 mx-auto max-w-4xl px-6 pt-24 pb-16 text-center">
+      <p class="mb-4 text-xs font-bold tracking-[0.35em] text-green-800 uppercase drop-shadow-md">
+        Izu Oshima · Since 1975
+      </p>
+      <h1 class="font-serif text-4xl leading-tight font-bold tracking-wide text-gray-900 drop-shadow-lg sm:text-5xl md:text-6xl lg:text-7xl">
+        森と眠る、<br class="sm:hidden" />心の再生
+      </h1>
+      <p class="mx-auto mt-8 max-w-xl text-base font-medium leading-relaxed text-gray-800 drop-shadow-md md:text-lg">
+        15年の眠りから目覚めた、伊豆大島の貸別荘。<br />
+        家族連れや友人グループなど、最大6名で過ごす静かな時間を。
+      </p>
+      <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+        <a href="#booking" class="rounded-full bg-green-700 px-8 py-3.5 text-sm font-bold tracking-wide text-white shadow-lg transition-all hover:bg-green-600">
+          空室を確認する
+        </a>
+        <a href="#story" class="rounded-full border-2 border-gray-900 bg-white/90 px-8 py-3.5 text-sm font-bold tracking-wide text-gray-900 transition-colors hover:bg-gray-900 hover:text-white">
+          施設のストーリー
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story - Magazine layout -->
+  <section id="story" class="bg-orange-50 py-20 md:py-28">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mb-16 text-center">
+        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Our Story</p>
+        <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">15年ぶりの復活</h2>
+      </div>
+
+      <!-- Row 1: large image + text -->
+      <div class="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+        <div class="lg:col-span-6">
+          <img src="/old_brochure.png" alt="1975年当時の大島ニュービラのパンフレット" class="w-full rounded-2xl object-cover shadow-xl" loading="lazy" />
+          <p class="mt-2 text-center text-xs text-gray-500">当時の面影を残すパンフレット</p>
+        </div>
+        <div class="lg:col-span-6">
+          <p class="text-lg leading-relaxed text-gray-700">
+            1975年に開業した「大島ニュービラ」。かつて多くの方に愛されたこの施設は、15年前に一度その扉を閉じました。
+          </p>
+          <p class="mt-5 text-lg leading-relaxed text-gray-700">
+            2026年、私たちは森に囲まれたこの場所を丁寧にリノベーションし、再びゲストをお迎えできるようにしました。
+          </p>
+          <div class="mt-8 inline-flex items-center gap-4 rounded-xl bg-white px-6 py-4 shadow-sm">
+            <span class="font-serif text-3xl font-bold text-green-800">1975</span>
+            <div class="h-10 w-px bg-gray-300"></div>
+            <p class="text-sm font-medium text-gray-600">開業 · 2026年リニューアル</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: text + two images -->
+      <div class="mt-16 grid items-start gap-10 lg:grid-cols-12 lg:gap-12">
+        <div class="lg:col-span-4">
+          <p class="text-lg leading-relaxed text-gray-700">
+            豪華な設備や最新のインテリアではなく、鳥の声に癒される静かな環境こそが、ここならではの魅力です。
+          </p>
+          <p class="mt-5 text-lg leading-relaxed text-gray-700">
+            家族連れ（2世帯など）や友人同士のグループでの滞在に最適。自然の中で、大切な人と過ごす時間を味わう場所でありたいと考えています。
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-4 lg:col-span-8">
+          <img src="/day_salvia.jpg" alt="現在の建物の外観" class="aspect-[3/4] w-full rounded-2xl object-cover shadow-lg" loading="lazy" />
+          <img src="/forest.jpg" alt="森の中の光" class="mt-8 aspect-[3/4] w-full rounded-2xl object-cover shadow-lg" loading="lazy" />
+        </div>
+      </div>
+
+      <!-- Row 3: wide banner image -->
+      <div class="mt-16">
+        <img src="/mihara.jpg" alt="大島の広大な自然" class="aspect-[21/9] w-full rounded-2xl object-cover shadow-xl" loading="lazy" />
+        <p class="mt-4 text-center font-medium text-gray-600">
+          定員最大6名 (シングルベッド4台・ソファベッド2台) 
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Appeals - Zigzag layout -->
+  <section id="experience" class="bg-white py-20 md:py-28">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mb-20 text-center">
+        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Experience</p>
+        <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">3つの魅力</h2>
+        <p class="mx-auto mt-4 max-w-2xl text-gray-600">大島ニュービラでしか味わえない、ゆったりとした滞在のかたち。</p>
+      </div>
+
+      <div class="space-y-24 md:space-y-32">
+        {
+          appeals.map((appeal, index) => (
+            <article id={appeal.id} class="overflow-hidden">
+              <div class:list={['grid items-center gap-8 lg:grid-cols-2 lg:gap-14', index % 2 === 1 && 'lg:[direction:rtl]']}>
+                <!-- Main image -->
+                <div class:list={[index % 2 === 1 && 'lg:[direction:ltr]']}>
+                  <div class="relative">
+                    <img src={appeal.image.src} alt={appeal.image.alt} class="aspect-[4/3] w-full rounded-2xl object-cover shadow-2xl" loading="lazy" />
+                    <span class="absolute top-4 left-4 rounded-full bg-white px-4 py-1.5 font-serif text-sm font-bold text-green-700 shadow-md">
+                      {appeal.number}
+                    </span>
+                  </div>
+                  <!-- Sub images -->
+                  <div class="mt-4 grid grid-cols-2 gap-4">
+                    {appeal.subImages.map((sub) => (
+                      <img src={sub.src} alt={sub.alt} class="aspect-[4/3] w-full rounded-xl object-cover shadow-md" loading="lazy" />
+                    ))}
+                  </div>
+                </div>
+
+                <!-- Text -->
+                <div class:list={['py-4', index % 2 === 1 && 'lg:[direction:ltr]']}>
+                  <p class="text-xs font-bold tracking-[0.2em] text-orange-600 uppercase">{appeal.subtitle}</p>
+                  <h3 class="mt-3 font-serif text-2xl font-bold text-gray-900 md:text-3xl">{appeal.title}</h3>
+                  <p class="mt-6 text-lg leading-relaxed text-gray-700">{appeal.description}</p>
+                  <div class="mt-8 h-1 w-16 rounded-full bg-green-500"></div>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo gallery -->
+  <section class="bg-gray-50 py-20 md:py-28">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mb-12 text-center">
+        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Gallery</p>
+        <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">施設の様子</h2>
+      </div>
+      <div class="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
+        {
+          galleryImages.map((img) => (
+            <div class:list={['overflow-hidden rounded-2xl shadow-md', img.span]}>
+              <img src={img.src} alt={img.alt} class="h-full w-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+<!-- Facilities & FAQ (AIO対策用・詳細化) -->
+  <section id="facilities" class="bg-white py-20 md:py-28">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mb-16 text-center">
+        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Facilities & Q&A</p>
+        <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">設備・よくあるご質問</h2>
+        <p class="mt-4 text-gray-600">快適にお過ごしいただくための、サルビア棟の詳しい設備やルールをご案内します。</p>
+      </div>
+
+      <div class="grid items-start gap-16 lg:grid-cols-2">
+        <!-- 左側：設備リスト -->
+        <div class="space-y-10">
+          <div>
+            <h3 class="flex items-center gap-2 font-serif text-xl font-bold text-gray-900">
+              <span class="h-6 w-1.5 rounded-full bg-green-600"></span>
+              充実の自炊・キッチン設備
+            </h3>
+            <p class="mt-3 text-sm leading-relaxed text-gray-600">
+              包丁、まな板、フライパン、食器類、コップ、お箸・カトラリー類、スポンジなどを備え付けております。家電は、冷蔵庫、電子レンジ、炊飯器、トースター、電気ケトル、ガスコンロをご用意しております。
+            </p>
+          </div>
+          <div>
+            <h3 class="flex items-center gap-2 font-serif text-xl font-bold text-gray-900">
+              <span class="h-6 w-1.5 rounded-full bg-green-600"></span>
+              アメニティ・バスルーム
+            </h3>
+            <p class="mt-3 text-sm leading-relaxed text-gray-600">
+              バスタオル、フェイスタオル、歯ブラシ、スリッパをご用意しております。バスルームにはシャンプー、リンス、ボディソープを備え付け、トイレは温水洗浄便座（ウォシュレット）完備です。
+            </p>
+          </div>
+          <div>
+            <h3 class="flex items-center gap-2 font-serif text-xl font-bold text-gray-900">
+              <span class="h-6 w-1.5 rounded-full bg-green-600"></span>
+              エンターテインメント
+            </h3>
+            <p class="mt-3 text-sm leading-relaxed text-gray-600">
+              無料Wi-Fiをご利用いただけます。リビングのテレビはスマートTVとなっており、ご自身のアカウントでYouTube、Netflix、Amazon Primeなどを視聴可能です。
+            </p>
+          </div>
+        </div>
+
+<!-- Access (アクセス情報) -->
+  <section id="access" class="bg-gray-50 py-20 md:py-28">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mb-16 text-center">
+        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Access</p>
+        <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">アクセス情報</h2>
+        <p class="mt-4 text-gray-600">
+          伊豆大島でのご移動や買い出しには、自由度の高い<strong class="text-green-700">レンタカーのご利用を強くおすすめ</strong>しております。
+        </p>
+      </div>
+
+      <!-- 所要時間カード -->
+      <div class="grid gap-6 md:grid-cols-3">
+        <!-- 元町港 -->
+        <div class="rounded-2xl bg-white p-8 shadow-sm">
+          <h3 class="mb-4 border-b border-gray-100 pb-4 font-serif text-xl font-bold text-gray-900">元町港から</h3>
+          <ul class="space-y-4 text-sm text-gray-700">
+            <li class="flex items-center justify-between">
+              <span class="flex items-center gap-2 font-bold"><span class="text-lg">🚗</span> 車・タクシー</span>
+              <span>約5分</span>
+            </li>
+            <li class="flex items-center justify-between">
+              <span class="flex items-center gap-2 font-bold"><span class="text-lg">🚌</span> 路線バス</span>
+              <span class="text-right">約14分<br/><span class="text-xs text-gray-400">（徒歩9分含む）</span></span>
+            </li>
+            <li class="flex items-center justify-between">
+              <span class="flex items-center gap-2 font-bold"><span class="text-lg">🚶</span> 徒歩</span>
+              <span>約28分</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 岡田港 -->
+        <div class="rounded-2xl bg-white p-8 shadow-sm">
+          <h3 class="mb-4 border-b border-gray-100 pb-4 font-serif text-xl font-bold text-gray-900">岡田港から</h3>
+          <ul class="space-y-4 text-sm text-gray-700">
+            <li class="flex items-center justify-between">
+              <span class="flex items-center gap-2 font-bold"><span class="text-lg">🚗</span> 車・タクシー</span>
+              <span>約11分</span>
+            </li>
+            <li class="flex items-center justify-between">
+              <span class="flex items-center gap-2 font-bold"><span class="text-lg">🚌</span> 路線バス</span>
+              <span class="text-right">約21分<br/><span class="text-xs text-gray-400">（徒歩9分含む）</span></span>
+            </li>
+            <li class="flex items-center justify-between">
+              <span class="flex items-center gap-2 font-bold"><span class="text-lg">🚶</span> 徒歩</span>
+              <span>約1時間20分</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 空港 -->
+        <div class="rounded-2xl bg-white p-8 shadow-sm">
+          <h3 class="mb-4 border-b border-gray-100 pb-4 font-serif text-xl font-bold text-gray-900">大島空港から</h3>
+          <ul class="space-y-4 text-sm text-gray-700">
+            <li class="flex items-center justify-between">
+              <span class="flex items-center gap-2 font-bold"><span class="text-lg">🚗</span> 車・タクシー</span>
+              <span>約6分</span>
+            </li>
+            <li class="flex items-center justify-between">
+              <span class="flex items-center gap-2 font-bold"><span class="text-lg">🚌</span> 路線バス</span>
+              <span class="text-right">約24分<br/><span class="text-xs text-gray-400">（徒歩21分含む）</span></span>
+            </li>
+            <li class="flex items-center justify-between">
+              <span class="flex items-center gap-2 font-bold"><span class="text-lg">🚶</span> 徒歩</span>
+              <span>約35分</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 重要なお知らせ（リンク付き） -->
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        <div class="rounded-xl border-l-4 border-green-600 bg-white p-6 shadow-sm">
+          <h4 class="font-bold text-gray-900">🛳️ 当日の入港地について</h4>
+          <p class="mt-2 text-sm leading-relaxed text-gray-600">
+            大島への到着港（元町港または岡田港）は、当日の朝6:00頃に海況により決定します。出発前に必ず東海汽船のサイトでご確認ください。
+          </p>
+          <a href="https://www.tokaikisen.co.jp/schedule/" target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-xs font-bold text-green-700 transition-colors hover:text-green-600 hover:underline">
+            東海汽船 本日の運航状況を見る &rarr;
+          </a>
+        </div>
+        
+        <div class="rounded-xl border-l-4 border-green-600 bg-white p-6 shadow-sm">
+          <h4 class="font-bold text-gray-900">🚌 路線バスをご利用の方へ</h4>
+          <p class="mt-2 text-sm leading-relaxed text-gray-600">
+            最寄りのバス停は<strong class="text-gray-900">「大島高校前」</strong>です（施設まで徒歩約12分）。大島バス「公園線」の最新の時刻表をご確認の上ご利用ください。
+          </p>
+          <a href="http://www.oshima-bus.com/rosen-bus.html" target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-xs font-bold text-green-700 transition-colors hover:text-green-600 hover:underline">
+            大島バス 時刻表を見る &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+        <!-- 右側：Q&Aリスト -->
+        <div class="rounded-2xl border border-gray-100 bg-gray-50 p-8 shadow-sm">
+          <h3 class="mb-6 font-serif text-2xl font-bold text-gray-900">よくあるご質問</h3>
+          <dl class="space-y-6">
+            <div class="border-b border-gray-200 pb-6">
+              <dt class="text-base font-bold text-gray-900">Q. チェックインとチェックアウトの時間は？</dt>
+              <dd class="mt-2 text-sm text-gray-600">
+                チェックインは15:00から、チェックアウトは10:00までとなります。タブレットを使用した無人受付です。
+              </dd>
+            </div>
+            <div class="border-b border-gray-200 pb-6">
+              <dt class="text-base font-bold text-gray-900">Q. バーベキューはできますか？</dt>
+              <dd class="mt-2 text-sm text-gray-600">
+                はい、庭の指定スペース（ガゼボ庵）にてご利用いただけます。強風時の使用はお控えいただき、使用後の炭や灰は完全に消火してから「燃やすごみ」へ捨ててください。
+              </dd>
+            </div>
+            <div class="border-b border-gray-200 pb-6">
+              <dt class="text-base font-bold text-gray-900">Q. 喫煙は可能ですか？</dt>
+              <dd class="mt-2 text-sm text-gray-600">
+                室内は完全禁煙です。野外のみ喫煙可能となっております。
+              </dd>
+            </div>
+            <div>
+              <dt class="text-base font-bold text-gray-900">Q. ペットは一緒に泊まれますか？</dt>
+              <dd class="mt-2 text-sm text-gray-600">
+                申し訳ございません。ペットの宿泊はお断りさせていただいております。
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking CTA -->
+  <section id="booking" class="relative overflow-hidden py-24 md:py-32">
+    <img src="/main.png" alt="大島ニュービラ" class="absolute inset-0 h-full w-full object-cover" loading="lazy" aria-hidden="true" />
+    <div class="absolute inset-0 bg-white/80 backdrop-blur-sm" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-3xl px-6 text-center">
+      <h2 class="font-serif text-3xl font-bold text-gray-900 md:text-4xl">森の中で、心を整える旅へ</h2>
+      <p class="mt-6 text-lg font-medium leading-relaxed text-gray-700">
+        最大6名様（ベッド4台＋ソファベッド2台）でくつろげるプライベート空間。<br />
+        ご家族連れやご友人グループと、伊豆大島の自然に包まれた時間をお過ごしください。
+      </p>
+      <a href="https://www.airbnb.jp/rooms/1602063410123886296?guests=6&adults=6&s=67&unique_share_id=a393ba49-61eb-4d8e-a4c9-95935b649d65" class="mt-10 inline-block rounded-full bg-green-700 px-10 py-4 text-base font-bold tracking-wide text-white shadow-xl transition-all hover:bg-green-600 hover:-translate-y-1">
+        予約システムへ進む
+      </a>
+    </div>
+  </section>
 </Layout>
