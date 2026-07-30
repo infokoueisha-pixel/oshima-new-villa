@@ -35,8 +35,21 @@ const navItems = [
     />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+
+    <!-- Google Tag Manager -->
+    <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-M3WQTD59');</script>
+    <!-- End Google Tag Manager -->
   </head>
   <body class="min-h-screen flex flex-col antialiased bg-orange-50 text-gray-800">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M3WQTD59"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     <!-- ヘッダー -->
     <header
       class="fixed top-0 inset-x-0 z-50 border-b border-gray-200/80 bg-white/90 backdrop-blur-md shadow-sm"
@@ -91,7 +104,7 @@ const navItems = [
             </a>
             <p class="mt-4 text-sm text-gray-400">〒100-0101 東京都大島町元町字新込126-42</p>
           </div>
-          <!-- 運営会社・お問い合わせを削除し、メニュー一覧をループで表示 -->
+          <!-- メニュー一覧をループで表示 -->
           <nav class="flex flex-wrap justify-center gap-6 text-sm text-gray-400" aria-label="フッターナビゲーション">
             {
               navItems.map((item) => (
