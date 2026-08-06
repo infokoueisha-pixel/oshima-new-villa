@@ -9,52 +9,182 @@ const heroImages = [
 
 const appeals = [
   {
-    id: 'digital-detox',
+    id: 'private-time',
     number: '01',
-    title: '森の静寂と、仲間との時間',
-    subtitle: 'デジタルデトックス',
+    title: '観光のあとも、みんなの時間',
+    subtitle: 'Private Villa',
     description:
-      '豪華な設備はありませんが、鳥の声に包まれた静かな森があります。夜は星空を眺め、ソファベッドも備えた広々としたリビングで、用意されたボードゲームで仲間と語り合う時間を。スマートフォンから離れ、心を整える贅沢を。',
-    image: { src: '/sofa_salvia.jpg', alt: 'ゆったりくつろげるリビングルーム' },
+      '三原山や裏砂漠などを楽しんだあとは、森に囲まれた一棟貸しへ。最大6名で過ごせるリビングやボードゲームを備え、周囲を気にせず、家族や友人との食事や会話をゆっくり楽しめます。',
+    image: { src: '/sofa_salvia.jpg', alt: '家族や友人とくつろげる大島ニュービラのリビング' },
     subImages: [
       { src: '/bed_salvia.jpg', alt: 'シングルベッド4台を備えた寝室' },
-      { src: '/forest.jpg', alt: '窓の外に広がる豊かな緑' },
+      { src: '/forest.jpg', alt: '大島ニュービラを囲む静かな森' },
     ],
+    href: '#gallery',
+    linkLabel: '客室・間取りを見る',
   },
   {
     id: 'cooking',
     number: '02',
-    title: '充実した自炊・BBQ環境',
-    subtitle: 'ローカルな食体験',
+    title: '島の食材を、好きなかたちで',
+    subtitle: 'Local Dining',
     description:
-      '室内キッチン（冷蔵庫・電子レンジ・炊飯器・調理器具一式）での料理や、専用の屋外炊事場「ガゼボ庵」でのBBQが可能。地元のスーパーで島ならではの食材を調達し、伊豆大島の味を自分流に楽しんでください。',
-    image: { src: '/night_bbq.jpg', alt: 'ライトアップされた夜のガゼボ庵' },
+      '室内キッチンには冷蔵庫・電子レンジ・炊飯器・調理器具などを用意。専用の屋外炊事場「ガゼボ庵」ではBBQも楽しめます。地元のスーパーで食材を選ぶ時間から、伊豆大島の食体験が始まります。',
+    image: { src: '/night_bbq.jpg', alt: '夜にライトアップされた屋外炊事場のガゼボ庵' },
     subImages: [
       { src: '/day_bbq.jpg', alt: '昼間のガゼボ庵の外観' },
-      { src: '/bbq.jpg', alt: 'BBQコンロとベンチ' },
+      { src: '/bbq.jpg', alt: 'ガゼボ庵に備えられたBBQコンロとベンチ' },
     ],
+    href: '#shopping-guide',
+    linkLabel: '買い出し先を見る',
   },
   {
     id: 'checkin',
     number: '03',
-    title: 'スマートな完全無人チェックイン',
-    subtitle: 'タブレット受付',
+    title: '到着後は、自分たちのペースで',
+    subtitle: 'Self Check-in',
     description:
-      '敷地内コンテナに設置されたタブレットで、スムーズにチェックイン。スタッフを介さない無人受付でありながら、最新のテクノロジーで快適な到着体験を。船や飛行機の時間に合わせて、深夜の到着も安心です。',
-    image: { src: '/checkin_tablet.jpg', alt: 'チェックイン用タブレット' },
+      '敷地内コンテナに設置したタブレットでチェックイン。対面での長い手続きをせず、到着後は荷物を置いて、そのまま温泉や買い出しへ向かえます。滞在中も一棟貸切なので、自分たちのペースでお過ごしください。',
+    image: { src: '/checkin_tablet.jpg', alt: '大島ニュービラの無人チェックイン用タブレット' },
     subImages: [
-      { src: '/day_salvia.jpg', alt: '日中の建物の様子' },
-      { src: '/mihara.jpg', alt: '伊豆大島の大自然' },
+      { src: '/day_salvia.jpg', alt: 'リニューアルしたサルビア棟の外観' },
+      { src: '/mihara.jpg', alt: '伊豆大島を代表する三原山の景観' },
     ],
+    href: '#facilities',
+    linkLabel: '設備・よくある質問を見る',
+  },
+];
+
+
+const facilityGroups = [
+  {
+    title: '寝具・室内',
+    description: '最大6名で、食事も就寝も一棟の中でゆったり過ごせます。',
+    items: ['シングルベッド4台', 'ソファベッド2台', '6名で囲めるダイニング', 'バス・トイレ別'],
+  },
+  {
+    title: 'キッチン・調理',
+    description: '島で買った食材を、室内で好きな時間に調理できます。',
+    items: ['冷蔵庫・電子レンジ', '炊飯器・トースター', '電気ケトル・ガスコンロ', '包丁・まな板・フライパン・食器類'],
+  },
+  {
+    title: '屋外BBQ',
+    description: '屋根付きの屋外炊事場「ガゼボ庵」をご利用いただけます。',
+    items: ['宿泊者専用スペース', 'BBQコンロ・ベンチ', '雨を避けやすい屋根付き', '強風時は利用をお控えください'],
+  },
+  {
+    title: 'バス・アメニティ',
+    description: '棟内に浴槽とシャワーを備えています。グループ旅行では島の温泉を組み合わせるのもおすすめです。',
+    items: ['浴槽・シャワー', 'バスタオル・フェイスタオル', '歯ブラシ・スリッパ', 'シャンプー・リンス・ボディソープ', '温水洗浄便座'],
+  },
+  {
+    title: 'Wi-Fi・室内時間',
+    description: '観光後の夜や天候が変わった日も、室内でゆっくり楽しめます。',
+    items: ['無料Wi-Fi', 'スマートTV', '動画配信サービスに対応', 'ボードゲーム'],
+  },
+  {
+    title: 'チェックイン',
+    description: '敷地内のタブレットを使った無人受付で、到着後も自分たちのペースで。',
+    items: ['チェックイン 15:00〜', 'チェックアウト 10:00まで', 'タブレットで無人受付', '一棟貸切で滞在'],
+  },
+];
+
+const faqItems = [
+  {
+    question: 'チェックインとチェックアウトの時間は？',
+    answer: 'チェックインは15:00から、チェックアウトは10:00までです。敷地内のタブレットを使用した無人受付となります。',
+    href: null,
+    linkLabel: null,
+  },
+  {
+    question: 'バーベキューはできますか？',
+    answer: 'はい。屋根付きの屋外炊事場「ガゼボ庵」をご利用いただけます。強風時は使用をお控えいただき、使用後の炭や灰は完全に消火してください。',
+    href: null,
+    linkLabel: null,
+  },
+  {
+    question: '自炊に必要な調理器具はありますか？',
+    answer: '冷蔵庫、電子レンジ、炊飯器、トースター、電気ケトル、ガスコンロのほか、包丁、まな板、フライパン、食器、コップ、箸・カトラリー類などを用意しています。',
+    href: null,
+    linkLabel: null,
+  },
+  {
+    question: 'タオルや歯ブラシはありますか？',
+    answer: 'バスタオル、フェイスタオル、歯ブラシ、スリッパを用意しています。浴室にはシャンプー、リンス、ボディソープがあります。',
+    href: null,
+    linkLabel: null,
+  },
+  {
+    question: '宿にお風呂はありますか？',
+    answer: 'はい。サルビア棟内に浴槽とシャワーを備えた浴室があります。6名などのグループ旅行では、全員が順番に入浴する時間を短縮しやすい「愛らんどセンター御神火温泉」の利用もおすすめです。温泉へ行く際は、室内のバスタオルをお持ちいただけます。',
+    href: null,
+    linkLabel: null,
+  },
+  {
+    question: 'Netflixなどの動画配信サービスは見られますか？',
+    answer: 'リビングのスマートTVで、YouTube、Netflix、Amazon Primeなどを利用できます。有料サービスはご自身のアカウントでログインしてください。',
+    href: null,
+    linkLabel: null,
+  },
+  {
+    question: '伊豆大島での移動にレンタカーは必要ですか？',
+    answer: '観光や買い出しを自由に楽しむため、レンタカーの利用をおすすめしています。港や空港からの所要時間は、ページ内のアクセス案内をご確認ください。',
+    href: '#access',
+    linkLabel: 'アクセス案内を見る',
+  },
+  {
+    question: '到着する港は元町港と岡田港のどちらですか？',
+    answer: '当日の海況によって元町港または岡田港に決まります。出発前に東海汽船の案内をご確認ください。',
+    href: '#access',
+    linkLabel: '港からの行き方を見る',
+  },
+  {
+    question: '室内で喫煙できますか？',
+    answer: '室内は完全禁煙です。喫煙は屋外でお願いいたします。',
+    href: null,
+    linkLabel: null,
+  },
+  {
+    question: 'ペットと一緒に泊まれますか？',
+    answer: '申し訳ございませんが、ペット同伴での宿泊はお受けしていません。',
+    href: null,
+    linkLabel: null,
   },
 ];
 
 const galleryImages = [
-  { src: '/main.png', alt: '大島ニュービラ全景', span: 'col-span-2 row-span-2' },
-  { src: '/old_brochure.png', alt: '昔のパンフレット', span: '' },
-  { src: '/bed_salvia.jpg', alt: 'ベッドルーム', span: '' },
-  { src: '/night_bbq.jpg', alt: '夜のBBQスペース', span: '' },
-  { src: '/Sea_of_Izu_Oshima.jpg', alt: '伊豆大島の海', span: '' },
+  {
+    src: '/sofa_salvia.jpg',
+    alt: 'ソファベッド2台を備えたサルビア棟のリビング',
+    title: 'リビング',
+    description: '食事や会話を楽しめるリビング。2台のソファは、就寝時にはソファベッドとして利用できます。',
+    span: 'md:col-span-7',
+    aspect: 'aspect-[4/3]',
+  },
+  {
+    src: '/bed_salvia.jpg',
+    alt: 'シングルベッド4台を備えたサルビア棟の寝室',
+    title: 'ベッドスペース',
+    description: 'シングルベッド4台を並べ、グループでも休みやすくしています。',
+    span: 'md:col-span-5',
+    aspect: 'aspect-[4/3]',
+  },
+  {
+    src: '/day_bbq.jpg',
+    alt: '屋根付きの屋外炊事場ガゼボ庵',
+    title: '屋外炊事場「ガゼボ庵」',
+    description: '屋根付きの専用スペースで、家族や友人とBBQを楽しめます。',
+    span: 'md:col-span-5',
+    aspect: 'aspect-[4/3]',
+  },
+  {
+    src: '/main.png',
+    alt: '森に囲まれた大島ニュービラのサルビア棟',
+    title: '森に囲まれた一棟貸し',
+    description: '周囲の自然を感じながら、自分たちだけの時間を過ごせます。',
+    span: 'md:col-span-7',
+    aspect: 'aspect-[4/3]',
+  },
 ];
 ---
 
@@ -83,79 +213,146 @@ const galleryImages = [
     <!-- Light warm overlay (明るく開放的なオーバーレイに変更) -->
     <div class="absolute inset-0 bg-white/40" aria-hidden="true"></div>
 
-    <div class="relative z-10 mx-auto max-w-4xl px-6 pt-24 pb-16 text-center">
-      <p class="mb-4 text-xs font-bold tracking-[0.35em] text-green-800 uppercase drop-shadow-md">
-        Izu Oshima · Since 1975
+    <div class="relative z-10 mx-auto max-w-5xl px-6 pt-24 pb-12 text-center sm:pb-16">
+      <p class="mb-4 text-xs font-bold tracking-[0.24em] text-green-900 uppercase drop-shadow-md sm:tracking-[0.35em]">
+        伊豆大島の一棟貸し<span class="mx-2" aria-hidden="true">｜</span>Since 1975
       </p>
       <h1 class="font-serif text-4xl leading-tight font-bold tracking-wide text-gray-900 drop-shadow-lg sm:text-5xl md:text-6xl lg:text-7xl">
         森と眠る、<br class="sm:hidden" />心の再生
       </h1>
-      <p class="mx-auto mt-8 max-w-xl text-base font-medium leading-relaxed text-gray-800 drop-shadow-md md:text-lg">
-        15年の眠りから目覚めた、伊豆大島の貸別荘。<br />
-        家族連れや友人グループなど、最大6名で過ごす静かな時間を。
+      <p class="mt-5 font-serif text-lg font-bold tracking-wide text-green-900 drop-shadow-md md:text-xl">
+        大島を遊ぶ。森に帰る。
       </p>
-      <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-        <a href="#booking" class="rounded-full bg-green-700 px-8 py-3.5 text-sm font-bold tracking-wide text-white shadow-lg transition-all hover:bg-green-600">
-          空室を確認する
+      <p class="mx-auto mt-5 max-w-2xl text-sm font-medium leading-7 text-gray-800 drop-shadow-md sm:text-base md:text-lg md:leading-8">
+        三原山や裏砂漠など、伊豆大島の自然を楽しんだあとは森に囲まれたヴィラへ。<br class="hidden md:block" />
+        家族や友人と、BBQや静かな夜を楽しめる一棟貸しの宿です。
+      </p>
+
+      <ul class="mx-auto mt-7 flex max-w-3xl flex-wrap justify-center gap-2 text-xs font-bold text-gray-800 sm:gap-3 sm:text-sm" aria-label="施設の主な特徴">
+        <li class="rounded-full border border-white/70 bg-white/85 px-4 py-2 shadow-sm backdrop-blur-sm">一棟貸切</li>
+        <li class="rounded-full border border-white/70 bg-white/85 px-4 py-2 shadow-sm backdrop-blur-sm">最大6名</li>
+        <li class="rounded-full border border-white/70 bg-white/85 px-4 py-2 shadow-sm backdrop-blur-sm">BBQ・自炊</li>
+        <li class="rounded-full border border-white/70 bg-white/85 px-4 py-2 shadow-sm backdrop-blur-sm">元町港から車約5分</li>
+      </ul>
+
+      <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
+        <a href="#booking" class="w-full max-w-xs rounded-full bg-green-700 px-8 py-3.5 text-sm font-bold tracking-wide text-white shadow-lg transition-all hover:-translate-y-0.5 hover:bg-green-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-800 sm:w-auto">
+          空室・料金を確認する
         </a>
-        <a href="#story" class="rounded-full border-2 border-gray-900 bg-white/90 px-8 py-3.5 text-sm font-bold tracking-wide text-gray-900 transition-colors hover:bg-gray-900 hover:text-white">
-          施設のストーリー
+        <a href="#story" class="w-full max-w-xs rounded-full border-2 border-gray-900 bg-white/90 px-8 py-3.5 text-sm font-bold tracking-wide text-gray-900 transition-colors hover:bg-gray-900 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gray-900 sm:w-auto">
+          1975年からの物語
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Story - Magazine layout -->
-  <section id="story" class="bg-orange-50 py-20 md:py-28">
+  <!-- Story -->
+  <section id="story" class="bg-orange-50 py-20 md:py-28" aria-labelledby="story-title">
     <div class="mx-auto max-w-7xl px-6">
-      <div class="mb-16 text-center">
+      <div class="mx-auto mb-14 max-w-3xl text-center md:mb-16">
         <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Our Story</p>
-        <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">15年ぶりの復活</h2>
+        <h2 id="story-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">
+          1975年から、もう一度。
+        </h2>
+        <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-gray-600 md:text-lg">
+          約15年の時を経て、大島ニュービラが再び始まりました。
+        </p>
       </div>
 
-      <!-- Row 1: large image + text -->
-      <div class="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+      <!-- 1975年のパンフレットと施設の歩み -->
+      <div class="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
+        <figure class="lg:col-span-6">
+          <img
+            src="/old_brochure.png"
+            alt="1975年当時の大島ニュービラのパンフレット"
+            class="w-full rounded-2xl object-cover shadow-xl"
+            loading="lazy"
+            width="1024"
+            height="1054"
+          />
+          <figcaption class="mt-3 text-center text-xs leading-relaxed text-gray-500 md:text-sm">
+            1975年当時のパンフレット。開業時の大島ニュービラの面影を今に伝える資料です。
+          </figcaption>
+        </figure>
+
         <div class="lg:col-span-6">
-          <img src="/old_brochure.png" alt="1975年当時の大島ニュービラのパンフレット" class="w-full rounded-2xl object-cover shadow-xl" loading="lazy" />
-          <p class="mt-2 text-center text-xs text-gray-500">当時の面影を残すパンフレット</p>
+          <div class="space-y-5 text-base leading-8 text-gray-700 md:text-lg md:leading-9">
+            <p>
+              1975年、伊豆大島の森の中に開業した「大島ニュービラ」。
+            </p>
+            <p>
+              島を訪れる人を迎えてきたこの施設は、その後、約15年間にわたり静かに扉を閉じていました。
+            </p>
+            <p>
+              2026年、当時の面影を大切に残しながら、建物を丁寧にリノベーション。家族や友人と過ごせる一棟貸しの宿として、再びゲストをお迎えしています。
+            </p>
+          </div>
+
+          <ol class="mt-9 grid gap-3 sm:grid-cols-3" aria-label="大島ニュービラの歩み">
+            <li class="rounded-xl border border-orange-100 bg-white px-5 py-4 shadow-sm">
+              <p class="font-serif text-2xl font-bold text-green-800">1975</p>
+              <p class="mt-1 text-sm font-medium text-gray-600">開業</p>
+            </li>
+            <li class="rounded-xl border border-orange-100 bg-white px-5 py-4 shadow-sm">
+              <p class="font-serif text-2xl font-bold text-green-800">約15年間</p>
+              <p class="mt-1 text-sm font-medium text-gray-600">休館</p>
+            </li>
+            <li class="rounded-xl border border-orange-100 bg-white px-5 py-4 shadow-sm">
+              <p class="font-serif text-2xl font-bold text-green-800">2026</p>
+              <p class="mt-1 text-sm font-medium text-gray-600">リニューアルオープン</p>
+            </li>
+          </ol>
         </div>
-        <div class="lg:col-span-6">
-          <p class="text-lg leading-relaxed text-gray-700">
-            1975年に開業した「大島ニュービラ」。かつて多くの方に愛されたこの施設は、15年前に一度その扉を閉じました。
-          </p>
-          <p class="mt-5 text-lg leading-relaxed text-gray-700">
-            2026年、私たちは森に囲まれたこの場所を丁寧にリノベーションし、再びゲストをお迎えできるようにしました。
-          </p>
-          <div class="mt-8 inline-flex items-center gap-4 rounded-xl bg-white px-6 py-4 shadow-sm">
-            <span class="font-serif text-3xl font-bold text-green-800">1975</span>
-            <div class="h-10 w-px bg-gray-300"></div>
-            <p class="text-sm font-medium text-gray-600">開業 · 2026年リニューアル</p>
+      </div>
+
+      <!-- 変わったもの、変わらないもの -->
+      <div class="mt-16 grid items-center gap-10 lg:mt-20 lg:grid-cols-12 lg:gap-14">
+        <div class="lg:col-span-5">
+          <p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">Then and Now</p>
+          <h3 class="mt-3 font-serif text-2xl font-bold leading-snug text-gray-900 md:text-3xl">
+            森は、ずっとここにありました。
+          </h3>
+          <div class="mt-6 space-y-5 text-base leading-8 text-gray-700 md:text-lg md:leading-9">
+            <p>
+              変わったものも、変わらないものもあります。鳥の声、木々に包まれる静けさ、そして大切な人とゆっくり過ごせる時間。
+            </p>
+            <p>
+              昔を知る方にも、これから初めて訪れる方にも、ここで新しい思い出が生まれることを願っています。
+            </p>
+          </div>
+
+          <div class="mt-8 rounded-2xl bg-white p-6 shadow-sm">
+            <p class="font-serif text-lg font-bold text-gray-900">現在の大島ニュービラ</p>
+            <p class="mt-2 text-sm leading-7 text-gray-600">
+              一棟貸切・最大6名。森に囲まれた環境で、家族や友人との時間を気兼ねなくお過ごしいただけます。
+            </p>
           </div>
         </div>
-      </div>
 
-      <!-- Row 2: text + two images -->
-      <div class="mt-16 grid items-start gap-10 lg:grid-cols-12 lg:gap-12">
-        <div class="lg:col-span-4">
-          <p class="text-lg leading-relaxed text-gray-700">
-            豪華な設備や最新のインテリアではなく、鳥の声に癒される静かな環境こそが、ここならではの魅力です。
-          </p>
-          <p class="mt-5 text-lg leading-relaxed text-gray-700">
-            家族連れ（2世帯など）や友人同士のグループでの滞在に最適。自然の中で、大切な人と過ごす時間を味わう場所でありたいと考えています。
-          </p>
+        <div class="grid grid-cols-2 gap-4 lg:col-span-7 md:gap-6">
+          <figure>
+            <img
+              src="/day_salvia.jpg"
+              alt="リニューアルした現在の大島ニュービラの外観"
+              class="aspect-[3/4] w-full rounded-2xl object-cover shadow-lg"
+              loading="lazy"
+              width="3024"
+              height="4032"
+            />
+            <figcaption class="mt-3 text-center text-xs text-gray-500">現在の建物</figcaption>
+          </figure>
+          <figure class="mt-8">
+            <img
+              src="/forest.jpg"
+              alt="大島ニュービラを囲む緑豊かな森"
+              class="aspect-[3/4] w-full rounded-2xl object-cover shadow-lg"
+              loading="lazy"
+              width="3024"
+              height="4032"
+            />
+            <figcaption class="mt-3 text-center text-xs text-gray-500">施設を囲む森</figcaption>
+          </figure>
         </div>
-        <div class="grid grid-cols-2 gap-4 lg:col-span-8">
-          <img src="/day_salvia.jpg" alt="現在の建物の外観" class="aspect-[3/4] w-full rounded-2xl object-cover shadow-lg" loading="lazy" />
-          <img src="/forest.jpg" alt="森の中の光" class="mt-8 aspect-[3/4] w-full rounded-2xl object-cover shadow-lg" loading="lazy" />
-        </div>
-      </div>
-
-      <!-- Row 3: wide banner image -->
-      <div class="mt-16">
-        <img src="/mihara.jpg" alt="大島の広大な自然" class="aspect-[21/9] w-full rounded-2xl object-cover shadow-xl" loading="lazy" />
-        <p class="mt-4 text-center font-medium text-gray-600">
-          定員最大6名 (シングルベッド4台・ソファベッド2台) 
-        </p>
       </div>
     </div>
   </section>
@@ -165,8 +362,13 @@ const galleryImages = [
     <div class="mx-auto max-w-7xl px-6">
       <div class="mb-20 text-center">
         <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Experience</p>
-        <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">3つの魅力</h2>
-        <p class="mx-auto mt-4 max-w-2xl text-gray-600">大島ニュービラでしか味わえない、ゆったりとした滞在のかたち。</p>
+        <h2 class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">
+          大島を遊んだあとも、旅は続く。
+        </h2>
+        <p class="mx-auto mt-5 max-w-3xl text-base leading-8 text-gray-600 md:text-lg">
+          三原山や裏砂漠、海や島の食を楽しんだあとは、森の中のヴィラへ。<br class="hidden md:block" />
+          大島ニュービラは、観光のあとの時間まで家族や友人と楽しめる一棟貸しです。
+        </p>
       </div>
 
       <div class="space-y-24 md:space-y-32">
@@ -194,8 +396,15 @@ const galleryImages = [
                 <div class:list={['py-4', index % 2 === 1 && 'lg:[direction:ltr]']}>
                   <p class="text-xs font-bold tracking-[0.2em] text-orange-600 uppercase">{appeal.subtitle}</p>
                   <h3 class="mt-3 font-serif text-2xl font-bold text-gray-900 md:text-3xl">{appeal.title}</h3>
-                  <p class="mt-6 text-lg leading-relaxed text-gray-700">{appeal.description}</p>
-                  <div class="mt-8 h-1 w-16 rounded-full bg-green-500"></div>
+                  <p class="mt-6 text-base leading-8 text-gray-700 md:text-lg md:leading-9">{appeal.description}</p>
+                  <a
+                    href={appeal.href}
+                    class="mt-7 inline-flex items-center gap-2 text-sm font-bold text-green-700 transition-colors hover:text-green-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-700"
+                  >
+                    {appeal.linkLabel}
+                    <span aria-hidden="true">→</span>
+                  </a>
+                  <div class="mt-6 h-1 w-16 rounded-full bg-green-500"></div>
                 </div>
               </div>
             </article>
@@ -205,320 +414,377 @@ const galleryImages = [
     </div>
   </section>
 
-  <!-- Photo gallery -->
-  <section class="bg-gray-50 py-20 md:py-28">
+  <!-- Stay / Room gallery -->
+  <section id="gallery" class="bg-gray-50 py-20 md:py-28" aria-labelledby="stay-title">
     <div class="mx-auto max-w-7xl px-6">
-      <div class="mb-12 text-center">
-        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Gallery</p>
-        <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">施設の様子</h2>
+      <div class="mx-auto mb-12 max-w-3xl text-center md:mb-16">
+        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Stay</p>
+        <h2 id="stay-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">
+          一棟貸切で、みんながくつろげるサルビア棟
+        </h2>
+        <p class="mx-auto mt-5 max-w-2xl text-sm leading-7 text-gray-600 md:text-base md:leading-8">
+          最大6名で利用できる69.27㎡の一棟貸し。食事を囲む時間も、夜のくつろぎも、周囲を気にせず自分たちのペースでお過ごしいただけます。
+        </p>
       </div>
-      <div class="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
+
+      <dl class="mb-10 grid grid-cols-2 gap-3 md:mb-14 md:grid-cols-4 md:gap-4" aria-label="サルビア棟の基本情報">
+        <div class="rounded-2xl border border-gray-100 bg-white px-4 py-5 text-center shadow-sm">
+          <dt class="text-xs font-bold tracking-wide text-gray-500">広さ</dt>
+          <dd class="mt-2 font-serif text-xl font-bold text-green-800 md:text-2xl">69.27㎡</dd>
+        </div>
+        <div class="rounded-2xl border border-gray-100 bg-white px-4 py-5 text-center shadow-sm">
+          <dt class="text-xs font-bold tracking-wide text-gray-500">宿泊スタイル</dt>
+          <dd class="mt-2 font-serif text-xl font-bold text-green-800 md:text-2xl">一棟貸切</dd>
+        </div>
+        <div class="rounded-2xl border border-gray-100 bg-white px-4 py-5 text-center shadow-sm">
+          <dt class="text-xs font-bold tracking-wide text-gray-500">定員</dt>
+          <dd class="mt-2 font-serif text-xl font-bold text-green-800 md:text-2xl">最大6名</dd>
+        </div>
+        <div class="rounded-2xl border border-gray-100 bg-white px-4 py-5 text-center shadow-sm">
+          <dt class="text-xs font-bold tracking-wide text-gray-500">寝具</dt>
+          <dd class="mt-2 font-serif text-lg font-bold leading-snug text-green-800 md:text-xl">シングル4台<br />＋ソファベッド2台</dd>
+        </div>
+      </dl>
+
+      <div class="grid gap-5 md:grid-cols-12 md:gap-6">
         {
           galleryImages.map((img) => (
-            <div class:list={['overflow-hidden rounded-2xl shadow-md', img.span]}>
-              <img src={img.src} alt={img.alt} class="h-full w-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" />
-            </div>
+            <figure class:list={["group overflow-hidden rounded-2xl bg-white shadow-md", img.span]}>
+              <div class="overflow-hidden">
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  class:list={["w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]", img.aspect]}
+                  loading="lazy"
+                />
+              </div>
+              <figcaption class="p-5 md:p-6">
+                <h3 class="font-serif text-lg font-bold text-gray-900 md:text-xl">{img.title}</h3>
+                <p class="mt-2 text-sm leading-7 text-gray-600">{img.description}</p>
+              </figcaption>
+            </figure>
           ))
         }
       </div>
-    </div>
-    <!-- 👇 ここから：間取り図（サルビア棟）セクション 👇 -->
-<div class="mx-auto mt-16 max-w-4xl px-6">
-  <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-    <div class="border-b border-gray-100 bg-orange-50/60 px-6 py-5 md:px-8">
-      <div class="flex items-center justify-between">
-        <h3 class="font-serif text-xl font-bold text-gray-900 md:text-2xl">
-          間取り図：サルビア棟
-        </h3>
-        <span class="rounded-full bg-white px-4 py-1 text-sm font-medium text-gray-600 shadow-sm">
-          69.27㎡ / 最大6名様
-        </span>
+
+      <div class="mt-14 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm md:mt-16">
+        <div class="flex flex-col gap-3 border-b border-gray-100 bg-orange-50/60 px-6 py-5 sm:flex-row sm:items-center sm:justify-between md:px-8">
+          <div>
+            <p class="text-xs font-bold tracking-[0.2em] text-green-700 uppercase">Floor Plan</p>
+            <h3 class="mt-2 font-serif text-xl font-bold text-gray-900 md:text-2xl">サルビア棟の間取り</h3>
+          </div>
+          <span class="w-fit rounded-full bg-white px-4 py-1.5 text-sm font-medium text-gray-600 shadow-sm">
+            69.27㎡ / 最大6名
+          </span>
+        </div>
+
+        <div class="grid items-center gap-8 p-6 md:p-8 lg:grid-cols-12 lg:gap-10">
+          <figure class="lg:col-span-8">
+            <img
+              src="/image_14.png"
+              alt="大島ニュービラのサルビア棟の間取り図"
+              class="h-auto w-full rounded-xl border border-gray-200 bg-gray-50 shadow-sm"
+              loading="lazy"
+              width="1536"
+              height="1024"
+            />
+            <figcaption class="mt-3 text-center text-xs leading-6 text-gray-500">
+              リビング・ベッドスペース・キッチン・バス・トイレを備えた一棟貸しです。
+            </figcaption>
+          </figure>
+
+          <div class="lg:col-span-4">
+            <h3 class="font-serif text-xl font-bold text-gray-900">グループで過ごしやすい空間</h3>
+            <p class="mt-3 text-sm leading-7 text-gray-600">
+              食事を囲めるダイニングと、ソファベッド2台を備えたリビング、シングルベッド4台のベッドスペースがあります。バス・トイレは別で、室内キッチンもご利用いただけます。
+            </p>
+            <ul class="mt-6 space-y-3 text-sm text-gray-700">
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-100 text-xs font-bold text-green-800" aria-hidden="true">✓</span>
+                シングルベッド4台＋ソファベッド2台
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-100 text-xs font-bold text-green-800" aria-hidden="true">✓</span>
+                6名で囲めるダイニング
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-100 text-xs font-bold text-green-800" aria-hidden="true">✓</span>
+                バス・トイレ別
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-100 text-xs font-bold text-green-800" aria-hidden="true">✓</span>
+                自炊できる室内キッチン
+              </li>
+            </ul>
+            <a href="#facilities" class="mt-7 inline-flex items-center gap-2 text-sm font-bold text-green-800 underline decoration-green-300 underline-offset-4 transition-colors hover:text-green-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-800">
+              設備・アメニティを確認する
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
-    
-    <!-- 画像エリア：下の余白（pb）を減らして間延びを解消 -->
-    <div class="bg-gray-50/50 px-6 pt-6 pb-2 md:px-8 md:pt-8 md:pb-4">
-      <img
-        src="/image_14.png"
-        alt="大島ニュービラ サルビア棟 間取り図"
-        class="h-auto w-full rounded-xl border border-gray-200 shadow-sm transition-transform duration-500 hover:scale-[1.02]"
-        loading="lazy"
-      />
-    </div>
-
-    <!-- テキストエリア：上下の余白（py）を均等に美しく確保 -->
-    <div class="bg-white px-6 py-6 md:px-8 md:py-8">
-      <ul class="flex flex-col gap-3 text-sm text-gray-600 md:flex-row md:gap-8">
-        <li class="flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-700" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-          </svg>
-          シングルベッド4台（ネイビー統一）
-        </li>
-        <li class="flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-700" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-          </svg>
-          ゆったり6名掛けダイニング
-        </li>
-        <li class="flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-700" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-          </svg>
-          バス・トイレ別
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-<!-- 👆 ここまで 👆 -->
   </section>
 
 
-
-<!-- Facilities & FAQ (設備とQ&A) -->
-  <section id="facilities" class="bg-white py-20 md:py-28">
+<!-- Facilities & FAQ -->
+  <section id="facilities" class="bg-orange-50/50 py-20 md:py-28" aria-labelledby="facilities-title">
     <div class="mx-auto max-w-7xl px-6">
-      <div class="mb-16 text-center">
-        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Facilities & Q&A</p>
-        <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">設備・よくあるご質問</h2>
-        <p class="mt-4 text-gray-600">快適にお過ごしいただくための、サルビア棟の詳しい設備やルールをご案内します。</p>
+      <div class="mx-auto mb-12 max-w-3xl text-center md:mb-16">
+        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Facilities & FAQ</p>
+        <h2 id="facilities-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">
+          予約前に知りたいことを、一か所に
+        </h2>
+        <p class="mx-auto mt-5 max-w-2xl text-sm leading-7 text-gray-600 md:text-base md:leading-8">
+          寝具、キッチン、アメニティからチェックイン方法まで。サルビア棟での滞在を具体的にイメージできるよう、設備とよくある質問をまとめました。
+        </p>
       </div>
 
-      <div class="grid items-start gap-16 lg:grid-cols-2">
-        <!-- 左側：設備リスト -->
-        <div class="space-y-10">
-          <div>
-            <h3 class="flex items-center gap-2 font-serif text-xl font-bold text-gray-900">
-              <span class="h-6 w-1.5 rounded-full bg-green-600"></span>
-              充実の自炊・キッチン設備
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
+        {
+          facilityGroups.map((group) => (
+            <article class="rounded-2xl border border-orange-100 bg-white p-6 shadow-sm md:p-7">
+              <h3 class="font-serif text-xl font-bold text-gray-900">{group.title}</h3>
+              <p class="mt-3 text-sm leading-7 text-gray-600">{group.description}</p>
+              <ul class="mt-5 space-y-2.5 text-sm leading-6 text-gray-700">
+                {
+                  group.items.map((item) => (
+                    <li class="flex items-start gap-3">
+                      <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-100 text-xs font-bold text-green-800" aria-hidden="true">✓</span>
+                      <span>{item}</span>
+                    </li>
+                  ))
+                }
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+
+      <article class="mt-10 overflow-hidden rounded-3xl border border-orange-100 bg-white shadow-sm md:mt-12">
+        <div class="grid items-stretch md:grid-cols-2">
+          <figure class="relative min-h-[280px] overflow-hidden bg-gray-100 sm:min-h-[360px] md:min-h-full">
+            <img
+              src="/bath_salvia.jpg"
+              alt="水色のタイルとステンレス浴槽を備えたサルビア棟の浴室"
+              class="absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
+              width="1107"
+              height="1349"
+            />
+          </figure>
+          <div class="flex flex-col justify-center p-7 sm:p-9 md:p-10 lg:p-12">
+            <p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">Bath & Hot Spring</p>
+            <h3 class="mt-3 font-serif text-2xl font-bold leading-tight text-gray-900 md:text-3xl">
+              宿のお風呂と、御神火温泉
             </h3>
-            <p class="mt-3 text-sm leading-relaxed text-gray-600">
-              包丁、まな板、フライパン、食器類、コップ、お箸・カトラリー類、スポンジなどを備え付けております。家電は、冷蔵庫、電子レンジ、炊飯器、トースター、電気ケトル、ガスコンロをご用意しております。
+            <p class="mt-5 text-sm leading-7 text-gray-600 md:text-base md:leading-8">
+              サルビア棟には、浴槽とシャワーを備えた、どこか懐かしさを感じるタイル張りの浴室があります。温泉へ出かけない日も、滞在中いつでもご利用いただけます。
             </p>
-          </div>
-          <div>
-            <h3 class="flex items-center gap-2 font-serif text-xl font-bold text-gray-900">
-              <span class="h-6 w-1.5 rounded-full bg-green-600"></span>
-              アメニティ・バスルーム
-            </h3>
-            <p class="mt-3 text-sm leading-relaxed text-gray-600">
-              バスタオル、フェイスタオル、歯ブラシ、スリッパをご用意しております。バスルームにはシャンプー、リンス、ボディソープを備え付け、トイレは温水洗浄便座（ウォシュレット）完備です。
-            </p>
-          </div>
-          <div>
-            <h3 class="flex items-center gap-2 font-serif text-xl font-bold text-gray-900">
-              <span class="h-6 w-1.5 rounded-full bg-green-600"></span>
-              エンターテインメント
-            </h3>
-            <p class="mt-3 text-sm leading-relaxed text-gray-600">
-              無料Wi-Fiをご利用いただけます。リビングのテレビはスマートTVとなっており、ご自身のアカウントでYouTube、Netflix、Amazon Primeなどを視聴可能です。
-            </p>
+            <div class="mt-6 rounded-2xl bg-green-50 p-5">
+              <p class="font-bold leading-7 text-green-900">グループ旅行の時短にもおすすめ</p>
+              <p class="mt-2 text-sm leading-7 text-gray-700">
+                6名などで全員が順番に入浴すると、想像以上に時間がかかることも。チェックイン後に室内のバスタオルを持って「愛らんどセンター御神火温泉」へ向かえば、入浴の待ち時間を減らし、BBQや夜の団らんに使える時間を確保しやすくなります。
+              </p>
+            </div>
           </div>
         </div>
+      </article>
 
-        <!-- 右側：Q&Aリスト -->
-        <div class="rounded-2xl border border-gray-100 bg-gray-50 p-8 shadow-sm">
-          <h3 class="mb-6 font-serif text-2xl font-bold text-gray-900">よくあるご質問</h3>
-          <dl class="space-y-6">
-            <div class="border-b border-gray-200 pb-6">
-              <dt class="text-base font-bold text-gray-900">Q. チェックインとチェックアウトの時間は？</dt>
-              <dd class="mt-2 text-sm text-gray-600">
-                チェックインは15:00から、チェックアウトは10:00までとなります。タブレットを使用した無人受付です。
-              </dd>
-            </div>
-            <div class="border-b border-gray-200 pb-6">
-              <dt class="text-base font-bold text-gray-900">Q. バーベキューはできますか？</dt>
-              <dd class="mt-2 text-sm text-gray-600">
-                はい、庭の指定スペース（ガゼボ庵）にてご利用いただけます。強風時の使用はお控えいただき、使用後の炭や灰は完全に消火してから「燃やすごみ」へ捨ててください。
-              </dd>
-            </div>
-            <div class="border-b border-gray-200 pb-6">
-              <dt class="text-base font-bold text-gray-900">Q. 喫煙は可能ですか？</dt>
-              <dd class="mt-2 text-sm text-gray-600">
-                室内は完全禁煙です。野外のみ喫煙可能となっております。
-              </dd>
-            </div>
-            <div>
-              <dt class="text-base font-bold text-gray-900">Q. ペットは一緒に泊まれますか？</dt>
-              <dd class="mt-2 text-sm text-gray-600">
-                申し訳ございません。ペットの宿泊はお断りさせていただいております。
-              </dd>
-            </div>
-          </dl>
+      <div class="mt-14 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm md:mt-16 md:p-10">
+        <div class="max-w-2xl">
+          <p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">Frequently Asked Questions</p>
+          <h3 class="mt-3 font-serif text-2xl font-bold text-gray-900 md:text-3xl">よくあるご質問</h3>
+          <p class="mt-3 text-sm leading-7 text-gray-600">
+            予約前や出発前に確認されることが多い内容をまとめています。
+          </p>
+        </div>
+
+        <div class="mt-8 grid gap-x-10 lg:grid-cols-2">
+          {
+            faqItems.map((faq) => (
+              <details class="group border-t border-gray-200 py-5 first:border-t-0 lg:first:border-t lg:[&:nth-child(2)]:border-t">
+                <summary class="flex cursor-pointer list-none items-start justify-between gap-5 font-bold leading-7 text-gray-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-800">
+                  <span>Q. {faq.question}</span>
+                  <span class="mt-1 text-xl leading-none text-green-700 transition-transform group-open:rotate-45" aria-hidden="true">＋</span>
+                </summary>
+                <div class="pt-3 pr-8">
+                  <p class="text-sm leading-7 text-gray-600">{faq.answer}</p>
+                  {
+                    faq.href && (
+                      <a href={faq.href} class="mt-3 inline-flex items-center gap-2 text-sm font-bold text-green-800 underline decoration-green-300 underline-offset-4 transition-colors hover:text-green-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-800">
+                        {faq.linkLabel}
+                        <span aria-hidden="true">→</span>
+                      </a>
+                    )
+                  }
+                </div>
+              </details>
+            ))
+          }
         </div>
       </div>
     </div>
   </section>
 
 <!-- Model Itinerary (過ごし方・モデルプラン) -->
-  <section id="itinerary" class="bg-white py-20 md:py-28">
-    <div class="mx-auto max-w-4xl px-6">
-      <div class="mb-16 text-center">
-        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Model Plan</p>
-        <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">過ごし方のアイデア</h2>
-        <p class="mt-4 text-gray-600">
-          ガチガチのスケジュールではなく、その日の気分で選べる。<br class="hidden sm:block" />
-          ご家族やご友人グループで過ごす、自由な1泊2日のモデルケースをご紹介します。
+  <section id="itinerary" class="bg-white py-20 md:py-28" aria-labelledby="itinerary-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mx-auto mb-14 max-w-3xl text-center md:mb-16">
+        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">1 Night / 2 Days</p>
+        <h2 id="itinerary-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">
+          伊豆大島を遊び、森に帰る。<br class="hidden sm:block" />1泊2日モデルコース
+        </h2>
+        <p class="mt-5 leading-7 text-gray-600 md:text-lg md:leading-8">
+          初めて伊豆大島を訪れる家族や友人グループにおすすめの一例です。<br class="hidden md:block" />
+          到着港・船の時間・天候に合わせて、無理のない範囲で組み替えてください。
+        </p>
+        <p class="mt-4 text-sm text-gray-500">
+          島内を自由に巡るため、レンタカーの利用をおすすめしています。
         </p>
       </div>
 
-      <div class="relative border-l-2 border-green-200 ml-3 space-y-12 md:ml-0 md:border-none md:space-y-16">
-        
-        <!-- Day 1 見出し -->
-        <div class="relative pl-8 md:pl-0">
-          <div class="md:grid md:grid-cols-12 md:gap-8">
-            <div class="md:col-span-3 md:text-right">
-              <span class="inline-block rounded-full bg-green-700 px-4 py-1 text-sm font-bold tracking-widest text-white shadow-sm md:mt-1">DAY 1</span>
+      <div class="grid gap-8 lg:grid-cols-2 lg:gap-10">
+        <!-- DAY 1 -->
+        <article class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
+          <div class="relative aspect-[16/9] overflow-hidden">
+            <img
+              src="/mihara.jpg"
+              alt="伊豆大島を代表する三原山の火山景観"
+              class="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" aria-hidden="true"></div>
+            <div class="absolute right-5 bottom-5 left-5 text-white">
+              <p class="text-xs font-bold tracking-[0.25em] uppercase">Day 1</p>
+              <h3 class="mt-1 font-serif text-2xl font-bold">火山の大地を歩き、ヴィラの夜へ</h3>
             </div>
-            <div class="hidden md:block md:col-span-9"></div>
           </div>
-        </div>
 
-        <!-- 10:00 -->
-        <div class="relative pl-8 md:pl-0">
-          <div class="absolute -left-[9px] top-1 h-4 w-4 rounded-full border-4 border-white bg-green-500 md:hidden"></div>
-          <div class="md:grid md:grid-cols-12 md:gap-8">
-            <div class="mb-2 md:col-span-3 md:mb-0 md:text-right">
-              <span class="font-serif text-xl font-bold text-green-700">10:00〜</span>
-            </div>
-            <div class="md:col-span-9 md:border-l-2 md:border-green-200 md:pl-8 md:relative">
-              <div class="absolute -left-[9px] top-1.5 hidden h-4 w-4 rounded-full border-4 border-white bg-green-500 md:block"></div>
-              <h3 class="text-lg font-bold text-gray-900">大島到着・ランチ・島内観光</h3>
-              <p class="mt-2 text-sm leading-relaxed text-gray-700">
-                ジェット船で到着後、まずは島内の飲食店でローカルな昼食を。午後はチェックインまでたっぷりと大島の自然や文化を満喫します。
+          <ol class="space-y-0 p-6 sm:p-8">
+            <li class="relative border-l-2 border-green-100 pb-8 pl-7 last:border-l-transparent last:pb-0">
+              <span class="absolute -left-[9px] top-0.5 h-4 w-4 rounded-full border-4 border-white bg-green-600" aria-hidden="true"></span>
+              <p class="text-xs font-bold tracking-widest text-green-700">ARRIVAL — LUNCH</p>
+              <h4 class="mt-1 text-lg font-bold text-gray-900">港に到着、レンタカーで島旅をスタート</h4>
+              <p class="mt-2 text-sm leading-7 text-gray-600">
+                到着港でレンタカーを受け取り、まずは島の飲食店でランチ。船旅のあとは、ゆとりを持って行動を始めます。
               </p>
-              <div class="mt-3 flex flex-wrap gap-2">
-                <span class="rounded bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600">三原山トレッキング</span>
-                <span class="rounded bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600">伊豆大島ミュージアム - ジオノス -</span>
+            </li>
+
+            <li class="relative border-l-2 border-green-100 pb-8 pl-7 last:border-l-transparent last:pb-0">
+              <span class="absolute -left-[9px] top-0.5 h-4 w-4 rounded-full border-4 border-white bg-green-600" aria-hidden="true"></span>
+              <p class="text-xs font-bold tracking-widest text-green-700">AFTERNOON</p>
+              <h4 class="mt-1 text-lg font-bold text-gray-900">三原山や裏砂漠で、大島らしい景観を体感</h4>
+              <p class="mt-2 text-sm leading-7 text-gray-600">
+                火山島ならではの景観を楽しむ午後。滞在時間や体力、当日の天候に合わせ、三原山または裏砂漠を中心に巡るのがおすすめです。
+              </p>
+              <div class="mt-3 flex flex-wrap gap-2" aria-label="おすすめスポット">
+                <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">三原山</span>
+                <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">裏砂漠</span>
+                <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">ジオノス</span>
               </div>
-            </div>
-          </div>
-        </div>
+            </li>
 
-        <!-- 15:00 -->
-        <div class="relative pl-8 md:pl-0">
-          <div class="absolute -left-[9px] top-1 h-4 w-4 rounded-full border-4 border-white bg-green-500 md:hidden"></div>
-          <div class="md:grid md:grid-cols-12 md:gap-8">
-            <div class="mb-2 md:col-span-3 md:mb-0 md:text-right">
-              <span class="font-serif text-xl font-bold text-green-700">15:00</span>
-            </div>
-            <div class="md:col-span-9 md:border-l-2 md:border-green-200 md:pl-8 md:relative">
-              <div class="absolute -left-[9px] top-1.5 hidden h-4 w-4 rounded-full border-4 border-white bg-green-500 md:block"></div>
-              <h3 class="text-lg font-bold text-gray-900">チェックイン ＆ 温泉へ出発</h3>
-              <p class="mt-2 text-sm leading-relaxed text-gray-700">
-                施設に到着したらタブレットでスムーズにチェックインし、荷物を置きます。<br />
-                <span class="font-bold text-orange-700">【💡おすすめ】</span> 室内のバスタオルを持参して「愛らんどセンター御神火温泉」へ！グループ全員が順番にシャワーを浴びる時間を短縮でき、広々とした温泉でリフレッシュできます。
+            <li class="relative border-l-2 border-green-100 pb-8 pl-7 last:border-l-transparent last:pb-0">
+              <span class="absolute -left-[9px] top-0.5 h-4 w-4 rounded-full border-4 border-white bg-green-600" aria-hidden="true"></span>
+              <p class="text-xs font-bold tracking-widest text-green-700">CHECK-IN — HOT SPRING</p>
+              <h4 class="mt-1 text-lg font-bold text-gray-900">荷物を置いて、御神火温泉でリフレッシュ</h4>
+              <p class="mt-2 text-sm leading-7 text-gray-600">
+                チェックイン後は、室内のバスタオルを持って「愛らんどセンター御神火温泉」へ。複数人が同じ時間に入浴できるため、6名などのグループでは順番待ちを減らし、夜の時間をゆったり確保できます。
               </p>
-            </div>
-          </div>
-        </div>
+            </li>
 
-        <!-- 16:00 -->
-        <div class="relative pl-8 md:pl-0">
-          <div class="absolute -left-[9px] top-1 h-4 w-4 rounded-full border-4 border-white bg-green-500 md:hidden"></div>
-          <div class="md:grid md:grid-cols-12 md:gap-8">
-            <div class="mb-2 md:col-span-3 md:mb-0 md:text-right">
-              <span class="font-serif text-xl font-bold text-green-700">16:00</span>
-            </div>
-            <div class="md:col-span-9 md:border-l-2 md:border-green-200 md:pl-8 md:relative">
-              <div class="absolute -left-[9px] top-1.5 hidden h-4 w-4 rounded-full border-4 border-white bg-green-500 md:block"></div>
-              <h3 class="text-lg font-bold text-gray-900">地元スーパーで買い出し</h3>
-              <p class="mt-2 text-sm leading-relaxed text-gray-700">
-                温泉の帰りに、地元のスーパーへ。夜のBBQや自炊に向けて、島ならではの新鮮な食材やお酒をみんなでワイワイ調達します。
+            <li class="relative border-l-2 border-green-100 pb-8 pl-7 last:border-l-transparent last:pb-0">
+              <span class="absolute -left-[9px] top-0.5 h-4 w-4 rounded-full border-4 border-white bg-green-600" aria-hidden="true"></span>
+              <p class="text-xs font-bold tracking-widest text-green-700">AFTER HOT SPRING</p>
+              <h4 class="mt-1 text-lg font-bold text-gray-900">温泉帰りに、夜の食材を買い出し</h4>
+              <p class="mt-2 text-sm leading-7 text-gray-600">
+                BBQや室内料理に使う食材、飲み物、翌朝の朝食をまとめて購入。スーパーの営業時間を確認し、余裕を持って立ち寄るのがおすすめです。
               </p>
-            </div>
-          </div>
-        </div>
+              <a href="#shopping-guide" class="mt-3 inline-flex items-center gap-1 text-sm font-bold text-green-700 underline decoration-green-200 underline-offset-4 transition-colors hover:text-green-900">
+                スーパー＆食料品店を見る<span aria-hidden="true">→</span>
+              </a>
+            </li>
 
-        <!-- 17:00 -->
-        <div class="relative pl-8 md:pl-0">
-          <div class="absolute -left-[9px] top-1 h-4 w-4 rounded-full border-4 border-white bg-green-500 md:hidden"></div>
-          <div class="md:grid md:grid-cols-12 md:gap-8">
-            <div class="mb-2 md:col-span-3 md:mb-0 md:text-right">
-              <span class="font-serif text-xl font-bold text-green-700">17:00〜</span>
-            </div>
-            <div class="md:col-span-9 md:border-l-2 md:border-green-200 md:pl-8 md:relative">
-              <div class="absolute -left-[9px] top-1.5 hidden h-4 w-4 rounded-full border-4 border-white bg-green-500 md:block"></div>
-              <h3 class="text-lg font-bold text-gray-900">気分で選べる夕食タイム</h3>
-              <p class="mt-2 text-sm leading-relaxed text-gray-700">
-                食事のスタイルは自由自在。グループの雰囲気や天候に合わせてお好きな選択を。
+            <li class="relative pl-7">
+              <span class="absolute -left-[7px] top-0.5 h-4 w-4 rounded-full border-4 border-white bg-orange-500" aria-hidden="true"></span>
+              <p class="text-xs font-bold tracking-widest text-orange-700">NIGHT</p>
+              <h4 class="mt-1 text-lg font-bold text-gray-900">BBQ、団らん、晴れた夜には星空</h4>
+              <p class="mt-2 text-sm leading-7 text-gray-600">
+                チェックイン後は「ガゼボ庵」でBBQをしたり、室内で料理をしたり。食後はボードゲームや会話を楽しみ、晴れていれば屋外で星空を眺めます。
               </p>
-              <ul class="mt-3 space-y-2 text-sm text-gray-600">
-                <li class="flex items-start gap-2"><span class="text-green-600">✓</span> 外の「ガゼボ庵」でBBQを満喫</li>
-                <li class="flex items-start gap-2"><span class="text-green-600">✓</span> 設備の整った室内キッチンで楽しくお料理</li>
-                <li class="flex items-start gap-2"><span class="text-green-600">✓</span> 島内の美味しい飲食店でディナー（外食）</li>
-              </ul>
+            </li>
+          </ol>
+        </article>
+
+        <!-- DAY 2 -->
+        <article class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
+          <div class="relative aspect-[16/9] overflow-hidden">
+            <img
+              src="/Sea_of_Izu_Oshima.jpg"
+              alt="伊豆大島の海と夕景"
+              class="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" aria-hidden="true"></div>
+            <div class="absolute right-5 bottom-5 left-5 text-white">
+              <p class="text-xs font-bold tracking-[0.25em] uppercase">Day 2</p>
+              <h3 class="mt-1 font-serif text-2xl font-bold">森の朝から、島の南部と港町へ</h3>
             </div>
           </div>
-        </div>
 
-        <!-- 20:00 -->
-        <div class="relative pl-8 md:pl-0">
-          <div class="absolute -left-[9px] top-1 h-4 w-4 rounded-full border-4 border-white bg-green-500 md:hidden"></div>
-          <div class="md:grid md:grid-cols-12 md:gap-8">
-            <div class="mb-2 md:col-span-3 md:mb-0 md:text-right">
-              <span class="font-serif text-xl font-bold text-green-700">20:00〜</span>
-            </div>
-            <div class="md:col-span-9 md:border-l-2 md:border-green-200 md:pl-8 md:relative">
-              <div class="absolute -left-[9px] top-1.5 hidden h-4 w-4 rounded-full border-4 border-white bg-green-500 md:block"></div>
-              <h3 class="text-lg font-bold text-gray-900">森に包まれた夜のひととき</h3>
-              <p class="mt-2 text-sm leading-relaxed text-gray-700">
-                お部屋にあるボードゲームで白熱したり、外に出て満天の星空を観察したり、夜の静かな森をお散歩したり。都会では味わえないリラックスタイムをお過ごしください。
+          <ol class="space-y-0 p-6 sm:p-8">
+            <li class="relative border-l-2 border-gray-200 pb-8 pl-7 last:border-l-transparent last:pb-0">
+              <span class="absolute -left-[9px] top-0.5 h-4 w-4 rounded-full border-4 border-white bg-gray-500" aria-hidden="true"></span>
+              <p class="text-xs font-bold tracking-widest text-gray-600">MORNING</p>
+              <h4 class="mt-1 text-lg font-bold text-gray-900">鳥の声と森の空気で目覚める朝</h4>
+              <p class="mt-2 text-sm leading-7 text-gray-600">
+                朝食をとり、身支度を整えたら10時までにチェックアウト。出発前に、室内や冷蔵庫の忘れ物をご確認ください。
               </p>
-            </div>
-          </div>
-        </div>
+            </li>
 
-        <!-- Day 2 見出し -->
-        <div class="relative pl-8 md:pl-0 pt-4">
-          <div class="md:grid md:grid-cols-12 md:gap-8">
-            <div class="md:col-span-3 md:text-right">
-              <span class="inline-block rounded-full bg-gray-300 px-4 py-1 text-sm font-bold tracking-widest text-white shadow-sm md:mt-1">DAY 2</span>
-            </div>
-            <div class="hidden md:block md:col-span-9"></div>
-          </div>
-        </div>
-
-        <!-- Day 2 朝 -->
-        <div class="relative pl-8 md:pl-0">
-          <div class="absolute -left-[9px] top-1 h-4 w-4 rounded-full border-4 border-white bg-gray-400 md:hidden"></div>
-          <div class="md:grid md:grid-cols-12 md:gap-8">
-            <div class="mb-2 md:col-span-3 md:mb-0 md:text-right">
-              <span class="font-serif text-xl font-bold text-gray-500">Morning</span>
-            </div>
-            <div class="md:col-span-9 md:border-l-2 md:border-gray-200 md:pl-8 md:relative">
-              <div class="absolute -left-[9px] top-1.5 hidden h-4 w-4 rounded-full border-4 border-white bg-gray-400 md:block"></div>
-              <h3 class="text-lg font-bold text-gray-900">鳥の声で目覚める朝</h3>
-              <p class="mt-2 text-sm leading-relaxed text-gray-700">
-                少し早起きして、澄んだ空気の中で朝のお散歩へ。自然のエネルギーをチャージします。
+            <li class="relative border-l-2 border-gray-200 pb-8 pl-7 last:border-l-transparent last:pb-0">
+              <span class="absolute -left-[9px] top-0.5 h-4 w-4 rounded-full border-4 border-white bg-gray-500" aria-hidden="true"></span>
+              <p class="text-xs font-bold tracking-widest text-gray-600">LATE MORNING</p>
+              <h4 class="mt-1 text-lg font-bold text-gray-900">地層大切断面を眺め、波浮港を散策</h4>
+              <p class="mt-2 text-sm leading-7 text-gray-600">
+                島の成り立ちを感じる地層大切断面から、昔ながらの港町の風景が残る波浮港へ。写真を撮りながら、ゆっくり巡ります。
               </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 10:00 & 出発まで -->
-        <div class="relative pl-8 md:pl-0">
-          <div class="absolute -left-[9px] top-1 h-4 w-4 rounded-full border-4 border-white bg-gray-400 md:hidden"></div>
-          <div class="md:grid md:grid-cols-12 md:gap-8">
-            <div class="mb-2 md:col-span-3 md:mb-0 md:text-right">
-              <span class="font-serif text-xl font-bold text-gray-500">10:00〜</span>
-            </div>
-            <div class="md:col-span-9 md:border-l-2 md:border-gray-200 md:pl-8 md:relative">
-              <div class="absolute -left-[9px] top-1.5 hidden h-4 w-4 rounded-full border-4 border-white bg-gray-400 md:block"></div>
-              <h3 class="text-lg font-bold text-gray-900">チェックアウト・出発まで観光</h3>
-              <p class="mt-2 text-sm leading-relaxed text-gray-700">
-                10時にチェックアウト。お帰りの船や飛行機の時間まで、残りの大島観光をゆっくりとお楽しみください。
-              </p>
-              <div class="mt-3 flex flex-wrap gap-2">
-                <span class="rounded bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600">地層大切断面</span>
-                <span class="rounded bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600">ノスタルジックな波浮港</span>
-                <span class="rounded bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600">都立大島公園</span>
+              <div class="mt-3 flex flex-wrap gap-2" aria-label="おすすめスポット">
+                <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">地層大切断面</span>
+                <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">波浮港</span>
               </div>
-            </div>
-          </div>
-        </div>
+            </li>
 
+            <li class="relative border-l-2 border-gray-200 pb-8 pl-7 last:border-l-transparent last:pb-0">
+              <span class="absolute -left-[9px] top-0.5 h-4 w-4 rounded-full border-4 border-white bg-gray-500" aria-hidden="true"></span>
+              <p class="text-xs font-bold tracking-widest text-gray-600">LUNCH — DEPARTURE</p>
+              <h4 class="mt-1 text-lg font-bold text-gray-900">島グルメを楽しみ、出発港へ</h4>
+              <p class="mt-2 text-sm leading-7 text-gray-600">
+                べっこうや明日葉などの島グルメ、大島牛乳を使ったアイスなどを楽しみ、船や飛行機の時間に余裕を持って出発場所へ向かいます。
+              </p>
+            </li>
+
+            <li class="relative pl-7">
+              <span class="absolute -left-[7px] top-0.5 h-4 w-4 rounded-full border-4 border-white bg-green-600" aria-hidden="true"></span>
+              <p class="text-xs font-bold tracking-widest text-green-700">SEASONAL OPTION</p>
+              <h4 class="mt-1 text-lg font-bold text-gray-900">季節や天候に合わせて立ち寄り先を変更</h4>
+              <p class="mt-2 text-sm leading-7 text-gray-600">
+                椿の季節は椿園、暖かい時期は海辺、雨の日はジオノスへ。よく歩いた日や体が冷えた日は温泉を組み合わせるなど、天候と体調に合わせて予定に余白を持たせると、旅を楽しみやすくなります。
+              </p>
+            </li>
+          </ol>
+        </article>
+      </div>
+
+      <div class="mt-10 rounded-3xl bg-green-50 px-6 py-7 text-center sm:px-8">
+        <p class="font-serif text-xl font-bold text-gray-900">到着港は、当日の海況によって変わります。</p>
+        <p class="mt-2 text-sm leading-7 text-gray-600">
+          元町港・岡田港・大島空港からの所要時間や、出発前に確認したい情報をアクセス欄にまとめています。
+        </p>
+        <a href="#access" class="mt-4 inline-flex items-center gap-1 rounded-full bg-green-700 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-green-800 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-800">
+          アクセス案内を見る<span aria-hidden="true">→</span>
+        </a>
       </div>
     </div>
   </section>
