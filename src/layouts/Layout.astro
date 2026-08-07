@@ -7,12 +7,14 @@ interface Props {
 }
 
 const {
-  title = '大島ニュービラ｜伊豆大島の一棟貸し・最大6名・BBQ',
-  description = '伊豆大島・元町の一棟貸し「大島ニュービラ」。最大6名で宿泊でき、屋外BBQや自炊を楽しめます。1975年開業、約15年の休館を経て2026年にリニューアル。元町港から車で約5分。',
+  title = '伊豆大島の一棟貸し宿｜最大6名・BBQ・森のヴィラ｜大島ニュービラ',
+  description = '伊豆大島・元町の一棟貸し宿「大島ニュービラ」。家族・友人で最大6名、BBQ・自炊を楽しめる森のヴィラです。元町港から車で約5分。1975年開業の施設を2026年にリニューアルしました。',
 } = Astro.props;
 
 const siteUrl = 'https://oshima-new-villa.com/';
-const ogImageUrl = new URL('/main.png', siteUrl).href;
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImageUrl = new URL('/ogp-oshima-new-villa.jpg', siteUrl).href;
+const propertyImageUrl = new URL('/main-optimized.webp', siteUrl).href;
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -33,10 +35,10 @@ const structuredData = {
       url: siteUrl,
       description,
       image: [
-        ogImageUrl,
-        new URL('/day_salvia.jpg', siteUrl).href,
-        new URL('/sofa_salvia.jpg', siteUrl).href,
-        new URL('/night_bbq.jpg', siteUrl).href,
+        propertyImageUrl,
+        new URL('/day-salvia.webp', siteUrl).href,
+        new URL('/sofa-salvia.webp', siteUrl).href,
+        new URL('/night-bbq.webp', siteUrl).href,
       ],
       logo: new URL('/oshima_new_villa_logo_A_N.png', siteUrl).href,
       address: {
@@ -125,24 +127,36 @@ const footerNavItems = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <link rel="canonical" href={siteUrl} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link
+      rel="preload"
+      as="image"
+      href="/main-optimized.webp"
+      imagesrcset="/main-optimized-640.webp 640w, /main-optimized-960.webp 960w, /main-optimized.webp 1170w"
+      imagesizes="100vw"
+      fetchpriority="high"
+    />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:site_name" content="大島ニュービラ" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={siteUrl} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImageUrl} />
-    <meta property="og:image:alt" content="森に囲まれた伊豆大島の一棟貸し・大島ニュービラ" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:alt" content="伊豆大島の一棟貸し・大島ニュービラ。大島を遊ぶ。森に帰る。" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content="伊豆大島の一棟貸し・大島ニュービラ。大島を遊ぶ。森に帰る。" />
 
     <meta name="theme-color" content="#15803d" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -177,6 +191,8 @@ const footerNavItems = [
             src="/oshima_new_villa_logo_A_N.png"
             alt="大島ニュービラ"
             class="h-10 w-auto shrink-0 object-contain"
+            width="1267"
+            height="1247"
           />
           <span class="truncate font-serif text-base font-bold tracking-wider text-gray-900 sm:text-lg">大島ニュービラ</span>
         </a>
@@ -272,7 +288,7 @@ const footerNavItems = [
         <div class="flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
           <div class="flex flex-col items-center md:items-start">
             <a href="/" class="flex items-center gap-3 transition-opacity hover:opacity-80">
-              <img src="/oshima_new_villa_logo_A_W.png" alt="ロゴ" class="h-12 w-auto object-contain opacity-90" />
+              <img src="/oshima_new_villa_logo_A_W.png" alt="大島ニュービラ" class="h-12 w-auto object-contain opacity-90" width="1267" height="1247" />
               <span class="font-serif text-xl font-bold tracking-wider text-white">大島ニュービラ</span>
             </a>
             <p class="mt-4 text-sm text-gray-400">〒100-0101 東京都大島町元町字新込126-42</p>
@@ -351,8 +367,6 @@ const footerNavItems = [
 </html>
 
 <style is:global>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap');
-
   :root {
     font-family: 'Noto Sans JP', sans-serif;
   }
