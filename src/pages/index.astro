@@ -44,11 +44,11 @@ const appeals = [
     title: '到着後は、自分たちのペースで',
     subtitle: 'Self Check-in',
     description:
-      '敷地内コンテナに設置したタブレットでチェックイン。対面での長い手続きをせず、到着後は荷物を置いて、そのまま温泉や買い出しへ向かえます。滞在中も一棟貸切なので、自分たちのペースでお過ごしください。',
+      '敷地内コンテナに設置したタブレットでチェックイン。対面での長い手続きをせず、到着後は荷物を置いて、そのまま御神火温泉や買い出し、夕方の海辺へ向かえます。滞在中も一棟貸切なので、自分たちのペースでお過ごしください。',
     image: { src: '/checkin_tablet.jpg', alt: '大島ニュービラの無人チェックイン用タブレット' },
     subImages: [
       { src: '/day_salvia.jpg', alt: 'リニューアルしたサルビア棟の外観' },
-      { src: '/mihara.jpg', alt: '伊豆大島を代表する三原山の景観' },
+      { src: '/mihara-mountain-view.webp', alt: '大島ニュービラのスタッフが撮影した三原山の景観' },
     ],
     href: '#facilities',
     linkLabel: '設備・よくある質問を見る',
@@ -74,7 +74,7 @@ const facilityGroups = [
   },
   {
     title: 'バス・アメニティ',
-    description: '棟内に浴槽とシャワーを備えています。グループ旅行では島の温泉を組み合わせるのもおすすめです。',
+    description: '棟内に浴槽とシャワーを備えています。どこか懐かしさのあるタイル浴室で、グループ旅行では御神火温泉を組み合わせるのもおすすめです。',
     items: ['浴槽・シャワー', 'バスタオル・フェイスタオル', '歯ブラシ・スリッパ', 'シャンプー・リンス・ボディソープ', '温水洗浄便座'],
   },
   {
@@ -89,7 +89,7 @@ const facilityGroups = [
   },
 ];
 
-const faqItems = [
+const stayFaqItems = [
   {
     question: 'チェックインとチェックアウトの時間は？',
     answer: 'チェックインは15:00から、チェックアウトは10:00までです。敷地内のタブレットを使用した無人受付となります。',
@@ -116,7 +116,7 @@ const faqItems = [
   },
   {
     question: '宿にお風呂はありますか？',
-    answer: 'はい。サルビア棟内に浴槽とシャワーを備えた浴室があります。6名などのグループ旅行では、全員が順番に入浴する時間を短縮しやすい「愛らんどセンター御神火温泉」の利用もおすすめです。温泉へ行く際は、室内のバスタオルをお持ちいただけます。',
+    answer: 'はい。サルビア棟内に浴槽とシャワーを備えた浴室があります。6名などのグループ旅行では、複数人が同じ時間帯に入浴しやすい「愛らんどセンター御神火温泉」を利用すると、入浴の順番待ちを減らし、夜の時間を確保しやすくなります。',
     href: null,
     linkLabel: null,
   },
@@ -149,6 +149,45 @@ const faqItems = [
     answer: '申し訳ございませんが、ペット同伴での宿泊はお受けしていません。',
     href: null,
     linkLabel: null,
+  },
+];
+
+const islandFaqItems = [
+  {
+    question: '伊豆大島は1泊2日でも楽しめますか？',
+    answer: 'はい。船や飛行機の到着時刻、天候にもよりますが、1泊2日でも三原山や裏砂漠などの自然、島の南部、港町などを組み合わせて楽しめます。このページでは、初めての方向けのモデルコースを紹介しています。',
+    href: '#itinerary',
+    linkLabel: '1泊2日モデルコースを見る',
+  },
+  {
+    question: '初めての伊豆大島旅行でも大丈夫ですか？',
+    answer: 'はい。到着港が当日に決まることがあるため、出発前に港を確認しておくのがポイントです。島内を自由に巡るならレンタカーがおすすめです。元町港・岡田港・大島空港からのアクセスもページ内にまとめています。',
+    href: '#access',
+    linkLabel: 'アクセス案内を見る',
+  },
+  {
+    question: '家族や友人6人で泊まれますか？',
+    answer: 'はい。サルビア棟は最大6名の一棟貸しです。シングルベッド4台とソファベッド2台を備え、リビングやダイニングも一緒に過ごせるつくりになっています。',
+    href: '#gallery',
+    linkLabel: '客室・間取りを見る',
+  },
+  {
+    question: '雨の日はどう過ごせますか？',
+    answer: '天候に合わせてジオノスなどの屋内施設を旅程に入れたり、ヴィラで料理、ボードゲーム、スマートTVなどを楽しんだりできます。予定を詰め込みすぎず、島の天候に合わせて過ごし方を変えるのがおすすめです。',
+    href: '#facilities',
+    linkLabel: '室内設備を見る',
+  },
+  {
+    question: 'BBQの食材や翌朝の朝食は島で買えますか？',
+    answer: 'はい。元町周辺を中心に食料品を購入できるお店があります。BBQの食材、飲み物、翌朝の朝食をまとめて買っておくと、ヴィラ到着後をゆっくり過ごせます。ページ内に買い出し先をまとめています。',
+    href: '#shopping-guide',
+    linkLabel: 'スーパー＆食料品店を見る',
+  },
+  {
+    question: '夕焼けや星空はいつでも見られますか？',
+    answer: '天候や雲の状況に左右されるため、必ず見られるものではありません。晴れた日は、夕方に海辺へ寄り道したり、夜に空を見上げたりする時間も伊豆大島ならではの楽しみのひとつです。',
+    href: '#sunset-sky-guide',
+    linkLabel: '夕焼けと星空の景色を見る',
   },
 ];
 
@@ -579,12 +618,12 @@ const galleryImages = [
               宿のお風呂と、御神火温泉
             </h3>
             <p class="mt-5 text-sm leading-7 text-gray-600 md:text-base md:leading-8">
-              サルビア棟には、浴槽とシャワーを備えた、どこか懐かしさを感じるタイル張りの浴室があります。温泉へ出かけない日も、滞在中いつでもご利用いただけます。
+              サルビア棟には、浴槽とシャワーを備えた、どこか懐かしさを感じるタイル張りの浴室があります。観光から戻ったあとや、夕食前後など、滞在中いつでもご利用いただけます。
             </p>
             <div class="mt-6 rounded-2xl bg-green-50 p-5">
               <p class="font-bold leading-7 text-green-900">グループ旅行の時短にもおすすめ</p>
               <p class="mt-2 text-sm leading-7 text-gray-700">
-                6名などで全員が順番に入浴すると、想像以上に時間がかかることも。チェックイン後に室内のバスタオルを持って「愛らんどセンター御神火温泉」へ向かえば、入浴の待ち時間を減らし、BBQや夜の団らんに使える時間を確保しやすくなります。
+                6名などで全員が順番に入浴すると、想像以上に時間がかかることも。実際に宿泊者にも利用されている「愛らんどセンター御神火温泉」を組み合わせれば、入浴の待ち時間を減らし、BBQや夜の団らんに使える時間を確保しやすくなります。
               </p>
             </div>
           </div>
@@ -600,34 +639,522 @@ const galleryImages = [
           </p>
         </div>
 
-        <div class="mt-8 grid gap-x-10 lg:grid-cols-2">
-          {
-            faqItems.map((faq) => (
-              <details class="group border-t border-gray-200 py-5 first:border-t-0 lg:first:border-t lg:[&:nth-child(2)]:border-t">
-                <summary class="flex cursor-pointer list-none items-start justify-between gap-5 font-bold leading-7 text-gray-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-800">
-                  <span>Q. {faq.question}</span>
-                  <span class="mt-1 text-xl leading-none text-green-700 transition-transform group-open:rotate-45" aria-hidden="true">＋</span>
-                </summary>
-                <div class="pt-3 pr-8">
-                  <p class="text-sm leading-7 text-gray-600">{faq.answer}</p>
-                  {
-                    faq.href && (
-                      <a href={faq.href} class="mt-3 inline-flex items-center gap-2 text-sm font-bold text-green-800 underline decoration-green-300 underline-offset-4 transition-colors hover:text-green-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-800">
-                        {faq.linkLabel}
-                        <span aria-hidden="true">→</span>
-                      </a>
-                    )
-                  }
-                </div>
-              </details>
-            ))
-          }
+        <div class="mt-8 grid gap-10 lg:grid-cols-2 lg:gap-12">
+          <section aria-labelledby="stay-faq-title">
+            <div class="border-b border-gray-200 pb-4">
+              <p class="text-xs font-bold tracking-[0.2em] text-green-700 uppercase">About Your Stay</p>
+              <h4 id="stay-faq-title" class="mt-1 font-serif text-xl font-bold text-gray-900">宿泊・設備について</h4>
+            </div>
+            <div>
+              {
+                stayFaqItems.map((faq) => (
+                  <details class="group border-b border-gray-200 py-5">
+                    <summary class="flex cursor-pointer list-none items-start justify-between gap-5 font-bold leading-7 text-gray-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-800">
+                      <span>Q. {faq.question}</span>
+                      <span class="mt-1 text-xl leading-none text-green-700 transition-transform group-open:rotate-45" aria-hidden="true">＋</span>
+                    </summary>
+                    <div class="pt-3 pr-8">
+                      <p class="text-sm leading-7 text-gray-600">{faq.answer}</p>
+                      {
+                        faq.href && (
+                          <a href={faq.href} class="mt-3 inline-flex items-center gap-2 text-sm font-bold text-green-800 underline decoration-green-300 underline-offset-4 transition-colors hover:text-green-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-800">
+                            {faq.linkLabel}
+                            <span aria-hidden="true">→</span>
+                          </a>
+                        )
+                      }
+                    </div>
+                  </details>
+                ))
+              }
+            </div>
+          </section>
+
+          <section aria-labelledby="island-faq-title">
+            <div class="border-b border-gray-200 pb-4">
+              <p class="text-xs font-bold tracking-[0.2em] text-orange-700 uppercase">First Trip to Oshima</p>
+              <h4 id="island-faq-title" class="mt-1 font-serif text-xl font-bold text-gray-900">初めての伊豆大島旅行について</h4>
+            </div>
+            <div>
+              {
+                islandFaqItems.map((faq) => (
+                  <details class="group border-b border-gray-200 py-5">
+                    <summary class="flex cursor-pointer list-none items-start justify-between gap-5 font-bold leading-7 text-gray-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-800">
+                      <span>Q. {faq.question}</span>
+                      <span class="mt-1 text-xl leading-none text-orange-700 transition-transform group-open:rotate-45" aria-hidden="true">＋</span>
+                    </summary>
+                    <div class="pt-3 pr-8">
+                      <p class="text-sm leading-7 text-gray-600">{faq.answer}</p>
+                      {
+                        faq.href && (
+                          <a href={faq.href} class="mt-3 inline-flex items-center gap-2 text-sm font-bold text-orange-800 underline decoration-orange-300 underline-offset-4 transition-colors hover:text-orange-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-800">
+                            {faq.linkLabel}
+                            <span aria-hidden="true">→</span>
+                          </a>
+                        )
+                      }
+                    </div>
+                  </details>
+                ))
+              }
+            </div>
+          </section>
         </div>
       </div>
     </div>
   </section>
 
+<!-- Volcano guide / First-party sightseeing content -->
+  <section id="volcano-guide" class="bg-slate-950 py-20 text-white md:py-28" aria-labelledby="volcano-guide-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mx-auto mb-14 max-w-3xl text-center md:mb-16">
+        <p class="text-xs font-bold tracking-[0.3em] text-orange-300 uppercase">Explore the Volcano Island</p>
+        <h2 id="volcano-guide-title" class="mt-3 font-serif text-3xl font-bold leading-tight md:text-4xl">
+          火山の島を、実際に歩いて見つけた景色。
+        </h2>
+        <p class="mt-5 text-base leading-8 text-slate-300 md:text-lg">
+          三原山と裏砂漠は、伊豆大島ならではの大地を体感できる代表的な場所です。<br class="hidden md:block" />
+          掲載している写真は、私たちが実際に現地で撮影したものです。
+        </p>
+      </div>
+
+      <div class="space-y-16 md:space-y-24">
+        <!-- Mt. Mihara -->
+        <article class="grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
+          <div class="lg:col-span-7">
+            <div class="grid grid-cols-2 gap-3 md:gap-4">
+              <figure class="col-span-2 overflow-hidden rounded-3xl bg-slate-900">
+                <img
+                  src="/mihara-mountain-view.webp"
+                  alt="青空の下に広がる三原山の山容"
+                  class="aspect-[16/10] w-full object-cover"
+                  loading="lazy"
+                  width="1536"
+                  height="1152"
+                />
+              </figure>
+              <figure class="overflow-hidden rounded-2xl bg-slate-900">
+                <img
+                  src="/mihara-crater.webp"
+                  alt="三原山の火口と色彩のある火山岩"
+                  class="aspect-[4/5] w-full object-cover"
+                  loading="lazy"
+                  width="1152"
+                  height="1536"
+                />
+              </figure>
+              <div class="grid gap-3 md:gap-4">
+                <figure class="overflow-hidden rounded-2xl bg-slate-900">
+                  <img
+                    src="/mihara-trail.webp"
+                    alt="三原山周辺の火山景観を進む舗装された遊歩道"
+                    class="aspect-[4/3] w-full object-cover"
+                    loading="lazy"
+                    width="1152"
+                    height="1536"
+                  />
+                </figure>
+                <figure class="overflow-hidden rounded-2xl bg-slate-900">
+                  <img
+                    src="/mihara-island-view.webp"
+                    alt="三原山周辺の高台から望む伊豆大島の町と海"
+                    class="aspect-[4/3] w-full object-cover"
+                    loading="lazy"
+                    width="1536"
+                    height="1152"
+                  />
+                </figure>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5">
+            <p class="text-xs font-bold tracking-[0.25em] text-orange-300 uppercase">Mt. Mihara</p>
+            <h3 class="mt-3 font-serif text-3xl font-bold">三原山を歩く</h3>
+            <p class="mt-6 leading-8 text-slate-300 md:text-lg md:leading-9">
+              緑に囲まれた山容から、火口周辺の荒々しい岩肌まで、歩くほどに景色が変わります。伊豆大島が火山の島であることを、足元から感じられる場所です。
+            </p>
+            <p class="mt-4 text-sm leading-7 text-slate-400">
+              歩く距離やコースは、当日の天候や体力に合わせて無理のない範囲でお選びください。
+            </p>
+            <div class="mt-7 flex flex-wrap gap-2" aria-label="三原山の魅力">
+              <span class="rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-bold">火口景観</span>
+              <span class="rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-bold">トレッキング</span>
+              <span class="rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-bold">島と海の眺望</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Urasabaku -->
+        <article class="grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
+          <div class="lg:order-2 lg:col-span-7">
+            <figure class="overflow-hidden rounded-3xl bg-slate-900">
+              <img
+                src="/urasabaku-panorama.webp"
+                alt="黒い火山地形が広がる裏砂漠のパノラマ"
+                class="aspect-[16/7] w-full object-cover md:aspect-[20/7]"
+                loading="lazy"
+                width="1536"
+                height="369"
+              />
+            </figure>
+            <figure class="mt-4 overflow-hidden rounded-3xl bg-slate-900">
+              <img
+                src="/urasabaku-sea-view.webp"
+                alt="黒い大地の向こうに青い海が広がる裏砂漠の景観"
+                class="aspect-[16/10] w-full object-cover object-[center_65%]"
+                loading="lazy"
+                width="1152"
+                height="1536"
+              />
+            </figure>
+          </div>
+
+          <div class="lg:order-1 lg:col-span-5">
+            <p class="text-xs font-bold tracking-[0.25em] text-orange-300 uppercase">Urasabaku</p>
+            <h3 class="mt-3 font-serif text-3xl font-bold">裏砂漠の静けさへ</h3>
+            <p class="mt-6 leading-8 text-slate-300 md:text-lg md:leading-9">
+              視界いっぱいに続く黒い大地と、その先に広がる青い海。日常の風景から切り離されたような、伊豆大島ならではのスケールを感じられます。
+            </p>
+            <p class="mt-4 text-sm leading-7 text-slate-400">
+              山の天候は変わりやすいため、風・霧・雨の状況を確認し、安全を優先してお楽しみください。
+            </p>
+            <div class="mt-7 flex flex-wrap gap-2" aria-label="裏砂漠の魅力">
+              <span class="rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-bold">黒い火山地形</span>
+              <span class="rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-bold">非日常の景観</span>
+              <span class="rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-bold">写真撮影</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="mt-14 rounded-3xl border border-white/10 bg-white/5 p-6 text-center md:mt-20 md:p-10">
+        <p class="font-serif text-xl font-bold md:text-2xl">歩いたあとは、温泉か夕焼けへ。その後は森のヴィラへ。</p>
+        <p class="mx-auto mt-3 max-w-2xl text-sm leading-7 text-slate-300 md:text-base">
+          三原山や裏砂漠を楽しんだ日の夕方は、グループなら御神火温泉で入浴時間を短縮するか、海辺へ寄り道して夕焼けを眺めるかを選べます。ヴィラへ戻ったあとは、BBQや団らん、晴れた夜の星空へと楽しみが続きます。
+        </p>
+        <a href="#itinerary" class="mt-6 inline-flex items-center gap-2 rounded-full bg-orange-400 px-6 py-3 text-sm font-bold text-slate-950 transition-colors hover:bg-orange-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-300">
+          1泊2日モデルコースを見る<span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+<!-- Great Cut guide / First-party sightseeing content -->
+  <section id="strata-guide" class="bg-white py-20 md:py-28" aria-labelledby="strata-guide-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
+        <div class="lg:col-span-7">
+          <figure class="overflow-hidden rounded-3xl bg-amber-50 shadow-sm">
+            <img
+              src="/strata-cut-panorama.webp"
+              alt="地層大切断面のパノラマと海まで見渡せる眺め"
+              class="aspect-[16/10] w-full object-cover"
+              loading="lazy"
+              width="1536"
+              height="565"
+            />
+          </figure>
+          <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <figure class="overflow-hidden rounded-2xl bg-amber-50">
+              <img
+                src="/strata-cut-close.webp"
+                alt="地層大切断面に刻まれた縞模様の地層"
+                class="aspect-[4/5] w-full object-cover"
+                loading="lazy"
+                width="1152"
+                height="1536"
+              />
+            </figure>
+            <div class="rounded-2xl border border-amber-100 bg-amber-50/70 p-6 sm:p-7">
+              <p class="text-xs font-bold tracking-[0.25em] text-amber-700 uppercase">Photo Note</p>
+              <p class="mt-4 leading-8 text-gray-700">
+                道沿いに現れる大きな断面は、伊豆大島の成り立ちを感じられる印象的な景色です。掲載している写真は、私たちが現地で撮影したものです。
+              </p>
+              <div class="mt-6 flex flex-wrap gap-2" aria-label="地層大切断面の魅力">
+                <span class="rounded-full border border-amber-200 bg-white px-4 py-2 text-xs font-bold text-amber-900">島の成り立ち</span>
+                <span class="rounded-full border border-amber-200 bg-white px-4 py-2 text-xs font-bold text-amber-900">ドライブ途中に立ち寄りやすい</span>
+                <span class="rounded-full border border-amber-200 bg-white px-4 py-2 text-xs font-bold text-amber-900">写真撮影</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5">
+          <p class="text-xs font-bold tracking-[0.3em] text-amber-700 uppercase">Explore The Great Cut</p>
+          <h2 id="strata-guide-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">
+            島の時間が重なる、<br class="hidden sm:block" />地層大切断面。
+          </h2>
+          <p class="mt-6 leading-8 text-gray-600 md:text-lg md:leading-9">
+            長い年月をかけて積み重なった地層が大きく現れ、火山の島・伊豆大島らしさを感じられるスポットです。車で移動していても思わず足を止めたくなる景色で、南部エリアへ向かう途中にも立ち寄りやすいのが魅力です。
+          </p>
+          <p class="mt-4 leading-8 text-gray-600">
+            三原山や裏砂漠のスケール感とはまた違う、島の成り立ちそのものを感じる景色。波浮港や海沿いのドライブとあわせて巡ると、伊豆大島の表情がぐっと広がります。
+          </p>
+          <a href="#itinerary" class="mt-8 inline-flex items-center gap-2 rounded-full bg-amber-700 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-amber-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-700">
+            2日目のモデルコースを見る<span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Habu Port guide / First-party sightseeing content -->
+  <section id="habu-port-guide" class="bg-stone-50 py-20 md:py-28" aria-labelledby="habu-port-guide-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
+        <div class="lg:col-span-5">
+          <p class="text-xs font-bold tracking-[0.3em] text-sky-700 uppercase">Explore Habu Port</p>
+          <h2 id="habu-port-guide-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">
+            高台から港を眺め、<br class="hidden sm:block" />坂を下りて歩く。
+          </h2>
+          <p class="mt-6 leading-8 text-gray-600 md:text-lg md:leading-9">
+            波浮港見晴台から望む、深い青の海と港町。高台で景色を楽しんだあとは、港へ下りて、島の暮らしを感じる町並みをゆっくり歩くのがおすすめです。
+          </p>
+          <p class="mt-4 leading-8 text-gray-600">
+            三原山や裏砂漠の雄大な自然とはまた違う、海と人の営みが近くにある伊豆大島の表情に出会えます。掲載している写真は、私たちが現地で撮影したものです。
+          </p>
+          <div class="mt-7 flex flex-wrap gap-2" aria-label="波浮港の魅力">
+            <span class="rounded-full border border-sky-200 bg-white px-4 py-2 text-xs font-bold text-sky-900">見晴台からの眺望</span>
+            <span class="rounded-full border border-sky-200 bg-white px-4 py-2 text-xs font-bold text-sky-900">港町散策</span>
+            <span class="rounded-full border border-sky-200 bg-white px-4 py-2 text-xs font-bold text-sky-900">写真撮影</span>
+          </div>
+          <a href="#itinerary" class="mt-8 inline-flex items-center gap-2 rounded-full bg-sky-800 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-sky-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-800">
+            2日目のモデルコースを見る<span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <div class="lg:col-span-7">
+          <figure class="overflow-hidden rounded-3xl bg-sky-100 shadow-sm">
+            <img
+              src="/habu-port-overlook.webp"
+              alt="波浮港見晴台から見下ろす青い海と港町"
+              class="aspect-[16/10] w-full object-cover"
+              loading="lazy"
+              width="1536"
+              height="1152"
+            />
+          </figure>
+          <div class="mt-4 grid grid-cols-2 gap-4">
+            <figure class="overflow-hidden rounded-2xl bg-sky-100">
+              <img
+                src="/habu-port-sign.webp"
+                alt="波浮港見晴台の石碑越しに望む波浮港"
+                class="aspect-square w-full object-cover object-left"
+                loading="lazy"
+                width="1536"
+                height="1152"
+              />
+            </figure>
+            <figure class="overflow-hidden rounded-2xl bg-sky-100">
+              <img
+                src="/habu-port-bay.webp"
+                alt="緑に囲まれた入り江に広がる波浮港"
+                class="aspect-square w-full object-cover"
+                loading="lazy"
+                width="1536"
+                height="1152"
+              />
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<!-- Camellia and Oshima Park guide / First-party sightseeing content -->
+  <section id="camellia-park-guide" class="bg-rose-50/50 py-20 md:py-28" aria-labelledby="camellia-park-guide-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-xs font-bold tracking-[0.3em] text-rose-700 uppercase">Seasonal Nature & Family Time</p>
+        <h2 id="camellia-park-guide-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">
+          椿の季節と、<br class="hidden sm:block" />大島公園の動物たち。
+        </h2>
+        <p class="mt-6 leading-8 text-gray-600 md:text-lg md:leading-9">
+          冬から春にかけて島を彩る椿と、家族で立ち寄りやすい大島公園の動物園。火山や海とは違う、やわらかな伊豆大島の魅力を楽しめます。
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-8 lg:grid-cols-2 lg:gap-10">
+        <article class="overflow-hidden rounded-3xl border border-rose-100 bg-white shadow-sm">
+          <div class="grid grid-cols-2 gap-2 p-2">
+            <figure class="overflow-hidden rounded-2xl bg-rose-50">
+              <img
+                src="/camellia-pink-cluster.webp"
+                alt="伊豆大島で撮影した鮮やかなピンク色の椿"
+                class="aspect-square w-full object-cover"
+                loading="lazy"
+                width="1536"
+                height="1536"
+              />
+            </figure>
+            <figure class="overflow-hidden rounded-2xl bg-rose-50">
+              <img
+                src="/camellia-red-white.webp"
+                alt="伊豆大島で撮影した赤と白の模様が入った椿"
+                class="aspect-square w-full object-cover"
+                loading="lazy"
+                width="1536"
+                height="1536"
+              />
+            </figure>
+          </div>
+          <div class="p-6 sm:p-8">
+            <p class="text-xs font-bold tracking-[0.25em] text-rose-700 uppercase">Camellia Season</p>
+            <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">島を彩る、椿の花</h3>
+            <p class="mt-4 leading-8 text-gray-600">
+              鮮やかな花と艶のある葉が、冬から春の島旅に彩りを添えます。椿の開花状況は時期や天候によって変わるため、季節の景色としてゆったり楽しむのがおすすめです。
+            </p>
+            <p class="mt-4 rounded-2xl bg-rose-50 px-4 py-3 text-sm leading-7 text-rose-900">
+              掲載写真は伊豆大島で撮影した椿で、椿園内で撮影したものではありません。
+            </p>
+          </div>
+        </article>
+
+        <article class="overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-sm">
+          <div class="grid grid-cols-2 gap-2 p-2">
+            <figure class="overflow-hidden rounded-2xl bg-emerald-50">
+              <img
+                src="/oshima-park-flamingos.webp"
+                alt="大島公園の水辺に立つフラミンゴ"
+                class="aspect-square w-full object-cover object-center"
+                loading="lazy"
+                width="1152"
+                height="1536"
+              />
+            </figure>
+            <figure class="overflow-hidden rounded-2xl bg-emerald-50">
+              <img
+                src="/oshima-park-goat.webp"
+                alt="大島公園で柵の近くにいるヤギ"
+                class="aspect-square w-full object-cover object-center"
+                loading="lazy"
+                width="1388"
+                height="1536"
+              />
+            </figure>
+          </div>
+          <div class="p-6 sm:p-8">
+            <p class="text-xs font-bold tracking-[0.25em] text-emerald-700 uppercase">Oshima Park</p>
+            <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">子どもも楽しめる、大島公園</h3>
+            <p class="mt-4 leading-8 text-gray-600">
+              フラミンゴやヤギなどの動物を間近に見られ、家族旅行の立ち寄り先にも向いています。観光を詰め込みすぎず、子どものペースで過ごしたい日に組み込みやすい場所です。
+            </p>
+            <div class="mt-6 flex flex-wrap gap-2" aria-label="大島公園の魅力">
+              <span class="rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-bold text-emerald-900">家族旅行</span>
+              <span class="rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-bold text-emerald-900">動物との出会い</span>
+              <span class="rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-bold text-emerald-900">ゆったり観光</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="mt-10 text-center">
+        <a href="#itinerary" class="inline-flex items-center gap-2 rounded-full bg-green-800 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-green-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-800">
+          季節に合わせたモデルコースを見る<span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
 <!-- Model Itinerary (過ごし方・モデルプラン) -->
+
+  <section id="sunset-sky-guide" class="bg-orange-50/40 py-20 md:py-28" aria-labelledby="sunset-sky-guide-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-xs font-bold tracking-[0.3em] text-orange-700 uppercase">Sunset & Starlit Sky</p>
+        <h2 id="sunset-sky-guide-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">
+          夕焼けのあと、見上げれば星空。
+        </h2>
+        <p class="mt-5 leading-7 text-gray-600 md:text-lg md:leading-8">
+          海辺で夕焼けを眺める時間も、夜に空を見上げる時間も、伊豆大島の旅をやさしく締めくくってくれます。掲載している写真は、私たちが実際に伊豆大島で撮影したものです。
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-6 lg:grid-cols-12 lg:gap-8">
+        <figure class="overflow-hidden rounded-3xl bg-white shadow-sm lg:col-span-7">
+          <img
+            src="/sunset-shore-panorama.webp"
+            alt="海辺に広がる夕焼け空と波打つ海"
+            class="aspect-[16/9] w-full object-cover"
+            loading="lazy"
+            width="1536"
+            height="552"
+          />
+        </figure>
+
+        <div class="grid gap-6 sm:grid-cols-2 lg:col-span-5">
+          <figure class="overflow-hidden rounded-3xl bg-white shadow-sm">
+            <img
+              src="/sunset-ocean-view.webp"
+              alt="夕焼けに染まる海と遠くの富士山"
+              class="aspect-[4/3] w-full object-cover"
+              loading="lazy"
+              width="1280"
+              height="960"
+            />
+          </figure>
+          <figure class="overflow-hidden rounded-3xl bg-white shadow-sm">
+            <img
+              src="/sunset-harbor-view.webp"
+              alt="海辺の夕景と空に広がる雲"
+              class="aspect-[4/3] w-full object-cover"
+              loading="lazy"
+              width="1280"
+              height="960"
+            />
+          </figure>
+          <figure class="overflow-hidden rounded-3xl bg-slate-950 shadow-sm">
+            <img
+              src="/starlit-sky-1.webp"
+              alt="伊豆大島の夜空に見える星"
+              class="aspect-[4/3] w-full object-cover"
+              loading="lazy"
+              width="1365"
+              height="1024"
+            />
+          </figure>
+          <figure class="overflow-hidden rounded-3xl bg-slate-950 shadow-sm">
+            <img
+              src="/starlit-sky-2.webp"
+              alt="夜空いっぱいに広がる星"
+              class="aspect-[4/3] w-full object-cover"
+              loading="lazy"
+              width="1024"
+              height="1365"
+            />
+          </figure>
+        </div>
+      </div>
+
+      <div class="mt-10 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+        <div class="rounded-3xl border border-orange-100 bg-white p-7 shadow-sm md:p-8">
+          <h3 class="font-serif text-2xl font-bold text-gray-900">大きく予定を入れなくても、旅の満足度が上がる時間</h3>
+          <p class="mt-4 text-sm leading-7 text-gray-600 md:text-base md:leading-8">
+            三原山や裏砂漠、波浮港などを巡ったあと、夕方に少しだけ海辺へ寄り道。チェックイン後にあわただしく動き回らなくても、伊豆大島らしい景色を楽しめます。
+          </p>
+          <p class="mt-4 text-sm leading-7 text-gray-600 md:text-base md:leading-8">
+            ヴィラへ戻ったあとはBBQや団らんを楽しみ、晴れた夜には星空を眺める流れがおすすめです。観光の締めくくりとして、無理なく組み込みやすいのも魅力です。
+          </p>
+        </div>
+
+        <div class="rounded-3xl bg-orange-100/70 p-7 md:p-8">
+          <p class="text-xs font-bold tracking-[0.25em] text-orange-700 uppercase">Enjoy Slowly</p>
+          <ul class="mt-4 space-y-3 text-sm leading-7 text-gray-700">
+            <li>・夕食前に立ち寄りやすい、海辺の景色</li>
+            <li>・晴れた夜の散歩や、空を見上げる時間</li>
+            <li>・大きく移動を増やさず、旅の余韻を楽しめる</li>
+          </ul>
+          <a href="#itinerary" class="mt-6 inline-flex items-center gap-2 rounded-full bg-orange-700 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-orange-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-700">
+            1泊2日モデルコースを見る<span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="itinerary" class="bg-white py-20 md:py-28" aria-labelledby="itinerary-title">
     <div class="mx-auto max-w-7xl px-6">
       <div class="mx-auto mb-14 max-w-3xl text-center md:mb-16">
@@ -649,8 +1176,8 @@ const galleryImages = [
         <article class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
           <div class="relative aspect-[16/9] overflow-hidden">
             <img
-              src="/mihara.jpg"
-              alt="伊豆大島を代表する三原山の火山景観"
+              src="/mihara-mountain-view.webp"
+              alt="大島ニュービラのスタッフが撮影した三原山の火山景観"
               class="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
               loading="lazy"
             />
@@ -679,31 +1206,46 @@ const galleryImages = [
                 火山島ならではの景観を楽しむ午後。滞在時間や体力、当日の天候に合わせ、三原山または裏砂漠を中心に巡るのがおすすめです。
               </p>
               <div class="mt-3 flex flex-wrap gap-2" aria-label="おすすめスポット">
-                <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">三原山</span>
-                <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">裏砂漠</span>
+                <a href="#volcano-guide" class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700 transition-colors hover:bg-green-100 hover:text-green-800">三原山</a>
+                <a href="#volcano-guide" class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700 transition-colors hover:bg-green-100 hover:text-green-800">裏砂漠</a>
                 <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">ジオノス</span>
               </div>
             </li>
 
             <li class="relative border-l-2 border-green-100 pb-8 pl-7 last:border-l-transparent last:pb-0">
               <span class="absolute -left-[9px] top-0.5 h-4 w-4 rounded-full border-4 border-white bg-green-600" aria-hidden="true"></span>
-              <p class="text-xs font-bold tracking-widest text-green-700">CHECK-IN — HOT SPRING</p>
-              <h4 class="mt-1 text-lg font-bold text-gray-900">荷物を置いて、御神火温泉でリフレッシュ</h4>
+              <p class="text-xs font-bold tracking-widest text-green-700">CHECK-IN — CHOOSE YOUR EVENING</p>
+              <h4 class="mt-1 text-lg font-bold text-gray-900">荷物を置いて、夕方の過ごし方を選ぶ</h4>
               <p class="mt-2 text-sm leading-7 text-gray-600">
-                チェックイン後は、室内のバスタオルを持って「愛らんどセンター御神火温泉」へ。複数人が同じ時間に入浴できるため、6名などのグループでは順番待ちを減らし、夜の時間をゆったり確保できます。
+                チェックイン後は、まずサルビア棟に荷物を置いて身軽に。グループで入浴時間を短縮したい日は御神火温泉へ、景色を楽しみたい日は海辺の夕焼けへ向かうなど、その日の天候や気分で選べます。
               </p>
+              <div class="mt-4 grid gap-3 sm:grid-cols-2" aria-label="夕方の過ごし方">
+                <div class="rounded-2xl bg-green-50 p-4">
+                  <p class="text-xs font-bold tracking-wider text-green-700">TIME-SAVING</p>
+                  <p class="mt-1 text-sm font-bold text-gray-900">御神火温泉で入浴の順番待ちを減らす</p>
+                </div>
+                <div class="rounded-2xl bg-orange-50 p-4">
+                  <p class="text-xs font-bold tracking-wider text-orange-700">SCENERY</p>
+                  <p class="mt-1 text-sm font-bold text-gray-900">海辺で夕焼けを眺める</p>
+                </div>
+              </div>
             </li>
 
             <li class="relative border-l-2 border-green-100 pb-8 pl-7 last:border-l-transparent last:pb-0">
               <span class="absolute -left-[9px] top-0.5 h-4 w-4 rounded-full border-4 border-white bg-green-600" aria-hidden="true"></span>
-              <p class="text-xs font-bold tracking-widest text-green-700">AFTER HOT SPRING</p>
-              <h4 class="mt-1 text-lg font-bold text-gray-900">温泉帰りに、夜の食材を買い出し</h4>
+              <p class="text-xs font-bold tracking-widest text-green-700">BEFORE DINNER</p>
+              <h4 class="mt-1 text-lg font-bold text-gray-900">夜の食材と翌朝分をまとめて買い出し</h4>
               <p class="mt-2 text-sm leading-7 text-gray-600">
-                BBQや室内料理に使う食材、飲み物、翌朝の朝食をまとめて購入。スーパーの営業時間を確認し、余裕を持って立ち寄るのがおすすめです。
+                BBQや室内料理に使う食材、飲み物、翌朝の朝食をまとめて購入。温泉や夕焼けへ向かう前後で、店舗の営業時間に余裕を持って立ち寄るのがおすすめです。
               </p>
-              <a href="#shopping-guide" class="mt-3 inline-flex items-center gap-1 text-sm font-bold text-green-700 underline decoration-green-200 underline-offset-4 transition-colors hover:text-green-900">
-                スーパー＆食料品店を見る<span aria-hidden="true">→</span>
-              </a>
+              <div class="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+                <a href="#shopping-guide" class="inline-flex items-center gap-1 text-sm font-bold text-green-700 underline decoration-green-200 underline-offset-4 transition-colors hover:text-green-900">
+                  スーパー＆食料品店を見る<span aria-hidden="true">→</span>
+                </a>
+                <a href="#sunset-sky-guide" class="inline-flex items-center gap-1 text-sm font-bold text-orange-700 underline decoration-orange-200 underline-offset-4 transition-colors hover:text-orange-900">
+                  夕焼けと星空の景色を見る<span aria-hidden="true">→</span>
+                </a>
+              </div>
             </li>
 
             <li class="relative pl-7">
@@ -713,6 +1255,9 @@ const galleryImages = [
               <p class="mt-2 text-sm leading-7 text-gray-600">
                 チェックイン後は「ガゼボ庵」でBBQをしたり、室内で料理をしたり。食後はボードゲームや会話を楽しみ、晴れていれば屋外で星空を眺めます。
               </p>
+              <a href="#sunset-sky-guide" class="mt-3 inline-flex items-center gap-1 text-sm font-bold text-orange-700 underline decoration-orange-200 underline-offset-4 transition-colors hover:text-orange-900">
+                夕焼けと星空の景色を見る<span aria-hidden="true">→</span>
+              </a>
             </li>
           </ol>
         </article>
@@ -721,8 +1266,8 @@ const galleryImages = [
         <article class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
           <div class="relative aspect-[16/9] overflow-hidden">
             <img
-              src="/Sea_of_Izu_Oshima.jpg"
-              alt="伊豆大島の海と夕景"
+              src="/habu-port-overlook.webp"
+              alt="高台から見下ろす波浮港と青い海"
               class="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
               loading="lazy"
             />
@@ -754,6 +1299,14 @@ const galleryImages = [
                 <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">地層大切断面</span>
                 <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">波浮港</span>
               </div>
+              <div class="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+                <a href="#strata-guide" class="inline-flex items-center gap-1 text-sm font-bold text-amber-700 underline decoration-amber-200 underline-offset-4 transition-colors hover:text-amber-900">
+                  地層大切断面を見る<span aria-hidden="true">→</span>
+                </a>
+                <a href="#habu-port-guide" class="inline-flex items-center gap-1 text-sm font-bold text-sky-800 underline decoration-sky-200 underline-offset-4 transition-colors hover:text-sky-950">
+                  波浮港の景色を見る<span aria-hidden="true">→</span>
+                </a>
+              </div>
             </li>
 
             <li class="relative border-l-2 border-gray-200 pb-8 pl-7 last:border-l-transparent last:pb-0">
@@ -770,8 +1323,16 @@ const galleryImages = [
               <p class="text-xs font-bold tracking-widest text-green-700">SEASONAL OPTION</p>
               <h4 class="mt-1 text-lg font-bold text-gray-900">季節や天候に合わせて立ち寄り先を変更</h4>
               <p class="mt-2 text-sm leading-7 text-gray-600">
-                椿の季節は椿園、暖かい時期は海辺、雨の日はジオノスへ。よく歩いた日や体が冷えた日は温泉を組み合わせるなど、天候と体調に合わせて予定に余白を持たせると、旅を楽しみやすくなります。
+                椿の季節は島内の花を楽しみ、家族旅行なら大島公園の動物園へ。暖かい時期は海辺で夕焼けを眺め、晴れた夜は星空も楽しめます。雨の日はジオノスなども選択肢にしながら、天候に合わせて予定に余白を持たせると旅を楽しみやすくなります。
               </p>
+              <div class="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+                <a href="#camellia-park-guide" class="inline-flex items-center gap-1 text-sm font-bold text-rose-700 underline decoration-rose-200 underline-offset-4 transition-colors hover:text-rose-900">
+                  椿と大島公園を見る<span aria-hidden="true">→</span>
+                </a>
+                <a href="#sunset-sky-guide" class="inline-flex items-center gap-1 text-sm font-bold text-orange-700 underline decoration-orange-200 underline-offset-4 transition-colors hover:text-orange-900">
+                  夕焼けと星空を見る<span aria-hidden="true">→</span>
+                </a>
+              </div>
             </li>
           </ol>
         </article>
@@ -790,216 +1351,280 @@ const galleryImages = [
   </section>
 
 <!-- Local Markets (スーパー＆食料品店ガイド) -->
-  <section id="shopping-guide" class="bg-orange-50/50 py-20 md:py-28">
+  <section id="shopping-guide" class="bg-orange-50/50 py-20 md:py-28" aria-labelledby="shopping-title">
     <div class="mx-auto max-w-7xl px-6">
-      <div class="mb-12 text-center">
-        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Local Markets</p>
-        <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">スーパー＆食料品店ガイド</h2>
-        <p class="mt-4 text-gray-600">地元食材と地酒が揃う、大島ライフを満喫するための“島の台所”（元町エリア）</p>
-      </div>
-
-      <!-- ご利用にあたっての案内 -->
-      <div class="mx-auto mb-16 max-w-3xl rounded-2xl bg-white p-6 shadow-sm md:p-8">
-        <h3 class="mb-4 flex items-center gap-2 font-bold text-gray-900">
-          <span>💡</span> ご利用にあたっての案内とお願い
-        </h3>
-        <ul class="space-y-3 text-sm leading-relaxed text-gray-600">
-          <li class="pl-4 -indent-4"><strong class="text-gray-800">最新情報について：</strong>掲載内容は2026年1月時点の調査情報です。営業日や営業時間は、天候や仕入れ状況、またその日の「出帆港（元町港・岡田港）」によって急遽変更される場合があります。</li>
-          <li class="pl-4 -indent-4"><strong class="text-gray-800">免責事項：</strong>掲載情報には万全を期しておりますが、内容の正確性を保証するものではありません。万一、情報に誤りがあった場合や、店舗利用によりトラブルが生じた場合も、当宿では責任を負いかねますのでご了承ください。</li>
-          <li class="pl-4 -indent-4"><strong class="text-gray-800">お気づきの点があれば：</strong>閉業や情報変更にお気づきの場合は、フロントスタッフまでお知らせいただけますと幸いです。</li>
-        </ul>
-      </div>
-
-      <!-- 店舗リスト -->
-      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        
-        <!-- べにや -->
-        <div class="flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition-shadow hover:shadow-md">
-          <div class="flex flex-1 flex-col p-8">
-            <h4 class="font-serif text-xl font-bold text-gray-900">ショッピングセンターべにや<span class="block text-sm font-normal text-gray-500">（紅屋）</span></h4>
-            <p class="mt-3 inline-block self-start rounded-full bg-orange-100 px-3 py-1 text-xs font-bold text-orange-800">お惣菜のクオリティと島感</p>
-            <div class="mt-5 flex-1 rounded-xl bg-gray-50 p-4">
-              <p class="mb-2 text-xs font-bold text-gray-500">お客様の声（一部抜粋）</p>
-              <p class="text-sm italic leading-relaxed text-gray-700">「島唐辛子の醤油漬けや、地元の魚を使ったお惣菜がとにかく美味しい。元町港のすぐそばなので、乗船待ちの時間に『島らしいもの』を買うのに最高。店員さんが非常にフレンドリーで、初めての大島旅行が楽しい思い出になった。」</p>
-            </div>
-            <dl class="mt-6 space-y-2 text-sm text-gray-600">
-              <div class="flex gap-4"><dt class="font-bold text-gray-900 w-16">営業時間</dt><dd>9:00 〜 19:00（不定休）</dd></div>
-            </dl>
-          </div>
-        </div>
-
-        <!-- さむかわ食賓館 -->
-        <div class="flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition-shadow hover:shadow-md">
-          <div class="flex flex-1 flex-col p-8">
-            <h4 class="font-serif text-xl font-bold text-gray-900">さむかわ食賓館<span class="block text-sm font-normal text-gray-500">（全日食チェーン）</span></h4>
-            <p class="mt-3 inline-block self-start rounded-full bg-orange-100 px-3 py-1 text-xs font-bold text-orange-800">利便性と圧倒的な安心感</p>
-            <div class="mt-5 flex-1 rounded-xl bg-gray-50 p-4">
-              <p class="mb-2 text-xs font-bold text-gray-500">お客様の声（一部抜粋）</p>
-              <p class="text-sm italic leading-relaxed text-gray-700">「21時まで開いているのは、夜が早い大島において神様のような存在。都会のスーパーと変わらない品揃えで、キャンプ中の買い足しにも困らない。キャッシュレス決済がスムーズで、レジの対応もテキパキしていて気持ちが良い。」</p>
-            </div>
-            <dl class="mt-6 space-y-2 text-sm text-gray-600">
-              <div class="flex gap-4"><dt class="font-bold text-gray-900 w-16">営業時間</dt><dd>9:00 〜 21:00<br/>（年中無休 ※年始を除く）</dd></div>
-            </dl>
-          </div>
-        </div>
-
-        <!-- ささき -->
-        <div class="flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition-shadow hover:shadow-md">
-          <div class="flex flex-1 flex-col p-8">
-            <h4 class="font-serif text-xl font-bold text-gray-900">Foods & liquor ささき<span class="block text-sm font-normal text-gray-500">（佐々木）</span></h4>
-            <p class="mt-3 inline-block self-start rounded-full bg-orange-100 px-3 py-1 text-xs font-bold text-orange-800">お酒のセレクトと絶品おつまみ</p>
-            <div class="mt-5 flex-1 rounded-xl bg-gray-50 p-4">
-              <p class="mb-2 text-xs font-bold text-gray-500">お客様の声（一部抜粋）</p>
-              <p class="text-sm italic leading-relaxed text-gray-700">「大島の焼酎や珍しいクラフトビールの品揃えに驚いた。さらにおつまみとして買った『べっこう寿司』や地魚の刺身が、居酒屋レベルに美味しい。お酒好きなら大島滞在中に必ず寄るべき名店。」</p>
-            </div>
-            <dl class="mt-6 space-y-2 text-sm text-gray-600">
-              <div class="flex gap-4"><dt class="font-bold text-gray-900 w-16">営業時間</dt><dd>10:00 〜 20:30（水曜定休）</dd></div>
-            </dl>
-          </div>
-        </div>
-
-        <!-- やすとく -->
-        <div class="flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition-shadow hover:shadow-md">
-          <div class="flex flex-1 flex-col p-8">
-            <h4 class="font-serif text-xl font-bold text-gray-900">LIFE TOWN やすとく<span class="block text-sm font-normal text-gray-500">（安徳）</span></h4>
-            <p class="mt-3 inline-block self-start rounded-full bg-orange-100 px-3 py-1 text-xs font-bold text-orange-800">何でも揃う安心感！</p>
-            <div class="mt-5 flex-1 rounded-xl bg-gray-50 p-4">
-              <p class="mb-2 text-xs font-bold text-gray-500">お客様の声（一部抜粋）</p>
-              <p class="text-sm italic leading-relaxed text-gray-700">「お菓子や飲み物が安く、滞在中の消耗品を揃えるのに最適。食品以外にも『こんなものまであるの？』という品揃えで、見ているだけで楽しい。島で一番安く買い物ができる場所として重宝している。」</p>
-            </div>
-            <dl class="mt-6 space-y-2 text-sm text-gray-600">
-              <div class="flex gap-4"><dt class="font-bold text-gray-900 w-16">営業時間</dt><dd>9:00 〜 18:00（火曜定休）</dd></div>
-            </dl>
-          </div>
-        </div>
-
-        <!-- 大島ストア -->
-        <div class="flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition-shadow hover:shadow-md md:col-span-2 lg:col-span-1">
-          <div class="flex flex-1 flex-col p-8">
-            <h4 class="font-serif text-xl font-bold text-gray-900">大島ストア<span class="block text-sm font-normal text-gray-500">（八丈万有）</span></h4>
-            <p class="mt-3 inline-block self-start rounded-full bg-orange-100 px-3 py-1 text-xs font-bold text-orange-800">鮮魚の質と地元密着の温かさ</p>
-            <div class="mt-5 flex-1 rounded-xl bg-gray-50 p-4">
-              <p class="mb-2 text-xs font-bold text-gray-500">お客様の声（一部抜粋）</p>
-              <p class="text-sm italic leading-relaxed text-gray-700">「お刺身が驚くほど新鮮で安い！観光客向けの派手さはないが、地元の人に混じって本当に良い食材を買える喜びがある。お店の方が親切で、調理法などを教えてくれることもある、アットホームで素敵なお店。」</p>
-            </div>
-            <dl class="mt-6 space-y-2 text-sm text-gray-600">
-              <div class="flex gap-4"><dt class="font-bold text-gray-900 w-16">営業時間</dt><dd>9:00 〜 19:00<br/>（木曜定休 ※年始を除く）</dd></div>
-            </dl>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-  <!-- Access (アクセス情報・独立したセクション) -->
-  <section id="access" class="bg-gray-50 py-20 md:py-28">
-    <div class="mx-auto max-w-7xl px-6">
-      <div class="mb-16 text-center">
-        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Access</p>
-        <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">アクセス情報</h2>
-        <p class="mt-4 text-gray-600">
-          伊豆大島でのご移動や買い出しには、自由度の高い<strong class="text-green-700">レンタカーのご利用を強くおすすめ</strong>しております。
+      <div class="mx-auto mb-12 max-w-3xl text-center md:mb-16">
+        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Local Food & Shopping</p>
+        <h2 id="shopping-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">
+          島の食材を選ぶ時間も、<br class="hidden sm:block" />旅の楽しみに。
+        </h2>
+        <p class="mt-5 leading-7 text-gray-600 md:text-lg md:leading-8">
+          サルビア棟には室内キッチンと屋外炊事場「ガゼボ庵」があります。<br class="hidden md:block" />
+          元町周辺で食材や飲み物をそろえ、BBQや朝食を自分たちらしく楽しめます。
         </p>
       </div>
 
-      <!-- 所要時間カード -->
-      <div class="grid gap-6 md:grid-cols-3">
-        <!-- 元町港 -->
-        <div class="rounded-2xl bg-white p-8 shadow-sm">
-          <h3 class="mb-4 border-b border-gray-100 pb-4 font-serif text-xl font-bold text-gray-900">元町港から</h3>
-          <ul class="space-y-4 text-sm text-gray-700">
-            <li class="flex items-center justify-between">
-              <span class="flex items-center gap-2 font-bold"><span class="text-lg">🚗</span> 車・タクシー</span>
-              <span>約5分</span>
-            </li>
-            <li class="flex items-center justify-between">
-              <span class="flex items-center gap-2 font-bold"><span class="text-lg">🚌</span> 路線バス</span>
-              <span class="text-right">約14分<br/><span class="text-xs text-gray-400">（徒歩9分含む）</span></span>
-            </li>
-            <li class="flex items-center justify-between">
-              <span class="flex items-center gap-2 font-bold"><span class="text-lg">🚶</span> 徒歩</span>
-              <span>約28分</span>
-            </li>
-          </ul>
-        </div>
+      <div class="mb-12 grid gap-4 sm:grid-cols-3">
+        <article class="rounded-2xl border border-orange-100 bg-white p-6 shadow-sm">
+          <p class="text-xs font-bold tracking-widest text-orange-700">TONIGHT</p>
+          <h3 class="mt-2 font-serif text-xl font-bold text-gray-900">夕食・BBQ</h3>
+          <p class="mt-3 text-sm leading-7 text-gray-600">肉や魚、野菜、飲み物、調味料をまとめて購入。島の食材を見つけたら、いつものBBQに一品加えるのもおすすめです。</p>
+        </article>
+        <article class="rounded-2xl border border-orange-100 bg-white p-6 shadow-sm">
+          <p class="text-xs font-bold tracking-widest text-orange-700">NEXT MORNING</p>
+          <h3 class="mt-2 font-serif text-xl font-bold text-gray-900">翌朝の朝食</h3>
+          <p class="mt-3 text-sm leading-7 text-gray-600">パンやご飯、卵、飲み物などを夕食と一緒に。翌朝の買い出しを減らし、森の朝をゆっくり過ごせます。</p>
+        </article>
+        <article class="rounded-2xl border border-orange-100 bg-white p-6 shadow-sm">
+          <p class="text-xs font-bold tracking-widest text-orange-700">LOCAL TASTE</p>
+          <h3 class="mt-2 font-serif text-xl font-bold text-gray-900">島らしい味</h3>
+          <p class="mt-3 text-sm leading-7 text-gray-600">地魚、べっこう、明日葉、島のお酒など、店頭で出会った味を滞在に取り入れてみてください。入荷や品ぞろえは日によって変わります。</p>
+        </article>
+      </div>
 
-        <!-- 岡田港 -->
-        <div class="rounded-2xl bg-white p-8 shadow-sm">
-          <h3 class="mb-4 border-b border-gray-100 pb-4 font-serif text-xl font-bold text-gray-900">岡田港から</h3>
-          <ul class="space-y-4 text-sm text-gray-700">
-            <li class="flex items-center justify-between">
-              <span class="flex items-center gap-2 font-bold"><span class="text-lg">🚗</span> 車・タクシー</span>
-              <span>約11分</span>
-            </li>
-            <li class="flex items-center justify-between">
-              <span class="flex items-center gap-2 font-bold"><span class="text-lg">🚌</span> 路線バス</span>
-              <span class="text-right">約21分<br/><span class="text-xs text-gray-400">（徒歩9分含む）</span></span>
-            </li>
-            <li class="flex items-center justify-between">
-              <span class="flex items-center gap-2 font-bold"><span class="text-lg">🚶</span> 徒歩</span>
-              <span>約1時間20分</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- 空港 -->
-        <div class="rounded-2xl bg-white p-8 shadow-sm">
-          <h3 class="mb-4 border-b border-gray-100 pb-4 font-serif text-xl font-bold text-gray-900">東京大島かめりあ空港から</h3>
-          <ul class="space-y-4 text-sm text-gray-700">
-            <li class="flex items-center justify-between">
-              <span class="flex items-center gap-2 font-bold"><span class="text-lg">🚗</span> 車・タクシー</span>
-              <span>約6分</span>
-            </li>
-            <li class="flex items-center justify-between">
-              <span class="flex items-center gap-2 font-bold"><span class="text-lg">🚌</span> 路線バス</span>
-              <span class="text-right">約24分<br/><span class="text-xs text-gray-400">（徒歩21分含む）</span></span>
-            </li>
-            <li class="flex items-center justify-between">
-              <span class="flex items-center gap-2 font-bold"><span class="text-lg">🚶</span> 徒歩</span>
-              <span>約35分</span>
-            </li>
-          </ul>
+      <div class="mb-10 rounded-2xl border border-green-100 bg-green-50 px-6 py-6 sm:px-8">
+        <div class="grid gap-5 md:grid-cols-[auto_1fr] md:items-start">
+          <div class="flex h-12 w-12 items-center justify-center rounded-full bg-white text-2xl shadow-sm" aria-hidden="true">🛒</div>
+          <div>
+            <h3 class="font-bold text-gray-900">買い出しは、温泉や夕焼けの前後に無理なく</h3>
+            <p class="mt-2 text-sm leading-7 text-gray-600">
+              島内には24時間営業のコンビニがないため、夕食・飲み物・翌朝分をまとめて用意しておくと安心です。営業日や営業時間は変更されることがあるため、来店前に店舗の最新情報をご確認ください。
+            </p>
+          </div>
         </div>
       </div>
 
-      <!-- 重要なお知らせ（リンク付き） -->
-      <div class="mt-10 grid gap-6 md:grid-cols-2">
-        <div class="rounded-xl border-l-4 border-green-600 bg-white p-6 shadow-sm">
-          <h4 class="font-bold text-gray-900">🛳️ 当日の入港地について</h4>
-          <p class="mt-2 text-sm leading-relaxed text-gray-600">
-            大島への到着港（元町港または岡田港）は、当日の朝6:00頃に海況により決定します。出発前に必ず東海汽船のサイトでご確認ください。
-          </p>
-          <a href="https://www.tokaikisen.co.jp/schedule/" target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-xs font-bold text-green-700 transition-colors hover:text-green-600 hover:underline">
-            東海汽船 本日の運航状況を見る &rarr;
-          </a>
-        </div>
-        
-        <div class="rounded-xl border-l-4 border-green-600 bg-white p-6 shadow-sm">
-          <h4 class="font-bold text-gray-900">🚌 路線バスをご利用の方へ</h4>
-          <p class="mt-2 text-sm leading-relaxed text-gray-600">
-            最寄りのバス停は<strong class="text-gray-900">「大島高校前」</strong>です（施設まで徒歩約9分）。大島バス「公園線」の最新の時刻表をご確認の上ご利用ください。
-          </p>
-          <a href="http://www.oshima-bus.com/rosen-bus.html" target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-xs font-bold text-green-700 transition-colors hover:text-green-600 hover:underline">
-            大島バス 時刻表を見る &rarr;
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" aria-label="元町周辺の買い出し先">
+        <article class="flex flex-col rounded-2xl bg-white p-7 shadow-sm">
+          <p class="text-xs font-bold tracking-widest text-green-700">DELICATESSEN</p>
+          <h3 class="mt-2 font-serif text-xl font-bold text-gray-900">ショッピングセンターべにや</h3>
+          <p class="mt-3 text-sm leading-7 text-gray-600">惣菜や普段使いの食材を探したいときに。元町エリアで、到着後や出発前の買い物にも組み込みやすい店舗です。</p>
+          <p class="mt-auto pt-5 text-xs font-medium text-gray-500">惣菜・食品・飲み物など</p>
+        </article>
 
-  <!-- Booking CTA -->
-  <section id="booking" class="relative overflow-hidden py-24 md:py-32">
-    <img src="/main.png" alt="大島ニュービラ" class="absolute inset-0 h-full w-full object-cover" loading="lazy" aria-hidden="true" />
-    <div class="absolute inset-0 bg-white/80 backdrop-blur-sm" aria-hidden="true"></div>
-    <div class="relative mx-auto max-w-3xl px-6 text-center">
-      <h2 class="font-serif text-3xl font-bold text-gray-900 md:text-4xl">森の中で、心を整える旅へ</h2>
-      <p class="mt-6 text-lg font-medium leading-relaxed text-gray-700">
-        最大6名様（ベッド4台＋ソファベッド2台）でくつろげるプライベート空間。<br />
-        ご家族連れやご友人グループと、伊豆大島の自然に包まれた時間をお過ごしください。
+        <article class="flex flex-col rounded-2xl bg-white p-7 shadow-sm">
+          <p class="text-xs font-bold tracking-widest text-green-700">VARIETY</p>
+          <h3 class="mt-2 font-serif text-xl font-bold text-gray-900">さむかわ食賓館</h3>
+          <p class="mt-3 text-sm leading-7 text-gray-600">夕食から翌朝分まで、食品や飲み物を一度にそろえたいときの候補。グループ旅行のまとめ買いにも便利です。</p>
+          <p class="mt-auto pt-5 text-xs font-medium text-gray-500">生鮮食品・惣菜・飲み物など</p>
+        </article>
+
+        <article class="flex flex-col rounded-2xl bg-white p-7 shadow-sm">
+          <p class="text-xs font-bold tracking-widest text-green-700">DRINKS</p>
+          <h3 class="mt-2 font-serif text-xl font-bold text-gray-900">Foods &amp; Liquor ささき</h3>
+          <p class="mt-3 text-sm leading-7 text-gray-600">島のお酒や飲み物、おつまみを選びたいときに。BBQの乾杯用や、ヴィラで過ごす夜の買い足しに向いています。</p>
+          <p class="mt-auto pt-5 text-xs font-medium text-gray-500">酒類・飲み物・食品など</p>
+        </article>
+
+        <article class="flex flex-col rounded-2xl bg-white p-7 shadow-sm">
+          <p class="text-xs font-bold tracking-widest text-green-700">DAILY GOODS</p>
+          <h3 class="mt-2 font-serif text-xl font-bold text-gray-900">LIFE TOWN やすとく</h3>
+          <p class="mt-3 text-sm leading-7 text-gray-600">食品だけでなく、旅の途中で必要になった日用品も確認したいときに。忘れ物や消耗品の買い足し先としても覚えておくと安心です。</p>
+          <p class="mt-auto pt-5 text-xs font-medium text-gray-500">食品・飲み物・日用品など</p>
+        </article>
+
+        <article class="flex flex-col rounded-2xl bg-white p-7 shadow-sm md:col-span-2 lg:col-span-1">
+          <p class="text-xs font-bold tracking-widest text-green-700">FRESH FOOD</p>
+          <h3 class="mt-2 font-serif text-xl font-bold text-gray-900">大島ストア</h3>
+          <p class="mt-3 text-sm leading-7 text-gray-600">鮮魚や食材を見ながら、島の普段の食卓を感じたいときの候補。入荷状況を見て、その日の献立を決める楽しみがあります。</p>
+          <p class="mt-auto pt-5 text-xs font-medium text-gray-500">鮮魚・食品・飲み物など</p>
+        </article>
+      </div>
+
+      <p class="mt-8 text-center text-xs leading-6 text-gray-500">
+        ※取扱商品・営業日・営業時間は季節や仕入れ状況などにより変わる場合があります。最新情報は各店舗へご確認ください。
       </p>
-      <a href="https://www.airbnb.jp/rooms/1602063410123886296?guests=6&adults=6&s=67&unique_share_id=a393ba49-61eb-4d8e-a4c9-95935b649d65" class="mt-10 inline-block rounded-full bg-green-700 px-10 py-4 text-base font-bold tracking-wide text-white shadow-xl transition-all hover:bg-green-600 hover:-translate-y-1">
-        予約システムへ進む
-      </a>
     </div>
   </section>
+  <!-- Access -->
+  <section id="access" class="bg-gray-50 py-20 md:py-28" aria-labelledby="access-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mx-auto mb-14 max-w-3xl text-center md:mb-16">
+        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Access</p>
+        <h2 id="access-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">
+          港が変わっても、迷わずヴィラへ。
+        </h2>
+        <p class="mt-5 leading-8 text-gray-600">
+          伊豆大島の船は、当日の海況によって元町港または岡田港に到着します。<br class="hidden sm:block" />
+          出発前に到着港を確認し、島内ではレンタカーを利用すると、観光・御神火温泉・買い出し・海辺への移動まで動きやすくなります。
+        </p>
+      </div>
+
+      <!-- 初めての方向け到着ステップ -->
+      <div class="grid gap-5 md:grid-cols-3">
+        <article class="rounded-2xl bg-white p-7 shadow-sm">
+          <div class="flex items-center gap-4">
+            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green-700 text-sm font-bold text-white">1</span>
+            <div>
+              <p class="text-xs font-bold tracking-widest text-green-700">BEFORE DEPARTURE</p>
+              <h3 class="mt-1 font-serif text-lg font-bold text-gray-900">当日の到着港を確認</h3>
+            </div>
+          </div>
+          <p class="mt-5 text-sm leading-7 text-gray-600">
+            元町港と岡田港のどちらに到着するかは、東海汽船の「本日の運航状況」で確認できます。高速ジェット船の入出港地は当日6:00頃に案内されます。
+          </p>
+          <a href="https://www.tokaikisen.co.jp/schedule/" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex items-center gap-1 text-sm font-bold text-green-700 transition-colors hover:text-green-600 hover:underline">
+            本日の運航状況を見る <span aria-hidden="true">↗</span>
+          </a>
+        </article>
+
+        <article class="rounded-2xl bg-white p-7 shadow-sm">
+          <div class="flex items-center gap-4">
+            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green-700 text-sm font-bold text-white">2</span>
+            <div>
+              <p class="text-xs font-bold tracking-widest text-green-700">MOVE AROUND</p>
+              <h3 class="mt-1 font-serif text-lg font-bold text-gray-900">レンタカーを受け取る</h3>
+            </div>
+          </div>
+          <p class="mt-5 text-sm leading-7 text-gray-600">
+            三原山、裏砂漠、波浮港、御神火温泉、スーパー、海辺の景色などを効率よく巡るならレンタカーが便利です。台数に限りがあるため、宿とあわせて早めの予約がおすすめです。
+          </p>
+          <a href="https://www.oshima-navi.com/transportation/" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex items-center gap-1 text-sm font-bold text-green-700 transition-colors hover:text-green-600 hover:underline">
+            島内交通の案内を見る <span aria-hidden="true">↗</span>
+          </a>
+        </article>
+
+        <article class="rounded-2xl bg-white p-7 shadow-sm">
+          <div class="flex items-center gap-4">
+            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green-700 text-sm font-bold text-white">3</span>
+            <div>
+              <p class="text-xs font-bold tracking-widest text-green-700">TO THE VILLA</p>
+              <h3 class="mt-1 font-serif text-lg font-bold text-gray-900">ナビで大島ニュービラへ</h3>
+            </div>
+          </div>
+          <p class="mt-5 text-sm leading-7 text-gray-600">
+            元町港から車で約5分、岡田港から約11分、東京大島かめりあ空港から約6分。到着後は敷地内のタブレットでチェックインできます。
+          </p>
+          <a href="#facilities" class="mt-5 inline-flex items-center gap-1 text-sm font-bold text-green-700 transition-colors hover:text-green-600 hover:underline">
+            チェックイン方法を見る <span aria-hidden="true">→</span>
+          </a>
+        </article>
+      </div>
+
+      <!-- 港・空港からの所要時間 -->
+      <div class="mt-16">
+        <div class="mb-8 text-center">
+          <p class="text-xs font-bold tracking-[0.24em] text-green-700 uppercase">Travel Time</p>
+          <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">港・空港からの所要時間</h3>
+          <p class="mt-3 text-sm text-gray-500">交通状況や当日の運行状況により変わるため、時間には余裕をもってお越しください。</p>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-3">
+          <article class="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm">
+            <h4 class="border-b border-gray-100 pb-4 font-serif text-xl font-bold text-gray-900">元町港から</h4>
+            <dl class="mt-5 space-y-4 text-sm text-gray-700">
+              <div class="flex items-center justify-between gap-4">
+                <dt class="font-bold">🚗 車・タクシー</dt>
+                <dd>約5分</dd>
+              </div>
+              <div class="flex items-center justify-between gap-4">
+                <dt class="font-bold">🚌 路線バス</dt>
+                <dd class="text-right">約14分<br /><span class="text-xs text-gray-400">徒歩約9分を含む</span></dd>
+              </div>
+              <div class="flex items-center justify-between gap-4">
+                <dt class="font-bold">🚶 徒歩</dt>
+                <dd>約28分</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article class="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm">
+            <h4 class="border-b border-gray-100 pb-4 font-serif text-xl font-bold text-gray-900">岡田港から</h4>
+            <dl class="mt-5 space-y-4 text-sm text-gray-700">
+              <div class="flex items-center justify-between gap-4">
+                <dt class="font-bold">🚗 車・タクシー</dt>
+                <dd>約11分</dd>
+              </div>
+              <div class="flex items-center justify-between gap-4">
+                <dt class="font-bold">🚌 路線バス</dt>
+                <dd class="text-right">約21分<br /><span class="text-xs text-gray-400">徒歩約9分を含む</span></dd>
+              </div>
+              <div class="flex items-center justify-between gap-4">
+                <dt class="font-bold">🚶 徒歩</dt>
+                <dd>約1時間20分</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article class="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm">
+            <h4 class="border-b border-gray-100 pb-4 font-serif text-xl font-bold text-gray-900">東京大島かめりあ空港から</h4>
+            <dl class="mt-5 space-y-4 text-sm text-gray-700">
+              <div class="flex items-center justify-between gap-4">
+                <dt class="font-bold">🚗 車・タクシー</dt>
+                <dd>約6分</dd>
+              </div>
+              <div class="flex items-center justify-between gap-4">
+                <dt class="font-bold">🚌 路線バス</dt>
+                <dd class="text-right">約24分<br /><span class="text-xs text-gray-400">徒歩約21分を含む</span></dd>
+              </div>
+              <div class="flex items-center justify-between gap-4">
+                <dt class="font-bold">🚶 徒歩</dt>
+                <dd>約35分</dd>
+              </div>
+            </dl>
+          </article>
+        </div>
+      </div>
+
+      <!-- 公共交通の補足 -->
+      <div class="mt-10 rounded-2xl border border-green-100 bg-green-50/70 p-7 md:flex md:items-center md:justify-between md:gap-8">
+        <div>
+          <h3 class="font-serif text-xl font-bold text-gray-900">路線バスでお越しの方へ</h3>
+          <p class="mt-3 text-sm leading-7 text-gray-600">
+            最寄りは「大島高校前」バス停で、施設まで徒歩約9分です。当日の入出港地によりダイヤが変わる場合があるため、乗車前に最新の公園線時刻表をご確認ください。
+          </p>
+        </div>
+        <a href="https://www.oshima-bus.com/rosen-bus.html" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex shrink-0 items-center justify-center rounded-full border border-green-700 px-6 py-3 text-sm font-bold text-green-700 transition-colors hover:bg-green-700 hover:text-white md:mt-0">
+          大島バスの時刻表を見る <span class="ml-1" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  <!-- Booking CTA -->
+  <section id="booking" class="relative overflow-hidden py-24 md:py-32" aria-labelledby="booking-title">
+    <img src="/main.png" alt="" class="absolute inset-0 h-full w-full object-cover" loading="lazy" aria-hidden="true" />
+    <div class="absolute inset-0 bg-white/85 backdrop-blur-sm" aria-hidden="true"></div>
+
+    <div class="relative mx-auto max-w-5xl px-6 text-center">
+      <p class="text-xs font-bold uppercase tracking-[0.3em] text-green-800">Book your stay</p>
+      <h2 id="booking-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-5xl">
+        次の旅は、島へ。<br class="sm:hidden" />大島を遊び、森に帰る。
+      </h2>
+      <p class="mx-auto mt-6 max-w-2xl text-base font-medium leading-8 text-gray-700 md:text-lg">
+        三原山や裏砂漠を楽しんだあとは、森の中の一棟貸しでゆっくりと。<br class="hidden md:block" />
+        家族や友人と、食事も会話も自分たちのペースでお楽しみください。
+      </p>
+
+      <ul class="mx-auto mt-8 grid max-w-3xl grid-cols-2 gap-3 text-sm font-bold text-gray-800 md:grid-cols-4" aria-label="宿泊施設の主な特徴">
+        <li class="rounded-2xl border border-white/80 bg-white/90 px-4 py-4 shadow-sm">一棟貸切</li>
+        <li class="rounded-2xl border border-white/80 bg-white/90 px-4 py-4 shadow-sm">最大6名</li>
+        <li class="rounded-2xl border border-white/80 bg-white/90 px-4 py-4 shadow-sm">BBQ・自炊</li>
+        <li class="rounded-2xl border border-white/80 bg-white/90 px-4 py-4 shadow-sm">元町港から車約5分</li>
+      </ul>
+
+      <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <a
+          href="https://www.airbnb.jp/rooms/1602063410123886296?guests=6&adults=6&s=67&unique_share_id=a393ba49-61eb-4d8e-a4c9-95935b649d65"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex w-full max-w-sm items-center justify-center rounded-full bg-green-700 px-8 py-4 text-base font-bold tracking-wide text-white shadow-xl transition-all hover:-translate-y-1 hover:bg-green-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-800 sm:w-auto"
+        >
+          Airbnbで空室・料金を確認する
+          <span class="ml-2" aria-hidden="true">↗</span>
+        </a>
+        <a
+          href="#facilities"
+          class="inline-flex w-full max-w-sm items-center justify-center rounded-full border-2 border-green-800 bg-white/90 px-8 py-3.5 text-sm font-bold text-green-800 transition-colors hover:bg-green-800 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-800 sm:w-auto"
+        >
+          設備・よくある質問を見る
+        </a>
+      </div>
+
+      <p class="mt-5 text-xs leading-6 text-gray-600">
+        日程と人数を入力すると、最新の空室状況・宿泊料金・予約条件を確認できます。
+      </p>
+    </div>
+  </section>
+
+
 </Layout>
