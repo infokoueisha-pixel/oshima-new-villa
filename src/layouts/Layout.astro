@@ -16,6 +16,8 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 const ogImageUrl = new URL('/ogp-oshima-new-villa.jpg', siteUrl).href;
 const propertyImageUrl = new URL('/main-optimized.webp', siteUrl).href;
 
+const homeAnchor = (hash: string) => Astro.url.pathname === '/' ? hash : `/${hash}`;
+
 const structuredData = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -69,54 +71,54 @@ const structuredData = {
 };
 
 const desktopNavItems = [
-  { label: '宿の魅力', href: '#experience' },
-  { label: '客室', href: '#gallery' },
-  { label: '島を楽しむ', href: '#volcano-guide' },
-  { label: 'モデルコース', href: '#itinerary' },
-  { label: '設備・FAQ', href: '#facilities' },
-  { label: 'アクセス', href: '#access' },
+  { label: '宿の魅力', href: homeAnchor('#experience') },
+  { label: '客室', href: homeAnchor('#gallery') },
+  { label: '島を楽しむ', href: homeAnchor('#volcano-guide') },
+  { label: 'モデルコース', href: homeAnchor('#itinerary') },
+  { label: '設備・FAQ', href: homeAnchor('#facilities') },
+  { label: 'アクセス', href: homeAnchor('#access') },
 ];
 
 const mobileNavGroups = [
   {
     title: '宿泊する',
     items: [
-      { label: '大島ニュービラの魅力', href: '#experience' },
-      { label: 'サルビア棟・客室', href: '#gallery' },
-      { label: '設備・よくある質問', href: '#facilities' },
+      { label: '大島ニュービラの魅力', href: homeAnchor('#experience') },
+      { label: 'サルビア棟・客室', href: homeAnchor('#gallery') },
+      { label: '設備・よくある質問', href: homeAnchor('#facilities') },
     ],
   },
   {
     title: '大島を楽しむ',
     items: [
-      { label: '三原山・裏砂漠', href: '#volcano-guide' },
-      { label: '地層大切断面', href: '#strata-guide' },
-      { label: '波浮港', href: '#habu-port-guide' },
-      { label: '椿・大島公園', href: '#camellia-park-guide' },
-      { label: '夕焼け・星空', href: '#sunset-sky-guide' },
+      { label: '三原山・裏砂漠', href: homeAnchor('#volcano-guide') },
+      { label: '地層大切断面', href: homeAnchor('#strata-guide') },
+      { label: '波浮港', href: homeAnchor('#habu-port-guide') },
+      { label: '椿・大島公園', href: homeAnchor('#camellia-park-guide') },
+      { label: '夕焼け・星空', href: homeAnchor('#sunset-sky-guide') },
     ],
   },
   {
     title: '旅を計画する',
     items: [
-      { label: '1泊2日モデルコース', href: '#itinerary' },
-      { label: 'スーパー・買い出し', href: '#shopping-guide' },
-      { label: 'アクセス・駐車場', href: '#access' },
+      { label: '1泊2日モデルコース', href: homeAnchor('#itinerary') },
+      { label: 'スーパー・買い出し', href: homeAnchor('#shopping-guide') },
+      { label: 'アクセス・駐車場', href: homeAnchor('#access') },
     ],
   },
   {
     title: '私たちについて',
-    items: [{ label: '1975年からの物語', href: '#story' }],
+    items: [{ label: '1975年からの物語', href: homeAnchor('#story') }],
   },
 ];
 
 const footerNavItems = [
-  { label: 'ストーリー', href: '#story' },
-  { label: '客室', href: '#gallery' },
-  { label: '観光案内', href: '#volcano-guide' },
-  { label: 'モデルコース', href: '#itinerary' },
-  { label: '設備・FAQ', href: '#facilities' },
-  { label: 'アクセス', href: '#access' },
+  { label: 'ストーリー', href: homeAnchor('#story') },
+  { label: '客室', href: homeAnchor('#gallery') },
+  { label: '観光案内', href: homeAnchor('#volcano-guide') },
+  { label: 'モデルコース', href: homeAnchor('#itinerary') },
+  { label: '設備・FAQ', href: homeAnchor('#facilities') },
+  { label: 'アクセス', href: homeAnchor('#access') },
 ];
 ---
 
