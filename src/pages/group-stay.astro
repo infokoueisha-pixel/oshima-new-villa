@@ -15,7 +15,7 @@ const useCases = [
     icon: '💻',
     kicker: 'Workation',
     title: 'ワーケーション',
-    description: '無料Wi-Fiを備え、リビングやダイニングでPC作業ができます。仕事の前後は島の自然へ。',
+    description: '無料Wi-Fiを備え、リビングやダイニングでPC作業ができます。通信品質・常時接続を保証するものではないため、重要なオンライン会議等がある場合は予備回線のご用意をおすすめします。',
   },
   {
     icon: '🧑‍💻',
@@ -45,7 +45,7 @@ const useCases = [
 
 const amenities = [
   '最大6名・一棟貸切',
-  '無料Wi-Fi',
+  '無料Wi-Fi（通信品質・常時接続の保証なし）',
   'キッチン・調理器具',
   '屋外炊事場「ガゼボ庵」',
   'BBQ設備（コンロ・ベンチ／炭は要持参）',
@@ -61,7 +61,7 @@ const faqs = [
   },
   {
     question: 'Wi-Fiはありますか？',
-    answer: 'はい、無料Wi-Fiを用意しています。リビングやダイニングでPC作業ができます。通信状況は回線や天候などにより変動する場合があります。',
+    answer: 'はい。無料Wi-Fiをご利用いただけます。ただし、島内の回線状況、通信障害、天候、機器の状態などにより、一時的に接続しにくくなったり通信速度が低下したりする場合があります。常時の接続や通信速度を保証するものではないため、重要なオンライン会議等がある場合は予備の通信手段をご用意ください。',
   },
   {
     question: '釣った魚を調理できますか？',
@@ -74,6 +74,10 @@ const faqs = [
   {
     question: 'ダイビング旅行の宿泊にも使えますか？',
     answer: 'はい。ダイビングを楽しむグループの宿泊拠点としても歓迎しています。一棟貸しなので、仲間だけで自分たちのペースで過ごせます。',
+  },
+  {
+    question: '持参した方がよいものはありますか？',
+    answer: '寝巻き・パジャマ、髭剃りはご用意していません。BBQを予定している場合は炭・食材・飲み物をご持参ください。普段お使いの化粧品・スキンケア用品も必要に応じてお持ちください。',
   },
   {
     question: '予約方法は？',
@@ -214,6 +218,17 @@ const faqs = [
       <p class="mt-6 text-center text-sm leading-7 text-gray-500">
         専用の会議室やスタッフ常駐サービスはありません。必要なものを持ち込み、自分たちで自由に過ごしたい少人数グループに向いています。
       </p>
+
+      <aside class="mt-10 rounded-3xl border border-gray-200 bg-gray-50 p-6 md:p-8" aria-labelledby="group-owner-equipment-title">
+        <p class="text-xs font-bold tracking-[0.22em] text-gray-500 uppercase">Owner's Equipment</p>
+        <h3 id="group-owner-equipment-title" class="mt-2 font-serif text-xl font-bold text-gray-900 md:text-2xl">同じ敷地内のオーナー所有設備</h3>
+        <p class="mt-3 text-sm leading-7 text-gray-600">
+          同じ敷地内には、大島ニュービラとは別にオーナーが所有・管理するコンテナがあります。ご宿泊中のお客様は、オーナーの厚意により洗濯機・乾燥機・シャワー・トイレを無料でご利用いただけます。
+        </p>
+        <p class="mt-3 text-xs leading-6 text-gray-500">
+          これらは大島ニュービラの宿泊設備・付帯設備には含まれず、利用を前提とした宿泊サービスではありません。メンテナンス・故障・清掃等により予告なくご利用いただけない場合があります。
+        </p>
+      </aside>
     </div>
   </section>
 

@@ -14,7 +14,7 @@ const appeals = [
     title: '観光のあとも、みんなの時間',
     subtitle: 'Private Villa',
     description:
-      '三原山や裏砂漠などを楽しんだあとは、森に囲まれた一棟貸しへ。最大6名で過ごせるリビングやボードゲームを備え、周囲を気にせず、家族や友人との食事や会話をゆっくり楽しめます。',
+      '三原山や裏砂漠などを楽しんだあとは、森に囲まれた一棟貸しへ。最大6名で過ごせるリビングで、周囲を気にせず、家族や友人との食事や会話をゆっくり楽しめます。ボードゲームなどは無料貸出品としてご用意しています。',
     image: { src: '/sofa-salvia.webp', alt: '家族や友人とくつろげる大島ニュービラのリビング', width: 1108, height: 832 },
     subImages: [
       { src: '/bed-salvia.webp', alt: 'シングルベッド4台を備えた寝室', width: 1477, height: 994 },
@@ -79,8 +79,8 @@ const facilityGroups = [
   },
   {
     title: 'Wi-Fi・室内時間',
-    description: '観光後の夜や天候が変わった日も、室内でゆっくり楽しめます。',
-    items: ['無料Wi-Fi', 'スマートTV', '動画配信サービスに対応', 'ボードゲーム'],
+    description: '観光後の夜や天候が変わった日も、室内でゆっくり過ごせます。Wi-Fiは無料で利用できますが、通信品質や常時接続を保証するものではありません。',
+    items: ['無料Wi-Fi', 'スマートTV', '動画配信サービスに対応'],
   },
   {
     title: 'チェックイン',
@@ -111,6 +111,12 @@ const stayFaqItems = [
   {
     question: 'タオルや歯ブラシはありますか？',
     answer: 'バスタオル、フェイスタオル、歯ブラシ、スリッパを用意しています。浴室にはシャンプー、リンス、ボディソープがあります。',
+    href: null,
+    linkLabel: null,
+  },
+  {
+    question: 'Wi-Fiはありますか？',
+    answer: 'はい。館内では無料Wi-Fiをご利用いただけます。ただし、島内の回線状況、通信障害、天候、機器の状態などにより、一時的に接続しにくくなったり通信速度が低下したりする場合があります。常時の接続や通信速度を保証するものではないため、重要なオンライン会議などで利用予定の場合は、予備の通信手段をご用意ください。',
     href: null,
     linkLabel: null,
   },
@@ -173,7 +179,7 @@ const islandFaqItems = [
   },
   {
     question: '雨の日はどう過ごせますか？',
-    answer: '天候に合わせてジオノスなどの屋内施設を旅程に入れたり、ヴィラで料理、ボードゲーム、スマートTVなどを楽しんだりできます。予定を詰め込みすぎず、島の天候に合わせて過ごし方を変えるのがおすすめです。',
+    answer: '天候に合わせてジオノスなどの屋内施設を旅程に入れたり、ヴィラで料理やスマートTV、無料貸出品のボードゲームなどを楽しんだりできます。貸出品の内容は時期により変わる場合があります。予定を詰め込みすぎず、島の天候に合わせて過ごし方を変えるのがおすすめです。',
     href: '#facilities',
     linkLabel: '室内設備を見る',
   },
@@ -614,6 +620,34 @@ const galleryImages = [
         }
       </div>
 
+      <div class="mt-10 grid gap-6 lg:grid-cols-2 md:mt-12">
+        <article class="rounded-3xl border border-sky-100 bg-sky-50/60 p-6 md:p-8">
+          <p class="text-xs font-bold tracking-[0.22em] text-sky-700 uppercase">What to Bring</p>
+          <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">ご持参いただくもの</h3>
+          <p class="mt-3 text-sm leading-7 text-gray-600">
+            基本的な設備・アメニティはご用意していますが、次のものは必要に応じてお持ちください。
+          </p>
+          <ul class="mt-5 grid gap-2.5 text-sm leading-7 text-gray-700 sm:grid-cols-2">
+            <li>・寝巻き・パジャマ</li>
+            <li>・髭剃り</li>
+            <li>・BBQ用の炭</li>
+            <li>・BBQの食材・飲み物</li>
+            <li class="sm:col-span-2">・普段お使いの化粧品・スキンケア用品</li>
+          </ul>
+        </article>
+
+        <article class="rounded-3xl border border-green-100 bg-green-50/60 p-6 md:p-8">
+          <p class="text-xs font-bold tracking-[0.22em] text-green-700 uppercase">Complimentary Items</p>
+          <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">無料貸出・サービス品</h3>
+          <p class="mt-3 text-sm leading-7 text-gray-600">
+            滞在をより楽しんでいただけるよう、ボードゲーム・玩具・水鉄砲・外履き用スリッパ・洗顔料などを無料でご用意しています。
+          </p>
+          <p class="mt-4 rounded-2xl bg-white/80 p-4 text-xs leading-6 text-gray-600">
+            これらは宿泊設備・基本アメニティとは別のサービス品です。内容・種類・数量は時期により変更となる場合があり、破損・紛失・補充状況等によりご利用いただけないことがあります。特定の品目のご用意を保証するものではありません。
+          </p>
+        </article>
+      </div>
+
       <article class="mt-10 overflow-hidden rounded-3xl border border-orange-100 bg-white shadow-sm md:mt-12">
         <div class="grid items-stretch md:grid-cols-2">
           <figure class="relative min-h-[280px] overflow-hidden bg-gray-100 sm:min-h-[360px] md:min-h-full">
@@ -718,6 +752,30 @@ const galleryImages = [
     </div>
   </section>
 
+  <!-- Owner-owned equipment / 大島ニュービラとは別のオーナー所有設備 -->
+  <section id="owner-equipment" class="border-y border-gray-100 bg-gray-50 py-14 md:py-16" aria-labelledby="owner-equipment-title">
+    <div class="mx-auto max-w-5xl px-6">
+      <div class="rounded-3xl border border-gray-200 bg-white p-7 shadow-sm md:p-10">
+        <p class="text-xs font-bold tracking-[0.25em] text-gray-500 uppercase">Owner's Equipment</p>
+        <h2 id="owner-equipment-title" class="mt-3 font-serif text-2xl font-bold text-gray-900 md:text-3xl">
+          敷地内で無料でご利用いただけるオーナー所有設備
+        </h2>
+        <p class="mt-5 text-sm leading-7 text-gray-600 md:text-base md:leading-8">
+          大島ニュービラと同じ敷地内には、大島ニュービラとは別にオーナーが所有・管理するコンテナ設備があります。ご宿泊中のお客様は、オーナーの厚意により無料でご利用いただけます。
+        </p>
+        <ul class="mt-6 grid gap-3 sm:grid-cols-2 md:grid-cols-4" aria-label="オーナー所有設備">
+          <li class="rounded-2xl bg-gray-50 px-5 py-4 text-center text-sm font-bold text-gray-800">洗濯機</li>
+          <li class="rounded-2xl bg-gray-50 px-5 py-4 text-center text-sm font-bold text-gray-800">乾燥機</li>
+          <li class="rounded-2xl bg-gray-50 px-5 py-4 text-center text-sm font-bold text-gray-800">シャワー</li>
+          <li class="rounded-2xl bg-gray-50 px-5 py-4 text-center text-sm font-bold text-gray-800">トイレ</li>
+        </ul>
+        <p class="mt-6 rounded-2xl border border-gray-200 bg-gray-50 px-5 py-4 text-xs leading-6 text-gray-600 md:text-sm md:leading-7">
+          これらは大島ニュービラの宿泊設備・付帯設備には含まれず、利用を前提とした宿泊サービスではありません。メンテナンス・故障・清掃その他の事情により、予告なくご利用いただけない場合があります。
+        </p>
+      </div>
+    </div>
+  </section>
+
 <!-- Recommended for / どんな旅に向いているか -->
   <section id="recommended-for" class="bg-white py-20 md:py-28" aria-labelledby="recommended-for-title">
     <div class="mx-auto max-w-7xl px-6">
@@ -749,7 +807,7 @@ const galleryImages = [
           <p class="mt-6 text-xs font-bold tracking-[0.2em] text-orange-700 uppercase">Friends Trip</p>
           <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">友人と、夜まで楽しむ。</h3>
           <p class="mt-4 text-sm leading-7 text-gray-600">
-            ガゼボ庵でのBBQ、室内での料理、ボードゲーム、晴れた夜の星空まで。観光が終わったあとも、みんなで過ごす時間が続きます。
+            ガゼボ庵でのBBQ、室内での料理、無料貸出品のボードゲームなど、晴れた夜の星空まで。観光が終わったあとも、みんなで過ごす時間が続きます。
           </p>
           <a href="#sunset-sky-guide" class="mt-5 inline-flex items-center gap-1 text-sm font-bold text-orange-800 underline decoration-orange-200 underline-offset-4 transition-colors hover:text-orange-950">
             夕焼けと星空を見る<span aria-hidden="true">→</span>
@@ -891,7 +949,7 @@ const galleryImages = [
               <p class="text-xs font-bold tracking-widest text-orange-700">NIGHT</p>
               <h4 class="mt-1 text-lg font-bold text-gray-900">BBQ、団らん、晴れた夜には星空</h4>
               <p class="mt-2 text-sm leading-7 text-gray-600">
-                チェックイン後は「ガゼボ庵」でBBQをしたり、室内で料理をしたり。食後はボードゲームや会話を楽しみ、晴れていれば屋外で星空を眺めます。
+                チェックイン後は「ガゼボ庵」でBBQをしたり、室内で料理をしたり。食後は無料貸出品のボードゲームなどを楽しんだり、会話をしたり。晴れていれば屋外で星空を眺めます。
               </p>
               <a href="#sunset-sky-guide" class="mt-3 inline-flex items-center gap-1 text-sm font-bold text-orange-700 underline decoration-orange-200 underline-offset-4 transition-colors hover:text-orange-900">
                 夕焼けと星空の景色を見る<span aria-hidden="true">→</span>
@@ -1716,9 +1774,11 @@ const galleryImages = [
       <div class="mt-8 rounded-3xl border border-amber-200 bg-amber-50 px-6 py-6 md:px-8">
         <h3 class="font-serif text-xl font-bold text-gray-900">ご宿泊前にご確認ください</h3>
         <ul class="mt-4 grid gap-3 text-sm leading-7 text-gray-700 md:grid-cols-2">
-          <li><strong class="text-gray-900">BBQの炭：</strong>施設でのご用意はありません。BBQを予定している場合は必ずご持参ください。</li>
-          <li><strong class="text-gray-900">屋外設備：</strong>天候や強風など、安全上の理由により利用をお控えいただく場合があります。</li>
-          <li><strong class="text-gray-900">自然環境：</strong>森に囲まれた施設のため、季節によって虫が見られることがあります。</li>
+          <li><strong class="text-gray-900">ご持参品：</strong>寝巻き・髭剃りのご用意はありません。BBQを予定している場合は炭・食材・飲み物もご持参ください。</li>
+          <li><strong class="text-gray-900">Wi-Fi：</strong>無料で利用できますが、回線状況・障害・天候等により通信が不安定になる場合があり、常時接続・通信速度は保証していません。</li>
+          <li><strong class="text-gray-900">無料サービス品：</strong>ボードゲーム・玩具等は内容や数量が変わる場合があり、特定の品目のご用意は保証していません。</li>
+          <li><strong class="text-gray-900">オーナー所有設備：</strong>敷地内コンテナの洗濯機・乾燥機・シャワー・トイレは大島ニュービラの宿泊設備には含まれません。</li>
+          <li><strong class="text-gray-900">屋外・自然環境：</strong>強風など安全上の理由で屋外設備を利用できない場合があります。また、森に囲まれた環境のため季節によって虫が見られます。</li>
           <li><strong class="text-gray-900">無人運営：</strong>スタッフは常駐していません。チェックインは敷地内のタブレットで行います。</li>
         </ul>
       </div>
