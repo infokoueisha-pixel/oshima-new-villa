@@ -70,7 +70,7 @@ const facilityGroups = [
   {
     title: '屋外BBQ',
     description: '屋根付きの屋外炊事場「ガゼボ庵」をご利用いただけます。',
-    items: ['宿泊者専用スペース', 'BBQコンロ・ベンチ', '雨を避けやすい屋根付き', '強風時は利用をお控えください'],
+    items: ['宿泊者専用スペース', 'BBQコンロ・ベンチ（炭は付属しません）', '炭はご持参ください', '雨を避けやすい屋根付き', '強風時は利用をお控えください'],
   },
   {
     title: 'バス・アメニティ',
@@ -98,7 +98,7 @@ const stayFaqItems = [
   },
   {
     question: 'バーベキューはできますか？',
-    answer: 'はい。屋根付きの屋外炊事場「ガゼボ庵」をご利用いただけます。強風時は使用をお控えいただき、使用後の炭や灰は完全に消火してください。',
+    answer: 'はい。屋根付きの屋外炊事場「ガゼボ庵」とBBQコンロ・ベンチをご利用いただけます。炭は施設では用意していないため、BBQを予定している場合は必ずご持参ください。食材・飲み物も各自でご用意ください。強風時は安全のため使用をお控えいただき、使用後の炭や灰は完全に消火してください。',
     href: null,
     linkLabel: null,
   },
@@ -1696,8 +1696,8 @@ const galleryImages = [
           <dd class="mt-2 text-sm leading-7 text-gray-600">チェックイン15:00〜、チェックアウト10:00まで。敷地内のタブレットで無人受付です。</dd>
         </div>
         <div class="rounded-2xl border border-gray-100 bg-gray-50 p-6">
-          <dt class="font-bold text-gray-900">🔥 BBQ・自炊OK</dt>
-          <dd class="mt-2 text-sm leading-7 text-gray-600">屋根付きの「ガゼボ庵」と室内キッチンを利用できます。強風時はBBQをお控えください。</dd>
+          <dt class="font-bold text-gray-900">🔥 BBQは炭をご持参ください</dt>
+          <dd class="mt-2 text-sm leading-7 text-gray-600">屋根付きの「ガゼボ庵」とBBQコンロ・ベンチを利用できます。炭・食材・飲み物はご持参ください。強風時は安全のためBBQをお控えください。</dd>
         </div>
         <div class="rounded-2xl border border-gray-100 bg-gray-50 p-6">
           <dt class="font-bold text-gray-900">🚗 島内移動はレンタカー推奨</dt>
@@ -1712,6 +1712,16 @@ const galleryImages = [
           <dd class="mt-2 text-sm leading-7 text-gray-700">空室、宿泊料金、キャンセル条件など、予約時点の最新情報はAirbnbの予約画面でご確認ください。</dd>
         </div>
       </dl>
+
+      <div class="mt-8 rounded-3xl border border-amber-200 bg-amber-50 px-6 py-6 md:px-8">
+        <h3 class="font-serif text-xl font-bold text-gray-900">ご宿泊前にご確認ください</h3>
+        <ul class="mt-4 grid gap-3 text-sm leading-7 text-gray-700 md:grid-cols-2">
+          <li><strong class="text-gray-900">BBQの炭：</strong>施設でのご用意はありません。BBQを予定している場合は必ずご持参ください。</li>
+          <li><strong class="text-gray-900">屋外設備：</strong>天候や強風など、安全上の理由により利用をお控えいただく場合があります。</li>
+          <li><strong class="text-gray-900">自然環境：</strong>森に囲まれた施設のため、季節によって虫が見られることがあります。</li>
+          <li><strong class="text-gray-900">無人運営：</strong>スタッフは常駐していません。チェックインは敷地内のタブレットで行います。</li>
+        </ul>
+      </div>
 
       <div class="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm font-bold">
         <a href="#facilities" class="text-green-700 underline decoration-green-200 underline-offset-4 transition-colors hover:text-green-900">設備・FAQを詳しく見る</a>
