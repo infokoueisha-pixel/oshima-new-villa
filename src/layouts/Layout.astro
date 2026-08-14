@@ -4,11 +4,13 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
 const {
   title = '伊豆大島の一棟貸し宿｜最大6名・BBQ・森のヴィラ｜大島ニュービラ',
   description = '伊豆大島・元町の一棟貸し宿「大島ニュービラ」。家族・友人で最大6名、BBQ・自炊を楽しめる森のヴィラです。元町港から車で約5分。1975年開業の施設を2026年にリニューアルしました。',
+  noindex = false,
 } = Astro.props;
 
 const siteUrl = 'https://oshima-new-villa.com/';
@@ -128,7 +130,7 @@ const footerNavItems = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
     <link rel="canonical" href={canonicalUrl} />
     <link
       rel="preload"
