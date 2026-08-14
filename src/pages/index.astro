@@ -70,7 +70,7 @@ const facilityGroups = [
   {
     title: '屋外BBQ',
     description: '屋根付きの屋外炊事場「ガゼボ庵」をご利用いただけます。',
-    items: ['宿泊者専用スペース', 'BBQコンロ・ベンチ（炭は付属しません）', '炭はご持参ください', '雨を避けやすい屋根付き', '強風時は利用をお控えください'],
+    items: ['宿泊者専用スペース', 'BBQコンロ・ベンチ', '雨を避けやすい屋根付き', '強風時は利用をお控えください'],
   },
   {
     title: 'バス・アメニティ',
@@ -98,7 +98,7 @@ const stayFaqItems = [
   },
   {
     question: 'バーベキューはできますか？',
-    answer: 'はい。屋根付きの屋外炊事場「ガゼボ庵」とBBQコンロ・ベンチをご利用いただけます。炭は施設では用意していないため、BBQを予定している場合は必ずご持参ください。食材・飲み物も各自でご用意ください。強風時は安全のため使用をお控えいただき、使用後の炭や灰は完全に消火してください。',
+    answer: 'はい。屋根付きの屋外炊事場「ガゼボ庵」とBBQコンロ・ベンチをご利用いただけます。炭・着火剤・着火ライター・食材・飲み物はご用意していませんので、BBQをされる方のみ必要なものをご準備ください。強風時は安全のため使用をお控えいただき、使用後の炭や灰は完全に消火してください。',
     href: null,
     linkLabel: null,
   },
@@ -620,31 +620,54 @@ const galleryImages = [
         }
       </div>
 
-      <div class="mt-10 grid gap-6 lg:grid-cols-2 md:mt-12">
-        <article class="rounded-3xl border border-sky-100 bg-sky-50/60 p-6 md:p-8">
-          <p class="text-xs font-bold tracking-[0.22em] text-sky-700 uppercase">What to Bring</p>
-          <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">ご持参いただくもの</h3>
+      <div class="mt-10 grid gap-6 lg:grid-cols-3 md:mt-12">
+        <article class="rounded-3xl border border-green-100 bg-green-50/60 p-6 md:p-8">
+          <p class="text-xs font-bold tracking-[0.22em] text-green-700 uppercase">Provided</p>
+          <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">ご用意しているもの</h3>
           <p class="mt-3 text-sm leading-7 text-gray-600">
-            基本的な設備・アメニティはご用意していますが、次のものは必要に応じてお持ちください。
+            宿泊設備・基本アメニティとしてご用意している主なものです。
           </p>
-          <ul class="mt-5 grid gap-2.5 text-sm leading-7 text-gray-700 sm:grid-cols-2">
-            <li>・寝巻き・パジャマ</li>
-            <li>・髭剃り</li>
-            <li>・BBQ用の炭</li>
-            <li>・BBQの食材・飲み物</li>
-            <li class="sm:col-span-2">・普段お使いの化粧品・スキンケア用品</li>
+          <ul class="mt-5 space-y-2.5 text-sm leading-7 text-gray-700">
+            <li>・ベッド・寝具</li>
+            <li>・キッチン家電・基本調理器具・食器類</li>
+            <li>・浴槽・シャワー・トイレ</li>
+            <li>・タオル・歯ブラシ・室内用スリッパ</li>
+            <li>・シャンプー・リンス・ボディソープ</li>
+            <li>・BBQコンロ・ベンチ</li>
+            <li>・Wi-Fi設備</li>
           </ul>
+          <p class="mt-4 rounded-2xl bg-white/80 p-4 text-xs leading-6 text-gray-600">
+            Wi-Fiは回線状況・通信障害・天候等により不安定になる場合があり、常時接続や通信速度を保証するものではありません。
+          </p>
         </article>
 
-        <article class="rounded-3xl border border-green-100 bg-green-50/60 p-6 md:p-8">
-          <p class="text-xs font-bold tracking-[0.22em] text-green-700 uppercase">Complimentary Items</p>
-          <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">無料貸出・サービス品</h3>
+        <article class="rounded-3xl border border-sky-100 bg-sky-50/60 p-6 md:p-8">
+          <p class="text-xs font-bold tracking-[0.22em] text-sky-700 uppercase">Complimentary</p>
+          <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">無料でご利用いただけることがあるもの</h3>
           <p class="mt-3 text-sm leading-7 text-gray-600">
-            滞在をより楽しんでいただけるよう、ボードゲーム・玩具・水鉄砲・外履き用スリッパ・洗顔料などを無料でご用意しています。
+            ボードゲーム・玩具・水鉄砲・外履き用スリッパ・洗顔料・Bluetoothスピーカーなどは、無料貸出・サービス品としてご用意することがあります。
           </p>
           <p class="mt-4 rounded-2xl bg-white/80 p-4 text-xs leading-6 text-gray-600">
-            これらは宿泊設備・基本アメニティとは別のサービス品です。内容・種類・数量は時期により変更となる場合があり、破損・紛失・補充状況等によりご利用いただけないことがあります。特定の品目のご用意を保証するものではありません。
+            これらは宿泊設備・基本アメニティではありません。内容・種類・数量は変更となる場合があり、破損・紛失・補充状況等により利用できないことがあります。特定の品目のご用意は保証していません。
           </p>
+          <p class="mt-4 text-xs leading-6 text-sky-900/80">
+            また、敷地内の洗濯機・乾燥機・コンテナ内シャワー・トイレはオーナー所有設備であり、大島ニュービラの宿泊設備・付帯設備には含まれません。利用可能な場合に無料でお使いいただけます。
+          </p>
+        </article>
+
+        <article class="rounded-3xl border border-amber-200 bg-amber-50 p-6 md:p-8">
+          <p class="text-xs font-bold tracking-[0.22em] text-amber-800 uppercase">Not Provided</p>
+          <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">基本的にご用意していないもの</h3>
+          <ul class="mt-5 space-y-2.5 text-sm leading-7 text-gray-700">
+            <li>・寝巻き・パジャマ</li>
+            <li>・髭剃り</li>
+          </ul>
+          <div class="mt-5 rounded-2xl border border-amber-200 bg-white/80 p-4">
+            <p class="text-sm font-bold text-gray-900">※BBQをされる方</p>
+            <p class="mt-2 text-xs leading-6 text-gray-600">
+              炭・着火剤・着火ライター・食材・飲み物はご用意していません。BBQをご利用の場合のみ、必要なものをご準備ください。
+            </p>
+          </div>
         </article>
       </div>
 
@@ -748,30 +771,6 @@ const galleryImages = [
             </div>
           </section>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Owner-owned equipment / 大島ニュービラとは別のオーナー所有設備 -->
-  <section id="owner-equipment" class="border-y border-gray-100 bg-gray-50 py-14 md:py-16" aria-labelledby="owner-equipment-title">
-    <div class="mx-auto max-w-5xl px-6">
-      <div class="rounded-3xl border border-gray-200 bg-white p-7 shadow-sm md:p-10">
-        <p class="text-xs font-bold tracking-[0.25em] text-gray-500 uppercase">Owner's Equipment</p>
-        <h2 id="owner-equipment-title" class="mt-3 font-serif text-2xl font-bold text-gray-900 md:text-3xl">
-          敷地内で無料でご利用いただけるオーナー所有設備
-        </h2>
-        <p class="mt-5 text-sm leading-7 text-gray-600 md:text-base md:leading-8">
-          大島ニュービラと同じ敷地内には、大島ニュービラとは別にオーナーが所有・管理するコンテナ設備があります。ご宿泊中のお客様は、オーナーの厚意により無料でご利用いただけます。
-        </p>
-        <ul class="mt-6 grid gap-3 sm:grid-cols-2 md:grid-cols-4" aria-label="オーナー所有設備">
-          <li class="rounded-2xl bg-gray-50 px-5 py-4 text-center text-sm font-bold text-gray-800">洗濯機</li>
-          <li class="rounded-2xl bg-gray-50 px-5 py-4 text-center text-sm font-bold text-gray-800">乾燥機</li>
-          <li class="rounded-2xl bg-gray-50 px-5 py-4 text-center text-sm font-bold text-gray-800">シャワー</li>
-          <li class="rounded-2xl bg-gray-50 px-5 py-4 text-center text-sm font-bold text-gray-800">トイレ</li>
-        </ul>
-        <p class="mt-6 rounded-2xl border border-gray-200 bg-gray-50 px-5 py-4 text-xs leading-6 text-gray-600 md:text-sm md:leading-7">
-          これらは大島ニュービラの宿泊設備・付帯設備には含まれず、利用を前提とした宿泊サービスではありません。メンテナンス・故障・清掃その他の事情により、予告なくご利用いただけない場合があります。
-        </p>
       </div>
     </div>
   </section>
@@ -1754,8 +1753,8 @@ const galleryImages = [
           <dd class="mt-2 text-sm leading-7 text-gray-600">チェックイン15:00〜、チェックアウト10:00まで。敷地内のタブレットで無人受付です。</dd>
         </div>
         <div class="rounded-2xl border border-gray-100 bg-gray-50 p-6">
-          <dt class="font-bold text-gray-900">🔥 BBQは炭をご持参ください</dt>
-          <dd class="mt-2 text-sm leading-7 text-gray-600">屋根付きの「ガゼボ庵」とBBQコンロ・ベンチを利用できます。炭・食材・飲み物はご持参ください。強風時は安全のためBBQをお控えください。</dd>
+          <dt class="font-bold text-gray-900">🔥 BBQ設備あり</dt>
+          <dd class="mt-2 text-sm leading-7 text-gray-600">屋根付きの「ガゼボ庵」とBBQコンロ・ベンチをご用意しています。炭・着火剤・着火ライター・食材・飲み物はありませんので、BBQをされる方のみ必要なものをご準備ください。強風時は安全のためBBQをお控えください。</dd>
         </div>
         <div class="rounded-2xl border border-gray-100 bg-gray-50 p-6">
           <dt class="font-bold text-gray-900">🚗 島内移動はレンタカー推奨</dt>
@@ -1774,10 +1773,11 @@ const galleryImages = [
       <div class="mt-8 rounded-3xl border border-amber-200 bg-amber-50 px-6 py-6 md:px-8">
         <h3 class="font-serif text-xl font-bold text-gray-900">ご宿泊前にご確認ください</h3>
         <ul class="mt-4 grid gap-3 text-sm leading-7 text-gray-700 md:grid-cols-2">
-          <li><strong class="text-gray-900">ご持参品：</strong>寝巻き・髭剃りのご用意はありません。BBQを予定している場合は炭・食材・飲み物もご持参ください。</li>
-          <li><strong class="text-gray-900">Wi-Fi：</strong>無料で利用できますが、回線状況・障害・天候等により通信が不安定になる場合があり、常時接続・通信速度は保証していません。</li>
-          <li><strong class="text-gray-900">無料サービス品：</strong>ボードゲーム・玩具等は内容や数量が変わる場合があり、特定の品目のご用意は保証していません。</li>
-          <li><strong class="text-gray-900">オーナー所有設備：</strong>敷地内コンテナの洗濯機・乾燥機・シャワー・トイレは大島ニュービラの宿泊設備には含まれません。</li>
+          <li><strong class="text-gray-900">基本的にないもの：</strong>寝巻き・パジャマ、髭剃りはご用意していません。必要な方はご自身でご用意ください。</li>
+          <li><strong class="text-gray-900">BBQをご利用の方：</strong>炭・着火剤・着火ライター・食材・飲み物はご用意していません。BBQをされる方のみ必要なものをご準備ください。</li>
+          <li><strong class="text-gray-900">Wi-Fi：</strong>Wi-Fi設備はありますが、回線状況・障害・天候等により通信が不安定になる場合があり、常時接続・通信速度は保証していません。</li>
+          <li><strong class="text-gray-900">無料貸出・サービス品：</strong>ボードゲーム・玩具等は内容や数量が変わる場合があり、特定の品目のご用意は保証していません。</li>
+          <li><strong class="text-gray-900">オーナー所有設備：</strong>敷地内の洗濯機・乾燥機・コンテナ内シャワー・トイレは大島ニュービラの宿泊設備には含まれず、利用可能な場合に無料でお使いいただけます。</li>
           <li><strong class="text-gray-900">屋外・自然環境：</strong>強風など安全上の理由で屋外設備を利用できない場合があります。また、森に囲まれた環境のため季節によって虫が見られます。</li>
           <li><strong class="text-gray-900">無人運営：</strong>スタッフは常駐していません。チェックインは敷地内のタブレットで行います。</li>
         </ul>
