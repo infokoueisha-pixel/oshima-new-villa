@@ -1,0 +1,361 @@
+---
+import InternationalLayout from '../../layouts/InternationalLayout.astro';
+
+const pageTitle = 'Oshima New Villa｜東京伊豆大島整棟包棟 Villa';
+const pageDescription = '位於東京火山島伊豆大島的整棟包棟 Villa，最多可住 6 人。備有廚房、BBQ 空間、免費 Wi-Fi、停車場與自助入住，距元町港車程約 5 分鐘。';
+const bookingUrl = 'https://www.airbnb.com/rooms/1602063410123886296';
+
+const islandHighlights = [
+  {
+    title: '三原山',
+    eyebrow: '活火山',
+    description: '漫步於伊豆大島火山核心三原山周邊，感受壯闊的熔岩地貌。',
+    image: '/mihara-mountain-view.webp',
+    alt: '伊豆大島三原山景色',
+  },
+  {
+    title: '裏砂漠（Urasabaku）',
+    eyebrow: '黑色火山荒原',
+    description: '黑色火山大地與遼闊天空交織成彷彿異世界般的景觀。',
+    image: '/urasabaku-panorama.webp',
+    alt: '伊豆大島裏砂漠的廣闊火山地貌',
+  },
+  {
+    title: '波浮港',
+    eyebrow: '歷史港町',
+    description: '前往島的南部，放慢腳步，走訪老港口周邊寧靜的街道。',
+    image: '/habu-port-overlook.webp',
+    alt: '伊豆大島波浮港與周邊街區',
+  },
+  {
+    title: '夕陽與星空',
+    eyebrow: '島嶼夜晚',
+    description: '在海邊迎接日落，再回到森林裡享受安靜的夜晚與星空。',
+    image: '/sunset-ocean-view.webp',
+    alt: '伊豆大島海上的夕陽',
+  },
+];
+
+const villaFeatures = [
+  ['整棟包棟 Villa', '69.27㎡，僅供您的團體使用'],
+  ['最多 6 人', '4 張單人床＋2 張沙發床'],
+  ['廚房', '冷凍冷藏庫、微波爐、電子鍋、烹飪用具、餐具與刀叉'],
+  ['戶外 BBQ', '有屋頂的涼亭，備有烤爐、長椅與折疊桌'],
+  ['浴室・廁所', '專用浴室附浴缸與淋浴，廁所獨立'],
+  ['免費 Wi-Fi', 'Villa 內可使用；不保證連線品質與速度'],
+  ['停車', '敷地內免費停車'],
+  ['自助入住', '使用敷地內設置的平板辦理入住'],
+];
+
+const accessCards = [
+  {
+    step: '01',
+    title: '東京 → 伊豆大島',
+    body: '從東京市中心竹芝搭乘高速噴射船約 2 小時即可抵達。也可從調布機場搭乘飛機。班次會因季節與天候而異，出發前請確認營運公司的最新資訊。',
+  },
+  {
+    step: '02',
+    title: '確認抵達港口',
+    body: '船班會依海況停靠元町港或岡田港。登船前請確認當天的抵達港口。',
+  },
+  {
+    step: '03',
+    title: '租車移動',
+    body: '島上觀光、採買與移動建議租車。車輛數量有限，建議提早預訂。',
+  },
+  {
+    step: '04',
+    title: '開車前往 Oshima New Villa',
+    body: '從元町港開車約 5 分鐘、岡田港約 11 分鐘、大島機場約 6 分鐘。',
+  },
+];
+
+const bookingNotes = [
+  {
+    title: '入住 / 退房',
+    text: '15:00 起可入住，退房時間為 10:00 前。設施採無人管理，請使用平板自助辦理入住。',
+  },
+  {
+    title: '如要使用 BBQ',
+    text: '我們提供烤爐、長椅與折疊桌。木炭、引火劑、點火長柄打火機、食材與飲料不提供，請自行攜帶或在島上購買。',
+  },
+  {
+    title: 'Wi-Fi',
+    text: '免費 Wi-Fi is available, but island network conditions, weather, outages or equipment conditions may affect connectivity and speed. Please prepare a backup connection for important online meetings.',
+  },
+  {
+    title: '需自行準備的用品',
+    text: '提供浴巾、毛巾、牙刷、室內拖鞋、洗髮精、潤髮乳與沐浴乳。不提供睡衣與刮鬍刀。',
+  },
+  {
+    title: '吸菸與寵物',
+    text: 'Villa 室內全面禁菸，恕不接受攜帶寵物。',
+  },
+  {
+    title: '最新預訂條件',
+    text: '空房、價格與取消條件以 Airbnb 顯示為準，請於預訂頁確認最新資訊。',
+  },
+];
+---
+
+<InternationalLayout locale="zh-Hant" title={pageTitle} description={pageDescription}>
+  <!-- Hero -->
+  <section class="relative flex min-h-[100svh] items-center overflow-hidden bg-gray-950" aria-labelledby="en-hero-title">
+    <picture class="absolute inset-0" aria-hidden="true">
+      <source srcset="/main-optimized-640.webp 640w, /main-optimized-960.webp 960w, /main-optimized.webp 1170w" sizes="100vw" />
+      <img src="/main-optimized.webp" alt="" class="h-full w-full object-cover" width="1170" height="1171" fetchpriority="high" />
+    </picture>
+    <div class="absolute inset-0 bg-gradient-to-r from-gray-950/80 via-gray-950/55 to-gray-950/25" aria-hidden="true"></div>
+    <div class="relative z-10 mx-auto w-full max-w-7xl px-6 pt-28 pb-16 md:pt-32 md:pb-24">
+      <div class="max-w-3xl text-white">
+        <p class="text-xs font-bold tracking-[0.28em] text-green-200 uppercase sm:text-sm">位於東京伊豆大島的整棟 Villa</p>
+        <h1 id="en-hero-title" class="mt-5 font-serif text-4xl leading-[1.12] font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+          住進東京的<br />火山島。
+        </h1>
+        <p class="mt-6 max-w-2xl text-base leading-8 text-white/90 sm:text-lg md:text-xl md:leading-9">
+          白天探索火山、黑色火山荒原與大海，晚上回到森林環繞的整棟 Villa。Oshima New Villa 最多可供 6 人包棟入住。
+        </p>
+        <ul class="mt-7 flex flex-wrap gap-2.5 text-xs font-bold text-white sm:text-sm" aria-label="主要特色">
+          <li class="rounded-full border border-white/30 bg-white/10 px-4 py-2 backdrop-blur-sm">整棟包棟</li>
+          <li class="rounded-full border border-white/30 bg-white/10 px-4 py-2 backdrop-blur-sm">最多 6 人</li>
+          <li class="rounded-full border border-white/30 bg-white/10 px-4 py-2 backdrop-blur-sm">廚房 & BBQ</li>
+          <li class="rounded-full border border-white/30 bg-white/10 px-4 py-2 backdrop-blur-sm">距元町港車程約 5 分鐘</li>
+        </ul>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <a
+            href={bookingUrl}
+            data-booking-location="zh-tw_hero"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center rounded-full bg-green-600 px-8 py-4 text-sm font-bold text-white shadow-xl transition-all hover:-translate-y-0.5 hover:bg-green-500"
+          >
+            在 Airbnb 查看空房 <span class="ml-2" aria-hidden="true">↗</span>
+          </a>
+          <a href="#access" class="inline-flex items-center justify-center rounded-full border border-white/50 bg-white/10 px-8 py-4 text-sm font-bold text-white backdrop-blur-sm transition-colors hover:bg-white hover:text-gray-900">
+            交通方式
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tokyo island positioning -->
+  <section id="island" class="bg-orange-50 py-20 md:py-28" aria-labelledby="island-title">
+    <div class="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-12 lg:items-center lg:gap-16">
+      <div class="lg:col-span-5">
+        <p class="text-xs font-bold tracking-[0.28em] text-green-700 uppercase">東京的另一面</p>
+        <h2 id="island-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-5xl">
+          東京，不只有都市。
+        </h2>
+        <div class="mt-6 space-y-5 text-base leading-8 text-gray-600 md:text-lg md:leading-9">
+          <p>
+            伊豆大島是伊豆群島中最大的島嶼，行政區域屬於東京都。從東京市中心搭高速噴射船約兩小時，眼前卻是與都市截然不同的景色。
+          </p>
+          <p>
+            Spend the day hiking around 三原山, exploring the black volcanic landscape of 裏砂漠（Urasabaku）, visiting old harbor towns, diving, fishing or relaxing at an onsen.
+          </p>
+        </div>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="https://www.gotokyo.org/en/destinations/izu-and-ogasawara-islands/oshima-island/index.html" target="_blank" rel="noopener noreferrer" class="rounded-full border border-green-700 px-5 py-2.5 text-sm font-bold text-green-800 transition-colors hover:bg-green-700 hover:text-white">
+            東京都官方大島旅遊指南 ↗
+          </a>
+        </div>
+      </div>
+      <div class="lg:col-span-7">
+        <div class="grid grid-cols-2 gap-3 sm:gap-4">
+          <img src="/mihara-crater.webp" alt="三原山火山口景觀" class="aspect-[4/5] w-full rounded-2xl object-cover shadow-lg" width="1500" height="2000" loading="lazy" />
+          <img src="/urasabaku-sea-view.webp" alt="可眺望大海的裏砂漠火山地貌" class="mt-8 aspect-[4/5] w-full rounded-2xl object-cover shadow-lg sm:mt-12" width="1500" height="2000" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Villa -->
+  <section id="villa" class="bg-white py-20 md:py-28" aria-labelledby="villa-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-xs font-bold tracking-[0.28em] text-green-700 uppercase">島上的私人旅居基地</p>
+        <h2 id="villa-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-5xl">一棟 Villa，照自己的步調旅行。</h2>
+        <p class="mt-5 text-base leading-8 text-gray-600 md:text-lg">
+          Salvia 是一棟 69.27㎡ 的包棟 Villa，適合家人、朋友與小型團體。一起做飯、在客廳休息，或在 BBQ 涼亭度過夜晚。
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-4 md:grid-cols-12">
+        <figure class="overflow-hidden rounded-2xl bg-gray-100 md:col-span-7">
+          <img src="/sofa-salvia.webp" alt="Oshima New Villa 內有兩張沙發床的客廳" class="aspect-[4/3] h-full w-full object-cover" width="1108" height="832" loading="lazy" />
+        </figure>
+        <figure class="overflow-hidden rounded-2xl bg-gray-100 md:col-span-5">
+          <img src="/bed-salvia.webp" alt="設有四張單人床的臥室區" class="aspect-[4/3] h-full w-full object-cover" width="1477" height="994" loading="lazy" />
+        </figure>
+        <figure class="overflow-hidden rounded-2xl bg-gray-100 md:col-span-5">
+          <img src="/day-bbq.webp" alt="Oshima New Villa 有屋頂的戶外 BBQ 涼亭" class="aspect-[4/3] h-full w-full object-cover" width="1376" height="2000" loading="lazy" />
+        </figure>
+        <figure class="overflow-hidden rounded-2xl bg-gray-100 md:col-span-7">
+          <img src="/bath_salvia.jpg" alt="Salvia Villa 內的專用浴室" class="aspect-[4/3] h-full w-full object-cover" width="1200" height="900" loading="lazy" />
+        </figure>
+      </div>
+
+      <dl class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {villaFeatures.map(([term, detail]) => (
+          <div class="rounded-2xl border border-gray-100 bg-orange-50 p-5">
+            <dt class="font-bold text-gray-900">{term}</dt>
+            <dd class="mt-2 text-sm leading-6 text-gray-600">{detail}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <!-- Things to do -->
+  <section id="things-to-do" class="bg-green-950 py-20 text-white md:py-28" aria-labelledby="things-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="max-w-3xl">
+        <p class="text-xs font-bold tracking-[0.28em] text-green-300 uppercase">探索伊豆大島</p>
+        <h2 id="things-title" class="mt-3 font-serif text-3xl font-bold md:text-5xl">白天看火山，夜晚回森林。</h2>
+        <p class="mt-5 text-base leading-8 text-green-50/80 md:text-lg">
+          大島面積適合自駕探索，又有豐富多變的景色，從早到晚都能感受到不同的島嶼風貌。
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {islandHighlights.map((item) => (
+          <article class="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+            <img src={item.image} alt={item.alt} class="aspect-[4/3] w-full object-cover" width="1500" height="1000" loading="lazy" />
+            <div class="p-5">
+              <p class="text-xs font-bold tracking-[0.2em] text-green-300 uppercase">{item.eyebrow}</p>
+              <h3 class="mt-2 font-serif text-xl font-bold">{item.title}</h3>
+              <p class="mt-3 text-sm leading-7 text-green-50/75">{item.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Access -->
+  <section id="access" class="bg-orange-50 py-20 md:py-28" aria-labelledby="access-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-xs font-bold tracking-[0.28em] text-green-700 uppercase">交通方式</p>
+        <h2 id="access-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-5xl">從東京市中心，前往島上的森林。</h2>
+        <p class="mt-5 text-base leading-8 text-gray-600 md:text-lg">
+          前往大島的路程也是旅行的一部分。最簡單的方式是：東京 → 船或飛機 → 租車 → Oshima New Villa。
+        </p>
+      </div>
+
+      <ol class="mx-auto mt-12 grid max-w-5xl gap-4 md:grid-cols-2">
+        {accessCards.map((item) => (
+          <li class="rounded-2xl border border-orange-100 bg-white p-6 shadow-sm">
+            <p class="font-serif text-3xl font-bold text-green-700">{item.step}</p>
+            <h3 class="mt-3 text-lg font-bold text-gray-900">{item.title}</h3>
+            <p class="mt-3 text-sm leading-7 text-gray-600">{item.body}</p>
+          </li>
+        ))}
+      </ol>
+
+      <div class="mx-auto mt-8 max-w-5xl rounded-2xl border border-green-100 bg-green-50 p-6 md:p-8">
+        <div class="grid gap-6 md:grid-cols-3">
+          <div>
+            <p class="text-xs font-bold tracking-[0.18em] text-green-700 uppercase">元町港</p>
+            <p class="mt-2 font-serif text-2xl font-bold text-gray-900">約 5 分鐘</p>
+            <p class="mt-1 text-sm text-gray-600">開車</p>
+          </div>
+          <div>
+            <p class="text-xs font-bold tracking-[0.18em] text-green-700 uppercase">岡田港</p>
+            <p class="mt-2 font-serif text-2xl font-bold text-gray-900">約 11 分鐘</p>
+            <p class="mt-1 text-sm text-gray-600">開車</p>
+          </div>
+          <div>
+            <p class="text-xs font-bold tracking-[0.18em] text-green-700 uppercase">大島機場</p>
+            <p class="mt-2 font-serif text-2xl font-bold text-gray-900">約 6 分鐘</p>
+            <p class="mt-1 text-sm text-gray-600">開車</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href="https://www.tokaikisen.co.jp/en/" target="_blank" rel="noopener noreferrer" class="rounded-full border border-green-700 bg-white px-5 py-2.5 text-sm font-bold text-green-800 transition-colors hover:bg-green-700 hover:text-white">
+          東海汽船船班資訊 ↗
+        </a>
+        <a href="https://www.gotokyo.org/en/plan/getting-around/going-to-islands/index.html" target="_blank" rel="noopener noreferrer" class="rounded-full border border-gray-300 bg-white px-5 py-2.5 text-sm font-bold text-gray-700 transition-colors hover:border-gray-900 hover:bg-gray-900 hover:text-white">
+          東京都官方島嶼交通指南 ↗
+        </a>
+      </div>
+      <p class="mx-auto mt-5 max-w-3xl text-center text-xs leading-6 text-gray-500">
+        船班與航班時間可能因季節、航線與天候而變更。出發前請向交通營運公司確認最新時刻。
+      </p>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <section class="bg-white py-20 md:py-28" aria-labelledby="story-en-title">
+    <div class="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-12 lg:items-center lg:gap-16">
+      <figure class="lg:col-span-6">
+        <img src="/old-brochure.webp" alt="Oshima New Villa 1975 年原版宣傳冊" class="w-full rounded-2xl shadow-xl" width="1024" height="1054" loading="lazy" />
+        <figcaption class="mt-3 text-center text-xs leading-6 text-gray-500">1975 年當時的原版宣傳冊。</figcaption>
+      </figure>
+      <div class="lg:col-span-6">
+        <p class="text-xs font-bold tracking-[0.28em] text-green-700 uppercase">我們的故事</p>
+        <h2 id="story-en-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-5xl">1975 年開幕，2026 年重生。</h2>
+        <div class="mt-6 space-y-5 text-base leading-8 text-gray-600 md:text-lg md:leading-9">
+          <p>Oshima New Villa 於 1975 年在伊豆大島的森林中開幕，迎接來到島上的旅人。</p>
+          <p>停業約 15 年後，我們保留原有的氣息與痕跡，細心整修這座設施。</p>
+          <p>2026 年，這裡以整棟包棟 Villa 的形式重新出發，讓家人與朋友能以自己的步調感受島嶼。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Before booking -->
+  <section id="before-booking" class="bg-gray-100 py-20 md:py-28" aria-labelledby="before-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-xs font-bold tracking-[0.28em] text-green-700 uppercase">預訂前須知</p>
+        <h2 id="before-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-5xl">預訂前，請先了解這些事項。</h2>
+        <p class="mt-5 text-base leading-8 text-gray-600 md:text-lg">希望您在抵達島上之前，就能清楚掌握住宿需要知道的實用資訊。</p>
+      </div>
+
+      <div class="mx-auto mt-12 grid max-w-5xl gap-4 md:grid-cols-2">
+        {bookingNotes.map((item) => (
+          <article class="rounded-2xl bg-white p-6 shadow-sm">
+            <h3 class="font-bold text-gray-900">{item.title}</h3>
+            <p class="mt-3 text-sm leading-7 text-gray-600">{item.text}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="mx-auto mt-8 max-w-5xl rounded-2xl border border-green-200 bg-green-50 p-6 text-center sm:flex sm:items-center sm:justify-between sm:gap-6 sm:text-left">
+        <div>
+          <p class="text-sm font-bold text-gray-900">已經完成預訂了嗎？</p>
+          <p class="mt-1 text-sm leading-7 text-gray-600">繁體中文住宿指南整理了抵達港口、自助入住、Wi-Fi、BBQ 規則與住宿期間需要的實用資訊。</p>
+        </div>
+        <a href="/en/guest-guide/" class="mt-4 inline-flex shrink-0 rounded-full bg-green-700 px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-green-600 sm:mt-0">
+          開啟住宿指南 →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking CTA -->
+  <section class="relative overflow-hidden bg-green-950 py-20 text-white md:py-24" aria-labelledby="booking-en-title">
+    <img src="/night-bbq.webp" alt="" class="absolute inset-0 h-full w-full object-cover opacity-20" width="1500" height="2000" loading="lazy" aria-hidden="true" />
+    <div class="absolute inset-0 bg-green-950/70" aria-hidden="true"></div>
+    <div class="relative z-10 mx-auto max-w-3xl px-6 text-center">
+      <p class="text-xs font-bold tracking-[0.28em] text-green-300 uppercase">Oshima New Villa</p>
+      <h2 id="booking-en-title" class="mt-3 font-serif text-3xl font-bold md:text-5xl">把伊豆大島排進你的東京旅程。</h2>
+      <p class="mx-auto mt-5 max-w-2xl text-base leading-8 text-green-50/85 md:text-lg">
+        請在 Airbnb 查看最新空房、價格與預訂條件。
+      </p>
+      <a
+        href={bookingUrl}
+        data-booking-location="zh-tw_bottom"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-8 inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-bold text-green-900 shadow-xl transition-all hover:-translate-y-0.5 hover:bg-green-50"
+      >
+        在 Airbnb 查看空房 <span class="ml-2" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
+</InternationalLayout>

@@ -17,6 +17,24 @@ const siteUrl = 'https://oshima-new-villa.com/';
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 const ogImageUrl = new URL('/ogp-oshima-new-villa.jpg', siteUrl).href;
 const propertyImageUrl = new URL('/main-optimized.webp', siteUrl).href;
+const isHomePage = Astro.url.pathname === '/';
+const isGuestGuide = Astro.url.pathname.startsWith('/guest-guide');
+const hasLocalizedEquivalent = isHomePage || isGuestGuide;
+const localizedPath = (homePath: string, guidePath: string) => isGuestGuide ? guidePath : homePath;
+const languageLinks = [
+  { label: '日本語', short: 'JP', lang: 'ja', href: localizedPath('/', '/guest-guide/') },
+  { label: 'English', short: 'EN', lang: 'en', href: localizedPath('/en/', '/en/guest-guide/') },
+  { label: '한국어', short: 'KO', lang: 'ko', href: localizedPath('/ko/', '/ko/guest-guide/') },
+  { label: '繁體中文', short: '繁中', lang: 'zh-Hant', href: localizedPath('/zh-tw/', '/zh-tw/guest-guide/') },
+  { label: '简体中文', short: '简中', lang: 'zh-Hans', href: localizedPath('/zh-cn/', '/zh-cn/guest-guide/') },
+];
+const alternateUrls = {
+  ja: new URL(localizedPath('/', '/guest-guide/'), siteUrl).href,
+  en: new URL(localizedPath('/en/', '/en/guest-guide/'), siteUrl).href,
+  ko: new URL(localizedPath('/ko/', '/ko/guest-guide/'), siteUrl).href,
+  zhHant: new URL(localizedPath('/zh-tw/', '/zh-tw/guest-guide/'), siteUrl).href,
+  zhHans: new URL(localizedPath('/zh-cn/', '/zh-cn/guest-guide/'), siteUrl).href,
+};
 
 const homeAnchor = (hash: string) => Astro.url.pathname === '/' ? hash : `/${hash}`;
 
@@ -132,6 +150,12 @@ const footerNavItems = [
     <meta name="description" content={description} />
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
     <link rel="canonical" href={canonicalUrl} />
+    {hasLocalizedEquivalent && <link rel="alternate" hreflang="ja" href={alternateUrls.ja} />}
+    {hasLocalizedEquivalent && <link rel="alternate" hreflang="en" href={alternateUrls.en} />}
+    {hasLocalizedEquivalent && <link rel="alternate" hreflang="ko" href={alternateUrls.ko} />}
+    {hasLocalizedEquivalent && <link rel="alternate" hreflang="zh-Hant" href={alternateUrls.zhHant} />}
+    {hasLocalizedEquivalent && <link rel="alternate" hreflang="zh-Hans" href={alternateUrls.zhHans} />}
+    {hasLocalizedEquivalent && <link rel="alternate" hreflang="x-default" href={alternateUrls.ja} />}
     <link
       rel="preload"
       as="image"
@@ -212,6 +236,20 @@ const footerNavItems = [
               </a>
             ))
           }
+          <details class="group relative">
+            <summary class="flex cursor-pointer list-none items-center gap-1.5 whitespace-nowrap rounded-full border border-gray-200 bg-white px-3.5 py-2 text-xs font-bold text-gray-600 shadow-sm transition hover:border-green-300 hover:text-green-700 [&::-webkit-details-marker]:hidden">
+              <span aria-hidden="true">🌐</span>
+              <span>言語</span>
+              <span class="text-[10px] transition group-open:rotate-180" aria-hidden="true">▼</span>
+            </summary>
+            <div class="absolute right-0 mt-2 w-44 overflow-hidden rounded-2xl border border-gray-200 bg-white p-2 shadow-xl">
+              {languageLinks.map((item) => (
+                <a href={item.href} lang={item.lang} hreflang={item.lang} class="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-bold text-gray-700 transition-colors hover:bg-green-50 hover:text-green-800">
+                  <span>{item.label}</span><span class="text-xs text-gray-400">{item.short}</span>
+                </a>
+              ))}
+            </div>
+          </details>
           <a
             href="https://www.airbnb.jp/rooms/1602063410123886296?guests=6&adults=6&s=67&unique_share_id=a393ba49-61eb-4d8e-a4c9-95935b649d65"
             data-booking-location="header"
@@ -224,6 +262,18 @@ const footerNavItems = [
         </nav>
 
         <div class="flex shrink-0 items-center gap-2 xl:hidden">
+          <details class="group relative">
+            <summary class="flex cursor-pointer list-none items-center gap-1 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-bold text-gray-700 shadow-sm [&::-webkit-details-marker]:hidden" aria-label="言語を選択">
+              <span aria-hidden="true">🌐</span><span>JP</span>
+            </summary>
+            <div class="absolute right-0 mt-2 w-40 overflow-hidden rounded-2xl border border-gray-200 bg-white p-2 shadow-xl">
+              {languageLinks.map((item) => (
+                <a href={item.href} lang={item.lang} hreflang={item.lang} class="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-bold text-gray-700 hover:bg-green-50 hover:text-green-800">
+                  <span>{item.label}</span><span class="text-xs text-gray-400">{item.short}</span>
+                </a>
+              ))}
+            </div>
+          </details>
           <details id="mobile-menu" class="relative">
             <summary
               class="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-full border border-gray-200 bg-white text-gray-800 shadow-sm transition-colors hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 [&::-webkit-details-marker]:hidden"
@@ -302,6 +352,9 @@ const footerNavItems = [
           </div>
           <!-- メニュー一覧をループで表示 -->
           <nav class="flex flex-wrap justify-center gap-6 text-sm text-gray-400" aria-label="フッターナビゲーション">
+            {languageLinks.filter((item) => item.lang !== 'ja').map((item) => (
+              <a href={item.href} lang={item.lang} hreflang={item.lang} class="transition-colors hover:text-white">{item.label}</a>
+            ))}
             {
               footerNavItems.map((item) => (
                 <a href={item.href} class="transition-colors hover:text-white">

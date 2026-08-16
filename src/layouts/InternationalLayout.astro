@@ -1,0 +1,456 @@
+---
+import '../styles/global.css';
+
+type Locale = 'en' | 'ko' | 'zh-Hant' | 'zh-Hans';
+
+interface Props {
+  locale: Locale;
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const configs = {
+  en: {
+    slug: 'en',
+    htmlLang: 'en',
+    ogLocale: 'en_US',
+    shortLabel: 'EN',
+    defaultTitle: 'Oshima New Villa | Private Villa on Izu Oshima, Tokyo',
+    defaultDescription: 'Stay in a private villa on Izu Oshima, a volcanic island of Tokyo. Oshima New Villa sleeps up to 6 guests and offers a kitchen, BBQ space, free Wi-Fi and self check-in.',
+    nav: ['Why Oshima', 'The Villa', 'Things to Do', 'Getting Here', 'Before You Book'],
+    checkAvailability: 'Check availability',
+    checkAirbnb: 'Check Airbnb availability',
+    book: 'Book',
+    language: 'Language',
+    mainNavLabel: 'Main navigation',
+    mobileNavLabel: 'Mobile navigation',
+    openMenu: 'Open menu',
+    footerNavLabel: 'Footer navigation',
+    footer: ['The Villa', 'Things to Do', 'Getting Here', 'Before You Book', 'Guest Guide'],
+    address: '126-42 Shinkomi, Motomachi, Oshima-machi, Tokyo 100-0101, Japan',
+    backToTop: 'Back to top',
+    ogAlt: 'Oshima New Villa, a private villa surrounded by forest on Izu Oshima, Tokyo.',
+    fontCss: 'https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&family=Noto+Serif:wght@400;600;700&display=swap',
+    fontSans: 'Noto Sans',
+    fontSerif: 'Noto Serif',
+    structuredAmenities: ['Private entire villa', 'Sleeps up to 6 guests', 'Free Wi-Fi', 'Kitchen', 'Outdoor BBQ facilities', 'Free parking'],
+  },
+  ko: {
+    slug: 'ko',
+    htmlLang: 'ko',
+    ogLocale: 'ko_KR',
+    shortLabel: 'KO',
+    defaultTitle: '오시마 뉴 빌라 | 도쿄 이즈오시마의 독채 숙소',
+    defaultDescription: '도쿄의 화산섬 이즈오시마에서 즐기는 독채 빌라. 최대 6명 숙박, 주방, BBQ 공간, 무료 Wi-Fi, 주차장, 셀프 체크인을 제공합니다.',
+    nav: ['오시마의 매력', '빌라', '즐길 거리', '오시는 길', '예약 전 확인'],
+    checkAvailability: '예약 가능 여부 확인',
+    checkAirbnb: 'Airbnb에서 공실·요금 확인',
+    book: '예약',
+    language: '언어',
+    mainNavLabel: '메인 내비게이션',
+    mobileNavLabel: '모바일 내비게이션',
+    openMenu: '메뉴 열기',
+    footerNavLabel: '푸터 내비게이션',
+    footer: ['빌라', '즐길 거리', '오시는 길', '예약 전 확인', '숙박 가이드'],
+    address: '일본 도쿄도 오시마마치 모토마치 신코미 126-42, 100-0101',
+    backToTop: '맨 위로',
+    ogAlt: '도쿄 이즈오시마의 숲에 둘러싸인 독채 숙소 오시마 뉴 빌라.',
+    fontCss: 'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;600;700&display=swap',
+    fontSans: 'Noto Sans KR',
+    fontSerif: 'Noto Serif KR',
+    structuredAmenities: ['독채 빌라', '최대 6명 숙박', '무료 Wi-Fi', '주방', '야외 BBQ 설비', '무료 주차장'],
+  },
+  'zh-Hant': {
+    slug: 'zh-tw',
+    htmlLang: 'zh-Hant',
+    ogLocale: 'zh_TW',
+    shortLabel: '繁中',
+    defaultTitle: 'Oshima New Villa｜東京伊豆大島整棟包棟 Villa',
+    defaultDescription: '入住東京火山島伊豆大島的整棟包棟 Villa。最多可住 6 人，備有廚房、BBQ 空間、免費 Wi-Fi、停車場與自助入住。',
+    nav: ['大島的魅力', 'Villa 介紹', '島上體驗', '交通方式', '預訂前須知'],
+    checkAvailability: '查看空房',
+    checkAirbnb: '在 Airbnb 查看空房與價格',
+    book: '預訂',
+    language: '語言',
+    mainNavLabel: '主要導覽',
+    mobileNavLabel: '手機導覽',
+    openMenu: '開啟選單',
+    footerNavLabel: '頁尾導覽',
+    footer: ['Villa 介紹', '島上體驗', '交通方式', '預訂前須知', '住宿指南'],
+    address: '日本東京都大島町元町字新込126-42，100-0101',
+    backToTop: '回到頁首',
+    ogAlt: '位於東京伊豆大島森林中的整棟包棟住宿 Oshima New Villa。',
+    fontCss: 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&family=Noto+Serif+TC:wght@400;600;700&display=swap',
+    fontSans: 'Noto Sans TC',
+    fontSerif: 'Noto Serif TC',
+    structuredAmenities: ['整棟包棟 Villa', '最多 6 人', '免費 Wi-Fi', '廚房', '戶外 BBQ 設備', '免費停車場'],
+  },
+  'zh-Hans': {
+    slug: 'zh-cn',
+    htmlLang: 'zh-Hans',
+    ogLocale: 'zh_CN',
+    shortLabel: '简中',
+    defaultTitle: 'Oshima New Villa｜东京伊豆大岛整栋包租 Villa',
+    defaultDescription: '入住东京火山岛伊豆大岛的整栋包租 Villa。最多可住 6 人，配有厨房、BBQ 空间、免费 Wi-Fi、停车场和自助入住。',
+    nav: ['大岛的魅力', 'Villa 介绍', '岛上体验', '交通方式', '预订前须知'],
+    checkAvailability: '查看空房',
+    checkAirbnb: '在 Airbnb 查看空房与价格',
+    book: '预订',
+    language: '语言',
+    mainNavLabel: '主要导航',
+    mobileNavLabel: '手机导航',
+    openMenu: '打开菜单',
+    footerNavLabel: '页脚导航',
+    footer: ['Villa 介绍', '岛上体验', '交通方式', '预订前须知', '住宿指南'],
+    address: '日本东京都大岛町元町字新込126-42，100-0101',
+    backToTop: '返回顶部',
+    ogAlt: '位于东京伊豆大岛森林中的整栋包租住宿 Oshima New Villa。',
+    fontCss: null,
+    fontSans: 'PingFang SC',
+    fontSerif: 'Songti SC',
+    structuredAmenities: ['整栋包租 Villa', '最多 6 人', '免费 Wi-Fi', '厨房', '户外 BBQ 设备', '免费停车场'],
+  },
+} as const;
+
+const { locale, noindex = false } = Astro.props as Props;
+const config = configs[locale];
+const title = Astro.props.title ?? config.defaultTitle;
+const description = Astro.props.description ?? config.defaultDescription;
+
+const siteUrl = 'https://oshima-new-villa.com/';
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const isGuestGuide = Astro.url.pathname.includes('/guest-guide');
+const ogImageUrl = new URL('/ogp-oshima-new-villa.jpg', siteUrl).href;
+const propertyImageUrl = new URL('/main-optimized.webp', siteUrl).href;
+const bookingUrl = 'https://www.airbnb.com/rooms/1602063410123886296';
+const navBase = isGuestGuide ? `/${config.slug}/` : '';
+const bookingLocation = `${config.slug.replace('-', '_')}_header`;
+const fontVars = `--font-sans:'${config.fontSans}';--font-serif:'${config.fontSerif}';`;
+
+const navItems = [
+  { label: config.nav[0], href: `${navBase}#island` },
+  { label: config.nav[1], href: `${navBase}#villa` },
+  { label: config.nav[2], href: `${navBase}#things-to-do` },
+  { label: config.nav[3], href: `${navBase}#access` },
+  { label: config.nav[4], href: `${navBase}#before-booking` },
+];
+
+const languageLinks = [
+  { label: '日本語', short: 'JP', lang: 'ja', href: isGuestGuide ? '/guest-guide/' : '/' },
+  { label: 'English', short: 'EN', lang: 'en', href: isGuestGuide ? '/en/guest-guide/' : '/en/' },
+  { label: '한국어', short: 'KO', lang: 'ko', href: isGuestGuide ? '/ko/guest-guide/' : '/ko/' },
+  { label: '繁體中文', short: '繁中', lang: 'zh-Hant', href: isGuestGuide ? '/zh-tw/guest-guide/' : '/zh-tw/' },
+  { label: '简体中文', short: '简中', lang: 'zh-Hans', href: isGuestGuide ? '/zh-cn/guest-guide/' : '/zh-cn/' },
+];
+
+const altUrls = {
+  ja: new URL(isGuestGuide ? '/guest-guide/' : '/', siteUrl).href,
+  en: new URL(isGuestGuide ? '/en/guest-guide/' : '/en/', siteUrl).href,
+  ko: new URL(isGuestGuide ? '/ko/guest-guide/' : '/ko/', siteUrl).href,
+  'zh-Hant': new URL(isGuestGuide ? '/zh-tw/guest-guide/' : '/zh-tw/', siteUrl).href,
+  'zh-Hans': new URL(isGuestGuide ? '/zh-cn/guest-guide/' : '/zh-cn/', siteUrl).href,
+};
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': `${canonicalUrl}#webpage`,
+      url: canonicalUrl,
+      name: title,
+      description,
+      inLanguage: config.htmlLang,
+      isPartOf: { '@id': `${siteUrl}#website` },
+    },
+    {
+      '@type': 'LodgingBusiness',
+      '@id': `${siteUrl}#lodging-business`,
+      name: 'Oshima New Villa',
+      alternateName: '大島ニュービラ',
+      url: siteUrl,
+      description,
+      image: [
+        propertyImageUrl,
+        new URL('/day-salvia.webp', siteUrl).href,
+        new URL('/sofa-salvia.webp', siteUrl).href,
+        new URL('/night-bbq.webp', siteUrl).href,
+      ],
+      logo: new URL('/oshima_new_villa_logo_A_N.png', siteUrl).href,
+      address: {
+        '@type': 'PostalAddress',
+        postalCode: '100-0101',
+        addressRegion: 'Tokyo',
+        addressLocality: 'Oshima-machi',
+        streetAddress: '126-42 Shinkomi, Motomachi',
+        addressCountry: 'JP',
+      },
+      checkinTime: '15:00',
+      checkoutTime: '10:00',
+      petsAllowed: false,
+      smokingAllowed: false,
+      sameAs: ['https://www.airbnb.com/rooms/1602063410123886296'],
+      amenityFeature: config.structuredAmenities.map((name) => ({ '@type': 'LocationFeatureSpecification', name, value: true })),
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang={config.htmlLang} class="scroll-smooth" style={fontVars}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="ja" href={altUrls.ja} />
+    <link rel="alternate" hreflang="en" href={altUrls.en} />
+    <link rel="alternate" hreflang="ko" href={altUrls.ko} />
+    <link rel="alternate" hreflang="zh-Hant" href={altUrls['zh-Hant']} />
+    <link rel="alternate" hreflang="zh-Hans" href={altUrls['zh-Hans']} />
+    <link rel="alternate" hreflang="x-default" href={altUrls.ja} />
+    <link
+      rel="preload"
+      as="image"
+      href="/main-optimized.webp"
+      imagesrcset="/main-optimized-640.webp 640w, /main-optimized-960.webp 960w, /main-optimized.webp 1170w"
+      imagesizes="100vw"
+      fetchpriority="high"
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={config.ogLocale} />
+    <meta property="og:site_name" content="Oshima New Villa" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:alt" content={config.ogAlt} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={config.ogAlt} />
+
+    <meta name="theme-color" content="#15803d" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    {config.fontCss && <link rel="preconnect" href="https://fonts.googleapis.com" />}
+    {config.fontCss && <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />}
+    {config.fontCss && <link href={config.fontCss} rel="stylesheet" />}
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+    <!-- Google Tag Manager -->
+    <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-M3WQTD59');</script>
+    <!-- End Google Tag Manager -->
+  </head>
+  <body class="min-h-screen flex flex-col antialiased bg-orange-50 text-gray-800">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M3WQTD59"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <header class="fixed inset-x-0 top-0 z-50 border-b border-gray-200/80 bg-white/90 shadow-sm backdrop-blur-md">
+      <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+        <a href={`/${config.slug}/`} class="group flex min-w-0 items-center gap-2.5 transition-opacity hover:opacity-80 sm:gap-3">
+          <img
+            src="/oshima_new_villa_logo_A_N.png"
+            alt="Oshima New Villa"
+            class="h-10 w-auto shrink-0 object-contain"
+            width="1267"
+            height="1247"
+          />
+          <span class="truncate font-serif text-base font-bold tracking-wide text-gray-900 sm:text-lg">Oshima New Villa</span>
+        </a>
+
+        <nav class="hidden items-center gap-4 xl:flex" aria-label={config.mainNavLabel}>
+          {navItems.map((item) => (
+            <a href={item.href} class="whitespace-nowrap text-sm font-bold tracking-wide text-gray-600 transition-colors hover:text-green-700">
+              {item.label}
+            </a>
+          ))}
+
+          <details class="group relative">
+            <summary class="flex cursor-pointer list-none items-center gap-1.5 whitespace-nowrap rounded-full border border-gray-200 bg-white px-3.5 py-2 text-xs font-bold text-gray-600 shadow-sm transition hover:border-green-300 hover:text-green-700 [&::-webkit-details-marker]:hidden">
+              <span aria-hidden="true">🌐</span>
+              <span>{config.language}</span>
+              <span class="text-[10px] transition group-open:rotate-180" aria-hidden="true">▼</span>
+            </summary>
+            <div class="absolute right-0 mt-2 w-44 overflow-hidden rounded-2xl border border-gray-200 bg-white p-2 shadow-xl">
+              {languageLinks.map((item) => (
+                <a
+                  href={item.href}
+                  lang={item.lang}
+                  hreflang={item.lang}
+                  class:list={[
+                    'flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-bold transition-colors hover:bg-green-50 hover:text-green-800',
+                    item.lang === config.htmlLang ? 'bg-green-50 text-green-800' : 'text-gray-700',
+                  ]}
+                >
+                  <span>{item.label}</span><span class="text-xs text-gray-400">{item.short}</span>
+                </a>
+              ))}
+            </div>
+          </details>
+
+          <a
+            href={bookingUrl}
+            data-booking-location={bookingLocation}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="ml-1 whitespace-nowrap rounded-full bg-green-700 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-green-700/20 transition-all hover:-translate-y-0.5 hover:bg-green-600 hover:shadow-lg"
+          >
+            {config.checkAvailability}
+          </a>
+        </nav>
+
+        <div class="flex shrink-0 items-center gap-2 xl:hidden">
+          <details class="group relative">
+            <summary class="flex cursor-pointer list-none items-center gap-1 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-bold text-gray-700 shadow-sm [&::-webkit-details-marker]:hidden" aria-label={config.language}>
+              <span aria-hidden="true">🌐</span><span>{config.shortLabel}</span>
+            </summary>
+            <div class="absolute right-0 mt-2 w-40 overflow-hidden rounded-2xl border border-gray-200 bg-white p-2 shadow-xl">
+              {languageLinks.map((item) => (
+                <a href={item.href} lang={item.lang} hreflang={item.lang} class="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-bold text-gray-700 hover:bg-green-50 hover:text-green-800">
+                  <span>{item.label}</span><span class="text-xs text-gray-400">{item.short}</span>
+                </a>
+              ))}
+            </div>
+          </details>
+
+          <details id={`mobile-menu-${config.slug}`} class="relative">
+            <summary
+              class="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-full border border-gray-200 bg-white text-gray-800 shadow-sm transition-colors hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 [&::-webkit-details-marker]:hidden"
+              aria-label={config.openMenu}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </summary>
+            <div class="fixed inset-x-0 top-[65px] max-h-[calc(100dvh-65px)] overflow-y-auto border-t border-green-800 bg-green-950 text-white shadow-2xl">
+              <nav class="mx-auto max-w-3xl px-6 py-7" aria-label={config.mobileNavLabel}>
+                <ul class="divide-y divide-white/10">
+                  {navItems.map((item) => (
+                    <li>
+                      <a href={item.href} class={`mobile-menu-link-${config.slug} flex items-center justify-between gap-4 py-4 text-sm font-bold text-white transition-colors hover:text-green-200`}>
+                        <span>{item.label}</span><span class="text-green-300" aria-hidden="true">→</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={bookingUrl}
+                  data-booking-location={bookingLocation}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="mt-7 flex w-full items-center justify-center rounded-full bg-white px-6 py-3.5 text-sm font-bold text-green-900 shadow-sm transition-colors hover:bg-green-50"
+                >
+                  {config.checkAirbnb}
+                </a>
+              </nav>
+            </div>
+          </details>
+          <a
+            href={bookingUrl}
+            data-booking-location={bookingLocation}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="rounded-full bg-green-700 px-4 py-2 text-sm font-bold text-white shadow-md"
+          >
+            {config.book}
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1"><slot /></main>
+
+    <footer class="bg-gray-900 pt-16 pb-8 text-white">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
+          <div class="flex flex-col items-center md:items-start">
+            <a href={`/${config.slug}/`} class="flex items-center gap-3 transition-opacity hover:opacity-80">
+              <img src="/oshima_new_villa_logo_A_W.png" alt="Oshima New Villa" class="h-12 w-auto object-contain opacity-90" width="1267" height="1247" />
+              <span class="font-serif text-xl font-bold tracking-wide text-white">Oshima New Villa</span>
+            </a>
+            <p class="mt-4 text-sm text-gray-400">{config.address}</p>
+          </div>
+          <nav class="flex flex-wrap justify-center gap-6 text-sm text-gray-400" aria-label={config.footerNavLabel}>
+            <a href={`${navBase}#villa`} class="transition-colors hover:text-white">{config.footer[0]}</a>
+            <a href={`${navBase}#things-to-do`} class="transition-colors hover:text-white">{config.footer[1]}</a>
+            <a href={`${navBase}#access`} class="transition-colors hover:text-white">{config.footer[2]}</a>
+            <a href={`${navBase}#before-booking`} class="transition-colors hover:text-white">{config.footer[3]}</a>
+            <a href={`/${config.slug}/guest-guide/`} class="transition-colors hover:text-white">{config.footer[4]}</a>
+          </nav>
+        </div>
+        <div class="mt-8 flex flex-wrap justify-center gap-x-5 gap-y-2 border-t border-gray-800 pt-7 text-xs text-gray-500">
+          {languageLinks.map((item) => (
+            <a href={item.href} lang={item.lang} hreflang={item.lang} class="transition-colors hover:text-white">{item.label}</a>
+          ))}
+        </div>
+        <div class="mt-6 text-center text-xs text-gray-500">
+          <p>&copy; {new Date().getFullYear()} Oshima New Villa. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <a
+      href="#"
+      id={`back-to-top-${config.slug}`}
+      class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-green-700 text-white shadow-lg opacity-0 transition-opacity duration-300 hover:bg-green-600 pointer-events-none md:bottom-10 md:right-10"
+      aria-label={config.backToTop}
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+      </svg>
+    </a>
+
+    <script define:vars={{ localeSlug: config.slug }}>
+      const mobileMenu = document.getElementById(`mobile-menu-${localeSlug}`);
+      if (mobileMenu instanceof HTMLDetailsElement) {
+        mobileMenu.querySelectorAll(`.mobile-menu-link-${localeSlug}`).forEach((link) => {
+          link.addEventListener('click', () => { mobileMenu.open = false; });
+        });
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') mobileMenu.open = false;
+        });
+        document.addEventListener('click', (event) => {
+          if (mobileMenu.open && event.target instanceof Node && !mobileMenu.contains(event.target)) mobileMenu.open = false;
+        });
+      }
+
+      const backToTopBtn = document.getElementById(`back-to-top-${localeSlug}`);
+      if (backToTopBtn) {
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 400) {
+            backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+            backToTopBtn.classList.add('opacity-100', 'pointer-events-auto');
+          } else {
+            backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+            backToTopBtn.classList.remove('opacity-100', 'pointer-events-auto');
+          }
+        });
+        backToTopBtn.addEventListener('click', (event) => {
+          event.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  :root { font-family: var(--font-sans), sans-serif; }
+  h1, h2, h3, h4, h5, h6, .font-serif { font-family: var(--font-serif), serif; }
+</style>

@@ -1,0 +1,15 @@
+---
+import InternationalLayout from './InternationalLayout.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const props = Astro.props as Props;
+---
+
+<InternationalLayout locale="en" {...props}>
+  <slot />
+</InternationalLayout>

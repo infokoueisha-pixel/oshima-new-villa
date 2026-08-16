@@ -1,0 +1,560 @@
+---
+import InternationalLayout from '../../layouts/InternationalLayout.astro';
+
+const pageTitle = '住宿指南｜Oshima New Villa';
+const pageDescription = '東京伊豆大島 Oshima New Villa 住宿指南。介紹抵達港口、公車、Wi-Fi、自助入住、提供物品、BBQ 規則、敷地內屋主所有設備等住宿期間需要的實用資訊。';
+
+const quickLinks = [
+  { label: '抵達・入住', href: '#arrival', icon: '🚢' },
+  { label: 'Wi-Fi', href: '#wifi', icon: '📶' },
+  { label: '提供物品', href: '#guest-info', icon: '🧳' },
+  { label: '美食・遊玩・採買', href: '#island-guide', icon: '🗺️' },
+  { label: 'BBQ・涼亭', href: '#bbq', icon: '🔥' },
+  { label: '森林時光', href: '#forest-time', icon: '🌙' },
+];
+
+const providedItems = [
+  '4 張單人床・2 張沙發床',
+  '6 人用餐空間・浴室與廁所分離',
+  '冰箱・微波爐・電子鍋・烤麵包機',
+  '電熱水壺・瓦斯爐・基本烹飪用具・餐具',
+  '浴缸・淋浴・免治馬桶',
+  '浴巾・毛巾・牙刷・室內拖鞋',
+  '洗髮精・潤髮乳・沐浴乳',
+  'BBQ 烤爐・長椅',
+  'Wi-Fi 設備（不保證連線與速度）',
+];
+
+const complimentaryItems = [
+  '桌遊',
+  '玩具',
+  '水槍等玩水用品',
+  '戶外拖鞋',
+  '洗面乳',
+  'Bluetooth 音響',
+];
+
+const ownerFacilities = [
+  '洗衣機',
+  '瓦斯烘衣機',
+  '貨櫃屋內淋浴間',
+  '貨櫃屋內廁所',
+];
+
+const not提供Items = [
+  '睡衣・睡袍',
+  '刮鬍刀',
+];
+
+const bbqCoreItems = [
+  'BBQ 烤爐',
+  '烤網・鐵板',
+  '夾子・工作手套',
+  '折疊桌',
+  '水槽・水桶',
+];
+---
+
+<InternationalLayout locale="zh-Hant" title={pageTitle} description={pageDescription} noindex={true}>
+  <div class="bg-orange-50">
+    <!-- Hero -->
+    <section class="relative overflow-hidden pt-24 md:pt-28">
+      <div class="absolute inset-0">
+        <img
+          src="/forest-optimized.webp"
+          alt="Forest surrounding Oshima New Villa"
+          class="h-full w-full object-cover"
+          width="1500"
+          height="2000"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <div class="absolute inset-0 bg-green-950/65"></div>
+      </div>
+      <div class="relative mx-auto max-w-5xl px-6 py-20 text-center text-white md:py-28">
+        <p class="text-xs font-bold tracking-[0.3em] text-green-200 uppercase">住宿指南</p>
+        <h1 class="mt-4 font-serif text-4xl font-bold tracking-wide sm:text-5xl">歡迎來到 Oshima New Villa。</h1>
+        <p class="mx-auto mt-6 max-w-2xl text-sm leading-8 text-white/90 sm:text-base">
+          感謝您渡海而來，走進伊豆大島的這片森林。<br class="hidden sm:block" />
+          請把這份指南當作旅途中實用的小地圖，讓您更輕鬆自在地享受島上時光。
+        </p>
+        <div class="mx-auto mt-8 inline-flex rounded-full border border-white/30 bg-white/10 px-5 py-2 text-xs font-bold tracking-wide text-white/90 backdrop-blur-sm">
+          住宿旅客專用
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick navigation -->
+    <section class="border-b border-orange-100 bg-white py-8">
+      <div class="mx-auto max-w-6xl px-6">
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          {quickLinks.map((item) => (
+            <a
+              href={item.href}
+              class="flex min-h-24 flex-col items-center justify-center rounded-2xl border border-gray-200 bg-white px-3 py-4 text-center shadow-sm transition hover:-translate-y-0.5 hover:border-green-300 hover:shadow-md"
+            >
+              <span class="text-2xl" aria-hidden="true">{item.icon}</span>
+              <span class="mt-2 text-xs font-bold leading-5 text-gray-800">{item.label}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Arrival -->
+    <section id="arrival" class="scroll-mt-28 py-16 md:py-24">
+      <div class="mx-auto max-w-6xl px-6">
+        <div class="max-w-3xl">
+          <p class="text-xs font-bold tracking-[0.28em] text-green-700 uppercase">抵達前</p>
+          <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">抵達前請確認</h2>
+          <p class="mt-5 leading-8 text-gray-600">伊豆大島的入港地可能因當天海況而變更。出發前請確認最新資訊。</p>
+        </div>
+
+        <div class="mt-10 grid gap-5 lg:grid-cols-3">
+          <article class="rounded-3xl border border-orange-100 bg-white p-7 shadow-sm">
+            <div class="text-3xl" aria-hidden="true">🚨</div>
+            <h3 class="mt-4 text-xl font-bold text-gray-900">今日入港地</h3>
+            <p class="mt-3 text-sm leading-7 text-gray-600">請確認您的船班將抵達元町港或岡田港。高速噴射船的入出港地通常會在當天早上約 6:00 公布。</p>
+            <a
+              href="https://www.tokaikisen.co.jp/schedule/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-5 inline-flex items-center gap-1 text-sm font-bold text-green-700 hover:underline"
+            >
+              查看東海汽船運航狀況 <span aria-hidden="true">↗</span>
+            </a>
+          </article>
+
+          <article class="rounded-3xl border border-orange-100 bg-white p-7 shadow-sm">
+            <div class="text-3xl" aria-hidden="true">🚌</div>
+            <h3 class="mt-4 text-xl font-bold text-gray-900">公車時刻表</h3>
+            <p class="mt-3 text-sm leading-7 text-gray-600">最近的站牌是「大島高校前」，步行至 Villa 約 9 分鐘。時刻表可能依當日入出港地調整，搭車前請確認最新的公園線時刻表。</p>
+            <a
+              href="https://www.oshima-bus.com/rosen-bus.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-5 inline-flex items-center gap-1 text-sm font-bold text-green-700 hover:underline"
+            >
+              查看大島巴士時刻表 <span aria-hidden="true">↗</span>
+            </a>
+          </article>
+
+          <article class="rounded-3xl border border-orange-100 bg-white p-7 shadow-sm">
+            <div class="text-3xl" aria-hidden="true">🔑</div>
+            <h3 class="mt-4 text-xl font-bold text-gray-900">入住</h3>
+            <p class="mt-3 text-sm leading-7 text-gray-600">15:00 起可入住，退房時間為 10:00 前。設施採無人管理，請使用敷地內設置的平板自助辦理入住。</p>
+            <p class="mt-4 rounded-2xl bg-orange-50 px-4 py-3 text-xs font-medium leading-6 text-gray-600">距元町港車程約 5 分鐘／岡田港約 11 分鐘／大島機場約 6 分鐘</p>
+          </article>
+        </div>
+
+        <div class="mt-6 rounded-3xl border border-green-100 bg-green-50/70 p-6 md:flex md:items-center md:justify-between md:gap-8">
+          <div>
+            <h3 class="font-serif text-lg font-bold text-gray-900">島上移動建議租車</h3>
+            <p class="mt-2 text-sm leading-7 text-gray-600">若想自由前往三原山、裏砂漠、波浮港、御神火溫泉及採買地點，租車最方便。車輛數量有限，建議與住宿一起提早預訂。</p>
+          </div>
+          <a href="https://www.oshima-navi.com/transportation/" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex shrink-0 text-sm font-bold text-green-700 hover:underline md:mt-0">查看島內交通資訊 ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wi-Fi -->
+    <section id="wifi" class="scroll-mt-28 bg-green-950 py-16 text-white md:py-20">
+      <div class="mx-auto max-w-5xl px-6">
+        <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <div>
+            <p class="text-xs font-bold tracking-[0.28em] text-green-300 uppercase">Wi-Fi</p>
+            <h2 class="mt-3 font-serif text-3xl font-bold">提供免費 Wi-Fi</h2>
+            <p class="mt-5 text-sm leading-8 text-white/75">
+              島內網路狀況、通訊障礙、天候或設備狀態可能造成暫時無法連線或速度下降。不保證持續連線或特定網路速度。
+            </p>
+            <p class="mt-3 text-sm leading-7 text-white/75">如有重要線上會議等需要穩定網路的情況，請準備備用網路方式。</p>
+          </div>
+          <div class="rounded-3xl border border-white/15 bg-white/10 p-7 backdrop-blur-sm sm:p-8">
+            <p class="text-xs font-bold tracking-[0.2em] text-green-300 uppercase">連線資訊</p>
+            <h3 class="mt-3 text-xl font-bold">SSID 與密碼會在 Villa 內提供</h3>
+            <p class="mt-4 text-sm leading-7 text-white/75">
+              基於安全考量，Wi-Fi 連線資訊不會公開於網站。入住後請查看設施內的相關 說明。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Guest info -->
+    <section id="guest-info" class="scroll-mt-28 py-16 md:py-24">
+      <div class="mx-auto max-w-6xl px-6">
+        <div class="max-w-3xl">
+          <p class="text-xs font-bold tracking-[0.28em] text-green-700 uppercase">住宿資訊</p>
+          <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">有什麼・沒有什麼</h2>
+          <p class="mt-5 leading-8 text-gray-600">
+            我們將物品分成三類：住宿設備與基本備品、可能免費提供但不保證一定有的物品，以及原則上不提供的物品。
+          </p>
+        </div>
+
+        <div class="mt-10 grid gap-6 lg:grid-cols-3">
+          <article class="rounded-3xl border border-green-200 bg-green-50 p-7">
+            <p class="text-xs font-bold tracking-[0.2em] text-green-700 uppercase">提供</p>
+            <h3 class="mt-2 text-xl font-bold text-gray-900">住宿時會提供</h3>
+            <ul class="mt-5 space-y-3 text-sm leading-7 text-gray-700">
+              {providedItems.map((item) => (
+                <li class="flex gap-3"><span class="mt-0.5 text-green-700" aria-hidden="true">●</span><span>{item}</span></li>
+              ))}
+            </ul>
+            <p class="mt-5 border-t border-green-200 pt-5 text-xs leading-6 text-green-950/75">
+              以下為主要住宿設備與基本備品。Wi-Fi 設備有提供，但請同時確認上方的連線說明。
+            </p>
+          </article>
+
+          <article class="rounded-3xl border border-sky-200 bg-sky-50 p-7">
+            <p class="text-xs font-bold tracking-[0.2em] text-sky-800 uppercase">免費使用</p>
+            <h3 class="mt-2 text-xl font-bold text-gray-900">有時可免費使用</h3>
+            <p class="mt-4 text-sm leading-7 text-gray-700">免費借用品・服務用品</p>
+            <ul class="mt-3 space-y-3 text-sm leading-7 text-gray-700">
+              {complimentaryItems.map((item) => (
+                <li class="flex gap-3"><span class="mt-0.5 text-sky-700" aria-hidden="true">●</span><span>{item}</span></li>
+              ))}
+            </ul>
+            <p class="mt-5 text-xs leading-6 text-sky-950/75">
+              這些物品不屬於住宿設備或基本備品。品項、種類與數量可能變更，也可能因損壞、遺失或補充狀況而無法使用。不保證特定物品一定有。
+            </p>
+
+            <div class="mt-6 border-t border-sky-200 pt-6">
+              <p class="text-sm font-bold text-gray-900">敷地內屋主所有設備</p>
+              <ul class="mt-3 space-y-3 text-sm leading-7 text-gray-700">
+                {ownerFacilities.map((item) => (
+                  <li class="flex gap-3"><span class="mt-0.5 text-sky-700" aria-hidden="true">●</span><span>{item}</span></li>
+                ))}
+              </ul>
+              <p class="mt-4 text-xs leading-6 text-sky-950/75">
+                這些設備位於同一敷地內，由屋主所有並管理。 <strong>這些設備不包含在 Oshima New Villa 的住宿設備或附屬設施中。</strong> 有開放時，住宿旅客可免費使用；但可能因維護、故障、清潔等原因暫停使用。
+              </p>
+            </div>
+          </article>
+
+          <article class="rounded-3xl border border-amber-200 bg-amber-50 p-7">
+            <p class="text-xs font-bold tracking-[0.2em] text-amber-800 uppercase">不提供</p>
+            <h3 class="mt-2 text-xl font-bold text-gray-900">原則上不提供</h3>
+            <ul class="mt-5 space-y-3 text-sm leading-7 text-gray-700">
+              {not提供Items.map((item) => (
+                <li class="flex gap-3"><span class="mt-0.5 text-amber-700" aria-hidden="true">●</span><span>{item}</span></li>
+              ))}
+            </ul>
+            <p class="mt-5 border-t border-amber-200 pt-5 text-xs leading-6 text-amber-950/75">
+              如有需要，請自行準備。
+            </p>
+
+            <div class="mt-6 rounded-2xl border border-amber-200 bg-white/80 p-5">
+              <p class="text-sm font-bold text-gray-900">🔥 僅限要 BBQ 的旅客</p>
+              <p class="mt-2 text-xs leading-6 text-gray-600">
+                不提供木炭、引火劑、長柄點火器、食材與飲料。只有要使用 BBQ 時才需要自行準備。
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Island guide -->
+    <section id="island-guide" class="scroll-mt-28 bg-white py-16 md:py-24">
+      <div class="mx-auto max-w-6xl px-6">
+        <div class="text-center">
+          <p class="text-xs font-bold tracking-[0.28em] text-green-700 uppercase">大島周邊</p>
+          <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">吃・玩・買</h2>
+        </div>
+        <div class="mt-10 grid gap-5 md:grid-cols-3">
+          <a
+            href="https://app.notion.com/p/2e024b6861ae80a5baf2f65672232b32?pvs=21"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group rounded-3xl border border-gray-200 bg-orange-50 p-7 transition hover:-translate-y-1 hover:shadow-lg"
+          >
+            <span class="text-3xl" aria-hidden="true">🍴</span>
+            <h3 class="mt-4 text-xl font-bold text-gray-900">美食</h3>
+            <p class="mt-3 text-sm leading-7 text-gray-600">由我們的團隊與島上居民推薦的元町美食指南。</p>
+            <p class="mt-5 text-sm font-bold text-green-700">查看美食指南 <span aria-hidden="true">↗</span></p>
+          </a>
+          <a
+            href="https://www.izu-oshima.or.jp/play.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group rounded-3xl border border-gray-200 bg-orange-50 p-7 transition hover:-translate-y-1 hover:shadow-lg"
+          >
+            <span class="text-3xl" aria-hidden="true">🌋</span>
+            <h3 class="mt-4 text-xl font-bold text-gray-900">遊玩</h3>
+            <p class="mt-3 text-sm leading-7 text-gray-600">自然、活動與觀光景點的最新資訊，也請參考伊豆大島觀光協會。</p>
+            <p class="mt-5 text-sm font-bold text-green-700">查看觀光協會 <span aria-hidden="true">↗</span></p>
+          </a>
+          <a
+            href="/#shopping-guide"
+            class="group rounded-3xl border border-gray-200 bg-orange-50 p-7 transition hover:-translate-y-1 hover:shadow-lg"
+          >
+            <span class="text-3xl" aria-hidden="true">🛒</span>
+            <h3 class="mt-4 text-xl font-bold text-gray-900">採買</h3>
+            <p class="mt-3 text-sm leading-7 text-gray-600">查看可購買 BBQ 食材、食品、飲料與日用品的地點。</p>
+            <p class="mt-5 text-sm font-bold text-green-700">查看採買資訊 <span aria-hidden="true">↗</span></p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- BBQ -->
+    <section id="bbq" class="scroll-mt-28 py-16 md:py-24">
+      <div class="mx-auto max-w-6xl px-6">
+        <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div class="lg:sticky lg:top-28">
+            <p class="text-xs font-bold tracking-[0.28em] text-green-700 uppercase">涼亭 BBQ</p>
+            <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">圍著火光相聚。<br />涼亭使用方式</h2>
+            <p class="mt-5 leading-8 text-gray-600">在森林環繞的環境中安全享受 BBQ 的實用指南。</p>
+
+            <div class="mt-7 rounded-3xl border-2 border-red-200 bg-red-50 p-6">
+              <p class="text-sm font-bold text-red-900">🔥 如要使用 BBQ</p>
+              <p class="mt-2 text-sm leading-7 text-red-900/80">
+                BBQ 烤爐與長椅等基本設備已有提供。 <strong>不提供木炭、引火劑、長柄點火器、食材與飲料。</strong><br />如要 BBQ，請自行準備需要的物品。
+              </p>
+            </div>
+
+            <img
+              src="/night-bbq.webp"
+              alt="涼亭 BBQ area at night"
+              class="mt-7 aspect-[4/3] w-full rounded-3xl object-cover shadow-lg"
+              width="1500"
+              height="2000"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="space-y-5">
+            <details open class="group rounded-3xl border border-gray-200 bg-white shadow-sm">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 font-bold text-gray-900 [&::-webkit-details-marker]:hidden">
+                <span>1. 基本 BBQ 設備</span>
+                <span class="text-green-700 transition group-open:rotate-45" aria-hidden="true">＋</span>
+              </summary>
+              <div class="border-t border-gray-100 px-6 py-6">
+                <ul class="grid gap-3 sm:grid-cols-2">
+                  {bbqCoreItems.map((item) => (
+                    <li class="rounded-2xl bg-orange-50 px-4 py-3 text-sm font-medium text-gray-700">{item}</li>
+                  ))}
+                </ul>
+                <p class="mt-5 text-sm leading-7 text-gray-600">請查看 Salvia 廚房流理台上的外帶箱，以及涼亭內的棕色收納櫃。</p>
+                <p class="mt-3 text-xs leading-6 text-gray-500">可使用 Salvia 廚房內的餐具。Bluetooth 音響等免費借用品與必要的 BBQ 設備不同，不保證一定可使用。</p>
+              </div>
+            </details>
+
+            <details class="group rounded-3xl border border-gray-200 bg-white shadow-sm">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 font-bold text-gray-900 [&::-webkit-details-marker]:hidden">
+                <span>2. 組裝烤爐與桌子</span>
+                <span class="text-green-700 transition group-open:rotate-45" aria-hidden="true">＋</span>
+              </summary>
+              <div class="border-t border-gray-100 px-6 py-6 text-sm leading-8 text-gray-700">
+                <ol class="space-y-4">
+                  <li><strong>① 確認零件：</strong> 從黑色袋子中取出烤爐本體、腳架零件與螺絲。</li>
+                  <li><strong>② 組裝腳架：</strong> 用細桿與螺絲連接長腳架零件，組成兩組腳架。</li>
+                  <li><strong>③ 安裝腳架：</strong> 將組好的腳架固定在烤爐兩側並鎖緊螺絲。</li>
+                  <li><strong>④ 安裝下方支撐板：</strong> 將烤爐立起後，把支撐板安裝到腳架下方。</li>
+                  <li><strong>⑤ 放上烤網或鐵板：</strong> 等木炭充分點燃後，再將烤網或鐵板放到烤爐上。</li>
+                </ol>
+                <div class="mt-5 rounded-2xl bg-amber-50 p-4 text-amber-950"><strong>請注意：</strong> 組裝烤爐時請戴工作手套。讓烹調區與用餐區稍微分開，會更安全也更舒適。</div>
+              </div>
+            </details>
+
+            <details class="group rounded-3xl border border-gray-200 bg-white shadow-sm">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 font-bold text-gray-900 [&::-webkit-details-marker]:hidden">
+                <span>3. 點燃木炭</span>
+                <span class="text-green-700 transition group-open:rotate-45" aria-hidden="true">＋</span>
+              </summary>
+              <div class="border-t border-gray-100 px-6 py-6 text-sm leading-8 text-gray-700">
+                <ol class="space-y-4">
+                  <li><strong>① 放置引火劑：</strong> 將引火劑放在烤爐底部。</li>
+                  <li><strong>② 堆放木炭：</strong> 將木炭堆在引火劑周圍。</li>
+                  <li><strong>③ 點火：</strong> 使用長柄點火器點燃引火劑。</li>
+                  <li><strong>④ 等火勢擴散：</strong> 剛點火後不要反覆移動木炭，請稍等火勢自然擴散。</li>
+                  <li><strong>⑤ 攤開木炭：</strong> 木炭表面開始變白且火勢穩定後，用夾子均勻攤開，再放上烤網或鐵板。</li>
+                </ol>
+                <p class="mt-5 rounded-2xl bg-gray-50 p-4 text-xs leading-6 text-gray-600">點火時間會因木炭種類、數量與天候而異。燃火期間請勿離開現場。</p>
+              </div>
+            </details>
+
+            <details class="group rounded-3xl border border-gray-200 bg-white shadow-sm">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 font-bold text-gray-900 [&::-webkit-details-marker]:hidden">
+                <span>4. 手持煙火</span>
+                <span class="text-green-700 transition group-open:rotate-45" aria-hidden="true">＋</span>
+              </summary>
+              <div class="border-t border-gray-100 px-6 py-6 text-sm leading-8 text-gray-700">
+                <p>僅可使用手持煙火。如遇強風、乾燥或其他安全疑慮，當天可能會請您停止使用煙火。</p>
+                <ul class="mt-4 space-y-3">
+                  <li><strong>地點：</strong> 請在敷地中央的混凝土道路區域，或涼亭水槽周邊使用。森林內與 Salvia Villa 室內禁止施放煙火。</li>
+                  <li><strong>熄火：</strong> 請先在水桶裝水，使用後將煙火完全浸水熄滅。</li>
+                  <li><strong>禁止：</strong> 禁止使用升空型煙火與噴泉型煙火。</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="group rounded-3xl border border-gray-200 bg-white shadow-sm">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 font-bold text-gray-900 [&::-webkit-details-marker]:hidden">
+                <span>5. 用火安全與收拾</span>
+                <span class="text-green-700 transition group-open:rotate-45" aria-hidden="true">＋</span>
+              </summary>
+              <div class="border-t border-gray-100 px-6 py-6 text-sm leading-8 text-gray-700">
+                <ul class="space-y-3">
+                  <li><strong>看管火源：</strong> 火還在燃燒時請勿離開現場。</li>
+                  <li><strong>木炭：</strong> 使用後請確認火種完全熄滅，並依現場說明處理木炭。</li>
+                  <li><strong>器具：</strong> 請使用水槽旁的清潔劑，簡單清洗烤網、鐵板、夾子與盤子上的油污及食物殘渣。</li>
+                  <li><strong>清洗後：</strong> 清洗過的工具，以及仍有餘溫的烤爐或桌子，請勿放回收納櫃。請放在水槽周邊或收納櫃旁，清潔人員會再次清洗並收納。</li>
+                  <li><strong>垃圾：</strong> 垃圾請分類後丟入 Salvia Villa 內指定垃圾桶。</li>
+                  <li><strong>天候：</strong> 強風或惡劣天候時，為安全起見請勿使用 BBQ。</li>
+                </ul>
+                <div class="mt-5 rounded-2xl border border-red-100 bg-red-50 p-4 text-xs leading-6 text-red-900">建築物內、森林等禁止用火區域請勿使用火源。吸菸也請遵守現場規定，使用火源時務必格外小心。</div>
+              </div>
+            </details>
+
+            <details class="group rounded-3xl border border-gray-200 bg-white shadow-sm">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 font-bold text-gray-900 [&::-webkit-details-marker]:hidden">
+                <span>6. 夏季昆蟲</span>
+                <span class="text-green-700 transition group-open:rotate-45" aria-hidden="true">＋</span>
+              </summary>
+              <div class="border-t border-gray-100 px-6 py-6 text-sm leading-8 text-gray-700">
+                <p>Oshima New Villa 四周是森林，因此昆蟲數量會因季節與時段而增加。尤其夏季夜晚，昆蟲容易聚集在涼亭燈光附近。把用餐空間稍微移到遠離燈光的草地側，通常能更舒適地享受 BBQ。</p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Forest time -->
+    <section id="forest-time" class="scroll-mt-28 bg-green-950 py-16 text-white md:py-24">
+      <div class="mx-auto max-w-6xl px-6">
+        <div class="max-w-3xl">
+          <p class="text-xs font-bold tracking-[0.28em] text-green-300 uppercase">森林時光</p>
+          <h2 class="mt-3 font-serif text-3xl font-bold md:text-4xl">讓森林的夜，再深一點。</h2>
+          <p class="mt-5 leading-8 text-white/75">
+            以下不是住宿設備的說明，而是享受森林時光的小小提案。免費借用品、推薦內容與對話題目會分開介紹。
+          </p>
+        </div>
+
+        <div class="mt-10 grid gap-6 lg:grid-cols-3">
+          <article class="rounded-3xl border border-white/15 bg-white/10 p-7">
+            <p class="inline-flex rounded-full bg-white/10 px-3 py-1 text-[11px] font-bold tracking-wide text-green-200">免費借用品</p>
+            <div class="mt-4 text-3xl" aria-hidden="true">🔊</div>
+            <h3 class="mt-4 text-xl font-bold">Bluetooth 音響</h3>
+            <p class="mt-3 text-sm leading-7 text-white/70">
+              住宿期間有時會提供 Bluetooth 音響作為免費借用品。這不是住宿設備，因此機型、數量與可用狀況可能變動，不保證隨時都有。
+            </p>
+            <p class="mt-4 text-xs leading-6 text-green-200">請使用不影響周邊的音量，晚上 8:00 後請停止播放音樂。</p>
+          </article>
+
+          <article class="rounded-3xl border border-white/15 bg-white/10 p-7">
+            <p class="inline-flex rounded-full bg-white/10 px-3 py-1 text-[11px] font-bold tracking-wide text-green-200">屋主推薦</p>
+            <div class="mt-4 text-3xl" aria-hidden="true">🎧</div>
+            <h3 class="mt-4 text-xl font-bold">森林 BBQ 夜晚播放清單</h3>
+            <p class="mt-3 text-sm leading-7 text-white/70">
+              我們整理了一份適合森林 BBQ 夜晚的 Spotify 播放清單。這不是 Oshima New Villa 提供的音樂服務，請自行確認 Spotify 使用條件、播放環境與網路連線。
+            </p>
+            <a
+              href="https://open.spotify.com/playlist/28hIpEThoLluvSmt7CGtOV?si=px4FoFcrRM2ULKzAUFn5Ug"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-5 inline-flex text-sm font-bold text-green-300 hover:underline"
+            >
+              開啟 Spotify 播放清單 ↗
+            </a>
+          </article>
+
+          <article class="rounded-3xl border border-white/15 bg-white/10 p-7">
+            <p class="inline-flex rounded-full bg-white/10 px-3 py-1 text-[11px] font-bold tracking-wide text-green-200">對話靈感</p>
+            <div class="mt-4 text-3xl" aria-hidden="true">🌙</div>
+            <h3 class="mt-4 text-xl font-bold">「再生之問」</h3>
+            <p class="mt-3 text-sm leading-7 text-white/70">
+              我們準備了幾個可自由使用的問題，希望能成為與重要的人展開對話，或回望自己的契機。這不是必須參加的體驗活動或住宿服務，心情合適時再自由使用即可。
+            </p>
+            <a
+              href="https://script.google.com/macros/s/AKfycbytyf1ZtcHqHOU_6Qaw8N0ZBCYEM7TMgUIWiNq0714TJsjvO1zZ28paf396MU56Ivk-2Q/exec"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-5 inline-flex text-sm font-bold text-green-300 hover:underline"
+            >
+              查看問題 ↗
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Story -->
+    <section class="py-16 md:py-24">
+      <div class="mx-auto max-w-4xl px-6">
+        <details class="group rounded-3xl border border-orange-200 bg-white shadow-sm">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-7 py-6 [&::-webkit-details-marker]:hidden sm:px-9">
+            <div>
+              <p class="text-xs font-bold tracking-[0.22em] text-green-700 uppercase">我們的故事</p>
+              <h2 class="mt-2 font-serif text-2xl font-bold text-gray-900 sm:text-3xl">Oshima New Villa 重生的故事</h2>
+            </div>
+            <span class="shrink-0 text-2xl text-green-700 transition group-open:rotate-45" aria-hidden="true">＋</span>
+          </summary>
+          <div class="border-t border-orange-100 px-7 py-8 sm:px-9">
+            <div class="space-y-5 text-sm leading-8 text-gray-600 sm:text-base">
+              <p>1975 年，這裡以「Oshima New Villa」之名誕生。多年來，許多人來到島上，在這裡留下笑聲；隨著時代變遷，約 15 年前它悄悄結束營業，進入長久的沉睡。</p>
+              <p>建築的時間彷彿停住了，但包圍它的森林仍安靜而有力地持續生長。</p>
+              <p>當我們第一次遇見這個地方，最先聽見的是充滿生命力的鳥鳴，以及樹葉隨風搖曳的輕柔聲音。</p>
+              <blockquote class="rounded-2xl bg-orange-50 px-6 py-5 font-serif text-lg font-bold leading-8 text-gray-900">「在便利得有些過頭的城市裡，我們是不是遺忘了某些重要的東西？」</blockquote>
+              <p>我們透過整修為這裡注入新的生命，同時保留森林的氣息，以及讓人重新面對自己的留白。</p>
+              <p>這裡有的，是按照自己步調流動的時間：與家人朋友圍著火光的溫度，以及在城市燈光下難得一見的夜空。</p>
+              <p class="font-serif text-xl font-bold text-green-900">「與森林共眠，讓心再生。」</p>
+              <p>我們保留了過去深受喜愛的名字「Oshima New Villa」。希望這裡也能成為讓您重新充電、再出發的地方。</p>
+              <p class="pt-2 text-sm font-bold text-gray-700">Oshima New Villa 製作人</p>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- Feedback & Review -->
+    <section id="feedback" class="scroll-mt-28 border-t border-orange-100 bg-white py-16 md:py-20">
+      <div class="mx-auto max-w-5xl px-6">
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="text-xs font-bold tracking-[0.28em] text-green-700 uppercase">住宿後</p>
+          <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900">把旅途的餘韻，寫成文字。</h2>
+          <p class="mx-auto mt-5 max-w-2xl text-sm leading-8 text-gray-600">住宿感想或改善建議可以直接傳給 Oshima New Villa；如果想把旅行體驗分享給未來旅客，也可以在 Google 地圖留下評論。無論哪一種，我們都歡迎真實的意見。</p>
+        </div>
+
+        <div class="mt-10 grid gap-6 md:grid-cols-2">
+          <article class="rounded-3xl border border-green-100 bg-green-50/60 p-7 text-left md:p-8">
+            <p class="text-xs font-bold tracking-[0.2em] text-green-700 uppercase">直接回饋</p>
+            <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">直接告訴 Oshima New Villa</h3>
+            <p class="mt-4 text-sm leading-7 text-gray-600">歡迎告訴我們住宿感想、設備或指南中不清楚的地方、希望改善的項目、「再生之問」的感受，或旅程結束後仍留在心中的片段。我們會把這些回饋用於改善住宿體驗。</p>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfQot58C2JBKWhg1XsLRyojk8EKgp7-CoRLZq0MYX4gv_nVsg/viewform?usp=publish-editor"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-6 inline-flex rounded-full bg-green-700 px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-green-600"
+            >
+              傳送回饋 ↗
+            </a>
+          </article>
+
+          <article class="rounded-3xl border border-orange-200 bg-orange-50 p-7 text-left md:p-8">
+            <p class="text-xs font-bold tracking-[0.2em] text-orange-700 uppercase">Google 評論</p>
+            <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">把體驗分享給下一位旅人</h3>
+            <p class="mt-4 text-sm leading-7 text-gray-600">如果願意，也歡迎您在 Google 地圖留下這次住宿的真實感受。喜歡的地方，以及覺得可以更好的地方，都能成為未來旅客的重要參考。</p>
+            <a
+              href="https://g.page/r/CchMWp8DVXlOEBM/review"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-6 inline-flex rounded-full border border-orange-700 bg-white px-6 py-3 text-sm font-bold text-orange-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-orange-100"
+            >
+              撰寫 Google 評論 ↗
+            </a>
+          </article>
+        </div>
+
+        <p class="mx-auto mt-7 max-w-3xl text-center text-xs leading-6 text-gray-500">如遇設備故障或住宿期間需要立即協助的問題，請不要使用回饋表單，而是聯絡預訂時提供的客服管道。</p>
+      </div>
+    </section>
+
+    <section class="bg-orange-50 py-10">
+      <div class="mx-auto max-w-3xl px-6 text-center">
+        <a href="#arrival" class="inline-flex text-xs font-bold text-green-700 hover:underline">回到頁首 ↑</a>
+      </div>
+    </section>
+  </div>
+</InternationalLayout>

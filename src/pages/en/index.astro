@@ -1,0 +1,361 @@
+---
+import EnglishLayout from '../../layouts/EnglishLayout.astro';
+
+const pageTitle = 'Oshima New Villa | Private Villa on Izu Oshima, Tokyo';
+const pageDescription = 'A private villa for up to 6 guests on Izu Oshima, one of Tokyo’s volcanic islands. Kitchen, BBQ space, free Wi-Fi, parking and self check-in. About 5 minutes by car from Motomachi Port.';
+const bookingUrl = 'https://www.airbnb.com/rooms/1602063410123886296';
+
+const islandHighlights = [
+  {
+    title: 'Mt. Mihara',
+    eyebrow: 'Active volcano',
+    description: 'Walk across dramatic lava landscapes around the volcanic heart of Izu Oshima.',
+    image: '/mihara-mountain-view.webp',
+    alt: 'View of Mt. Mihara on Izu Oshima',
+  },
+  {
+    title: 'Urasabaku',
+    eyebrow: 'Black desert',
+    description: 'A vast, otherworldly landscape of dark volcanic ground and open sky.',
+    image: '/urasabaku-panorama.webp',
+    alt: 'Wide volcanic landscape of Urasabaku on Izu Oshima',
+  },
+  {
+    title: 'Habu Port',
+    eyebrow: 'Historic harbor town',
+    description: 'Slow down in the island’s south and explore the quiet streets around this old port.',
+    image: '/habu-port-overlook.webp',
+    alt: 'Habu Port and the surrounding town on Izu Oshima',
+  },
+  {
+    title: 'Sunset & Stars',
+    eyebrow: 'Island evenings',
+    description: 'End the day by the sea, then return to the forest for a quieter night under the sky.',
+    image: '/sunset-ocean-view.webp',
+    alt: 'Sunset over the ocean on Izu Oshima',
+  },
+];
+
+const villaFeatures = [
+  ['Entire private villa', '69.27 m², reserved for your group only'],
+  ['Sleeps up to 6', '4 single beds + 2 sofa beds'],
+  ['Kitchen', 'Fridge/freezer, microwave, rice cooker, cookware, tableware and cutlery'],
+  ['Outdoor BBQ', 'Roofed gazebo with grill, benches and a folding table'],
+  ['Bath & toilet', 'Private bathroom with bathtub and shower; separate toilet'],
+  ['Free Wi-Fi', 'Available in the villa; connection quality and speed are not guaranteed'],
+  ['Parking', 'Free parking on the property'],
+  ['Self check-in', 'Check in on the tablet located on the property'],
+];
+
+const accessCards = [
+  {
+    step: '01',
+    title: 'Tokyo → Izu Oshima',
+    body: 'The high-speed jet ferry from Takeshiba, central Tokyo, takes about 2 hours. Flights from Chofu Airport are another option. Schedules vary by season and weather, so check the operator before travel.',
+  },
+  {
+    step: '02',
+    title: 'Check your arrival port',
+    body: 'Ferries may arrive at Motomachi Port or Okada Port depending on sea conditions. Confirm the day’s arrival port before boarding.',
+  },
+  {
+    step: '03',
+    title: 'Pick up a rental car',
+    body: 'A rental car is recommended for sightseeing, shopping and moving around the island. Cars can sell out, so reserving early is best.',
+  },
+  {
+    step: '04',
+    title: 'Drive to Oshima New Villa',
+    body: 'About 5 min from Motomachi Port, 11 min from Okada Port, or 6 min from Oshima Airport by car.',
+  },
+];
+
+const bookingNotes = [
+  {
+    title: 'Check-in / Check-out',
+    text: 'Check-in from 3:00 PM. Check-out by 10:00 AM. The property is unattended and uses self check-in by tablet.',
+  },
+  {
+    title: 'If you plan to BBQ',
+    text: 'The grill, benches and folding table are provided. Charcoal, fire starter, ignition lighter, food and drinks are not provided, so please bring or buy what you need.',
+  },
+  {
+    title: 'Wi-Fi',
+    text: 'Free Wi-Fi is available, but island network conditions, weather, outages or equipment conditions may affect connectivity and speed. Please prepare a backup connection for important online meetings.',
+  },
+  {
+    title: 'Amenities to bring',
+    text: 'Bath towels, face towels, toothbrushes, indoor slippers, shampoo, conditioner and body soap are provided. Sleepwear/pajamas and razors are not provided.',
+  },
+  {
+    title: 'Smoking & pets',
+    text: 'The villa is non-smoking indoors. Pets are not accepted.',
+  },
+  {
+    title: 'Latest booking conditions',
+    text: 'Availability, rates and cancellation conditions are shown on Airbnb. Please check the booking page for the latest information.',
+  },
+];
+---
+
+<EnglishLayout title={pageTitle} description={pageDescription}>
+  <!-- Hero -->
+  <section class="relative flex min-h-[100svh] items-center overflow-hidden bg-gray-950" aria-labelledby="en-hero-title">
+    <picture class="absolute inset-0" aria-hidden="true">
+      <source srcset="/main-optimized-640.webp 640w, /main-optimized-960.webp 960w, /main-optimized.webp 1170w" sizes="100vw" />
+      <img src="/main-optimized.webp" alt="" class="h-full w-full object-cover" width="1170" height="1171" fetchpriority="high" />
+    </picture>
+    <div class="absolute inset-0 bg-gradient-to-r from-gray-950/80 via-gray-950/55 to-gray-950/25" aria-hidden="true"></div>
+    <div class="relative z-10 mx-auto w-full max-w-7xl px-6 pt-28 pb-16 md:pt-32 md:pb-24">
+      <div class="max-w-3xl text-white">
+        <p class="text-xs font-bold tracking-[0.28em] text-green-200 uppercase sm:text-sm">A private villa on Izu Oshima, Tokyo</p>
+        <h1 id="en-hero-title" class="mt-5 font-serif text-4xl leading-[1.12] font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+          Stay on Tokyo’s<br />volcanic island.
+        </h1>
+        <p class="mt-6 max-w-2xl text-base leading-8 text-white/90 sm:text-lg md:text-xl md:leading-9">
+          Explore volcanoes, black desert landscapes and the sea—then come back to a private villa surrounded by forest. Oshima New Villa is a whole-villa stay for up to 6 guests.
+        </p>
+        <ul class="mt-7 flex flex-wrap gap-2.5 text-xs font-bold text-white sm:text-sm" aria-label="Key features">
+          <li class="rounded-full border border-white/30 bg-white/10 px-4 py-2 backdrop-blur-sm">Private villa</li>
+          <li class="rounded-full border border-white/30 bg-white/10 px-4 py-2 backdrop-blur-sm">Up to 6 guests</li>
+          <li class="rounded-full border border-white/30 bg-white/10 px-4 py-2 backdrop-blur-sm">Kitchen & BBQ</li>
+          <li class="rounded-full border border-white/30 bg-white/10 px-4 py-2 backdrop-blur-sm">5 min from Motomachi Port</li>
+        </ul>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <a
+            href={bookingUrl}
+            data-booking-location="en_hero"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center rounded-full bg-green-600 px-8 py-4 text-sm font-bold text-white shadow-xl transition-all hover:-translate-y-0.5 hover:bg-green-500"
+          >
+            Check availability on Airbnb <span class="ml-2" aria-hidden="true">↗</span>
+          </a>
+          <a href="#access" class="inline-flex items-center justify-center rounded-full border border-white/50 bg-white/10 px-8 py-4 text-sm font-bold text-white backdrop-blur-sm transition-colors hover:bg-white hover:text-gray-900">
+            How to get here
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tokyo island positioning -->
+  <section id="island" class="bg-orange-50 py-20 md:py-28" aria-labelledby="island-title">
+    <div class="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-12 lg:items-center lg:gap-16">
+      <div class="lg:col-span-5">
+        <p class="text-xs font-bold tracking-[0.28em] text-green-700 uppercase">A different side of Tokyo</p>
+        <h2 id="island-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-5xl">
+          Tokyo is more than the city.
+        </h2>
+        <div class="mt-6 space-y-5 text-base leading-8 text-gray-600 md:text-lg md:leading-9">
+          <p>
+            Izu Oshima is the largest of the Izu Islands and is officially part of Tokyo. From central Tokyo, the high-speed jet ferry takes about two hours—yet the landscape feels completely different.
+          </p>
+          <p>
+            Spend the day hiking around Mt. Mihara, exploring the black volcanic landscape of Urasabaku, visiting old harbor towns, diving, fishing or relaxing at an onsen.
+          </p>
+        </div>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="https://www.gotokyo.org/en/destinations/izu-and-ogasawara-islands/oshima-island/index.html" target="_blank" rel="noopener noreferrer" class="rounded-full border border-green-700 px-5 py-2.5 text-sm font-bold text-green-800 transition-colors hover:bg-green-700 hover:text-white">
+            Official Tokyo guide to Oshima ↗
+          </a>
+        </div>
+      </div>
+      <div class="lg:col-span-7">
+        <div class="grid grid-cols-2 gap-3 sm:gap-4">
+          <img src="/mihara-crater.webp" alt="Crater landscape of Mt. Mihara" class="aspect-[4/5] w-full rounded-2xl object-cover shadow-lg" width="1500" height="2000" loading="lazy" />
+          <img src="/urasabaku-sea-view.webp" alt="Urasabaku volcanic landscape overlooking the sea" class="mt-8 aspect-[4/5] w-full rounded-2xl object-cover shadow-lg sm:mt-12" width="1500" height="2000" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Villa -->
+  <section id="villa" class="bg-white py-20 md:py-28" aria-labelledby="villa-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-xs font-bold tracking-[0.28em] text-green-700 uppercase">Your private base on the island</p>
+        <h2 id="villa-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-5xl">One villa. Your own pace.</h2>
+        <p class="mt-5 text-base leading-8 text-gray-600 md:text-lg">
+          Salvia is a 69.27 m² whole-villa stay for families, friends and small groups. Cook together, relax in the living room, or spend the evening around the BBQ gazebo.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-4 md:grid-cols-12">
+        <figure class="overflow-hidden rounded-2xl bg-gray-100 md:col-span-7">
+          <img src="/sofa-salvia.webp" alt="Living room with two sofa beds at Oshima New Villa" class="aspect-[4/3] h-full w-full object-cover" width="1108" height="832" loading="lazy" />
+        </figure>
+        <figure class="overflow-hidden rounded-2xl bg-gray-100 md:col-span-5">
+          <img src="/bed-salvia.webp" alt="Bedroom area with four single beds" class="aspect-[4/3] h-full w-full object-cover" width="1477" height="994" loading="lazy" />
+        </figure>
+        <figure class="overflow-hidden rounded-2xl bg-gray-100 md:col-span-5">
+          <img src="/day-bbq.webp" alt="Roofed outdoor BBQ gazebo at Oshima New Villa" class="aspect-[4/3] h-full w-full object-cover" width="1376" height="2000" loading="lazy" />
+        </figure>
+        <figure class="overflow-hidden rounded-2xl bg-gray-100 md:col-span-7">
+          <img src="/bath_salvia.jpg" alt="Private bathroom inside Salvia villa" class="aspect-[4/3] h-full w-full object-cover" width="1200" height="900" loading="lazy" />
+        </figure>
+      </div>
+
+      <dl class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {villaFeatures.map(([term, detail]) => (
+          <div class="rounded-2xl border border-gray-100 bg-orange-50 p-5">
+            <dt class="font-bold text-gray-900">{term}</dt>
+            <dd class="mt-2 text-sm leading-6 text-gray-600">{detail}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <!-- Things to do -->
+  <section id="things-to-do" class="bg-green-950 py-20 text-white md:py-28" aria-labelledby="things-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="max-w-3xl">
+        <p class="text-xs font-bold tracking-[0.28em] text-green-300 uppercase">Explore Izu Oshima</p>
+        <h2 id="things-title" class="mt-3 font-serif text-3xl font-bold md:text-5xl">Volcano by day. Forest by night.</h2>
+        <p class="mt-5 text-base leading-8 text-green-50/80 md:text-lg">
+          Oshima is compact enough to explore by car, but varied enough to make every part of the day feel different.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {islandHighlights.map((item) => (
+          <article class="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+            <img src={item.image} alt={item.alt} class="aspect-[4/3] w-full object-cover" width="1500" height="1000" loading="lazy" />
+            <div class="p-5">
+              <p class="text-xs font-bold tracking-[0.2em] text-green-300 uppercase">{item.eyebrow}</p>
+              <h3 class="mt-2 font-serif text-xl font-bold">{item.title}</h3>
+              <p class="mt-3 text-sm leading-7 text-green-50/75">{item.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Access -->
+  <section id="access" class="bg-orange-50 py-20 md:py-28" aria-labelledby="access-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-xs font-bold tracking-[0.28em] text-green-700 uppercase">Getting here</p>
+        <h2 id="access-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-5xl">From central Tokyo to the forest.</h2>
+        <p class="mt-5 text-base leading-8 text-gray-600 md:text-lg">
+          The journey is part of the experience. The simplest plan is: Tokyo → ferry or flight → rental car → Oshima New Villa.
+        </p>
+      </div>
+
+      <ol class="mx-auto mt-12 grid max-w-5xl gap-4 md:grid-cols-2">
+        {accessCards.map((item) => (
+          <li class="rounded-2xl border border-orange-100 bg-white p-6 shadow-sm">
+            <p class="font-serif text-3xl font-bold text-green-700">{item.step}</p>
+            <h3 class="mt-3 text-lg font-bold text-gray-900">{item.title}</h3>
+            <p class="mt-3 text-sm leading-7 text-gray-600">{item.body}</p>
+          </li>
+        ))}
+      </ol>
+
+      <div class="mx-auto mt-8 max-w-5xl rounded-2xl border border-green-100 bg-green-50 p-6 md:p-8">
+        <div class="grid gap-6 md:grid-cols-3">
+          <div>
+            <p class="text-xs font-bold tracking-[0.18em] text-green-700 uppercase">Motomachi Port</p>
+            <p class="mt-2 font-serif text-2xl font-bold text-gray-900">About 5 min</p>
+            <p class="mt-1 text-sm text-gray-600">by car</p>
+          </div>
+          <div>
+            <p class="text-xs font-bold tracking-[0.18em] text-green-700 uppercase">Okada Port</p>
+            <p class="mt-2 font-serif text-2xl font-bold text-gray-900">About 11 min</p>
+            <p class="mt-1 text-sm text-gray-600">by car</p>
+          </div>
+          <div>
+            <p class="text-xs font-bold tracking-[0.18em] text-green-700 uppercase">Oshima Airport</p>
+            <p class="mt-2 font-serif text-2xl font-bold text-gray-900">About 6 min</p>
+            <p class="mt-1 text-sm text-gray-600">by car</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href="https://www.tokaikisen.co.jp/en/" target="_blank" rel="noopener noreferrer" class="rounded-full border border-green-700 bg-white px-5 py-2.5 text-sm font-bold text-green-800 transition-colors hover:bg-green-700 hover:text-white">
+          Tokai Kisen ferry information ↗
+        </a>
+        <a href="https://www.gotokyo.org/en/plan/getting-around/going-to-islands/index.html" target="_blank" rel="noopener noreferrer" class="rounded-full border border-gray-300 bg-white px-5 py-2.5 text-sm font-bold text-gray-700 transition-colors hover:border-gray-900 hover:bg-gray-900 hover:text-white">
+          Official Tokyo island access guide ↗
+        </a>
+      </div>
+      <p class="mx-auto mt-5 max-w-3xl text-center text-xs leading-6 text-gray-500">
+        Ferry and flight times may change depending on season, route and weather. Please confirm the latest schedule with the transport operator before departure.
+      </p>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <section class="bg-white py-20 md:py-28" aria-labelledby="story-en-title">
+    <div class="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-12 lg:items-center lg:gap-16">
+      <figure class="lg:col-span-6">
+        <img src="/old-brochure.webp" alt="Original 1975 brochure for Oshima New Villa" class="w-full rounded-2xl shadow-xl" width="1024" height="1054" loading="lazy" />
+        <figcaption class="mt-3 text-center text-xs leading-6 text-gray-500">The original brochure from 1975.</figcaption>
+      </figure>
+      <div class="lg:col-span-6">
+        <p class="text-xs font-bold tracking-[0.28em] text-green-700 uppercase">Our story</p>
+        <h2 id="story-en-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-5xl">First opened in 1975. Reborn in 2026.</h2>
+        <div class="mt-6 space-y-5 text-base leading-8 text-gray-600 md:text-lg md:leading-9">
+          <p>Oshima New Villa first opened in the forest of Izu Oshima in 1975 and welcomed travelers to the island.</p>
+          <p>After being closed for around 15 years, the property was carefully renovated while preserving traces of its original character.</p>
+          <p>In 2026, it began a new chapter as a private villa where families and friends can experience the island at their own pace.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Before booking -->
+  <section id="before-booking" class="bg-gray-100 py-20 md:py-28" aria-labelledby="before-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-xs font-bold tracking-[0.28em] text-green-700 uppercase">Before you book</p>
+        <h2 id="before-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-5xl">A few things to know.</h2>
+        <p class="mt-5 text-base leading-8 text-gray-600 md:text-lg">We want the practical details to be clear before you arrive on the island.</p>
+      </div>
+
+      <div class="mx-auto mt-12 grid max-w-5xl gap-4 md:grid-cols-2">
+        {bookingNotes.map((item) => (
+          <article class="rounded-2xl bg-white p-6 shadow-sm">
+            <h3 class="font-bold text-gray-900">{item.title}</h3>
+            <p class="mt-3 text-sm leading-7 text-gray-600">{item.text}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="mx-auto mt-8 max-w-5xl rounded-2xl border border-green-200 bg-green-50 p-6 text-center sm:flex sm:items-center sm:justify-between sm:gap-6 sm:text-left">
+        <div>
+          <p class="text-sm font-bold text-gray-900">Already booked your stay?</p>
+          <p class="mt-1 text-sm leading-7 text-gray-600">Our English Guest Guide covers arrival ports, self check-in, Wi-Fi, BBQ rules and practical information for your stay.</p>
+        </div>
+        <a href="/en/guest-guide/" class="mt-4 inline-flex shrink-0 rounded-full bg-green-700 px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-green-600 sm:mt-0">
+          Open Guest Guide →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking CTA -->
+  <section class="relative overflow-hidden bg-green-950 py-20 text-white md:py-24" aria-labelledby="booking-en-title">
+    <img src="/night-bbq.webp" alt="" class="absolute inset-0 h-full w-full object-cover opacity-20" width="1500" height="2000" loading="lazy" aria-hidden="true" />
+    <div class="absolute inset-0 bg-green-950/70" aria-hidden="true"></div>
+    <div class="relative z-10 mx-auto max-w-3xl px-6 text-center">
+      <p class="text-xs font-bold tracking-[0.28em] text-green-300 uppercase">Oshima New Villa</p>
+      <h2 id="booking-en-title" class="mt-3 font-serif text-3xl font-bold md:text-5xl">Make Izu Oshima part of your Tokyo trip.</h2>
+      <p class="mx-auto mt-5 max-w-2xl text-base leading-8 text-green-50/85 md:text-lg">
+        Check current availability, rates and booking conditions on Airbnb.
+      </p>
+      <a
+        href={bookingUrl}
+        data-booking-location="en_bottom"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-8 inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-bold text-green-900 shadow-xl transition-all hover:-translate-y-0.5 hover:bg-green-50"
+      >
+        Check availability on Airbnb <span class="ml-2" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
+</EnglishLayout>
