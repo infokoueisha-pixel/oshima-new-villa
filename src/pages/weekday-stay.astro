@@ -1,0 +1,345 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = '平日に楽しむ大人の伊豆大島旅｜一棟貸し・大島ニュービラ';
+const pageDescription = '夫婦や友人同士で、平日の伊豆大島をゆっくり楽しみたい方へ。三原山・裏砂漠・波浮港・温泉を巡り、森の一棟貸しで自分たちのペースで過ごす大人旅をご提案します。';
+
+const travelStyles = [
+  {
+    kicker: '夫婦旅',
+    title: '夫婦で、島をゆっくり巡る。',
+    description: '観光地を詰め込みすぎず、景色や食事、温泉をその日の気分で。ホテルの時間割に合わせず、自分たちのペースで滞在できます。',
+  },
+  {
+    kicker: '友人旅',
+    title: '友人と、久しぶりの旅へ。',
+    description: 'シングルベッド4台を備えた一棟貸し。友人3〜4名の旅行や、夫婦2組での島旅にも使いやすい間取りです。',
+  },
+  {
+    kicker: 'ゆったり島時間',
+    title: '予定を決めすぎない、島時間。',
+    description: '天候や体調に合わせて行き先を変えられるのも島旅の楽しみ。無理に予定を詰め込まず、森のヴィラを拠点に、休みながら自分たちのペースで大島を楽しめます。',
+  },
+];
+
+const stayPoints = [
+  { label: '一棟貸切', value: '69.27㎡・最大6名' },
+  { label: 'ベッド', value: 'シングル4台＋ソファベッド2台' },
+  { label: '食事', value: 'キッチン・調理器具・食器類' },
+  { label: 'くつろぎ', value: 'リビング・スマートTV・Wi-Fi' },
+  { label: '入浴', value: '浴槽・シャワー／御神火温泉も選択肢' },
+  { label: 'チェックイン', value: 'タブレットを使ったセルフチェックイン' },
+  { label: '移動', value: '元町港から車で約5分・無料駐車場' },
+  { label: '島内観光', value: 'レンタカー利用をおすすめ' },
+];
+
+const faqs = [
+  {
+    question: '夫婦2名でも利用できますか？',
+    answer: 'はい。最大6名の一棟貸しですが、2名でのご宿泊にもご利用いただけます。空室状況・料金は予約ページで日程と人数を入力してご確認ください。',
+  },
+  {
+    question: '友人3〜4名で、それぞれ別のベッドを使えますか？',
+    answer: 'はい。サルビア棟にはシングルベッド4台があります。5〜6名でご利用の場合は、追加でソファベッド2台をご利用いただけます。',
+  },
+  {
+    question: '島内の移動は車が必要ですか？',
+    answer: '観光や買い出しを自由に楽しむため、レンタカーの利用をおすすめしています。船の到着港は元町港または岡田港となるため、出発前に当日の入港地をご確認ください。',
+  },
+  {
+    question: 'チェックインはスタッフとの対面ですか？',
+    answer: '大島ニュービラは無人運営です。敷地内の受付にあるタブレットを使ってセルフチェックインしていただきます。',
+  },
+  {
+    question: 'Wi-Fiはありますか？',
+    answer: '無料Wi-Fiをご利用いただけます。ただし、島内の回線状況、通信障害、天候、機器の状態などにより、一時的に接続しにくくなったり通信速度が低下したりする場合があります。常時の接続や通信速度を保証するものではありません。',
+  },
+  {
+    question: '洗濯機や乾燥機はありますか？',
+    answer: '同じ敷地内に、オーナーが所有・管理する洗濯機・乾燥機・シャワー・トイレがあります。宿泊設備・付帯設備には含まれず、メンテナンス・故障・清掃等によりご利用いただけない場合があります。',
+  },
+];
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '大島ニュービラ', item: 'https://oshima-new-villa.com/' },
+        { '@type': 'ListItem', position: 2, name: '平日に楽しむ大人の伊豆大島旅', item: 'https://oshima-new-villa.com/weekday-stay/' },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+      })),
+    },
+  ],
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-stone-950 pt-24 text-white md:pt-28" aria-labelledby="weekday-title">
+    <div class="absolute inset-0" aria-hidden="true">
+      <img src="/sunset-ocean-view.webp" alt="" class="h-full w-full object-cover opacity-45" width="1536" height="1152" />
+      <div class="absolute inset-0 bg-gradient-to-r from-stone-950 via-stone-950/85 to-stone-900/45"></div>
+    </div>
+
+    <div class="relative mx-auto grid max-w-7xl gap-12 px-6 py-16 md:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16">
+      <div>
+        <a href="/" class="inline-flex items-center gap-2 text-base font-bold text-orange-100 transition-colors hover:text-white">
+          <span aria-hidden="true">←</span> 大島ニュービラ トップへ
+        </a>
+        <p class="mt-10 text-base font-bold tracking-[0.08em] text-orange-100">平日だからできる、ゆったり島旅</p>
+        <h1 id="weekday-title" class="mt-4 font-serif text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">
+          平日に楽しむ、<br />大人の伊豆大島旅。
+        </h1>
+        <p class="mt-6 max-w-2xl text-lg leading-9 text-stone-50 md:text-xl md:leading-10">
+          行き先を詰め込みすぎず、景色を眺め、温泉に入り、島の食を楽しむ。夫婦や友人同士で、自分たちのペースで過ごす旅の拠点に。
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-2 text-base font-bold text-stone-50">
+          <span class="rounded-full border border-white/20 bg-white/10 px-4 py-2">69.27㎡・一棟貸切</span>
+          <span class="rounded-full border border-white/20 bg-white/10 px-4 py-2">シングルベッド4台</span>
+          <span class="rounded-full border border-white/20 bg-white/10 px-4 py-2">元町港から車約5分</span>
+          <span class="rounded-full border border-white/20 bg-white/10 px-4 py-2">セルフチェックイン</span>
+        </div>
+
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+          <a
+            href="https://www.airbnb.jp/rooms/1602063410123886296?guests=2&adults=2&s=67&unique_share_id=a393ba49-61eb-4d8e-a4c9-95935b649d65"
+            data-booking-location="weekday_stay_hero"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-7 py-4 text-base font-bold text-stone-950 shadow-lg transition-all hover:-translate-y-0.5 hover:bg-orange-50 md:text-lg"
+          >
+            平日の空室・料金を見る<span class="ml-2" aria-hidden="true">↗</span>
+          </a>
+          <a href="#plan" class="inline-flex min-h-12 items-center justify-center rounded-full border border-white/35 px-7 py-4 text-base font-bold text-white transition-colors hover:bg-white/10 md:text-lg">
+            旅の過ごし方を見る<span class="ml-2" aria-hidden="true">↓</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 sm:gap-4">
+        <figure class="col-span-2 overflow-hidden rounded-3xl border border-white/10 bg-white/10 shadow-2xl">
+          <img src="/main-optimized.webp" alt="森に囲まれた大島ニュービラ" class="aspect-[16/10] w-full object-cover" width="1170" height="1171" />
+        </figure>
+        <figure class="overflow-hidden rounded-3xl border border-white/10 shadow-xl">
+          <img src="/mihara-mountain-view.webp" alt="伊豆大島の三原山" class="aspect-square w-full object-cover" width="1536" height="1152" loading="lazy" />
+        </figure>
+        <figure class="overflow-hidden rounded-3xl border border-white/10 shadow-xl">
+          <img src="/bath_salvia.jpg" alt="大島ニュービラのレトロなタイル張りの浴室" class="aspect-square w-full object-cover" width="1107" height="1317" loading="lazy" />
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who it's for -->
+  <section class="bg-white py-20 md:py-28" aria-labelledby="weekday-for-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mx-auto mb-12 max-w-3xl text-center">
+        <p class="text-base font-bold tracking-[0.08em] text-green-800">自分たちのペースで楽しむ旅</p>
+        <h2 id="weekday-for-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">誰かに合わせるより、<br class="hidden sm:block" />自分たちのペースで。</h2>
+        <p class="mt-5 text-lg leading-9 text-gray-700 md:text-xl md:leading-10">
+          大島ニュービラは、スタッフ常駐型のホテルではなく、最大6名の一棟貸し。島を巡る時間も、夕食の時間も、朝の過ごし方も自分たちで組み立てたい方に向いています。
+        </p>
+      </div>
+
+      <div class="grid gap-5 md:grid-cols-3">
+        {travelStyles.map((item) => (
+          <article class="rounded-3xl border border-stone-200 bg-stone-50/70 p-7 md:p-8">
+            <p class="text-base font-bold tracking-normal text-green-800">{item.kicker}</p>
+            <h3 class="mt-3 font-serif text-2xl font-bold leading-snug text-gray-900">{item.title}</h3>
+            <p class="mt-4 text-lg leading-9 text-gray-700">{item.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Model plan -->
+  <section id="plan" class="bg-orange-50/50 py-20 md:py-28" aria-labelledby="weekday-plan-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mx-auto mb-14 max-w-3xl text-center">
+        <p class="text-base font-bold tracking-[0.08em] text-orange-800">2泊3日の過ごし方</p>
+        <h2 id="weekday-plan-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">2泊3日なら、<br class="hidden sm:block" />島を急がず楽しめます。</h2>
+        <p class="mt-5 text-lg leading-9 text-gray-700 md:text-xl md:leading-10">
+          天候、船の時間、体調に合わせて入れ替えられる一例です。全部を巡ることより、気に入った場所で少し長く過ごす旅を想定しています。
+        </p>
+      </div>
+
+      <div class="grid gap-6 lg:grid-cols-3">
+        <article class="overflow-hidden rounded-3xl border border-orange-100 bg-white shadow-sm">
+          <img src="/habu-port-overlook.webp" alt="高台から眺める波浮港" class="aspect-[16/10] w-full object-cover" width="1536" height="1152" loading="lazy" />
+          <div class="p-7">
+            <p class="text-base font-bold tracking-normal text-orange-800">1日目｜到着・港町・温泉</p>
+            <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">港町と温泉から、ゆっくり始める。</h3>
+            <p class="mt-4 text-lg leading-9 text-gray-700">
+              到着後はレンタカーを受け取り、島の飲食店で昼食。波浮港などを散策したら、15時以降にセルフチェックイン。御神火温泉に立ち寄る、買い出しをしてヴィラで夕食にするなど、到着日の疲れを残さない過ごし方を。
+            </p>
+          </div>
+        </article>
+
+        <article class="overflow-hidden rounded-3xl border border-green-100 bg-white shadow-sm">
+          <img src="/urasabaku-panorama.webp" alt="伊豆大島の裏砂漠の火山景観" class="aspect-[16/10] w-full object-cover" width="1536" height="369" loading="lazy" />
+          <div class="p-7">
+            <p class="text-base font-bold tracking-normal text-green-800">2日目｜三原山・裏砂漠</p>
+            <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">三原山・裏砂漠を、無理のない範囲で。</h3>
+            <p class="mt-4 text-lg leading-9 text-gray-700">
+              火山島ならではの景観を楽しむ一日。三原山または裏砂漠を中心に、その日の天候や体力に合わせて行き先を選びます。帰りに地層大切断面や島の景色を楽しみ、夕方は食材を買って森のヴィラへ。
+            </p>
+          </div>
+        </article>
+
+        <article class="overflow-hidden rounded-3xl border border-sky-100 bg-white shadow-sm">
+          <img src="/day-salvia.webp" alt="森に囲まれた大島ニュービラのサルビア棟" class="aspect-[16/10] w-full object-cover" width="1500" height="2000" loading="lazy" />
+          <div class="p-7">
+            <p class="text-base font-bold tracking-normal text-sky-800">3日目｜森の朝・ゆっくり出発</p>
+            <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">森の朝を過ごして、10時に出発。</h3>
+            <p class="mt-4 text-lg leading-9 text-gray-700">
+              最終日は朝を慌ただしくしすぎず、室内で朝食を。10時までにチェックアウトしたあとは、船の出発時間に合わせて大島公園や港周辺などへ。最後まで余白を残して島旅を締めくくります。
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <div class="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-4 text-base font-bold md:text-lg">
+        <a href="/#volcano-guide" class="text-green-800 underline decoration-green-200 underline-offset-4 hover:text-green-950">三原山・裏砂漠を見る →</a>
+        <a href="/#habu-port-guide" class="text-sky-800 underline decoration-sky-200 underline-offset-4 hover:text-sky-950">波浮港を見る →</a>
+        <a href="/#shopping-guide" class="text-orange-800 underline decoration-orange-200 underline-offset-4 hover:text-orange-950">買い出し情報を見る →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stay -->
+  <section class="bg-white py-20 md:py-28" aria-labelledby="weekday-stay-title">
+    <div class="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-16">
+      <div class="grid grid-cols-2 gap-4">
+        <figure class="col-span-2 overflow-hidden rounded-3xl shadow-sm">
+          <img src="/bed-salvia.webp" alt="シングルベッド4台を備えたサルビア棟" class="aspect-[16/9] w-full object-cover" width="1477" height="994" loading="lazy" />
+        </figure>
+        <figure class="overflow-hidden rounded-3xl shadow-sm">
+          <img src="/sofa-salvia.webp" alt="サルビア棟のリビング" class="aspect-square w-full object-cover" width="1108" height="832" loading="lazy" />
+        </figure>
+        <figure class="overflow-hidden rounded-3xl shadow-sm">
+          <img src="/day-bbq.webp" alt="屋根付きの屋外炊事場ガゼボ庵" class="aspect-square w-full object-cover" width="1376" height="2000" loading="lazy" />
+        </figure>
+      </div>
+
+      <div>
+        <p class="text-base font-bold tracking-[0.08em] text-green-800">一棟貸しで、気兼ねなく</p>
+        <h2 id="weekday-stay-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">観光が終わったあとも、<br class="hidden sm:block" />旅の時間が続く一棟貸し。</h2>
+        <p class="mt-6 text-lg leading-9 text-gray-700 md:text-xl md:leading-10">
+          サルビア棟は69.27㎡。シングルベッド4台とソファベッド2台を備え、最大6名まで宿泊できます。夫婦だけでゆったり、友人同士でそれぞれのベッドを使う、といった過ごし方もできます。
+        </p>
+        <p class="mt-4 text-lg leading-9 text-gray-700">
+          キッチンで簡単な料理をしたり、屋根付きの「ガゼボ庵」でBBQをしたり。外食だけに決めず、その日の気分に合わせて食事を選べます。
+        </p>
+
+        <dl class="mt-8 grid gap-3 sm:grid-cols-2">
+          {stayPoints.map((item) => (
+            <div class="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+              <dt class="text-base font-bold text-gray-600">{item.label}</dt>
+              <dd class="mt-2 text-lg font-bold leading-8 text-gray-900">{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reassurance -->
+  <section class="bg-green-950 py-20 text-white md:py-28" aria-labelledby="weekday-info-title">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-base font-bold tracking-[0.08em] text-green-100">初めての伊豆大島旅行の前に</p>
+        <h2 id="weekday-info-title" class="mt-3 font-serif text-3xl font-bold leading-tight md:text-4xl">初めての伊豆大島でも、<br class="hidden sm:block" />先に知っておけば安心。</h2>
+      </div>
+
+      <div class="mt-12 grid gap-5 md:grid-cols-2">
+        <article class="rounded-3xl border border-white/10 bg-white/5 p-7">
+          <p class="text-base font-bold tracking-normal text-green-100">到着港</p>
+          <h3 class="mt-2 font-serif text-2xl font-bold leading-snug">到着港は当日に確認</h3>
+          <p class="mt-4 text-lg leading-9 text-green-50">船の入港地は元町港または岡田港です。当日の運航情報で到着港を確認してから島内移動を始めてください。</p>
+        </article>
+        <article class="rounded-3xl border border-white/10 bg-white/5 p-7">
+          <p class="text-base font-bold tracking-normal text-green-100">レンタカー</p>
+          <h3 class="mt-2 font-serif text-2xl font-bold leading-snug">島内はレンタカーがおすすめ</h3>
+          <p class="mt-4 text-lg leading-9 text-green-50">観光地や買い出し先を自分たちのペースで巡るため、レンタカーの利用をおすすめしています。大島ニュービラには無料駐車場があります。</p>
+        </article>
+        <article class="rounded-3xl border border-white/10 bg-white/5 p-7">
+          <p class="text-base font-bold tracking-normal text-green-100">セルフチェックイン</p>
+          <h3 class="mt-2 font-serif text-2xl font-bold leading-snug">チェックインはタブレットで</h3>
+          <p class="mt-4 text-lg leading-9 text-green-50">スタッフ常駐ではありません。敷地内の受付にあるタブレットからセルフチェックインしていただきます。チェックインは15時以降、チェックアウトは10時までです。</p>
+        </article>
+        <article class="rounded-3xl border border-white/10 bg-white/5 p-7">
+          <p class="text-base font-bold tracking-normal text-green-100">予約前の確認</p>
+          <h3 class="mt-2 font-serif text-2xl font-bold leading-snug">気になることは予約前に確認を</h3>
+          <p class="mt-4 text-lg leading-9 text-green-50">移動や設備面など、滞在にあたって確認しておきたいことがある場合は、予約前に予約ページからお問い合わせください。</p>
+        </article>
+      </div>
+
+      <div class="mt-8 rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
+        <p class="text-base font-bold tracking-normal text-green-100">オーナー所有設備</p>
+        <h3 class="mt-2 font-serif text-2xl font-bold leading-snug">同じ敷地内のオーナー所有設備について</h3>
+        <p class="mt-4 text-lg leading-9 text-green-50">
+          同じ敷地内には、オーナー所有の洗濯機・乾燥機・シャワー・トイレがあります。ご宿泊中のお客様は無料で利用できますが、大島ニュービラの宿泊設備・付帯設備には含まれません。メンテナンス・故障・清掃等により利用できない場合があります。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="bg-stone-50 py-20 md:py-28" aria-labelledby="weekday-faq-title">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="text-center">
+        <p class="text-base font-bold tracking-[0.08em] text-green-800">よくある質問</p>
+        <h2 id="weekday-faq-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">予約前に確認しておきたいこと。</h2>
+      </div>
+
+      <div class="mt-10 space-y-3">
+        {faqs.map((faq) => (
+          <details class="group rounded-2xl border border-gray-200 bg-white px-6 py-5 shadow-sm">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-5 text-lg font-bold leading-8 text-gray-900 [&::-webkit-details-marker]:hidden">
+              <span>{faq.question}</span>
+              <span class="text-2xl text-green-700 transition-transform group-open:rotate-45" aria-hidden="true">＋</span>
+            </summary>
+            <p class="mt-4 border-t border-gray-100 pt-5 text-lg leading-9 text-gray-700">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="relative overflow-hidden bg-white py-24 md:py-32" aria-labelledby="weekday-booking-title">
+    <div class="absolute inset-0 opacity-10" aria-hidden="true">
+      <img src="/forest-optimized.webp" alt="" class="h-full w-full object-cover" width="1170" height="1171" loading="lazy" />
+    </div>
+    <div class="relative mx-auto max-w-4xl px-6 text-center">
+      <p class="text-base font-bold tracking-[0.08em] text-green-800">平日の旅を計画する</p>
+      <h2 id="weekday-booking-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-5xl">次の平日、<br class="sm:hidden" />伊豆大島へ。</h2>
+      <p class="mx-auto mt-6 max-w-2xl text-lg leading-9 text-gray-700 md:text-xl md:leading-10">
+        空室状況と料金は予約ページでご確認いただけます。日程と人数を入力して、ご自身の旅に合う滞在を見つけてください。
+      </p>
+      <a
+        href="https://www.airbnb.jp/rooms/1602063410123886296?guests=2&adults=2&s=67&unique_share_id=a393ba49-61eb-4d8e-a4c9-95935b649d65"
+        data-booking-location="weekday_stay_bottom"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-9 inline-flex min-h-14 items-center justify-center rounded-full bg-green-700 px-9 py-4 text-base font-bold text-white shadow-lg shadow-green-700/20 transition-all hover:-translate-y-0.5 hover:bg-green-600 md:text-lg"
+      >
+        平日の空室・料金を確認する<span class="ml-2" aria-hidden="true">↗</span>
+      </a>
+      <p class="mt-5 text-sm leading-7 text-gray-600">予約・料金・キャンセル条件は予約ページに表示される最新情報をご確認ください。</p>
+    </div>
+  </section>
+</Layout>
