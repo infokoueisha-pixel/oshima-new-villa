@@ -1,0 +1,114 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = 'プライバシーポリシー｜大島ニュービラ';
+const pageDescription = '大島ニュービラ公式サイトにおける個人情報、アクセス解析データ、Google APIを通じて取得するデータの取扱いについてご案内します。';
+---
+
+<Layout title={pageTitle} description={pageDescription} noindex={true}>
+  <section class="bg-green-950 pt-24 text-white md:pt-28" aria-labelledby="privacy-title">
+    <div class="mx-auto max-w-5xl px-6 py-16 md:py-20">
+      <a href="/" class="inline-flex items-center gap-2 text-sm font-bold text-green-200 transition-colors hover:text-white">
+        <span aria-hidden="true">←</span> 大島ニュービラ トップへ
+      </a>
+      <p class="mt-10 text-xs font-bold uppercase tracking-[0.3em] text-green-300">Privacy Policy</p>
+      <h1 id="privacy-title" class="mt-4 font-serif text-4xl font-bold leading-tight sm:text-5xl">
+        プライバシーポリシー
+      </h1>
+      <p class="mt-6 max-w-3xl text-base leading-8 text-green-50/90 md:text-lg md:leading-9">
+        大島ニュービラでは、公式サイトの運営、利用状況の把握、サービス改善のために取得する情報を、以下の方針に基づいて取り扱います。
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-orange-50 py-16 md:py-20">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="space-y-6">
+        <section class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-8" aria-labelledby="privacy-1">
+          <h2 id="privacy-1" class="font-serif text-2xl font-bold text-gray-900">1. 取得する情報</h2>
+          <div class="mt-4 space-y-4 text-sm leading-8 text-gray-700 md:text-base">
+            <p>当サイトでは、サイトの改善や利用状況の把握のため、閲覧ページ、アクセス日時、参照元、利用端末・ブラウザ等のアクセス情報を取得する場合があります。</p>
+            <p>また、運営者が管理するGoogleサービスと連携し、Google Search Console、Google Analytics、Google Ads等を通じて、当サイトの検索パフォーマンス、アクセス状況、広告成果等の情報を取得する場合があります。</p>
+          </div>
+        </section>
+
+        <section class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-8" aria-labelledby="privacy-2">
+          <h2 id="privacy-2" class="font-serif text-2xl font-bold text-gray-900">2. 利用目的</h2>
+          <ul class="mt-4 list-disc space-y-2 pl-5 text-sm leading-8 text-gray-700 md:text-base">
+            <li>公式サイトおよび宿泊サービスの改善</li>
+            <li>サイトの利用状況、検索状況、流入経路の分析</li>
+            <li>広告・集客施策の効果測定と改善</li>
+            <li>不正利用やセキュリティ上の問題への対応</li>
+            <li>上記に付随する運営上の分析</li>
+          </ul>
+        </section>
+
+        <section class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-8" aria-labelledby="privacy-3">
+          <h2 id="privacy-3" class="font-serif text-2xl font-bold text-gray-900">3. Google APIサービスの利用</h2>
+          <div class="mt-4 space-y-4 text-sm leading-8 text-gray-700 md:text-base">
+            <p>当サイトの運営・分析では、Google Search Console API、Google Analytics Data APIその他のGoogle APIを利用する場合があります。</p>
+            <p>Google APIを通じて取得したデータは、当サイトおよび大島ニュービラの運営・分析・改善のために利用し、法令に基づく場合を除き、第三者への販売を行いません。</p>
+            <p>
+              Google APIから取得したデータの利用は、
+              <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer" class="font-bold text-green-700 underline decoration-green-200 underline-offset-4 hover:text-green-900">
+                Google API Services User Data Policy
+              </a>
+              （Limited Useの要件を含む）に従います。
+            </p>
+          </div>
+        </section>
+
+        <section class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-8" aria-labelledby="privacy-4">
+          <h2 id="privacy-4" class="font-serif text-2xl font-bold text-gray-900">4. Google Analytics等の利用</h2>
+          <div class="mt-4 space-y-4 text-sm leading-8 text-gray-700 md:text-base">
+            <p>当サイトでは、アクセス解析や効果測定のため、Google Analytics、Google Tag Manager、Google Ads等のGoogleサービスを利用する場合があります。</p>
+            <p>これらのサービスではCookieその他の技術を利用して情報が収集される場合があります。取得される情報や取扱いについては、Googleが定める各サービスのポリシーが適用されます。</p>
+          </div>
+        </section>
+
+        <section class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-8" aria-labelledby="privacy-5">
+          <h2 id="privacy-5" class="font-serif text-2xl font-bold text-gray-900">5. 外部予約サービスについて</h2>
+          <div class="mt-4 space-y-4 text-sm leading-8 text-gray-700 md:text-base">
+            <p>宿泊予約はAirbnb等の外部予約サービスを通じて行われる場合があります。外部サービス上で取得される個人情報や決済情報等については、各サービス提供者のプライバシーポリシーおよび利用規約が適用されます。</p>
+          </div>
+        </section>
+
+        <section class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-8" aria-labelledby="privacy-6">
+          <h2 id="privacy-6" class="font-serif text-2xl font-bold text-gray-900">6. 第三者提供・安全管理</h2>
+          <div class="mt-4 space-y-4 text-sm leading-8 text-gray-700 md:text-base">
+            <p>法令に基づく場合を除き、取得した個人情報を本人の同意なく第三者へ提供しません。</p>
+            <p>取得した情報について、不正アクセス、漏えい、紛失、改ざん等を防止するため、必要な範囲で適切な安全管理措置を講じます。</p>
+          </div>
+        </section>
+
+        <section class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-8" aria-labelledby="privacy-7">
+          <h2 id="privacy-7" class="font-serif text-2xl font-bold text-gray-900">7. データの保存</h2>
+          <div class="mt-4 space-y-4 text-sm leading-8 text-gray-700 md:text-base">
+            <p>取得した分析データは、運営改善や効果測定に必要な期間、Google Workspace等の運営者が管理する環境に保存する場合があります。利用目的を終えた情報は、必要性を確認のうえ適切に削除または整理します。</p>
+          </div>
+        </section>
+
+        <section class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-8" aria-labelledby="privacy-8">
+          <h2 id="privacy-8" class="font-serif text-2xl font-bold text-gray-900">8. 連絡方法</h2>
+          <div class="mt-4 space-y-4 text-sm leading-8 text-gray-700 md:text-base">
+            <p>当サイトでは、一般向けのお問い合わせフォームは設けていません。</p>
+            <p>宿泊予約・滞在に関するご連絡は、予約に利用した予約サイトのメッセージ機能、または予約後に案内されるサポート窓口をご利用ください。</p>
+            <p>Google OAuthを利用した運営者向け分析ツールに関する連絡先は、OAuth同意画面に表示されるユーザーサポート情報をご確認ください。</p>
+          </div>
+        </section>
+
+        <section class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-8" aria-labelledby="privacy-9">
+          <h2 id="privacy-9" class="font-serif text-2xl font-bold text-gray-900">9. 本ポリシーの変更</h2>
+          <div class="mt-4 space-y-4 text-sm leading-8 text-gray-700 md:text-base">
+            <p>法令、サービス内容、利用する外部サービス等の変更に応じて、本ポリシーを改定することがあります。変更後の内容は、本ページに掲載した時点から適用します。</p>
+          </div>
+        </section>
+      </div>
+
+      <div class="mt-10 flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-8 text-sm text-gray-500 sm:flex-row">
+        <p>制定日：2026年8月27日</p>
+        <a href="/" class="font-bold text-green-700 underline decoration-green-200 underline-offset-4 hover:text-green-900">トップページへ戻る</a>
+      </div>
+    </div>
+  </section>
+</Layout>
