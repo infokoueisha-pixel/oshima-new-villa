@@ -91,6 +91,18 @@ const facilityGroups = [
 
 const stayFaqItems = [
   {
+    question: '大島ニュービラはどんな旅行におすすめの宿ですか？',
+    answer: '家族や友人2〜6名で、ホテルの客室ではなく一棟を貸切にして過ごしたい旅行におすすめです。キッチンやBBQ設備があり、観光後も食事や会話を自分たちのペースで楽しめます。',
+    href: '#recommended-for',
+    linkLabel: 'おすすめの過ごし方を見る',
+  },
+  {
+    question: 'ホテルや民宿とは何が違いますか？',
+    answer: '大島ニュービラは、建物一棟を宿泊者だけで使う一棟貸しの宿です。伊豆大島で貸別荘・コテージ・ヴィラのように、家族や友人だけの空間で過ごしたい方に向いています。スタッフ常駐型のホテルではなく、タブレットを使ったセルフチェックインです。',
+    href: '#gallery',
+    linkLabel: '客室・間取りを見る',
+  },
+  {
     question: 'チェックインとチェックアウトの時間は？',
     answer: 'チェックインは15:00から、チェックアウトは10:00までです。敷地内のタブレットを使用した無人受付となります。',
     href: null,
@@ -272,17 +284,18 @@ const galleryImages = [
 
     <div class="relative z-10 mx-auto max-w-5xl px-6 pt-24 pb-12 text-center sm:pb-16">
       <p class="mb-4 text-xs font-bold tracking-[0.24em] text-green-900 uppercase drop-shadow-md sm:tracking-[0.35em]">
-        伊豆大島の一棟貸し<span class="mx-2" aria-hidden="true">｜</span>Since 1975
+        Oshima New Villa<span class="mx-2" aria-hidden="true">｜</span>Since 1975
       </p>
-      <h1 class="font-serif text-4xl leading-tight font-bold tracking-wide text-gray-900 drop-shadow-lg sm:text-5xl md:text-6xl lg:text-7xl">
-        森と眠る、<br class="sm:hidden" />心の再生
+      <h1 class="font-serif font-bold tracking-wide text-gray-900 drop-shadow-lg">
+        <span class="block text-xl leading-tight sm:text-2xl md:text-3xl">伊豆大島の一棟貸し宿</span>
+        <span class="mt-3 block text-4xl leading-tight sm:text-5xl md:text-6xl lg:text-7xl">森と眠る、<br class="sm:hidden" />心の再生</span>
       </h1>
       <p class="mt-5 font-serif text-lg font-bold tracking-wide text-green-900 drop-shadow-md md:text-xl">
         大島を遊ぶ。森に帰る。
       </p>
       <p class="mx-auto mt-5 max-w-2xl text-sm font-medium leading-7 text-gray-800 drop-shadow-md sm:text-base md:text-lg md:leading-8">
-        三原山や裏砂漠など、伊豆大島の自然を楽しんだあとは森に囲まれたヴィラへ。<br class="hidden md:block" />
-        家族や友人と、BBQや静かな夜を楽しめる一棟貸しの宿です。
+        伊豆大島で宿泊先をお探しの家族・友人グループへ。三原山や裏砂漠などを楽しんだあとは、森に囲まれたヴィラへ。<br class="hidden md:block" />
+        最大6名で、BBQや静かな夜を楽しめる一棟貸しの宿です。
       </p>
 
       <ul class="mx-auto mt-7 flex max-w-3xl flex-wrap justify-center gap-2 text-xs font-bold text-gray-800 sm:gap-3 sm:text-sm" aria-label="施設の主な特徴">
@@ -651,7 +664,7 @@ const galleryImages = [
             これらは宿泊設備・基本アメニティではありません。内容・種類・数量は変更となる場合があり、破損・紛失・補充状況等により利用できないことがあります。特定の品目のご用意は保証していません。
           </p>
           <p class="mt-4 text-xs leading-6 text-sky-900/80">
-            また、敷地内の洗濯機・乾燥機・コンテナ内シャワー・トイレはオーナー所有設備であり、大島ニュービラの宿泊設備・付帯設備には含まれません。利用可能な場合に無料でお使いいただけます。
+            また、敷地内の洗濯機・乾燥機・コンテナ内シャワー・トイレは、ご宿泊中のお客様が無料で利用できる共用設備です。大島ニュービラの宿泊設備・付帯設備には含まれないため、メンテナンス・故障・清掃等によりご利用いただけない場合があります。
           </p>
         </article>
 
@@ -781,10 +794,10 @@ const galleryImages = [
       <div class="mx-auto mb-12 max-w-3xl text-center md:mb-16">
         <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Recommended For</p>
         <h2 id="recommended-for-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">
-          こんな伊豆大島旅行に、<br class="hidden sm:block" />大島ニュービラ。
+          伊豆大島で、<br class="hidden sm:block" />こんな宿を探している方に。
         </h2>
         <p class="mt-5 leading-7 text-gray-600 md:text-lg md:leading-8">
-          家族で過ごす旅、友人と夜まで楽しむ旅、島を自由に巡る旅。それぞれの過ごし方に、大島ニュービラを旅の拠点として使えます。
+          大島ニュービラは、ホテルや民宿の客室ではなく、建物一棟を貸切で使う宿です。伊豆大島で貸別荘・コテージ・ヴィラのように、家族や友人だけで過ごせる宿を探している方に向いています。
         </p>
       </div>
 
@@ -839,7 +852,7 @@ const galleryImages = [
           <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-lg shadow-sm" aria-hidden="true">🏝️</span>
           <span>
             <span class="block text-xs font-bold tracking-[0.15em] text-green-700 uppercase">Group Stay</span>
-            <span class="mt-1 block text-sm font-bold leading-6 text-gray-900">オフサイト・ワーケーション・釣り・ダイビングなどのグループ利用はこちら</span>
+            <span class="mt-1 block text-sm font-bold leading-6 text-gray-900">伊豆大島の一棟貸しを、家族・友人・グループで使いたい方はこちら</span>
           </span>
           <span class="ml-auto text-green-700 transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
         </a>
@@ -852,7 +865,7 @@ const galleryImages = [
           <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-lg shadow-sm" aria-hidden="true">☕</span>
           <span>
             <span class="block text-xs font-bold tracking-[0.15em] text-stone-600 uppercase">Weekday Slow Trip</span>
-            <span class="mt-1 block text-sm font-bold leading-6 text-gray-900">夫婦・友人同士でゆっくり巡る「平日の大人旅」はこちら</span>
+            <span class="mt-1 block text-sm font-bold leading-6 text-gray-900">伊豆大島を2泊3日でゆっくり巡る「平日の大人旅」はこちら</span>
           </span>
           <span class="ml-auto text-stone-600 transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
         </a>
@@ -1800,7 +1813,7 @@ const galleryImages = [
           <li><strong class="text-gray-900">BBQをご利用の方：</strong>炭・着火剤・着火ライター・食材・飲み物はご用意していません。BBQをされる方のみ必要なものをご準備ください。</li>
           <li><strong class="text-gray-900">Wi-Fi：</strong>Wi-Fi設備はありますが、回線状況・障害・天候等により通信が不安定になる場合があり、常時接続・通信速度は保証していません。</li>
           <li><strong class="text-gray-900">無料貸出・サービス品：</strong>ボードゲーム・玩具等は内容や数量が変わる場合があり、特定の品目のご用意は保証していません。</li>
-          <li><strong class="text-gray-900">オーナー所有設備：</strong>敷地内の洗濯機・乾燥機・コンテナ内シャワー・トイレは大島ニュービラの宿泊設備には含まれず、利用可能な場合に無料でお使いいただけます。</li>
+          <li><strong class="text-gray-900">敷地内の共用設備：</strong>洗濯機・乾燥機・コンテナ内シャワー・トイレは、ご宿泊中のお客様が無料で利用できます。大島ニュービラの宿泊設備・付帯設備には含まれないため、メンテナンス・故障・清掃等によりご利用いただけない場合があります。</li>
           <li><strong class="text-gray-900">屋外・自然環境：</strong>強風など安全上の理由で屋外設備を利用できない場合があります。また、森に囲まれた環境のため季節によって虫が見られます。</li>
           <li><strong class="text-gray-900">無人運営：</strong>スタッフは常駐していません。チェックインは敷地内のタブレットで行います。</li>
         </ul>
@@ -1843,7 +1856,7 @@ const galleryImages = [
           data-booking-location="bottom_cta"
           class="inline-flex w-full max-w-sm items-center justify-center rounded-full bg-green-700 px-8 py-4 text-base font-bold tracking-wide text-white shadow-xl transition-all hover:-translate-y-1 hover:bg-green-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-800 sm:w-auto"
         >
-          Airbnbで空室・料金を確認する
+          空室・料金を見る
           <span class="ml-2" aria-hidden="true">↗</span>
         </a>
         <a

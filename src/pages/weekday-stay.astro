@@ -1,8 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const pageTitle = '平日に楽しむ大人の伊豆大島旅｜一棟貸し・大島ニュービラ';
-const pageDescription = '夫婦や友人同士で、平日の伊豆大島をゆっくり楽しみたい方へ。三原山・裏砂漠・波浮港・温泉を巡り、森の一棟貸しで自分たちのペースで過ごす大人旅をご提案します。';
+const pageTitle = '伊豆大島2泊3日の大人旅｜平日に泊まる一棟貸し｜大島ニュービラ';
+const pageDescription = '伊豆大島を2泊3日でゆっくり楽しみたい夫婦・友人へ。三原山・裏砂漠・波浮港・温泉を巡り、森の一棟貸しを拠点に自分たちのペースで過ごす平日のモデルプランをご提案します。';
 
 const travelStyles = [
   {
@@ -56,7 +56,7 @@ const faqs = [
   },
   {
     question: '洗濯機や乾燥機はありますか？',
-    answer: '同じ敷地内に、オーナーが所有・管理する洗濯機・乾燥機・シャワー・トイレがあります。宿泊設備・付帯設備には含まれず、メンテナンス・故障・清掃等によりご利用いただけない場合があります。',
+    answer: '同じ敷地内に、ご宿泊中のお客様が無料で利用できる洗濯機・乾燥機・シャワー・トイレがあります。宿泊設備・付帯設備には含まれないため、メンテナンス・故障・清掃等によりご利用いただけない場合があります。',
   },
 ];
 
@@ -67,7 +67,7 @@ const structuredData = {
       '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: '大島ニュービラ', item: 'https://oshima-new-villa.com/' },
-        { '@type': 'ListItem', position: 2, name: '平日に楽しむ大人の伊豆大島旅', item: 'https://oshima-new-villa.com/weekday-stay/' },
+        { '@type': 'ListItem', position: 2, name: '伊豆大島2泊3日の大人旅', item: 'https://oshima-new-villa.com/weekday-stay/' },
       ],
     },
     {
@@ -99,7 +99,7 @@ const structuredData = {
         </a>
         <p class="mt-10 text-base font-bold tracking-[0.08em] text-orange-100">平日だからできる、ゆったり島旅</p>
         <h1 id="weekday-title" class="mt-4 font-serif text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">
-          平日に楽しむ、<br />大人の伊豆大島旅。
+          平日に楽しむ、<br />伊豆大島2泊3日の大人旅。
         </h1>
         <p class="mt-6 max-w-2xl text-lg leading-9 text-stone-50 md:text-xl md:leading-10">
           行き先を詰め込みすぎず、景色を眺め、温泉に入り、島の食を楽しむ。夫婦や友人同士で、自分たちのペースで過ごす旅の拠点に。
@@ -120,7 +120,7 @@ const structuredData = {
             rel="noopener noreferrer"
             class="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-7 py-4 text-base font-bold text-stone-950 shadow-lg transition-all hover:-translate-y-0.5 hover:bg-orange-50 md:text-lg"
           >
-            平日の空室・料金を見る<span class="ml-2" aria-hidden="true">↗</span>
+            空室・料金を見る<span class="ml-2" aria-hidden="true">↗</span>
           </a>
           <a href="#plan" class="inline-flex min-h-12 items-center justify-center rounded-full border border-white/35 px-7 py-4 text-base font-bold text-white transition-colors hover:bg-white/10 md:text-lg">
             旅の過ごし方を見る<span class="ml-2" aria-hidden="true">↓</span>
@@ -288,10 +288,10 @@ const structuredData = {
       </div>
 
       <div class="mt-8 rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
-        <p class="text-base font-bold tracking-normal text-green-100">オーナー所有設備</p>
-        <h3 class="mt-2 font-serif text-2xl font-bold leading-snug">同じ敷地内のオーナー所有設備について</h3>
+        <p class="text-base font-bold tracking-normal text-green-100">共用設備</p>
+        <h3 class="mt-2 font-serif text-2xl font-bold leading-snug">同じ敷地内の共用設備について</h3>
         <p class="mt-4 text-lg leading-9 text-green-50">
-          同じ敷地内には、オーナー所有の洗濯機・乾燥機・シャワー・トイレがあります。ご宿泊中のお客様は無料で利用できますが、大島ニュービラの宿泊設備・付帯設備には含まれません。メンテナンス・故障・清掃等により利用できない場合があります。
+          同じ敷地内には、ご宿泊中のお客様が無料で利用できる洗濯機・乾燥機・シャワー・トイレがあります。大島ニュービラの宿泊設備・付帯設備には含まれないため、メンテナンス・故障・清掃等によりご利用いただけない場合があります。
         </p>
       </div>
     </div>
@@ -337,7 +337,7 @@ const structuredData = {
         rel="noopener noreferrer"
         class="mt-9 inline-flex min-h-14 items-center justify-center rounded-full bg-green-700 px-9 py-4 text-base font-bold text-white shadow-lg shadow-green-700/20 transition-all hover:-translate-y-0.5 hover:bg-green-600 md:text-lg"
       >
-        平日の空室・料金を確認する<span class="ml-2" aria-hidden="true">↗</span>
+        空室・料金を見る<span class="ml-2" aria-hidden="true">↗</span>
       </a>
       <p class="mt-5 text-sm leading-7 text-gray-600">予約・料金・キャンセル条件は予約ページに表示される最新情報をご確認ください。</p>
     </div>

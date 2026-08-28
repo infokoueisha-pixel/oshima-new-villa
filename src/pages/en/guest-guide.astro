@@ -2,7 +2,7 @@
 import EnglishLayout from '../../layouts/EnglishLayout.astro';
 
 const pageTitle = 'Guest Guide | Oshima New Villa';
-const pageDescription = 'Guest guide for Oshima New Villa on Izu Oshima, Tokyo. Arrival ports, buses, Wi-Fi, self check-in, what is provided, BBQ rules, owner-owned facilities and other practical information for your stay.';
+const pageDescription = 'Guest guide for Oshima New Villa on Izu Oshima, Tokyo. Arrival ports, buses, Wi-Fi, self check-in, what is provided, BBQ rules, shared facilities on the property and other practical information for your stay.';
 
 const quickLinks = [
   { label: 'Arrival & Check-in', href: '#arrival', icon: '🚢' },
@@ -34,7 +34,7 @@ const complimentaryItems = [
   'Bluetooth speaker',
 ];
 
-const ownerFacilities = [
+const sharedFacilities = [
   'Washing machine',
   'Gas dryer',
   'Shower booth in the container building',
@@ -238,14 +238,14 @@ const bbqCoreItems = [
             </p>
 
             <div class="mt-6 border-t border-sky-200 pt-6">
-              <p class="text-sm font-bold text-gray-900">Owner-owned facilities on the property</p>
+              <p class="text-sm font-bold text-gray-900">Shared facilities on the property</p>
               <ul class="mt-3 space-y-3 text-sm leading-7 text-gray-700">
-                {ownerFacilities.map((item) => (
+                {sharedFacilities.map((item) => (
                   <li class="flex gap-3"><span class="mt-0.5 text-sky-700" aria-hidden="true">●</span><span>{item}</span></li>
                 ))}
               </ul>
               <p class="mt-4 text-xs leading-6 text-sky-950/75">
-                These facilities are owned and managed by the property owner on the same premises. <strong>They are not included in the accommodation facilities or ancillary facilities of Oshima New Villa.</strong> Guests may use them free of charge when available, but they may be unavailable due to maintenance, malfunction, cleaning or other reasons.
+                These shared facilities are located on the same premises and are available to staying guests free of charge. <strong>They are not included in the accommodation facilities or ancillary facilities of Oshima New Villa.</strong> They may be unavailable due to maintenance, malfunction, cleaning or other reasons.
               </p>
             </div>
           </article>

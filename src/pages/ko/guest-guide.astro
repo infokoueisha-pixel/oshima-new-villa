@@ -2,7 +2,7 @@
 import InternationalLayout from '../../layouts/InternationalLayout.astro';
 
 const pageTitle = '숙박 가이드 | Oshima New Villa';
-const pageDescription = '도쿄 이즈오시마 Oshima New Villa 숙박 고객을 위한 가이드입니다. 도착 항구, 버스, Wi-Fi, 셀프 체크인, 제공 물품, BBQ 이용 규칙, 부지 내 오너 소유 설비 등 숙박에 필요한 정보를 안내합니다.';
+const pageDescription = '도쿄 이즈오시마 Oshima New Villa 숙박 고객을 위한 가이드입니다. 도착 항구, 버스, Wi-Fi, 셀프 체크인, 제공 물품, BBQ 이용 규칙, 부지 내 공용 설비 등 숙박에 필요한 정보를 안내합니다.';
 
 const quickLinks = [
   { label: '도착·체크인', href: '#arrival', icon: '🚢' },
@@ -34,7 +34,7 @@ const complimentaryItems = [
   'Bluetooth 스피커',
 ];
 
-const ownerFacilities = [
+const sharedFacilities = [
   '세탁기',
   '가스 건조기',
   '컨테이너 내 샤워 부스',
@@ -238,14 +238,14 @@ const bbqCoreItems = [
             </p>
 
             <div class="mt-6 border-t border-sky-200 pt-6">
-              <p class="text-sm font-bold text-gray-900">부지 내 오너 소유 설비</p>
+              <p class="text-sm font-bold text-gray-900">부지 내 공용 설비</p>
               <ul class="mt-3 space-y-3 text-sm leading-7 text-gray-700">
-                {ownerFacilities.map((item) => (
+                {sharedFacilities.map((item) => (
                   <li class="flex gap-3"><span class="mt-0.5 text-sky-700" aria-hidden="true">●</span><span>{item}</span></li>
                 ))}
               </ul>
               <p class="mt-4 text-xs leading-6 text-sky-950/75">
-                이 설비는 같은 부지 내에서 오너가 소유·관리하고 있습니다. <strong>Oshima New Villa의 숙박시설 또는 부대시설에는 포함되지 않습니다.</strong> 이용 가능한 경우 숙박 고객이 무료로 사용할 수 있으나, 점검·고장·청소 등의 이유로 이용하지 못할 수 있습니다.
+                같은 부지 내에 있는 숙박 고객용 공용 설비입니다. <strong>무료로 이용할 수 있지만 Oshima New Villa의 숙박시설 또는 부대시설에는 포함되지 않습니다.</strong> 점검·고장·청소 등의 이유로 이용하지 못할 수 있습니다.
               </p>
             </div>
           </article>

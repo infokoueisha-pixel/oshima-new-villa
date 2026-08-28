@@ -2,7 +2,7 @@
 import InternationalLayout from '../../layouts/InternationalLayout.astro';
 
 const pageTitle = '住宿指南｜Oshima New Villa';
-const pageDescription = '東京伊豆大島 Oshima New Villa 住宿指南。介紹抵達港口、公車、Wi-Fi、自助入住、提供物品、BBQ 規則、敷地內屋主所有設備等住宿期間需要的實用資訊。';
+const pageDescription = '東京伊豆大島 Oshima New Villa 住宿指南。介紹抵達港口、公車、Wi-Fi、自助入住、提供物品、BBQ 規則、園區內共用設備等住宿期間需要的實用資訊。';
 
 const quickLinks = [
   { label: '抵達・入住', href: '#arrival', icon: '🚢' },
@@ -34,7 +34,7 @@ const complimentaryItems = [
   'Bluetooth 音響',
 ];
 
-const ownerFacilities = [
+const sharedFacilities = [
   '洗衣機',
   '瓦斯烘衣機',
   '貨櫃屋內淋浴間',
@@ -238,14 +238,14 @@ const bbqCoreItems = [
             </p>
 
             <div class="mt-6 border-t border-sky-200 pt-6">
-              <p class="text-sm font-bold text-gray-900">敷地內屋主所有設備</p>
+              <p class="text-sm font-bold text-gray-900">園區內共用設備</p>
               <ul class="mt-3 space-y-3 text-sm leading-7 text-gray-700">
-                {ownerFacilities.map((item) => (
+                {sharedFacilities.map((item) => (
                   <li class="flex gap-3"><span class="mt-0.5 text-sky-700" aria-hidden="true">●</span><span>{item}</span></li>
                 ))}
               </ul>
               <p class="mt-4 text-xs leading-6 text-sky-950/75">
-                這些設備位於同一敷地內，由屋主所有並管理。 <strong>這些設備不包含在 Oshima New Villa 的住宿設備或附屬設施中。</strong> 有開放時，住宿旅客可免費使用；但可能因維護、故障、清潔等原因暫停使用。
+                這些是位於同一園區內、供住宿旅客使用的共用設備。<strong>可免費使用，但不包含在 Oshima New Villa 的住宿設備或附屬設施中。</strong> 可能因維護、故障、清潔等原因暫停使用。
               </p>
             </div>
           </article>

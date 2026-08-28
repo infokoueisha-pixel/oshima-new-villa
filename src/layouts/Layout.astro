@@ -8,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = '伊豆大島の一棟貸し宿｜最大6名・BBQ・森のヴィラ｜大島ニュービラ',
-  description = '伊豆大島・元町の一棟貸し宿「大島ニュービラ」。家族・友人で最大6名、BBQ・自炊を楽しめる森のヴィラです。元町港から車で約5分。1975年開業の施設を2026年にリニューアルしました。',
+  title = '伊豆大島の宿・一棟貸し｜最大6名の森のヴィラ｜大島ニュービラ',
+  description = '伊豆大島で宿泊先をお探しの方へ。元町の一棟貸し宿「大島ニュービラ」は、家族・友人で最大6名、BBQ・自炊を楽しめる森のヴィラです。元町港から車で約5分。',
   noindex = false,
 } = Astro.props;
 
@@ -151,6 +151,7 @@ const footerNavItems = [
     <meta name="description" content={description} />
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
     <link rel="canonical" href={canonicalUrl} />
+    <link rel="sitemap" href="/sitemap.xml" />
     {hasLocalizedEquivalent && <link rel="alternate" hreflang="ja" href={alternateUrls.ja} />}
     {hasLocalizedEquivalent && <link rel="alternate" hreflang="en" href={alternateUrls.en} />}
     {hasLocalizedEquivalent && <link rel="alternate" hreflang="ko" href={alternateUrls.ko} />}
@@ -258,7 +259,7 @@ const footerNavItems = [
             rel="noopener noreferrer"
             class="ml-1 whitespace-nowrap rounded-full bg-green-700 px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-green-700/20 transition-all hover:-translate-y-0.5 hover:bg-green-600 hover:shadow-lg"
           >
-            予約する
+            空室・料金を見る
           </a>
         </nav>
 
@@ -317,7 +318,7 @@ const footerNavItems = [
                   rel="noopener noreferrer"
                   class="mt-8 flex w-full items-center justify-center rounded-full bg-white px-6 py-3.5 text-sm font-bold text-green-900 shadow-sm transition-colors hover:bg-green-50"
                 >
-                  Airbnbで空室・料金を確認する
+                  空室・料金を見る
                 </a>
               </nav>
             </div>
@@ -330,7 +331,7 @@ const footerNavItems = [
             rel="noopener noreferrer"
             class="rounded-full bg-green-700 px-4 py-2 text-sm font-bold text-white shadow-md"
           >
-            予約
+            空室・料金
           </a>
         </div>
       </div>
