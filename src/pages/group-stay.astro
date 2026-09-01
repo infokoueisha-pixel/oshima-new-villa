@@ -4,7 +4,7 @@ import Layout from '../layouts/Layout.astro';
 const pageTitle = '伊豆大島の一棟貸し｜グループ・友人旅行に｜大島ニュービラ';
 const pageDescription = '伊豆大島で一棟貸しの宿をお探しの家族・友人・グループへ。最大6名の大島ニュービラは、Wi-Fi・キッチン・BBQ設備を備え、観光・オフサイト・釣り・ダイビングの拠点に使えます。';
 
-const useCases = [
+const useCases: Array<{ icon: string; kicker: string; title: string; description: string; href?: string }> = [
   {
     icon: '💬',
     kicker: 'Offsite',
@@ -27,7 +27,8 @@ const useCases = [
     icon: '🤿',
     kicker: 'Diving',
     title: 'ダイビング旅行',
-    description: '伊豆大島で海を楽しむグループの宿泊拠点としても歓迎しています。観光とは違う島時間を楽しみたい方へ。',
+    description: '伊豆大島で海を楽しむグループの宿泊拠点としても歓迎しています。潜ったあとの時間まで仲間と楽しみたい方へ。',
+    href: '/diving/',
   },
   {
     icon: '🎣',
@@ -176,6 +177,11 @@ const structuredData = {
             <p class="mt-5 text-xs font-bold tracking-[0.2em] text-green-700 uppercase">{item.kicker}</p>
             <h3 class="mt-2 font-serif text-xl font-bold text-gray-900">{item.title}</h3>
             <p class="mt-3 text-sm leading-7 text-gray-600">{item.description}</p>
+            {item.href && (
+              <a href={item.href} class="mt-5 inline-flex items-center gap-1 text-sm font-bold text-cyan-800 underline decoration-cyan-200 underline-offset-4 transition-colors hover:text-cyan-950">
+                ダイビング旅行の宿泊案内を見る<span aria-hidden="true">→</span>
+              </a>
+            )}
           </article>
         ))}
       </div>
@@ -258,6 +264,9 @@ const structuredData = {
         <p class="mt-4 leading-8 text-slate-400">
           ダイビングを楽しむグループの宿泊も歓迎しています。観光の時間割に合わせるのではなく、海の予定を中心に自分たちのペースで滞在できます。
         </p>
+        <a href="/diving/" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-cyan-200 underline decoration-cyan-800 underline-offset-4 transition-colors hover:text-white">
+          伊豆大島のダイビング旅行・宿泊案内を見る<span aria-hidden="true">→</span>
+        </a>
       </div>
 
       <figure class="overflow-hidden rounded-3xl border border-white/10 shadow-2xl">

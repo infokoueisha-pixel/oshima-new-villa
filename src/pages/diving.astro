@@ -1,0 +1,383 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = '伊豆大島のダイビング旅行・宿泊｜一棟貸しの大島ニュービラ';
+const pageDescription = '伊豆大島でダイビング旅行の宿をお探しの方へ。大島ニュービラは最大6名の一棟貸し。キッチン・BBQ・無料駐車場を備え、潜ったあとの時間も仲間だけでゆっくり過ごせます。';
+
+const stayPoints = [
+  {
+    icon: '🏡',
+    kicker: 'Private Stay',
+    title: '最大6名の一棟貸し',
+    description: 'ホテルの客室に分かれず、仲間だけでリビング・キッチンを使えます。ダイビング後も同じ空間でゆっくり過ごせます。',
+  },
+  {
+    icon: '🍳',
+    kicker: 'Kitchen',
+    title: '自炊できるキッチン',
+    description: '冷凍冷蔵庫、電子レンジ、炊飯器、調理器具などを用意。早朝ダイブの日も、自分たちの時間に合わせて食事を準備できます。',
+  },
+  {
+    icon: '🔥',
+    kicker: 'After Dive',
+    title: '夜はガゼボ庵でBBQ',
+    description: '屋根付きの屋外炊事場「ガゼボ庵」で、島の夜まで仲間との時間を。BBQ用の炭・着火用品・食材・飲み物はご持参ください。',
+  },
+  {
+    icon: '🚗',
+    kicker: 'Island Base',
+    title: '無料駐車場・無人チェックイン',
+    description: 'レンタカーで動く旅の拠点にも。チェックインはタブレットを使った無人方式で、滞在中は自分たちのペースで過ごせます。',
+  },
+];
+
+const dayFlow = [
+  {
+    time: 'Morning',
+    title: '海の予定に合わせて出発',
+    description: '朝食や身支度を自分たちのペースで。利用するダイビングサービスの集合時間・送迎条件をご確認のうえ出発してください。',
+  },
+  {
+    time: 'Dive',
+    title: '伊豆大島の海へ',
+    description: '秋の浜、野田浜、ケイカイ、王の浜など、伊豆大島には複数のダイビングポイントがあります。海況や利用条件は現地サービスの案内に従ってください。',
+  },
+  {
+    time: 'Evening',
+    title: '一棟貸しの宿へ戻る',
+    description: '宿へ戻ったら入浴や着替えを済ませ、リビングで休憩。敷地内には宿泊者が無料で利用できる共用の洗濯機・乾燥機・シャワーもあります。',
+  },
+  {
+    time: 'Night',
+    title: '潜ったあとの時間も旅にする',
+    description: 'キッチンで料理をしたり、ガゼボ庵でBBQをしたり。翌日の海の話をしながら、仲間だけの夜をお楽しみください。',
+  },
+];
+
+const divePoints = ['秋の浜', '野田浜', 'ケイカイ', '王の浜', 'トウシキ', '筆島・カキハラ'];
+
+const faqs = [
+  {
+    question: '大島ニュービラでダイビングを予約できますか？',
+    answer: 'いいえ。大島ニュービラではダイビングサービスの提供・予約仲介は行っていません。体験ダイビング、ファンダイビング、講習などは、島内のダイビングサービスへ直接ご予約ください。',
+  },
+  {
+    question: 'ダイビングショップまで送迎してもらえますか？',
+    answer: '送迎条件はダイビングサービスごとに異なります。ご予約前に、宿泊先が「大島ニュービラ（東京都大島町元町字新込126-42）」であることを伝え、送迎可否をご確認ください。',
+  },
+  {
+    question: 'ダイビング器材を洗ったり乾かしたりできますか？',
+    answer: '現在、ダイビング器材・ウェットスーツ専用の洗い場や乾燥スペースは設けていません。器材の洗浄・保管方法は、ご利用のダイビングサービスへご確認ください。',
+  },
+  {
+    question: '洗濯機・乾燥機はありますか？',
+    answer: '同じ敷地内に、ご宿泊中のお客様が無料で利用できる共用の洗濯機・ガス乾燥機があります。大島ニュービラの宿泊設備・付帯設備には含まれず、メンテナンス・故障・清掃等により利用できない場合があります。ダイビング器材やウェットスーツには使用しないでください。',
+  },
+  {
+    question: 'ダイビングのローカルルールはどこで確認できますか？',
+    answer: '大島ダイビング連絡協議会の公式サイトで、伊豆大島のローカルルールや各ダイビングポイントの案内が公開されています。来島前に最新情報をご確認ください。',
+  },
+  {
+    question: '何人まで宿泊できますか？',
+    answer: '現在営業中のサルビア棟は最大6名の一棟貸しです。友人同士やダイビング仲間など、複数人で同じ空間に泊まりたい旅行に向いています。',
+  },
+];
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '大島ニュービラ', item: 'https://oshima-new-villa.com/' },
+        { '@type': 'ListItem', position: 2, name: '伊豆大島のダイビング旅行・宿泊', item: 'https://oshima-new-villa.com/diving/' },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer,
+        },
+      })),
+    },
+  ],
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+  <!-- Hero -->
+  <section class="relative isolate overflow-hidden bg-slate-950 pt-24 text-white md:pt-28" aria-labelledby="diving-title">
+    <img
+      src="/sea-of-izu-oshima.webp"
+      alt="伊豆大島から望む海と夕景"
+      class="absolute inset-0 -z-20 h-full w-full object-cover"
+      width="2000"
+      height="1500"
+      fetchpriority="high"
+    />
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-slate-950 via-slate-950/80 to-slate-900/35" aria-hidden="true"></div>
+
+    <div class="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:py-24 lg:grid-cols-[1.08fr_0.92fr] lg:items-end lg:gap-16">
+      <div>
+        <a href="/" class="inline-flex items-center gap-2 text-sm font-bold text-sky-200 transition-colors hover:text-white">
+          <span aria-hidden="true">←</span> 大島ニュービラ トップへ
+        </a>
+        <p class="mt-10 text-xs font-bold tracking-[0.3em] text-cyan-300 uppercase">Izu Oshima Diving Stay</p>
+        <p class="mt-4 text-sm font-bold tracking-wide text-sky-100">伊豆大島のダイビング旅行・宿泊</p>
+        <h1 id="diving-title" class="mt-3 font-serif text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">
+          伊豆大島で潜って、<br />仲間だけの一棟へ。
+        </h1>
+        <p class="mt-6 max-w-2xl text-base leading-8 text-slate-100 md:text-lg md:leading-9">
+          海から戻ったあとも、ダイビング旅行は続きます。最大6名の一棟貸しで、料理をしたり、BBQを囲んだり、翌日の海の話をしたり。潜ったあとの時間まで、自分たちのペースで楽しめる宿です。
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-2 text-xs font-bold text-slate-50">
+          <span class="rounded-full border border-white/25 bg-slate-950/35 px-4 py-2 backdrop-blur-sm">最大6名・一棟貸し</span>
+          <span class="rounded-full border border-white/25 bg-slate-950/35 px-4 py-2 backdrop-blur-sm">キッチン</span>
+          <span class="rounded-full border border-white/25 bg-slate-950/35 px-4 py-2 backdrop-blur-sm">BBQ</span>
+          <span class="rounded-full border border-white/25 bg-slate-950/35 px-4 py-2 backdrop-blur-sm">無料駐車場</span>
+        </div>
+
+        <div class="mt-9">
+          <a
+            href="https://www.airbnb.jp/rooms/1602063410123886296?guests=6&adults=6&s=67&unique_share_id=a393ba49-61eb-4d8e-a4c9-95935b649d65"
+            data-booking-location="diving_hero"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-bold text-slate-950 shadow-xl transition-all hover:-translate-y-0.5 hover:bg-sky-50"
+          >
+            空室・料金を見る<span class="ml-2" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <aside class="rounded-3xl border border-white/15 bg-slate-950/55 p-6 shadow-2xl backdrop-blur-md md:p-8" aria-labelledby="diving-note-title">
+        <p class="text-xs font-bold tracking-[0.24em] text-cyan-300 uppercase">For Divers</p>
+        <h2 id="diving-note-title" class="mt-3 font-serif text-2xl font-bold">海の専門サービスと、滞在の宿を分けて選ぶ。</h2>
+        <p class="mt-4 text-sm leading-7 text-slate-200">
+          大島ニュービラはダイビングショップ併設宿ではありません。ダイビングは目的やスタイルに合う島内サービスへ直接予約し、宿は仲間だけで過ごせる一棟貸しを選ぶ。そんな旅の拠点としてご利用いただけます。
+        </p>
+        <p class="mt-4 text-xs leading-6 text-slate-400">
+          ※ ダイビングサービスの提供・予約仲介、器材専用の洗い場・乾燥設備は行っていません。
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Stay benefits -->
+  <section class="bg-white py-20 md:py-28" aria-labelledby="diving-stay-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-xs font-bold tracking-[0.3em] text-cyan-700 uppercase">Stay After Diving</p>
+        <h2 id="diving-stay-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">
+          潜ったあとの時間も、旅の一部。
+        </h2>
+        <p class="mt-5 leading-8 text-gray-600 md:text-lg md:leading-9">
+          海から上がったら、みんなで同じ宿へ。大島ニュービラは、ダイビングを終えたあとも仲間との時間を続けたいグループに向いた一棟貸しです。
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {stayPoints.map((item) => (
+          <article class="rounded-3xl border border-sky-100 bg-sky-50/45 p-7 shadow-sm">
+            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-white text-2xl shadow-sm" aria-hidden="true">{item.icon}</div>
+            <p class="mt-5 text-xs font-bold tracking-[0.2em] text-cyan-700 uppercase">{item.kicker}</p>
+            <h3 class="mt-2 font-serif text-xl font-bold text-gray-900">{item.title}</h3>
+            <p class="mt-3 text-sm leading-7 text-gray-600">{item.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- After dive visuals -->
+  <section class="bg-slate-50 py-20 md:py-28" aria-labelledby="diving-evening-title">
+    <div class="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[1fr_0.95fr] lg:items-center lg:gap-16">
+      <div class="grid grid-cols-2 gap-4">
+        <figure class="col-span-2 overflow-hidden rounded-3xl bg-white shadow-sm">
+          <img src="/sofa-salvia.webp" alt="ダイビング旅行の仲間と過ごせる大島ニュービラのリビング" class="aspect-[16/9] w-full object-cover" width="1108" height="832" loading="lazy" />
+        </figure>
+        <figure class="overflow-hidden rounded-3xl bg-white shadow-sm">
+          <img src="/day-bbq.webp" alt="屋根付きの屋外炊事場ガゼボ庵" class="aspect-square w-full object-cover" width="1376" height="2000" loading="lazy" />
+        </figure>
+        <figure class="overflow-hidden rounded-3xl bg-white shadow-sm">
+          <img src="/night-bbq.webp" alt="ダイビング後の夜も楽しめるガゼボ庵" class="aspect-square w-full object-cover" width="1500" height="2000" loading="lazy" />
+        </figure>
+      </div>
+
+      <div>
+        <p class="text-xs font-bold tracking-[0.3em] text-cyan-700 uppercase">Your Own Pace</p>
+        <h2 id="diving-evening-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">
+          海のあとは、<br class="hidden sm:block" />一棟を自分たちの基地に。
+        </h2>
+        <p class="mt-6 leading-8 text-gray-600 md:text-lg md:leading-9">
+          ダイビングが終わって宿へ戻ったら、まずは休憩。リビングで写真を見返したり、キッチンで夕食を作ったり、屋外のガゼボ庵でBBQを楽しんだりできます。
+        </p>
+        <p class="mt-4 leading-8 text-gray-600">
+          スタッフ常駐の宿ではないため、過ごし方を決められすぎないのも一棟貸しの特徴です。翌日の集合時間に合わせて早めに休む日も、仲間とゆっくり話す夜も、自分たちのペースで。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Day flow -->
+  <section class="bg-white py-20 md:py-28" aria-labelledby="diving-day-title">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-xs font-bold tracking-[0.3em] text-cyan-700 uppercase">A Day on Izu Oshima</p>
+        <h2 id="diving-day-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">ダイビング旅行の一日。</h2>
+        <p class="mt-5 leading-8 text-gray-600 md:text-lg md:leading-9">
+          ショップの集合時間や海況によって予定は変わります。宿では、海を中心にした一日の前後を自由に組み立てられます。
+        </p>
+      </div>
+
+      <ol class="mt-12 grid gap-5 md:grid-cols-2" aria-label="ダイビング旅行の一日の流れ">
+        {dayFlow.map((item, index) => (
+          <li class="relative rounded-3xl border border-gray-100 bg-orange-50/35 p-7 md:p-8">
+            <span class="absolute right-6 top-5 font-serif text-5xl font-bold text-cyan-100" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <p class="text-xs font-bold tracking-[0.24em] text-cyan-700 uppercase">{item.time}</p>
+            <h3 class="mt-3 pr-12 font-serif text-2xl font-bold text-gray-900">{item.title}</h3>
+            <p class="mt-4 text-sm leading-7 text-gray-600">{item.description}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Official diving information -->
+  <section class="overflow-hidden bg-cyan-950 py-20 text-white md:py-28" aria-labelledby="oshima-diving-info-title">
+    <div class="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-16">
+      <div>
+        <p class="text-xs font-bold tracking-[0.3em] text-cyan-300 uppercase">Dive Information</p>
+        <h2 id="oshima-diving-info-title" class="mt-3 font-serif text-3xl font-bold leading-tight md:text-4xl">
+          海のことは、<br class="hidden sm:block" />現地の専門情報を確認してください。
+        </h2>
+        <p class="mt-6 leading-8 text-cyan-50/85 md:text-lg md:leading-9">
+          伊豆大島には複数のダイビングポイントがあり、ポイントごとのローカルルールや海況があります。大島ダイビング連絡協議会の公式サイトでは、島内ダイビングサービスの情報やローカルルールが案内されています。
+        </p>
+        <p class="mt-4 text-sm leading-7 text-cyan-100/65">
+          大島ニュービラは協議会・各ダイビングサービスとの提携を表示するものではありません。安全なダイビングのため、来島前に利用サービスと最新情報をご確認ください。
+        </p>
+
+        <a
+          href="https://www.oshima-diving.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-diving-external="oshima_diving_council"
+          class="mt-8 inline-flex items-center justify-center rounded-full border border-cyan-200/35 bg-white px-7 py-3.5 text-sm font-bold text-cyan-950 shadow-lg transition-all hover:-translate-y-0.5 hover:bg-cyan-50"
+        >
+          大島ダイビング連絡協議会 公式サイト<span class="ml-2" aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      <div class="rounded-3xl border border-white/10 bg-white/[0.08] p-6 shadow-2xl md:p-8">
+        <p class="text-xs font-bold tracking-[0.22em] text-cyan-300 uppercase">Local Dive Points</p>
+        <h3 class="mt-2 font-serif text-2xl font-bold">公式サイトで案内されている主なポイント</h3>
+        <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {divePoints.map((point) => (
+            <div class="rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-4 text-center text-sm font-bold text-cyan-50">{point}</div>
+          ))}
+        </div>
+        <p class="mt-6 text-xs leading-6 text-cyan-100/65">
+          ポイントの利用可否、潜水条件、エントリー方法等は当施設では案内できません。必ず利用するダイビングサービスの指示と最新のローカルルールに従ってください。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Facilities / limitations -->
+  <section class="bg-slate-50 py-20 md:py-28" aria-labelledby="diver-facilities-title">
+    <div class="mx-auto max-w-5xl px-6">
+      <div class="text-center">
+        <p class="text-xs font-bold tracking-[0.3em] text-cyan-700 uppercase">Facilities & Notes</p>
+        <h2 id="diver-facilities-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">ダイバーの方へ、設備とご注意。</h2>
+      </div>
+
+      <div class="mt-10 grid gap-5 md:grid-cols-2">
+        <article class="rounded-3xl border border-green-100 bg-white p-7 shadow-sm md:p-8">
+          <p class="text-xs font-bold tracking-[0.22em] text-green-700 uppercase">Available</p>
+          <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">宿で利用できるもの</h3>
+          <ul class="mt-5 space-y-3 text-sm leading-7 text-gray-600">
+            <li class="flex gap-3"><span class="font-bold text-green-700" aria-hidden="true">✓</span><span>サルビア棟内の浴室・シャワー</span></li>
+            <li class="flex gap-3"><span class="font-bold text-green-700" aria-hidden="true">✓</span><span>キッチン・冷凍冷蔵庫・調理器具</span></li>
+            <li class="flex gap-3"><span class="font-bold text-green-700" aria-hidden="true">✓</span><span>屋外炊事場「ガゼボ庵」・BBQ設備</span></li>
+            <li class="flex gap-3"><span class="font-bold text-green-700" aria-hidden="true">✓</span><span>無料駐車場</span></li>
+            <li class="flex gap-3"><span class="font-bold text-green-700" aria-hidden="true">✓</span><span>敷地内の共用洗濯機・ガス乾燥機・シャワー</span></li>
+          </ul>
+        </article>
+
+        <article class="rounded-3xl border border-amber-200 bg-amber-50 p-7 md:p-8">
+          <p class="text-xs font-bold tracking-[0.22em] text-amber-800 uppercase">Please Note</p>
+          <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">現在、専用設備はありません</h3>
+          <p class="mt-5 text-sm leading-7 text-gray-700">
+            ダイビング器材・ウェットスーツ専用の洗い場、干し場、器材保管庫は現在設けていません。共用の洗濯機・乾燥機には、ダイビング器材やウェットスーツを入れないでください。
+          </p>
+          <p class="mt-4 text-xs leading-6 text-gray-500">
+            共用設備は宿泊設備・付帯設備には含まれず、メンテナンス・故障・清掃等により利用できない場合があります。
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="bg-white py-20 md:py-28" aria-labelledby="diving-faq-title">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="text-center">
+        <p class="text-xs font-bold tracking-[0.3em] text-cyan-700 uppercase">FAQ</p>
+        <h2 id="diving-faq-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">ダイビング旅行のよくある質問。</h2>
+      </div>
+
+      <div class="mt-10 rounded-3xl border border-gray-100 bg-slate-50/70 px-6 shadow-sm sm:px-8">
+        {faqs.map((faq) => (
+          <details class="group border-b border-gray-200 py-5 last:border-b-0">
+            <summary class="flex cursor-pointer list-none items-start justify-between gap-5 font-bold text-gray-900 [&::-webkit-details-marker]:hidden">
+              <span>{faq.question}</span>
+              <span class="mt-1 text-xl leading-none text-cyan-700 transition-transform group-open:rotate-45" aria-hidden="true">＋</span>
+            </summary>
+            <p class="pt-3 pr-8 text-sm leading-7 text-gray-600">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Related -->
+  <section class="bg-orange-50/55 py-16 md:py-20" aria-labelledby="diving-related-title">
+    <div class="mx-auto max-w-5xl px-6 text-center">
+      <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Related Stay</p>
+      <h2 id="diving-related-title" class="mt-3 font-serif text-2xl font-bold text-gray-900 md:text-3xl">仲間との一棟貸しについて、もっと見る。</h2>
+      <a href="/group-stay/" class="mt-7 inline-flex items-center gap-2 rounded-full border-2 border-green-800 bg-white px-7 py-3.5 text-sm font-bold text-green-800 transition-colors hover:bg-green-800 hover:text-white">
+        グループ・一棟貸しの詳細を見る<span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Bottom CTA -->
+  <section class="relative isolate overflow-hidden py-24 text-white md:py-28" aria-labelledby="diving-cta-title">
+    <img src="/sea-of-izu-oshima.webp" alt="" class="absolute inset-0 -z-20 h-full w-full object-cover" width="2000" height="1500" loading="lazy" aria-hidden="true" />
+    <div class="absolute inset-0 -z-10 bg-slate-950/78" aria-hidden="true"></div>
+    <div class="mx-auto max-w-4xl px-6 text-center">
+      <p class="text-xs font-bold tracking-[0.3em] text-cyan-300 uppercase">Stay on Izu Oshima</p>
+      <h2 id="diving-cta-title" class="mt-3 font-serif text-3xl font-bold leading-tight md:text-5xl">次の伊豆大島ダイビング旅行に。</h2>
+      <p class="mx-auto mt-6 max-w-2xl leading-8 text-slate-200 md:text-lg md:leading-9">
+        海の予定が決まったら、仲間だけで泊まれる一棟を。日程と人数を入力して、現在の空室・料金をご確認ください。
+      </p>
+      <a
+        href="https://www.airbnb.jp/rooms/1602063410123886296?guests=6&adults=6&s=67&unique_share_id=a393ba49-61eb-4d8e-a4c9-95935b649d65"
+        data-booking-location="diving_bottom_cta"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-9 inline-flex items-center justify-center rounded-full bg-white px-9 py-4 text-base font-bold text-slate-950 shadow-xl transition-all hover:-translate-y-0.5 hover:bg-cyan-50"
+      >
+        空室・料金を見る<span class="ml-2" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
+</Layout>
