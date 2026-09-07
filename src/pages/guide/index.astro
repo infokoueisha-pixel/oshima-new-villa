@@ -1,0 +1,118 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = '伊豆大島旅行ガイド｜宿選び・モデルコース・ダイビング｜大島ニュービラ';
+const pageDescription = '伊豆大島旅行を計画する方へ。宿の選び方、2泊3日の過ごし方、ダイビング旅行、グループ旅行など、滞在前に知っておきたい情報を大島ニュービラがまとめています。';
+
+const guides = [
+  {
+    href: '/guide/stay/',
+    image: '/day-salvia.webp',
+    alt: '森に囲まれた一棟貸しの大島ニュービラ',
+    kicker: 'Where to Stay',
+    title: '伊豆大島の宿選び',
+    description: 'ホテル・民宿・一棟貸しはどう違う？人数や旅の過ごし方から、自分たちに合う宿泊スタイルを整理します。',
+    tag: '宿・宿泊',
+  },
+  {
+    href: '/weekday-stay/',
+    image: '/mihara-island-view.webp',
+    alt: '伊豆大島の三原山から望む景色',
+    kicker: '2 Nights / 3 Days',
+    title: '伊豆大島2泊3日の大人旅',
+    description: '平日だからこそ楽しみたい、急がない島旅。2泊3日のモデルプランと一棟貸しでの過ごし方を紹介します。',
+    tag: 'モデルコース',
+  },
+  {
+    href: '/diving/',
+    image: '/sea-of-izu-oshima.webp',
+    alt: '伊豆大島の海',
+    kicker: 'Diving Stay',
+    title: '伊豆大島のダイビング旅行',
+    description: '潜ったあとは仲間だけの一棟へ。ダイビングサービスと宿を分けて選ぶ旅行の組み立て方を紹介します。',
+    tag: 'ダイビング',
+  },
+  {
+    href: '/group-stay/',
+    image: '/sofa-salvia.webp',
+    alt: '友人や家族で過ごせる大島ニュービラのリビング',
+    kicker: 'Group Stay',
+    title: '家族・友人で泊まる一棟貸し',
+    description: 'ホテルの複数室ではなく、同じリビングで旅の続きを。グループ旅行で一棟貸しを選ぶメリットを紹介します。',
+    tag: 'グループ旅行',
+  },
+];
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '大島ニュービラ', item: 'https://oshima-new-villa.com/' },
+        { '@type': 'ListItem', position: 2, name: '伊豆大島旅行ガイド', item: 'https://oshima-new-villa.com/guide/' },
+      ],
+    },
+    {
+      '@type': 'CollectionPage',
+      name: '伊豆大島旅行ガイド',
+      url: 'https://oshima-new-villa.com/guide/',
+      description: pageDescription,
+      mainEntity: {
+        '@type': 'ItemList',
+        itemListElement: guides.map((guide, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          url: new URL(guide.href, 'https://oshima-new-villa.com/').href,
+          name: guide.title,
+        })),
+      },
+    },
+  ],
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+  <section class="relative isolate overflow-hidden bg-stone-950 pt-24 text-white md:pt-28" aria-labelledby="guide-title">
+    <img src="/sunset-ocean-view.webp" alt="伊豆大島の海に沈む夕日" class="absolute inset-0 -z-20 h-full w-full object-cover" width="2000" height="1500" fetchpriority="high" />
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-stone-950 via-stone-950/75 to-stone-900/30" aria-hidden="true"></div>
+    <div class="mx-auto max-w-7xl px-6 py-20 md:py-28">
+      <a href="/" class="inline-flex items-center gap-2 text-sm font-bold text-orange-100 transition-colors hover:text-white"><span aria-hidden="true">←</span> 大島ニュービラ トップへ</a>
+      <p class="mt-10 text-xs font-bold tracking-[0.3em] text-orange-200 uppercase">Izu Oshima Travel Guide</p>
+      <h1 id="guide-title" class="mt-4 max-w-4xl font-serif text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">伊豆大島を、<br class="sm:hidden" />もっと自分たちらしく旅する。</h1>
+      <p class="mt-7 max-w-2xl text-base leading-8 text-stone-100 md:text-lg md:leading-9">宿を決めるところから、島でどう過ごすかまで。初めての伊豆大島旅行でも迷いにくいよう、宿泊施設を運営する私たちの視点から、旅の計画に役立つ情報をまとめます。</p>
+    </div>
+  </section>
+
+  <section class="bg-white py-20 md:py-28" aria-labelledby="guide-list-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Plan Your Trip</p>
+        <h2 id="guide-list-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">旅の目的から、知りたい情報へ。</h2>
+        <p class="mt-5 leading-8 text-gray-600 md:text-lg md:leading-9">「どこに泊まる？」「何泊する？」「何をする？」から選べます。予約済みのお客様向けの館内案内は、別の宿泊ガイドにまとめています。</p>
+      </div>
+
+      <div class="mt-14 grid gap-7 md:grid-cols-2">
+        {guides.map((guide) => (
+          <a href={guide.href} class="group overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+            <div class="overflow-hidden bg-stone-100">
+              <img src={guide.image} alt={guide.alt} class="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-[1.025]" width="1200" height="675" loading="lazy" />
+            </div>
+            <div class="p-7 md:p-8">
+              <div class="flex items-center justify-between gap-4">
+                <p class="text-xs font-bold tracking-[0.2em] text-green-700 uppercase">{guide.kicker}</p>
+                <span class="rounded-full bg-stone-100 px-3 py-1 text-xs font-bold text-stone-600">{guide.tag}</span>
+              </div>
+              <h3 class="mt-3 font-serif text-2xl font-bold text-gray-900 md:text-3xl">{guide.title}</h3>
+              <p class="mt-4 text-sm leading-7 text-gray-600">{guide.description}</p>
+              <span class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-green-800">詳しく見る<span class="transition-transform group-hover:translate-x-1" aria-hidden="true">→</span></span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Layout>

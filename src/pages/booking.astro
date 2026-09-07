@@ -1,0 +1,631 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const apiBase = 'https://oshima-new-villa-booking-api-dev.info-koueisha.workers.dev';
+const productId = 'salvia-standard';
+---
+
+<Layout
+  title="大島ニュービラ｜公式予約（開発中）"
+  description="大島ニュービラ SALVIAの公式予約ページです。宿泊日・人数から空室と料金を確認し、オンラインで予約手続きを進められます。"
+  noindex={true}
+>
+  <section class="relative overflow-hidden bg-green-950 pt-28 pb-16 text-white md:pt-36 md:pb-20">
+    <img
+      src="/main-optimized.webp"
+      alt=""
+      class="absolute inset-0 h-full w-full object-cover opacity-35"
+      width="1170"
+      height="1171"
+      aria-hidden="true"
+    />
+    <div class="absolute inset-0 bg-gradient-to-r from-green-950 via-green-950/90 to-green-950/55" aria-hidden="true"></div>
+
+    <div class="relative mx-auto max-w-7xl px-6">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 rounded-full border border-amber-200/30 bg-amber-100/10 px-4 py-2 text-xs font-bold text-amber-100">
+          <span class="h-2 w-2 rounded-full bg-amber-300" aria-hidden="true"></span>
+          開発環境・テスト決済
+        </div>
+        <p class="mt-7 text-xs font-bold tracking-[0.28em] text-green-200 uppercase">Official Booking</p>
+        <h1 class="mt-3 font-serif text-4xl font-bold leading-tight md:text-5xl">島で過ごす時間を、<br class="sm:hidden" />ここから。</h1>
+        <p class="mt-5 max-w-2xl text-sm leading-7 text-green-50/90 md:text-base md:leading-8">
+          SALVIA｜集まる家の空室と料金を確認し、そのままオンラインで予約できます。
+          現在は開発中のため、決済はStripeのテスト環境へ進みます。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <main class="bg-orange-50 py-12 md:py-16">
+    <div class="mx-auto grid max-w-7xl gap-8 px-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start">
+      <div class="space-y-8">
+        <!-- STEP 1 -->
+        <section class="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm" aria-labelledby="availability-title">
+          <div class="border-b border-stone-100 px-6 py-6 md:px-8">
+            <div class="flex items-start gap-4">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-800 text-sm font-bold text-white">1</span>
+              <div>
+                <p class="text-xs font-bold tracking-[0.2em] text-green-700 uppercase">Stay Details</p>
+                <h2 id="availability-title" class="mt-1 font-serif text-2xl font-bold text-gray-900">宿泊日と人数を選ぶ</h2>
+              </div>
+            </div>
+          </div>
+
+          <form id="availability-form" class="p-6 md:p-8">
+            <div class="grid gap-5 md:grid-cols-3">
+              <label class="block">
+                <span class="mb-2 block text-sm font-bold text-gray-800">チェックイン</span>
+                <input
+                  id="check-in"
+                  name="check_in"
+                  type="date"
+                  required
+                  class="min-h-12 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-base text-gray-900 outline-none transition focus:border-green-700 focus:ring-4 focus:ring-green-100"
+                />
+              </label>
+
+              <label class="block">
+                <span class="mb-2 block text-sm font-bold text-gray-800">チェックアウト</span>
+                <input
+                  id="check-out"
+                  name="check_out"
+                  type="date"
+                  required
+                  class="min-h-12 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-base text-gray-900 outline-none transition focus:border-green-700 focus:ring-4 focus:ring-green-100"
+                />
+              </label>
+
+              <label class="block">
+                <span class="mb-2 block text-sm font-bold text-gray-800">宿泊人数</span>
+                <select
+                  id="guest-count"
+                  name="guest_count"
+                  required
+                  class="min-h-12 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-base text-gray-900 outline-none transition focus:border-green-700 focus:ring-4 focus:ring-green-100"
+                >
+                  <option value="2">2名</option>
+                  <option value="3">3名</option>
+                  <option value="4">4名</option>
+                  <option value="5">5名</option>
+                  <option value="6">6名</option>
+                </select>
+              </label>
+            </div>
+
+            <div id="availability-message" class="mt-5 hidden rounded-2xl px-5 py-4 text-sm leading-6" role="status" aria-live="polite"></div>
+
+            <button
+              id="availability-submit"
+              type="submit"
+              class="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-green-800 px-7 py-3.5 text-base font-bold text-white shadow-md shadow-green-800/15 transition hover:-translate-y-0.5 hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60 md:w-auto"
+            >
+              空室・料金を確認する
+            </button>
+          </form>
+        </section>
+
+        <!-- AVAILABILITY RESULT -->
+        <section id="availability-result" class="hidden rounded-3xl border border-green-200 bg-white p-6 shadow-sm md:p-8" aria-labelledby="result-title">
+          <div class="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <div class="inline-flex items-center gap-2 rounded-full bg-green-50 px-3 py-1.5 text-xs font-bold text-green-800">
+                <span aria-hidden="true">✓</span> ご予約可能です
+              </div>
+              <h2 id="result-title" class="mt-4 font-serif text-2xl font-bold text-gray-900">SALVIA｜集まる家</h2>
+              <p id="result-stay" class="mt-2 text-sm leading-7 text-gray-600"></p>
+            </div>
+            <div class="sm:text-right">
+              <p class="text-xs font-bold tracking-wider text-gray-500">宿泊料金</p>
+              <p id="result-price" class="mt-1 text-3xl font-bold tracking-tight text-gray-900"></p>
+              <p class="mt-1 text-xs text-gray-500">税込・一棟料金</p>
+            </div>
+          </div>
+
+          <div id="nightly-breakdown" class="mt-6 hidden rounded-2xl bg-stone-50 p-5"></div>
+
+          <button
+            id="continue-button"
+            type="button"
+            class="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-green-800 px-7 py-3.5 text-base font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-green-700 md:w-auto"
+          >
+            お客様情報の入力へ進む <span class="ml-2" aria-hidden="true">↓</span>
+          </button>
+        </section>
+
+        <!-- STEP 2 -->
+        <section id="guest-section" class="hidden overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm" aria-labelledby="guest-title">
+          <div class="border-b border-stone-100 px-6 py-6 md:px-8">
+            <div class="flex items-start gap-4">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-800 text-sm font-bold text-white">2</span>
+              <div>
+                <p class="text-xs font-bold tracking-[0.2em] text-green-700 uppercase">Guest Information</p>
+                <h2 id="guest-title" class="mt-1 font-serif text-2xl font-bold text-gray-900">お客様情報を入力する</h2>
+              </div>
+            </div>
+          </div>
+
+          <form id="guest-form" class="p-6 md:p-8">
+            <div class="grid gap-5 md:grid-cols-2">
+              <label class="block md:col-span-2">
+                <span class="mb-2 block text-sm font-bold text-gray-800">お名前 <span class="text-red-600">*</span></span>
+                <input
+                  id="customer-name"
+                  name="customer_name"
+                  type="text"
+                  autocomplete="name"
+                  required
+                  placeholder="例：大島 太郎"
+                  class="min-h-12 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-base text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-green-700 focus:ring-4 focus:ring-green-100"
+                />
+              </label>
+
+              <label class="block">
+                <span class="mb-2 block text-sm font-bold text-gray-800">メールアドレス <span class="text-red-600">*</span></span>
+                <input
+                  id="customer-email"
+                  name="customer_email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                  placeholder="example@email.com"
+                  class="min-h-12 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-base text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-green-700 focus:ring-4 focus:ring-green-100"
+                />
+                <span class="mt-2 block text-xs leading-5 text-gray-500">予約確定メールをお送りします。</span>
+              </label>
+
+              <label class="block">
+                <span class="mb-2 block text-sm font-bold text-gray-800">電話番号 <span class="text-red-600">*</span></span>
+                <input
+                  id="customer-phone"
+                  name="customer_phone"
+                  type="tel"
+                  autocomplete="tel"
+                  inputmode="tel"
+                  required
+                  placeholder="09012345678"
+                  class="min-h-12 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-base text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-green-700 focus:ring-4 focus:ring-green-100"
+                />
+              </label>
+            </div>
+
+            <div class="mt-8 rounded-2xl border border-stone-200 bg-stone-50 p-5 md:p-6">
+              <h3 class="font-serif text-lg font-bold text-gray-900">ご予約前の確認</h3>
+
+              <details class="mt-4 border-t border-stone-200 pt-4">
+                <summary class="cursor-pointer font-bold text-gray-800">キャンセルポリシーを確認する</summary>
+                <div class="mt-3 space-y-2 text-sm leading-7 text-gray-600">
+                  <p>チェックイン日を基準に、8日前まで無料、7日前〜4日前20%、3日前〜2日前50%、前日80%、当日100%、無連絡不泊100%のキャンセル料を申し受けます。</p>
+                  <p>伊豆大島へのご来島に利用予定の船便または航空便が、悪天候その他の運航会社の事情により正式に欠航となった場合は、キャンセル料をいただきません。</p>
+                  <p>施設側の事情により宿泊をご提供できない場合は、宿泊料金を全額返金いたします。</p>
+                </div>
+              </details>
+
+              <label class="mt-5 flex cursor-pointer items-start gap-3">
+                <input id="terms-accepted" type="checkbox" required class="mt-1 h-5 w-5 shrink-0 accent-green-800" />
+                <span class="text-sm leading-6 text-gray-700">施設の利用ルール・注意事項を確認し、同意します。</span>
+              </label>
+
+              <label class="mt-4 flex cursor-pointer items-start gap-3">
+                <input id="cancellation-accepted" type="checkbox" required class="mt-1 h-5 w-5 shrink-0 accent-green-800" />
+                <span class="text-sm leading-6 text-gray-700">上記のキャンセルポリシーを確認し、同意します。</span>
+              </label>
+            </div>
+
+            <div id="booking-message" class="mt-5 hidden rounded-2xl px-5 py-4 text-sm leading-6" role="status" aria-live="polite"></div>
+
+            <button
+              id="booking-submit"
+              type="submit"
+              class="mt-6 inline-flex min-h-14 w-full items-center justify-center rounded-full bg-green-800 px-8 py-4 text-base font-bold text-white shadow-lg shadow-green-800/15 transition hover:-translate-y-0.5 hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              予約して支払いへ進む <span class="ml-2" aria-hidden="true">→</span>
+            </button>
+            <p class="mt-3 text-center text-xs leading-5 text-gray-500">このボタンを押すと、空室を30分間仮押さえしてStripeの決済画面へ進みます。</p>
+          </form>
+        </section>
+      </div>
+
+      <!-- SUMMARY -->
+      <aside class="lg:sticky lg:top-24">
+        <div class="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm">
+          <img src="/sofa-salvia.webp" alt="SALVIAのリビング" class="aspect-[16/10] w-full object-cover" width="1108" height="832" />
+          <div class="p-6">
+            <p class="text-xs font-bold tracking-[0.2em] text-green-700 uppercase">SALVIA</p>
+            <h2 class="mt-2 font-serif text-2xl font-bold text-gray-900">集まる家</h2>
+            <p class="mt-3 text-sm leading-7 text-gray-600">森に囲まれた一棟貸し。家族や友人と最大6名で、BBQや自炊を楽しめます。</p>
+
+            <dl class="mt-6 divide-y divide-stone-100 border-y border-stone-100 text-sm">
+              <div class="flex justify-between gap-4 py-3.5">
+                <dt class="text-gray-500">定員</dt><dd class="font-bold text-gray-800">最大6名</dd>
+              </div>
+              <div class="flex justify-between gap-4 py-3.5">
+                <dt class="text-gray-500">チェックイン</dt><dd class="font-bold text-gray-800">15:00〜</dd>
+              </div>
+              <div class="flex justify-between gap-4 py-3.5">
+                <dt class="text-gray-500">チェックアウト</dt><dd class="font-bold text-gray-800">10:00まで</dd>
+              </div>
+              <div class="flex justify-between gap-4 py-3.5">
+                <dt class="text-gray-500">受付</dt><dd class="font-bold text-gray-800">セルフチェックイン</dd>
+              </div>
+            </dl>
+
+            <div class="mt-6 rounded-2xl bg-green-50 p-4 text-sm leading-6 text-green-950">
+              <p class="font-bold">公式予約システム</p>
+              <p class="mt-1 text-green-900/80">空室確認から決済、予約確定メールまでオンラインで完結します。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-amber-950">
+          <p class="font-bold">現在は開発テスト中です</p>
+          <p class="mt-1">Stripeのテスト決済を使用します。実際の請求は発生しません。</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script define:vars={{ apiBase, productId }}>
+    const API_BASE = apiBase;
+    const PRODUCT_ID = productId;
+
+    const availabilityForm = document.getElementById('availability-form');
+    const availabilitySubmit = document.getElementById('availability-submit');
+    const availabilityMessage = document.getElementById('availability-message');
+    const availabilityResult = document.getElementById('availability-result');
+    const guestSection = document.getElementById('guest-section');
+    const guestForm = document.getElementById('guest-form');
+    const bookingSubmit = document.getElementById('booking-submit');
+    const bookingMessage = document.getElementById('booking-message');
+    const continueButton = document.getElementById('continue-button');
+    const checkInInput = document.getElementById('check-in');
+    const checkOutInput = document.getElementById('check-out');
+    const guestCountInput = document.getElementById('guest-count');
+    const resultStay = document.getElementById('result-stay');
+    const resultPrice = document.getElementById('result-price');
+    const nightlyBreakdown = document.getElementById('nightly-breakdown');
+
+    let selectedStay = null;
+
+    const formatYen = (value) => {
+      const amount = Number(value);
+      if (!Number.isFinite(amount)) return '—';
+      return `¥${amount.toLocaleString('ja-JP')}`;
+    };
+
+    const formatDate = (value) => {
+      if (!value) return '';
+      const [year, month, day] = value.split('-').map(Number);
+      if (!year || !month || !day) return value;
+      return new Intl.DateTimeFormat('ja-JP', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        weekday: 'short',
+      }).format(new Date(year, month - 1, day));
+    };
+
+    const addDays = (dateString, days) => {
+      const [year, month, day] = dateString.split('-').map(Number);
+      const date = new Date(year, month - 1, day);
+      date.setDate(date.getDate() + days);
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    };
+
+    const todayLocal = () => {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    };
+
+    const showMessage = (element, type, text) => {
+      element.className = 'mt-5 rounded-2xl px-5 py-4 text-sm leading-6';
+      if (type === 'error') {
+        element.classList.add('border', 'border-red-200', 'bg-red-50', 'text-red-800');
+      } else if (type === 'success') {
+        element.classList.add('border', 'border-green-200', 'bg-green-50', 'text-green-800');
+      } else {
+        element.classList.add('border', 'border-amber-200', 'bg-amber-50', 'text-amber-900');
+      }
+      element.textContent = text;
+      element.classList.remove('hidden');
+    };
+
+    const clearMessage = (element) => {
+      element.textContent = '';
+      element.classList.add('hidden');
+    };
+
+    const reasonToMessage = (data) => {
+      const reason = data?.reason || data?.error;
+      if (reason === 'already_reserved') return '選択した日程は、現在ご予約いただけません。別の日程をお試しください。';
+      if (reason === 'rate_not_configured') return '選択した日程は、現在料金を準備中です。別の日程をお試しください。';
+      if (reason === 'sales_closed') return '選択した日程は、現在販売を停止しています。別の日程をお試しください。';
+      if (reason === 'minimum_nights_not_met') return 'この日程は最低宿泊数の条件を満たしていません。宿泊日数を増やしてお試しください。';
+      if (reason === 'not_available') return '選択した日程は、現在ご予約いただけません。別の日程をお試しください。';
+      if (reason === 'idempotency_key_conflict') return '入力内容が更新されました。もう一度「予約して支払いへ進む」を押してください。';
+      return '空室情報を確認できませんでした。時間をおいてもう一度お試しください。';
+    };
+
+    const getTotalPrice = (data) =>
+      data?.total_price_jpy ??
+      data?.totalPrice ??
+      data?.total_price ??
+      data?.price_jpy ??
+      null;
+
+    const getNights = (data, checkIn, checkOut) => {
+      const value = data?.nights;
+      if (Number.isFinite(Number(value))) return Number(value);
+      const start = new Date(`${checkIn}T00:00:00`);
+      const end = new Date(`${checkOut}T00:00:00`);
+      return Math.max(0, Math.round((end - start) / 86400000));
+    };
+
+    const getNightlyRates = (data) => data?.nightly_rates ?? data?.nightlyRates ?? [];
+
+    checkInInput.min = todayLocal();
+    checkInInput.addEventListener('change', () => {
+      if (!checkInInput.value) return;
+      const nextDay = addDays(checkInInput.value, 1);
+      checkOutInput.min = nextDay;
+      if (!checkOutInput.value || checkOutInput.value <= checkInInput.value) {
+        checkOutInput.value = nextDay;
+      }
+      selectedStay = null;
+      availabilityResult.classList.add('hidden');
+      guestSection.classList.add('hidden');
+    });
+
+    [checkOutInput, guestCountInput].forEach((element) => {
+      element.addEventListener('change', () => {
+        selectedStay = null;
+        availabilityResult.classList.add('hidden');
+        guestSection.classList.add('hidden');
+      });
+    });
+
+    availabilityForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      clearMessage(availabilityMessage);
+      clearMessage(bookingMessage);
+      availabilityResult.classList.add('hidden');
+      guestSection.classList.add('hidden');
+      selectedStay = null;
+
+      const checkIn = checkInInput.value;
+      const checkOut = checkOutInput.value;
+      const guestCount = Number(guestCountInput.value);
+
+      if (!checkIn || !checkOut || checkOut <= checkIn) {
+        showMessage(availabilityMessage, 'error', 'チェックアウト日は、チェックイン日の翌日以降を選択してください。');
+        return;
+      }
+
+      availabilitySubmit.disabled = true;
+      const originalText = availabilitySubmit.textContent;
+      availabilitySubmit.textContent = '空室を確認しています…';
+
+      try {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'booking_availability_search',
+          booking_product: PRODUCT_ID,
+          check_in: checkIn,
+          check_out: checkOut,
+          guest_count: guestCount,
+        });
+
+        const params = new URLSearchParams({
+          product: PRODUCT_ID,
+          check_in: checkIn,
+          check_out: checkOut,
+          guest_count: String(guestCount),
+        });
+
+        const response = await fetch(`${API_BASE}/api/availability?${params.toString()}`, {
+          method: 'GET',
+          headers: { Accept: 'application/json' },
+        });
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok || data?.available !== true) {
+          showMessage(availabilityMessage, 'error', reasonToMessage(data));
+          return;
+        }
+
+        const nights = getNights(data, checkIn, checkOut);
+        const totalPrice = getTotalPrice(data);
+        const nightlyRates = getNightlyRates(data);
+
+        selectedStay = {
+          checkIn,
+          checkOut,
+          guestCount,
+          nights,
+          totalPrice,
+        };
+
+        resultStay.textContent = `${formatDate(checkIn)} 〜 ${formatDate(checkOut)} ／ ${nights}泊 ／ ${guestCount}名`;
+        resultPrice.textContent = formatYen(totalPrice);
+
+        if (Array.isArray(nightlyRates) && nightlyRates.length > 0) {
+          nightlyBreakdown.innerHTML = `
+            <p class="text-xs font-bold tracking-wider text-gray-500">日別料金</p>
+            <div class="mt-3 space-y-2">
+              ${nightlyRates.map((row) => {
+                const stayDate = row?.stay_date ?? row?.date ?? '';
+                const price = row?.price_jpy ?? row?.price ?? row?.rate ?? null;
+                return `<div class="flex items-center justify-between gap-4 text-sm"><span class="text-gray-600">${formatDate(stayDate)}</span><span class="font-bold text-gray-900">${formatYen(price)}</span></div>`;
+              }).join('')}
+            </div>
+          `;
+          nightlyBreakdown.classList.remove('hidden');
+        } else {
+          nightlyBreakdown.innerHTML = '';
+          nightlyBreakdown.classList.add('hidden');
+        }
+
+        availabilityResult.classList.remove('hidden');
+        window.dataLayer.push({
+          event: 'booking_available',
+          booking_product: PRODUCT_ID,
+          check_in: checkIn,
+          check_out: checkOut,
+          guest_count: guestCount,
+          nights,
+          value: totalPrice,
+          currency: 'JPY',
+        });
+        availabilityResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (error) {
+        console.error('Availability request failed:', error);
+        showMessage(
+          availabilityMessage,
+          'error',
+          '空室確認サーバーに接続できませんでした。通信環境をご確認のうえ、もう一度お試しください。'
+        );
+      } finally {
+        availabilitySubmit.disabled = false;
+        availabilitySubmit.textContent = originalText;
+      }
+    });
+
+    continueButton.addEventListener('click', () => {
+      if (!selectedStay) return;
+      guestSection.classList.remove('hidden');
+      guestSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => document.getElementById('customer-name')?.focus({ preventScroll: true }), 450);
+    });
+
+    guestForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      clearMessage(bookingMessage);
+
+      if (!selectedStay) {
+        showMessage(bookingMessage, 'error', '先に宿泊日と人数を選び、空室・料金をご確認ください。');
+        availabilityForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+
+      const customerName = document.getElementById('customer-name').value.trim();
+      const customerEmail = document.getElementById('customer-email').value.trim();
+      const customerPhone = document.getElementById('customer-phone').value.trim();
+      const termsAccepted = document.getElementById('terms-accepted').checked;
+      const cancellationAccepted = document.getElementById('cancellation-accepted').checked;
+
+      if (!customerName || !customerEmail || !customerPhone || !termsAccepted || !cancellationAccepted) {
+        showMessage(bookingMessage, 'error', '必須項目と同意事項をご確認ください。');
+        return;
+      }
+
+      const payload = {
+        product_id: PRODUCT_ID,
+        check_in: selectedStay.checkIn,
+        check_out: selectedStay.checkOut,
+        guest_count: selectedStay.guestCount,
+        customer_name: customerName,
+        customer_email: customerEmail,
+        customer_phone: customerPhone,
+        terms_accepted: true,
+        cancellation_policy_accepted: true,
+      };
+
+      const fingerprint = JSON.stringify(payload);
+      let idempotencyKey = sessionStorage.getItem('onv_booking_idempotency_key');
+      const storedFingerprint = sessionStorage.getItem('onv_booking_payload');
+
+      if (!idempotencyKey || storedFingerprint !== fingerprint) {
+        const randomPart = window.crypto?.randomUUID?.() ?? Math.random().toString(36).slice(2);
+        idempotencyKey = `web-${Date.now()}-${randomPart}`;
+        sessionStorage.setItem('onv_booking_idempotency_key', idempotencyKey);
+        sessionStorage.setItem('onv_booking_payload', fingerprint);
+      }
+
+      bookingSubmit.disabled = true;
+      const originalText = bookingSubmit.textContent;
+      bookingSubmit.textContent = '空室を仮押さえしています…';
+
+      try {
+        const holdResponse = await fetch(`${API_BASE}/api/holds`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            'Idempotency-Key': idempotencyKey,
+          },
+          body: JSON.stringify(payload),
+        });
+        const holdData = await holdResponse.json().catch(() => ({}));
+
+        if (!holdResponse.ok || holdData?.ok !== true) {
+          if (holdData?.error === 'idempotency_key_conflict') {
+            sessionStorage.removeItem('onv_booking_idempotency_key');
+            sessionStorage.removeItem('onv_booking_payload');
+          }
+          showMessage(bookingMessage, 'error', reasonToMessage(holdData));
+          return;
+        }
+
+        const bookingCode = holdData?.booking_code ?? holdData?.public_booking_code;
+        if (!bookingCode) {
+          throw new Error('booking_code_missing');
+        }
+
+        bookingSubmit.textContent = '決済画面を準備しています…';
+
+        const checkoutResponse = await fetch(`${API_BASE}/api/checkout`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({ booking_code: bookingCode }),
+        });
+        const checkoutData = await checkoutResponse.json().catch(() => ({}));
+
+        if (!checkoutResponse.ok || checkoutData?.ok !== true) {
+          showMessage(bookingMessage, 'error', '仮押さえは完了しましたが、決済画面を開けませんでした。時間をおいてもう一度お試しください。');
+          return;
+        }
+
+        const checkoutUrl = checkoutData?.checkout_url ?? checkoutData?.url;
+        if (!checkoutUrl) {
+          throw new Error('checkout_url_missing');
+        }
+
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'booking_checkout_start',
+          booking_product: PRODUCT_ID,
+          booking_code: bookingCode,
+          check_in: selectedStay.checkIn,
+          check_out: selectedStay.checkOut,
+          guest_count: selectedStay.guestCount,
+          nights: selectedStay.nights,
+          value: selectedStay.totalPrice,
+          currency: 'JPY',
+        });
+
+        sessionStorage.removeItem('onv_booking_idempotency_key');
+        sessionStorage.removeItem('onv_booking_payload');
+        window.location.assign(checkoutUrl);
+      } catch (error) {
+        console.error('Booking request failed:', error);
+        showMessage(
+          bookingMessage,
+          'error',
+          '予約処理中に通信エラーが発生しました。入力内容はそのままですので、時間をおいてもう一度お試しください。'
+        );
+      } finally {
+        bookingSubmit.disabled = false;
+        bookingSubmit.textContent = originalText;
+      }
+    });
+  </script>
+</Layout>

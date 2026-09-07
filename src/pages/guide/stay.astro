@@ -1,0 +1,185 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = '伊豆大島の宿選び｜ホテル・民宿・一棟貸しの違いと選び方';
+const pageDescription = '伊豆大島で宿を探している方へ。ホテル・民宿・一棟貸しの違いを、人数、食事、プライベート感、旅の過ごし方から比較。家族・友人・夫婦など旅行タイプ別の選び方を紹介します。';
+
+const comparisons = [
+  {
+    type: 'ホテル',
+    goodFor: '館内サービスや客室単位の滞在を重視する旅',
+    points: ['客室ごとにプライベート空間を確保しやすい', '施設によって食事・大浴場など館内サービスがある', '大人数では複数の客室に分かれる場合がある'],
+  },
+  {
+    type: '民宿',
+    goodFor: '島らしい距離感や食事、人との交流も楽しみたい旅',
+    points: ['宿ごとの個性や家庭的な雰囲気を楽しみやすい', '食事付きプランがある宿も多い', '共用部分や過ごし方のルールは宿ごとに異なる'],
+  },
+  {
+    type: '一棟貸し・貸別荘・ヴィラ',
+    goodFor: '家族や友人で同じ空間に集まり、自分たちのペースで過ごす旅',
+    points: ['リビングやキッチンをグループだけで使いやすい', '自炊やBBQなど食事の自由度が高い', '食事の準備や片付けを自分たちで行うスタイルが中心'],
+  },
+];
+
+const tripTypes = [
+  { icon: '👫', title: '夫婦・2人旅', text: '食事付きや館内サービスを重視するならホテル・民宿、自分たちだけで静かに過ごしたいなら一棟貸しも候補になります。' },
+  { icon: '👨‍👩‍👧‍👦', title: '家族旅行', text: '子どもと同じリビングで過ごしたい、自炊したい、荷物を広げやすい環境がほしい場合は一棟貸しと相性があります。' },
+  { icon: '👥', title: '友人・グループ旅行', text: '複数室に分かれず夜まで一緒に過ごしたいなら、一棟貸しのメリットが大きくなります。' },
+  { icon: '🤿', title: '趣味・アクティビティ旅行', text: 'ダイビングや釣りなど朝夕の予定が変わりやすい旅では、食事時間を自分たちで決められる宿が便利です。' },
+];
+
+const faqs = [
+  { question: '伊豆大島で宿を選ぶとき、まず何を決めればいいですか？', answer: 'まず人数と「宿でどう過ごしたいか」を決めるのがおすすめです。食事付きがよいのか、自炊したいのか、夜も全員で集まりたいのかによって、ホテル・民宿・一棟貸しの向き不向きが見えやすくなります。' },
+  { question: '一棟貸しと貸別荘・コテージ・ヴィラは何が違いますか？', answer: '呼び方や設備は施設ごとに異なりますが、旅行者目線では「建物または独立した空間をグループ単位で利用する宿泊スタイル」として比較されることが多くあります。予約前に、貸切範囲、キッチン、浴室、屋外設備などを確認すると安心です。' },
+  { question: 'グループ旅行では一棟貸しがおすすめですか？', answer: '全員で同じ空間に集まる時間を大切にしたい場合は相性がよいです。一方、個室のプライバシーや館内サービスを優先する場合は、ホテルの複数室利用なども候補になります。' },
+  { question: '伊豆大島ではレンタカーが必要ですか？', answer: '旅程や行きたい場所によります。島内の複数スポットを自分たちのペースで巡る場合は、レンタカーが便利です。運転しない旅では、バスやタクシーの運行・利用条件を事前に確認して計画してください。' },
+];
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '大島ニュービラ', item: 'https://oshima-new-villa.com/' },
+        { '@type': 'ListItem', position: 2, name: '伊豆大島旅行ガイド', item: 'https://oshima-new-villa.com/guide/' },
+        { '@type': 'ListItem', position: 3, name: '伊豆大島の宿選び', item: 'https://oshima-new-villa.com/guide/stay/' },
+      ],
+    },
+    {
+      '@type': 'Article',
+      headline: '伊豆大島の宿選び｜ホテル・民宿・一棟貸しの違いと選び方',
+      description: pageDescription,
+      mainEntityOfPage: 'https://oshima-new-villa.com/guide/stay/',
+      image: 'https://oshima-new-villa.com/day-salvia.webp',
+      author: { '@type': 'Organization', name: '大島ニュービラ', url: 'https://oshima-new-villa.com/' },
+      publisher: { '@type': 'Organization', name: '大島ニュービラ', url: 'https://oshima-new-villa.com/' },
+      inLanguage: 'ja',
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+      })),
+    },
+  ],
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+  <article>
+    <header class="bg-stone-50 pt-28 md:pt-32">
+      <div class="mx-auto max-w-5xl px-6 py-14 md:py-20">
+        <nav class="text-sm text-gray-500" aria-label="パンくずリスト">
+          <a href="/" class="hover:text-green-800">トップ</a><span class="mx-2">/</span><a href="/guide/" class="hover:text-green-800">伊豆大島旅行ガイド</a><span class="mx-2">/</span><span>宿選び</span>
+        </nav>
+        <p class="mt-10 text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Where to Stay in Izu Oshima</p>
+        <h1 class="mt-4 max-w-4xl font-serif text-4xl font-bold leading-tight text-gray-900 sm:text-5xl md:text-6xl">伊豆大島の宿選び。<br />ホテル・民宿・一棟貸し、どれが合う？</h1>
+        <p class="mt-7 max-w-3xl text-base leading-8 text-gray-600 md:text-lg md:leading-9">「伊豆大島の宿でおすすめは？」と調べても、旅の人数や過ごし方によって答えは変わります。価格だけでなく、食事、プライベート感、宿で過ごす時間まで考えると、自分たちに合う宿泊スタイルが選びやすくなります。</p>
+      </div>
+      <div class="mx-auto max-w-6xl px-6 pb-16 md:pb-20">
+        <img src="/day-salvia.webp" alt="伊豆大島の一棟貸し宿 大島ニュービラ サルビア棟" class="aspect-[16/8] w-full rounded-3xl object-cover shadow-sm" width="1800" height="900" fetchpriority="high" />
+      </div>
+    </header>
+
+    <section class="bg-white py-16 md:py-24" aria-labelledby="choice-first">
+      <div class="mx-auto max-w-4xl px-6">
+        <h2 id="choice-first" class="font-serif text-3xl font-bold text-gray-900 md:text-4xl">最初に決めたいのは、「宿で何をしたいか」。</h2>
+        <div class="mt-7 space-y-5 leading-8 text-gray-600 md:text-lg md:leading-9">
+          <p>観光のあと宿では寝るだけなのか、夕食も含めて宿でゆっくり過ごしたいのか。朝食や夕食を用意してほしいのか、自分たちで好きな時間に食べたいのか。まずここを決めると、宿選びはぐっと簡単になります。</p>
+          <p>伊豆大島にはホテル、旅館、民宿、一棟貸し、貸別荘、コテージ、ヴィラなどさまざまな呼び方の宿があります。名称だけで判断せず、実際の貸切範囲や設備、食事条件を確認することが大切です。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-stone-50 py-16 md:py-24" aria-labelledby="compare-stays">
+      <div class="mx-auto max-w-6xl px-6">
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Compare Stay Styles</p>
+          <h2 id="compare-stays" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">3つの宿泊スタイルを比べる。</h2>
+          <p class="mt-5 leading-8 text-gray-600">どれが優れているというより、旅の目的との相性で選ぶのがポイントです。</p>
+        </div>
+        <div class="mt-12 grid gap-6 lg:grid-cols-3">
+          {comparisons.map((item) => (
+            <section class="rounded-3xl border border-stone-200 bg-white p-7 shadow-sm md:p-8">
+              <h3 class="font-serif text-2xl font-bold text-gray-900">{item.type}</h3>
+              <p class="mt-3 text-sm font-bold leading-6 text-green-800">向いている旅：{item.goodFor}</p>
+              <ul class="mt-6 space-y-3 text-sm leading-7 text-gray-600">
+                {item.points.map((point) => <li class="flex gap-3"><span class="mt-0.5 text-green-700" aria-hidden="true">✓</span><span>{point}</span></li>)}
+              </ul>
+            </section>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white py-16 md:py-24" aria-labelledby="trip-type-title">
+      <div class="mx-auto max-w-6xl px-6">
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="text-xs font-bold tracking-[0.3em] text-orange-700 uppercase">By Travel Style</p>
+          <h2 id="trip-type-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">旅行タイプから考える。</h2>
+        </div>
+        <div class="mt-12 grid gap-5 md:grid-cols-2">
+          {tripTypes.map((item) => (
+            <section class="rounded-3xl border border-orange-100 bg-orange-50/45 p-7 md:p-8">
+              <div class="text-3xl" aria-hidden="true">{item.icon}</div>
+              <h3 class="mt-4 font-serif text-2xl font-bold text-gray-900">{item.title}</h3>
+              <p class="mt-3 text-sm leading-7 text-gray-600">{item.text}</p>
+            </section>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-green-950 py-20 text-white md:py-24" aria-labelledby="villa-fit-title">
+      <div class="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:gap-16">
+        <div>
+          <p class="text-xs font-bold tracking-[0.3em] text-green-200 uppercase">Private Villa Stay</p>
+          <h2 id="villa-fit-title" class="mt-3 font-serif text-3xl font-bold leading-tight md:text-4xl">「みんなで過ごす時間」を重視するなら、一棟貸し。</h2>
+          <p class="mt-6 leading-8 text-green-50 md:text-lg md:leading-9">家族や友人で伊豆大島へ行くなら、観光地だけでなく宿に戻ってからの時間も旅の一部です。一棟貸しなら、別々の客室へ戻らず、同じリビングでその日の写真を見たり、翌日の予定を話したりできます。</p>
+          <p class="mt-5 leading-8 text-green-100">大島ニュービラのサルビア棟は、最大6名で利用できる一棟貸し。キッチン、リビング、浴室、屋外BBQスペースを備えています。</p>
+          <a href="/group-stay/" class="mt-8 inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 text-sm font-bold text-green-950 transition-all hover:-translate-y-0.5 hover:bg-green-50">一棟貸し・グループ宿泊を見る<span class="ml-2" aria-hidden="true">→</span></a>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <img src="/sofa-salvia.webp" alt="一棟貸しのリビング" class="col-span-2 aspect-[16/9] w-full rounded-3xl object-cover" width="1200" height="675" loading="lazy" />
+          <img src="/bed-salvia.webp" alt="サルビア棟のベッドルーム" class="aspect-square w-full rounded-3xl object-cover" width="700" height="700" loading="lazy" />
+          <img src="/night-bbq.webp" alt="夜の屋外BBQスペース" class="aspect-square w-full rounded-3xl object-cover" width="700" height="700" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white py-16 md:py-24" aria-labelledby="stay-faq-title">
+      <div class="mx-auto max-w-4xl px-6">
+        <div class="text-center">
+          <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">FAQ</p>
+          <h2 id="stay-faq-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">伊豆大島の宿選びでよくある質問。</h2>
+        </div>
+        <div class="mt-10 rounded-3xl border border-gray-100 bg-stone-50/70 px-6 shadow-sm sm:px-8">
+          {faqs.map((faq) => (
+            <details class="group border-b border-gray-200 py-5 last:border-b-0">
+              <summary class="flex cursor-pointer list-none items-start justify-between gap-5 font-bold text-gray-900 [&::-webkit-details-marker]:hidden"><span>{faq.question}</span><span class="mt-1 text-xl leading-none text-green-700 transition-transform group-open:rotate-45" aria-hidden="true">＋</span></summary>
+              <p class="pt-3 pr-8 text-sm leading-7 text-gray-600">{faq.answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-orange-50/60 py-16 md:py-20" aria-labelledby="next-guide-title">
+      <div class="mx-auto max-w-5xl px-6 text-center">
+        <p class="text-xs font-bold tracking-[0.3em] text-orange-700 uppercase">Next Step</p>
+        <h2 id="next-guide-title" class="mt-3 font-serif text-2xl font-bold text-gray-900 md:text-3xl">宿のタイプが決まったら、旅程を考える。</h2>
+        <p class="mx-auto mt-4 max-w-2xl text-sm leading-7 text-gray-600">ゆっくり島を巡るなら、2泊3日のモデルプランも参考にしてください。</p>
+        <div class="mt-7 flex flex-wrap justify-center gap-3">
+          <a href="/weekday-stay/" class="inline-flex items-center rounded-full bg-green-800 px-7 py-3.5 text-sm font-bold text-white transition-colors hover:bg-green-900">2泊3日のモデルプラン<span class="ml-2" aria-hidden="true">→</span></a>
+          <a href="/guide/" class="inline-flex items-center rounded-full border-2 border-green-800 bg-white px-7 py-3.5 text-sm font-bold text-green-800 transition-colors hover:bg-green-50">旅行ガイド一覧へ</a>
+        </div>
+      </div>
+    </section>
+  </article>
+</Layout>
