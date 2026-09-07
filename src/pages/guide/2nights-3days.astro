@@ -1,0 +1,264 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = '伊豆大島2泊3日モデルコース｜初めての島旅をゆっくり楽しむ';
+const pageDescription = '伊豆大島を2泊3日で巡るモデルコース。元町港・岡田港への到着から、三原山・裏砂漠、地層大切断面、波浮港まで、天候や船の時間に合わせて無理なく楽しむ旅程を紹介します。';
+
+const days = [
+  {
+    day: '1日目',
+    kicker: 'Arrival & Slow Start',
+    title: '到着日は、港と島時間に慣れる日。',
+    image: '/habu-port-overlook.webp',
+    alt: '高台から見た伊豆大島の波浮港',
+    items: [
+      '当日の入港地（元町港または岡田港）を確認して島へ到着',
+      'レンタカーを受け取り、港周辺や元町エリアで昼食',
+      '時間と体力に余裕があれば、景色のよい場所や温泉へ',
+      '15時以降にチェックイン。夕食は外食・自炊・BBQからその日の気分で',
+    ],
+    note: '初日に予定を詰め込みすぎないのがポイント。船の時間や海況で到着時刻が変わる可能性も考え、余白を残しておくと安心です。',
+  },
+  {
+    day: '2日目',
+    kicker: 'Volcano & Island Scenery',
+    title: '火山島らしい景色を、旅の主役に。',
+    image: '/urasabaku-panorama.webp',
+    alt: '伊豆大島の裏砂漠に広がる火山景観',
+    items: [
+      '朝は天候を確認し、三原山または裏砂漠を中心に行程を決める',
+      '無理のない範囲で火山景観を歩き、伊豆大島らしい大地を体感',
+      '午後は地層大切断面や波浮港など、島南部の景色へ',
+      '夕方は買い出しをして宿へ。観光後は一棟でゆっくり過ごす',
+    ],
+    note: '三原山と裏砂漠は、天候や体力に合わせてどちらかを中心にするのもおすすめです。「全部行く」より、気に入った場所に時間を使う方が2泊3日の余裕を活かせます。',
+  },
+  {
+    day: '3日目',
+    kicker: 'Flexible Last Day',
+    title: '出港地に合わせて、最後の寄り道を。',
+    image: '/mihara-island-view.webp',
+    alt: '三原山周辺から望む伊豆大島の景色',
+    items: [
+      '朝食後、10時までにチェックアウト',
+      '当日の出港地と出航時間を再確認',
+      '元町港なら町歩きや買い物、岡田港なら北部方面など、港に合わせて行き先を調整',
+      'レンタカー返却や乗船手続きの時間を確保し、余裕をもって港へ',
+    ],
+    note: '伊豆大島は往路と復路で港が変わることがあります。最終日は「行きたい場所を先に固定する」のではなく、出港地から逆算すると動きやすくなります。',
+  },
+];
+
+const tips = [
+  {
+    title: '入出港地は当日に確認',
+    text: '伊豆大島の船は、海上状況などにより元町港・岡田港のどちらを使うか決まります。往路と復路で港が異なる場合もあるため、東海汽船の運航状況を当日に確認してください。',
+  },
+  {
+    title: '複数スポットを巡るなら車が便利',
+    text: '三原山、島南部、買い出しなどを自分たちのペースで組み合わせる場合はレンタカーが便利です。車を使わない場合は、バスの時刻を基準に行程を組み立てましょう。',
+  },
+  {
+    title: '天候に合わせて順番を変える',
+    text: '火山景観や海沿いの散策は天候の影響を受けます。「2日目は必ず三原山」と固定せず、晴れた時間帯を屋外観光に充てるくらいの柔軟さがおすすめです。',
+  },
+];
+
+const faqs = [
+  {
+    question: '伊豆大島は1泊2日と2泊3日、どちらがおすすめですか？',
+    answer: '主要スポットを短く巡るなら1泊2日でも可能ですが、三原山や裏砂漠、港町、温泉などを急がず楽しみたい場合は2泊3日の方が予定に余白を持たせやすくなります。船や天候に合わせて行程を変えやすい点もメリットです。',
+  },
+  {
+    question: '伊豆大島2泊3日ではレンタカーが必要ですか？',
+    answer: '必須ではありませんが、複数の観光地を自分たちのペースで巡る場合は便利です。バスを利用する場合は、運行時刻に合わせて訪問先を絞ると計画しやすくなります。',
+  },
+  {
+    question: '三原山と裏砂漠は同じ日に行けますか？',
+    answer: '行程の組み方によっては可能ですが、歩く時間や天候、体力によって所要時間は変わります。初めての場合は、どちらかをその日の主目的にして余裕を持たせると安心です。',
+  },
+  {
+    question: '雨の日はどうすればいいですか？',
+    answer: '屋外スポットを無理に詰め込まず、温泉、食事、買い物などへ切り替えるのがおすすめです。2泊3日にしておくと、天候を見ながら屋外観光を別日に動かしやすくなります。',
+  },
+];
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '大島ニュービラ', item: 'https://oshima-new-villa.com/' },
+        { '@type': 'ListItem', position: 2, name: '伊豆大島旅行ガイド', item: 'https://oshima-new-villa.com/guide/' },
+        { '@type': 'ListItem', position: 3, name: '伊豆大島2泊3日モデルコース', item: 'https://oshima-new-villa.com/guide/2nights-3days/' },
+      ],
+    },
+    {
+      '@type': 'Article',
+      headline: '伊豆大島2泊3日モデルコース｜初めての島旅をゆっくり楽しむ',
+      description: pageDescription,
+      mainEntityOfPage: 'https://oshima-new-villa.com/guide/2nights-3days/',
+      image: 'https://oshima-new-villa.com/urasabaku-panorama.webp',
+      datePublished: '2026-09-07',
+      dateModified: '2026-09-07',
+      author: { '@type': 'Organization', name: '大島ニュービラ', url: 'https://oshima-new-villa.com/' },
+      publisher: { '@type': 'Organization', name: '大島ニュービラ', url: 'https://oshima-new-villa.com/' },
+      inLanguage: 'ja',
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+      })),
+    },
+  ],
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+  <article>
+    <header class="bg-stone-50 pt-28 md:pt-32">
+      <div class="mx-auto max-w-5xl px-6 py-14 md:py-20">
+        <nav class="text-sm text-gray-500" aria-label="パンくずリスト">
+          <a href="/" class="hover:text-green-800">トップ</a><span class="mx-2">/</span><a href="/guide/" class="hover:text-green-800">伊豆大島旅行ガイド</a><span class="mx-2">/</span><span>2泊3日モデルコース</span>
+        </nav>
+        <p class="mt-10 text-xs font-bold tracking-[0.3em] text-green-700 uppercase">2 Nights / 3 Days in Izu Oshima</p>
+        <h1 class="mt-4 max-w-4xl font-serif text-4xl font-bold leading-tight text-gray-900 sm:text-5xl md:text-6xl">伊豆大島2泊3日モデルコース。<br />急がない島旅のつくり方。</h1>
+        <p class="mt-7 max-w-3xl text-base leading-8 text-gray-600 md:text-lg md:leading-9">三原山や裏砂漠、港町、温泉。見どころの多い伊豆大島は、2泊3日にすると「全部を急いで回る」のではなく、天候や船の時間に合わせて予定を動かせます。初めての島旅を想定した、余白のあるモデルコースです。</p>
+      </div>
+      <div class="mx-auto max-w-6xl px-6 pb-16 md:pb-20">
+        <img src="/urasabaku-panorama.webp" alt="伊豆大島の裏砂漠に広がる黒い火山景観" class="aspect-[16/8] w-full rounded-3xl object-cover shadow-sm" width="1536" height="369" fetchpriority="high" />
+      </div>
+    </header>
+
+    <section class="bg-white py-16 md:py-24" aria-labelledby="why-2n3d">
+      <div class="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:gap-16">
+        <div>
+          <p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">Why 2 Nights?</p>
+          <h2 id="why-2n3d" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">2泊3日だと、<br />「予定変更」が旅の余裕になる。</h2>
+        </div>
+        <div class="space-y-5 leading-8 text-gray-600 md:text-lg md:leading-9">
+          <p>伊豆大島では、船の入出港地が当日の海上状況などによって元町港・岡田港のどちらかに決まります。さらに山や海辺の景色は天候にも左右されます。</p>
+          <p>1泊2日でも旅はできますが、2泊3日なら屋外観光を晴れた時間へ動かしたり、到着日はゆっくり始めたりできます。島を「何か所回ったか」ではなく、「どんな時間を過ごしたか」で楽しみたい人と相性のよい日程です。</p>
+          <a href="https://www.tokaikisen.co.jp/schedule/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 font-bold text-green-800 underline decoration-green-200 underline-offset-4 hover:text-green-950">東海汽船の当日運航状況を確認する <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-stone-50 py-20 md:py-28" aria-labelledby="model-course-title">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="text-xs font-bold tracking-[0.25em] text-orange-700 uppercase">Sample Itinerary</p>
+          <h2 id="model-course-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">伊豆大島2泊3日のモデルコース</h2>
+          <p class="mt-5 leading-8 text-gray-600 md:text-lg md:leading-9">時刻を細かく固定しないのがこのプランの特徴です。船・天候・季節・体力に合わせて順番を入れ替えてください。</p>
+        </div>
+
+        <div class="mt-14 space-y-8">
+          {days.map((day, index) => (
+            <article class="grid overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm lg:grid-cols-[0.9fr_1.1fr]">
+              <img src={day.image} alt={day.alt} class={`h-full min-h-72 w-full object-cover ${index % 2 === 1 ? 'lg:order-2' : ''}`} width="1536" height="1024" loading="lazy" />
+              <div class={`p-7 md:p-10 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                <div class="flex flex-wrap items-center gap-3">
+                  <span class="rounded-full bg-green-900 px-4 py-2 text-sm font-bold text-white">{day.day}</span>
+                  <span class="text-xs font-bold tracking-[0.2em] text-green-700 uppercase">{day.kicker}</span>
+                </div>
+                <h3 class="mt-5 font-serif text-2xl font-bold leading-snug text-gray-900 md:text-3xl">{day.title}</h3>
+                <ol class="mt-6 space-y-3">
+                  {day.items.map((item, itemIndex) => (
+                    <li class="flex gap-4 leading-7 text-gray-700 md:text-lg md:leading-8">
+                      <span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-stone-100 text-sm font-bold text-green-800">{itemIndex + 1}</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ol>
+                <p class="mt-7 rounded-2xl bg-stone-50 p-5 text-sm leading-7 text-gray-600 md:text-base">{day.note}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white py-20 md:py-28" aria-labelledby="spots-title">
+      <div class="mx-auto max-w-6xl px-6">
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">Places to Add</p>
+          <h2 id="spots-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">旅程に入れたい、伊豆大島らしい景色。</h2>
+          <p class="mt-5 leading-8 text-gray-600 md:text-lg md:leading-9">同じ日に全部詰め込む必要はありません。天候とその日の気分で、主役をひとつ選ぶくらいがおすすめです。</p>
+        </div>
+
+        <div class="mt-12 grid gap-6 md:grid-cols-2">
+          <a href="/#volcano-guide" class="group overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+            <img src="/mihara-crater.webp" alt="伊豆大島の三原山火口周辺" class="aspect-[16/9] w-full object-cover" width="1200" height="675" loading="lazy" />
+            <div class="p-6 md:p-7"><h3 class="font-serif text-2xl font-bold text-gray-900">三原山・裏砂漠</h3><p class="mt-3 leading-7 text-gray-600">火山島・伊豆大島を象徴する景色。天候と歩く時間を見ながら、その日の主目的に。</p><span class="mt-4 inline-flex font-bold text-green-800">詳しく見る →</span></div>
+          </a>
+          <a href="/#habu-port-guide" class="group overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+            <img src="/habu-port-bay.webp" alt="伊豆大島の波浮港" class="aspect-[16/9] w-full object-cover" width="1200" height="675" loading="lazy" />
+            <div class="p-6 md:p-7"><h3 class="font-serif text-2xl font-bold text-gray-900">地層大切断面・波浮港</h3><p class="mt-3 leading-7 text-gray-600">島南部を巡る日に組み込みやすい景色。火山の地層と港町の空気を続けて楽しめます。</p><span class="mt-4 inline-flex font-bold text-green-800">詳しく見る →</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-green-950 py-20 text-white md:py-28" aria-labelledby="planning-tips-title">
+      <div class="mx-auto max-w-6xl px-6">
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="text-xs font-bold tracking-[0.25em] text-green-200 uppercase">Planning Tips</p>
+          <h2 id="planning-tips-title" class="mt-3 font-serif text-3xl font-bold md:text-4xl">2泊3日を組み立てる3つのコツ。</h2>
+        </div>
+        <div class="mt-12 grid gap-5 md:grid-cols-3">
+          {tips.map((tip) => (
+            <article class="rounded-3xl border border-white/10 bg-white/5 p-7">
+              <h3 class="font-serif text-2xl font-bold leading-snug">{tip.title}</h3>
+              <p class="mt-4 leading-8 text-green-50">{tip.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-stone-50 py-20 md:py-28" aria-labelledby="stay-base-title">
+      <div class="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16">
+        <div>
+          <p class="text-xs font-bold tracking-[0.25em] text-orange-700 uppercase">Where to Stay</p>
+          <h2 id="stay-base-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">観光のあとも、旅を終わらせない一棟貸し。</h2>
+          <p class="mt-6 leading-8 text-gray-600 md:text-lg md:leading-9">2泊3日では、宿で過ごす夜が2回あります。大島ニュービラのサルビア棟は、一棟貸しで最大6名。キッチンやリビングがあるので、外食だけに決めず、買ってきた食材で夕食を作ったり、仲間とゆっくり話したりできます。</p>
+          <div class="mt-7 flex flex-wrap gap-4">
+            <a href="/weekday-stay/" class="inline-flex items-center gap-2 font-bold text-green-800 underline decoration-green-200 underline-offset-4 hover:text-green-950">平日の大人旅・宿泊について見る →</a>
+            <a href="/group-stay/" class="inline-flex items-center gap-2 font-bold text-green-800 underline decoration-green-200 underline-offset-4 hover:text-green-950">グループの一棟貸しを見る →</a>
+          </div>
+        </div>
+        <img src="/sofa-salvia.webp" alt="大島ニュービラ サルビア棟のリビング" class="aspect-[4/3] w-full rounded-3xl object-cover shadow-sm" width="1108" height="832" loading="lazy" />
+      </div>
+    </section>
+
+    <section class="bg-white py-20 md:py-28" aria-labelledby="faq-title">
+      <div class="mx-auto max-w-4xl px-6">
+        <div class="text-center"><p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">FAQ</p><h2 id="faq-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">伊豆大島2泊3日のよくある質問</h2></div>
+        <div class="mt-10 space-y-3">
+          {faqs.map((faq) => (
+            <details class="group rounded-2xl border border-gray-200 bg-white px-6 py-5 shadow-sm">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-5 text-lg font-bold leading-8 text-gray-900 [&::-webkit-details-marker]:hidden"><span>{faq.question}</span><span class="text-2xl text-green-700 transition-transform group-open:rotate-45" aria-hidden="true">＋</span></summary>
+              <p class="mt-4 border-t border-gray-100 pt-5 leading-8 text-gray-700 md:text-lg md:leading-9">{faq.answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="relative overflow-hidden bg-stone-950 py-24 text-white md:py-32" aria-labelledby="booking-title">
+      <img src="/forest-optimized.webp" alt="" class="absolute inset-0 h-full w-full object-cover opacity-25" width="1170" height="1171" loading="lazy" />
+      <div class="relative mx-auto max-w-4xl px-6 text-center">
+        <p class="text-xs font-bold tracking-[0.25em] text-orange-200 uppercase">Stay in Izu Oshima</p>
+        <h2 id="booking-title" class="mt-3 font-serif text-3xl font-bold leading-tight md:text-5xl">2泊3日の島旅を、<br class="sm:hidden" />一棟貸しから。</h2>
+        <p class="mx-auto mt-6 max-w-2xl leading-8 text-stone-100 md:text-lg md:leading-9">日程が決まったら、大島ニュービラの空室と料金をご確認ください。</p>
+        <a href="https://www.airbnb.jp/rooms/1602063410123886296?guests=2&adults=2&s=67&unique_share_id=a393ba49-61eb-4d8e-a4c9-95935b649d65" data-booking-location="guide_2nights_3days_bottom" target="_blank" rel="noopener noreferrer" class="mt-9 inline-flex min-h-14 items-center justify-center rounded-full bg-orange-600 px-9 py-4 text-base font-bold text-white shadow-lg transition-all hover:-translate-y-0.5 hover:bg-orange-500 md:text-lg">空室・料金を見る<span class="ml-2" aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </article>
+</Layout>
