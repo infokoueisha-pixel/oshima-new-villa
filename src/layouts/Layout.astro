@@ -1,21 +1,30 @@
 ---
 import '../styles/global.css';
+import { SITE, AMENITIES } from '../data/site';
 
 interface Props {
   title?: string;
   description?: string;
   noindex?: boolean;
+  pageType?: 'WebPage' | 'CollectionPage' | 'Article' | 'AboutPage';
+  datePublished?: string;
+  dateModified?: string;
+  image?: string;
 }
 
 const {
   title = '伊豆大島の宿・一棟貸し｜最大6名の森のヴィラ｜大島ニュービラ',
   description = '伊豆大島で宿泊先をお探しの方へ。元町の一棟貸し宿「大島ニュービラ」は、家族・友人で最大6名、BBQ・自炊を楽しめる森のヴィラです。元町港から車で約5分。',
   noindex = false,
+  pageType = 'WebPage',
+  datePublished,
+  dateModified,
+  image = '/ogp-oshima-new-villa.jpg',
 } = Astro.props;
 
-const siteUrl = 'https://oshima-new-villa.com/';
+const siteUrl = SITE.url;
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
-const ogImageUrl = new URL('/ogp-oshima-new-villa.jpg', siteUrl).href;
+const ogImageUrl = new URL(image, siteUrl).href;
 const propertyImageUrl = new URL('/main-optimized.webp', siteUrl).href;
 const isHomePage = Astro.url.pathname === '/';
 const isGuestGuide = Astro.url.pathname.startsWith('/guest-guide');
@@ -38,6 +47,35 @@ const alternateUrls = {
 
 const homeAnchor = (hash: string) => Astro.url.pathname === '/' ? hash : `/${hash}`;
 
+const webPageStructuredData = {
+  '@type': pageType === 'Article' ? 'WebPage' : pageType,
+  '@id': `${canonicalUrl}#webpage`,
+  url: canonicalUrl,
+  name: title,
+  description,
+  inLanguage: 'ja',
+  isPartOf: { '@id': `${siteUrl}#website` },
+  about: { '@id': `${siteUrl}#lodging-business` },
+  primaryImageOfPage: { '@type': 'ImageObject', url: ogImageUrl },
+  ...(datePublished ? { datePublished } : {}),
+  ...(dateModified ? { dateModified } : {}),
+};
+
+const articleStructuredData = pageType === 'Article' ? {
+  '@type': 'Article',
+  '@id': `${canonicalUrl}#article`,
+  headline: title,
+  description,
+  url: canonicalUrl,
+  mainEntityOfPage: { '@id': `${canonicalUrl}#webpage` },
+  image: ogImageUrl,
+  inLanguage: 'ja',
+  ...(datePublished ? { datePublished } : {}),
+  ...(dateModified ? { dateModified } : {}),
+  author: { '@id': `${siteUrl}#lodging-business` },
+  publisher: { '@id': `${siteUrl}#lodging-business` },
+} : null;
+
 const structuredData = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -45,17 +83,20 @@ const structuredData = {
       '@type': 'WebSite',
       '@id': `${siteUrl}#website`,
       url: siteUrl,
-      name: '大島ニュービラ',
-      alternateName: 'Oshima New Villa',
+      name: SITE.name,
+      alternateName: SITE.alternateName,
+      description: SITE.description,
       inLanguage: 'ja',
+      publisher: { '@id': `${siteUrl}#lodging-business` },
     },
     {
       '@type': 'LodgingBusiness',
       '@id': `${siteUrl}#lodging-business`,
-      name: '大島ニュービラ',
-      alternateName: 'Oshima New Villa',
+      name: SITE.name,
+      alternateName: SITE.alternateName,
       url: siteUrl,
-      description,
+      description: SITE.description,
+      foundingDate: SITE.foundingDate,
       image: [
         propertyImageUrl,
         new URL('/day-salvia.webp', siteUrl).href,
@@ -65,28 +106,21 @@ const structuredData = {
       logo: new URL('/oshima_new_villa_logo_A_N.png', siteUrl).href,
       address: {
         '@type': 'PostalAddress',
-        postalCode: '100-0101',
-        addressRegion: '東京都',
-        addressLocality: '大島町',
-        streetAddress: '元町字新込126-42',
-        addressCountry: 'JP',
+        ...SITE.address,
       },
-      checkinTime: '15:00',
-      checkoutTime: '10:00',
+      checkinTime: SITE.checkinTime,
+      checkoutTime: SITE.checkoutTime,
       petsAllowed: false,
       smokingAllowed: false,
-      sameAs: [
-        'https://www.airbnb.jp/rooms/1602063410123886296',
-      ],
-      amenityFeature: [
-        { '@type': 'LocationFeatureSpecification', name: '一棟貸切', value: true },
-        { '@type': 'LocationFeatureSpecification', name: '最大6名', value: true },
-        { '@type': 'LocationFeatureSpecification', name: '無料Wi-Fi', value: true },
-        { '@type': 'LocationFeatureSpecification', name: 'キッチン', value: true },
-        { '@type': 'LocationFeatureSpecification', name: '屋外BBQ設備', value: true },
-        { '@type': 'LocationFeatureSpecification', name: '無料駐車場', value: true },
+      sameAs: [SITE.instagram, SITE.airbnbJa],
+      amenityFeature: AMENITIES.map((name) => ({ '@type': 'LocationFeatureSpecification', name, value: true })),
+      additionalProperty: [
+        { '@type': 'PropertyValue', name: '最大宿泊人数', value: `${SITE.maxGuests}名` },
+        { '@type': 'PropertyValue', name: 'リニューアル', value: `${SITE.reopenedYear}年` },
       ],
     },
+    webPageStructuredData,
+    ...(articleStructuredData ? [articleStructuredData] : []),
   ],
 };
 
@@ -132,7 +166,10 @@ const mobileNavGroups = [
   },
   {
     title: '私たちについて',
-    items: [{ label: '1975年からの物語', href: homeAnchor('#story') }],
+    items: [
+      { label: '大島ニュービラ 基本情報', href: '/about/' },
+      { label: '1975年からの物語', href: homeAnchor('#story') },
+    ],
   },
 ];
 
@@ -144,6 +181,7 @@ const footerNavItems = [
   { label: 'モデルコース', href: homeAnchor('#itinerary') },
   { label: '設備・FAQ', href: homeAnchor('#facilities') },
   { label: 'アクセス', href: homeAnchor('#access') },
+  { label: '基本情報', href: '/about/' },
 ];
 ---
 
@@ -153,9 +191,12 @@ const footerNavItems = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta name="author" content="大島ニュービラ" />
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" href="/sitemap.xml" />
+    <link rel="describedby" href="/llms.txt" />
+    <link rel="author" href="/about/" />
     {hasLocalizedEquivalent && <link rel="alternate" hreflang="ja" href={alternateUrls.ja} />}
     {hasLocalizedEquivalent && <link rel="alternate" hreflang="en" href={alternateUrls.en} />}
     {hasLocalizedEquivalent && <link rel="alternate" hreflang="ko" href={alternateUrls.ko} />}
@@ -171,7 +212,7 @@ const footerNavItems = [
       fetchpriority="high"
     />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={pageType === 'Article' ? 'article' : 'website'} />
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:site_name" content="大島ニュービラ" />
     <meta property="og:title" content={title} />
@@ -182,6 +223,8 @@ const footerNavItems = [
     <meta property="og:image:height" content="630" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:alt" content="伊豆大島の一棟貸し・大島ニュービラ。大島を遊ぶ。森に帰る。" />
+    {pageType === 'Article' && datePublished && <meta property="article:published_time" content={datePublished} />}
+    {pageType === 'Article' && dateModified && <meta property="article:modified_time" content={dateModified} />}
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />

@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 
 const pageTitle = '伊豆大島旅行ガイド｜宿選び・モデルコース・ダイビング｜大島ニュービラ';
-const pageDescription = '伊豆大島旅行を計画する方へ。宿の選び方、2泊3日の過ごし方、ダイビング旅行、グループ旅行など、滞在前に知っておきたい情報を大島ニュービラがまとめています。';
+const pageDescription = '伊豆大島旅行を計画する方へ。宿の選び方、2泊3日の過ごし方、雨の日観光、ダイビング旅行、グループ旅行など、滞在前に知っておきたい情報を大島ニュービラがまとめています。';
 
 const guides = [
   {
@@ -22,6 +22,15 @@ const guides = [
     title: '伊豆大島2泊3日モデルコース',
     description: '三原山・裏砂漠・波浮港などを、船や天候に合わせて無理なく巡る2泊3日の旅程を紹介します。',
     tag: 'モデルコース',
+  },
+  {
+    href: '/guide/rainy-day/',
+    image: '/forest-optimized.webp',
+    alt: '雨の日にも静かな時間が流れる伊豆大島の森',
+    kicker: 'Rainy Day',
+    title: '雨の日の伊豆大島',
+    description: '雨予報でも旅をあきらめない。屋内施設・温泉・食事・宿時間へ予定を組み替える過ごし方を紹介します。',
+    tag: '雨の日観光',
   },
   {
     href: '/diving/',
@@ -54,25 +63,21 @@ const structuredData = {
       ],
     },
     {
-      '@type': 'CollectionPage',
+      '@type': 'ItemList',
+      '@id': 'https://oshima-new-villa.com/guide/#guide-list',
       name: '伊豆大島旅行ガイド',
-      url: 'https://oshima-new-villa.com/guide/',
-      description: pageDescription,
-      mainEntity: {
-        '@type': 'ItemList',
-        itemListElement: guides.map((guide, index) => ({
-          '@type': 'ListItem',
-          position: index + 1,
-          url: new URL(guide.href, 'https://oshima-new-villa.com/').href,
-          name: guide.title,
-        })),
-      },
+      itemListElement: guides.map((guide, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: new URL(guide.href, 'https://oshima-new-villa.com/').href,
+        name: guide.title,
+      })),
     },
   ],
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
+<Layout title={pageTitle} description={pageDescription} pageType="CollectionPage" dateModified="2026-09-09">
   <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
   <section class="relative isolate overflow-hidden bg-stone-950 pt-24 text-white md:pt-28" aria-labelledby="guide-title">
@@ -111,6 +116,17 @@ const structuredData = {
             </div>
           </a>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white py-16 md:py-20" aria-labelledby="guide-policy-title">
+    <div class="mx-auto max-w-5xl px-6">
+      <div class="rounded-3xl border border-stone-200 bg-stone-50 p-7 md:p-10">
+        <p class="text-xs font-bold uppercase tracking-[0.25em] text-green-700">Editorial Policy</p>
+        <h2 id="guide-policy-title" class="mt-3 font-serif text-3xl font-bold text-gray-900">情報の確認方針</h2>
+        <p class="mt-5 leading-8 text-gray-600">大島ニュービラ自身が確認できる宿泊情報は公式の一次情報として掲載し、船・行政施設・温泉・ダイビングなど外部主体が運営する情報は、東海汽船・大島町・専門団体などの公式情報を優先して確認します。営業時間・運航・料金など変動する情報は、旅行前に各公式サイトで最新情報をご確認ください。</p>
+        <a href="/about/" class="mt-6 inline-flex font-bold text-green-800 underline decoration-green-200 underline-offset-4 hover:text-green-950">大島ニュービラの基本情報・情報方針を見る →</a>
       </div>
     </div>
   </section>

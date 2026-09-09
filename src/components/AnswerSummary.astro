@@ -1,0 +1,21 @@
+---
+interface Props {
+  title?: string;
+  items: string[];
+  updated?: string;
+}
+
+const { title = 'この記事の要点', items, updated } = Astro.props;
+---
+
+<aside class="rounded-3xl border border-green-200 bg-green-50/70 p-6 shadow-sm md:p-8" aria-label={title}>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h2 class="font-serif text-2xl font-bold text-gray-900">{title}</h2>
+    {updated && <time datetime={updated} class="text-xs font-bold text-gray-500">最終更新：{updated.replaceAll('-', '.')}</time>}
+  </div>
+  <ul class="mt-5 space-y-3 text-sm leading-7 text-gray-700 md:text-base md:leading-8">
+    {items.map((item) => (
+      <li class="flex gap-3"><span class="mt-0.5 font-bold text-green-700" aria-hidden="true">✓</span><span>{item}</span></li>
+    ))}
+  </ul>
+</aside>

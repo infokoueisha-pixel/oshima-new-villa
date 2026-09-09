@@ -1,8 +1,12 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import AnswerSummary from '../../components/AnswerSummary.astro';
 
 const pageTitle = '伊豆大島の宿選び｜ホテル・民宿・一棟貸しの違いと選び方';
 const pageDescription = '伊豆大島で宿を探している方へ。ホテル・民宿・一棟貸しの違いを、人数、食事、プライベート感、旅の過ごし方から比較。家族・友人・夫婦など旅行タイプ別の選び方を紹介します。';
+const datePublished = '2026-09-07';
+const dateModified = '2026-09-09';
+const summaryPoints = ["伊豆大島の宿は、ホテル・民宿・一棟貸しのどれが一律に優れているわけではなく、人数・食事・宿での過ごし方で選ぶのが基本です。", "家族や友人で夜まで同じ空間に集まりたい場合は、一棟貸し・貸別荘・ヴィラと相性があります。", "名称だけで判断せず、貸切範囲、食事条件、キッチン・浴室・屋外設備を予約前に確認すると失敗しにくくなります。"];
 
 const comparisons = [
   {
@@ -48,16 +52,6 @@ const structuredData = {
       ],
     },
     {
-      '@type': 'Article',
-      headline: '伊豆大島の宿選び｜ホテル・民宿・一棟貸しの違いと選び方',
-      description: pageDescription,
-      mainEntityOfPage: 'https://oshima-new-villa.com/guide/stay/',
-      image: 'https://oshima-new-villa.com/day-salvia.webp',
-      author: { '@type': 'Organization', name: '大島ニュービラ', url: 'https://oshima-new-villa.com/' },
-      publisher: { '@type': 'Organization', name: '大島ニュービラ', url: 'https://oshima-new-villa.com/' },
-      inLanguage: 'ja',
-    },
-    {
       '@type': 'FAQPage',
       mainEntity: faqs.map((faq) => ({
         '@type': 'Question',
@@ -69,7 +63,7 @@ const structuredData = {
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
+<Layout title={pageTitle} description={pageDescription} pageType="Article" datePublished={datePublished} dateModified={dateModified}>
   <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
   <article>
@@ -86,6 +80,12 @@ const structuredData = {
         <img src="/day-salvia.webp" alt="伊豆大島の一棟貸し宿 大島ニュービラ サルビア棟" class="aspect-[16/8] w-full rounded-3xl object-cover shadow-sm" width="1800" height="900" fetchpriority="high" />
       </div>
     </header>
+
+    <section class="bg-white py-10 md:py-14" aria-label="記事の要点">
+      <div class="mx-auto max-w-4xl px-6">
+        <AnswerSummary items={summaryPoints} updated={dateModified} />
+      </div>
+    </section>
 
     <section class="bg-white py-16 md:py-24" aria-labelledby="choice-first">
       <div class="mx-auto max-w-4xl px-6">

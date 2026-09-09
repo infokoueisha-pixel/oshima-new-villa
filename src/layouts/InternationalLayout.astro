@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { SITE } from '../data/site';
 
 type Locale = 'en' | 'ko' | 'zh-Hant' | 'zh-Hans';
 
@@ -27,7 +28,7 @@ const configs = {
     mobileNavLabel: 'Mobile navigation',
     openMenu: 'Open menu',
     footerNavLabel: 'Footer navigation',
-    footer: ['The Villa', 'Things to Do', 'Getting Here', 'Before You Book', 'Guest Guide'],
+    footer: ['The Villa', 'Things to Do', 'Getting Here', 'Before You Book'],
     address: '126-42 Shinkomi, Motomachi, Oshima-machi, Tokyo 100-0101, Japan',
     backToTop: 'Back to top',
     ogAlt: 'Oshima New Villa, a private villa surrounded by forest on Izu Oshima, Tokyo.',
@@ -52,7 +53,7 @@ const configs = {
     mobileNavLabel: '모바일 내비게이션',
     openMenu: '메뉴 열기',
     footerNavLabel: '푸터 내비게이션',
-    footer: ['빌라', '즐길 거리', '오시는 길', '예약 전 확인', '숙박 가이드'],
+    footer: ['빌라', '즐길 거리', '오시는 길', '예약 전 확인'],
     address: '일본 도쿄도 오시마마치 모토마치 신코미 126-42, 100-0101',
     backToTop: '맨 위로',
     ogAlt: '도쿄 이즈오시마의 숲에 둘러싸인 독채 숙소 오시마 뉴 빌라.',
@@ -77,7 +78,7 @@ const configs = {
     mobileNavLabel: '手機導覽',
     openMenu: '開啟選單',
     footerNavLabel: '頁尾導覽',
-    footer: ['Villa 介紹', '島上體驗', '交通方式', '預訂前須知', '住宿指南'],
+    footer: ['Villa 介紹', '島上體驗', '交通方式', '預訂前須知'],
     address: '日本東京都大島町元町字新込126-42，100-0101',
     backToTop: '回到頁首',
     ogAlt: '位於東京伊豆大島森林中的整棟包棟住宿 Oshima New Villa。',
@@ -102,7 +103,7 @@ const configs = {
     mobileNavLabel: '手机导航',
     openMenu: '打开菜单',
     footerNavLabel: '页脚导航',
-    footer: ['Villa 介绍', '岛上体验', '交通方式', '预订前须知', '住宿指南'],
+    footer: ['Villa 介绍', '岛上体验', '交通方式', '预订前须知'],
     address: '日本东京都大岛町元町字新込126-42，100-0101',
     backToTop: '返回顶部',
     ogAlt: '位于东京伊豆大岛森林中的整栋包租住宿 Oshima New Villa。',
@@ -118,7 +119,7 @@ const config = configs[locale];
 const title = Astro.props.title ?? config.defaultTitle;
 const description = Astro.props.description ?? config.defaultDescription;
 
-const siteUrl = 'https://oshima-new-villa.com/';
+const siteUrl = SITE.url;
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 const isGuestGuide = Astro.url.pathname.includes('/guest-guide');
 const ogImageUrl = new URL('/ogp-oshima-new-villa.jpg', siteUrl).href;
@@ -156,6 +157,14 @@ const structuredData = {
   '@context': 'https://schema.org',
   '@graph': [
     {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}#website`,
+      url: siteUrl,
+      name: SITE.alternateName,
+      alternateName: SITE.name,
+      publisher: { '@id': `${siteUrl}#lodging-business` },
+    },
+    {
       '@type': 'WebPage',
       '@id': `${canonicalUrl}#webpage`,
       url: canonicalUrl,
@@ -163,6 +172,7 @@ const structuredData = {
       description,
       inLanguage: config.htmlLang,
       isPartOf: { '@id': `${siteUrl}#website` },
+      about: { '@id': `${siteUrl}#lodging-business` },
     },
     {
       '@type': 'LodgingBusiness',
@@ -170,7 +180,7 @@ const structuredData = {
       name: 'Oshima New Villa',
       alternateName: '大島ニュービラ',
       url: siteUrl,
-      description,
+      description: SITE.description,
       image: [
         propertyImageUrl,
         new URL('/day-salvia.webp', siteUrl).href,
@@ -190,7 +200,8 @@ const structuredData = {
       checkoutTime: '10:00',
       petsAllowed: false,
       smokingAllowed: false,
-      sameAs: ['https://www.airbnb.com/rooms/1602063410123886296'],
+      foundingDate: SITE.foundingDate,
+      sameAs: [SITE.instagram, SITE.airbnbIntl],
       amenityFeature: config.structuredAmenities.map((name) => ({ '@type': 'LocationFeatureSpecification', name, value: true })),
     },
   ],
@@ -203,8 +214,12 @@ const structuredData = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta name="author" content="Oshima New Villa" />
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
     <link rel="canonical" href={canonicalUrl} />
+    <link rel="sitemap" href="/sitemap.xml" />
+    <link rel="describedby" href="/llms.txt" />
+    <link rel="author" href="/about/" />
     <link rel="alternate" hreflang="ja" href={altUrls.ja} />
     <link rel="alternate" hreflang="en" href={altUrls.en} />
     <link rel="alternate" hreflang="ko" href={altUrls.ko} />
@@ -391,7 +406,6 @@ const structuredData = {
             <a href={`${navBase}#things-to-do`} class="transition-colors hover:text-white">{config.footer[1]}</a>
             <a href={`${navBase}#access`} class="transition-colors hover:text-white">{config.footer[2]}</a>
             <a href={`${navBase}#before-booking`} class="transition-colors hover:text-white">{config.footer[3]}</a>
-            <a href={`/${config.slug}/guest-guide/`} class="transition-colors hover:text-white">{config.footer[4]}</a>
           </nav>
         </div>
         <div class="mt-8 flex flex-wrap justify-center gap-x-5 gap-y-2 border-t border-gray-800 pt-7 text-xs text-gray-500">

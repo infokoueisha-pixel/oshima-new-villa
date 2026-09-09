@@ -1,0 +1,215 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AnswerSummary from '../../components/AnswerSummary.astro';
+
+const pageTitle = '伊豆大島の雨の日観光｜屋内で楽しむ過ごし方・モデルプラン';
+const pageDescription = '伊豆大島旅行が雨予報でも楽しめる過ごし方を紹介。伊豆大島ミュージアム ジオノス、御神火温泉、食事や買い物、宿での過ごし方まで、天候に合わせて無理なく組み替える雨の日プランです。';
+const datePublished = '2026-09-08';
+const dateModified = '2026-09-09';
+const summaryPoints = ["雨の日は屋外スポットを無理に回らず、ジオノス、温泉、食事、買い物などへ予定を組み替えると旅を楽しみやすくなります。", "2泊以上なら、雨の時間帯を屋内に充て、天候が回復した時間を三原山などの屋外観光へ回す選択肢が増えます。", "強風・大雨時は海沿いや登山道へ無理に向かわず、各施設・交通機関の公式な営業・運行情報を確認してください。"];
+
+const plans = [
+  {
+    label: '午前',
+    kicker: 'Learn the Island',
+    title: 'ジオノスで、伊豆大島の「なぜ？」を知る。',
+    text: '2025年7月にリニューアルした「伊豆大島ミュージアム ジオノス」は、火山だけでなく、島の自然や暮らしまで知ることができる屋内施設です。晴れた日に三原山へ行く前の予習としても、雨の日の目的地としても使いやすい場所です。',
+    href: 'https://izuoshima-geonous.org/',
+    cta: 'ジオノス公式サイトで開館情報を見る',
+  },
+  {
+    label: '昼〜午後',
+    kicker: 'Warm Up',
+    title: '温泉と食事で、急がない午後に切り替える。',
+    text: '元町エリアの御神火温泉は、天然温泉の大浴場やサウナなどを備えた屋内施設です。屋外観光を無理に続けず、食事や買い物と組み合わせて、雨が弱まるのを待つ時間にするのもひとつの過ごし方です。',
+    href: 'https://www.town.oshima.tokyo.jp/soshiki/kankou/gojinka.html',
+    cta: '御神火温泉の公式情報を見る',
+  },
+  {
+    label: '夕方〜夜',
+    kicker: 'Stay Slow',
+    title: '宿に戻ったら、島の夜を室内で楽しむ。',
+    text: '一棟貸しなら、雨の日も「寝るだけの宿」になりません。大島ニュービラでは、キッチンで料理をしたり、スマートTVを見たり、無料貸出品のボードゲームなどで過ごしたりできます。貸出品の内容は時期により変わる場合があります。',
+    href: '/#facilities',
+    cta: '大島ニュービラの設備を見る',
+  },
+];
+
+const tips = [
+  {
+    title: '晴れた日に動かせる予定は、動かす',
+    text: '三原山や裏砂漠など、景色が主役になる場所は無理に雨の日へ固定しないのがおすすめです。2泊3日なら、天気予報を見ながら屋外観光の日を入れ替えやすくなります。',
+  },
+  {
+    title: '雨だけでなく、風と視界も確認する',
+    text: '島では雨量だけでなく風の強さや霧も行動に影響します。山道や海沿いへ出る場合は、現地の最新情報を確認し、危険を感じる状況では予定を変更してください。',
+  },
+  {
+    title: '予定をひとつ減らして、余白をつくる',
+    text: '雨の日は移動や乗り降りに時間がかかります。観光地を全部回ろうとせず、「今日は屋内を1〜2か所＋温泉」くらいにすると、島旅そのものを楽しみやすくなります。',
+  },
+];
+
+const faqs = [
+  {
+    question: '伊豆大島は雨の日でも観光できますか？',
+    answer: 'できます。伊豆大島ミュージアム ジオノスや御神火温泉などの屋内施設を中心にして、食事や買い物、宿で過ごす時間を組み合わせる方法があります。屋外観光は雨や風、視界を見ながら無理のない範囲で判断してください。',
+  },
+  {
+    question: '雨の日でも三原山や裏砂漠へ行けますか？',
+    answer: '天候によっては雨だけでなく強風や霧の影響を受けます。現地の安全情報や天気を確認し、視界が悪い場合や危険を感じる場合は別日に変更するのがおすすめです。',
+  },
+  {
+    question: '伊豆大島の雨の日はレンタカーがあった方が便利ですか？',
+    answer: '屋内施設や食事場所を複数回る場合は移動しやすくなります。ただし雨天時は視界や路面状況が悪くなることもあるため、普段以上に余裕を持って運転してください。',
+  },
+  {
+    question: '宿では雨の日に何をして過ごせますか？',
+    answer: '大島ニュービラでは、室内キッチンで料理をしたり、スマートTVを見たり、無料貸出品のボードゲームなどで過ごしたりできます。貸出品の内容や数量は時期により変わる場合があります。',
+  },
+];
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '大島ニュービラ', item: 'https://oshima-new-villa.com/' },
+        { '@type': 'ListItem', position: 2, name: '伊豆大島旅行ガイド', item: 'https://oshima-new-villa.com/guide/' },
+        { '@type': 'ListItem', position: 3, name: '伊豆大島の雨の日観光', item: 'https://oshima-new-villa.com/guide/rainy-day/' },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+      })),
+    },
+  ],
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} pageType="Article" datePublished={datePublished} dateModified={dateModified}>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+  <article>
+    <header class="relative isolate overflow-hidden bg-stone-950 pt-24 text-white md:pt-28">
+      <img src="/forest-optimized.webp" alt="雨の日にも静かな時間が流れる伊豆大島の森" class="absolute inset-0 -z-20 h-full w-full object-cover" width="1170" height="1171" fetchpriority="high" />
+      <div class="absolute inset-0 -z-10 bg-gradient-to-r from-stone-950 via-stone-950/80 to-stone-900/45" aria-hidden="true"></div>
+      <div class="mx-auto max-w-5xl px-6 py-16 md:py-24">
+        <nav class="text-sm text-stone-300" aria-label="パンくずリスト">
+          <a href="/" class="hover:text-white">トップ</a><span class="mx-2">/</span><a href="/guide/" class="hover:text-white">伊豆大島旅行ガイド</a><span class="mx-2">/</span><span>雨の日観光</span>
+        </nav>
+        <p class="mt-10 text-xs font-bold tracking-[0.3em] text-orange-200 uppercase">Rainy Day in Izu Oshima</p>
+        <h1 class="mt-4 max-w-4xl font-serif text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">伊豆大島が雨でも、<br />旅をあきらめない。</h1>
+        <p class="mt-7 max-w-3xl text-base leading-8 text-stone-100 md:text-lg md:leading-9">島の旅では、天候も旅程の一部。三原山や海を無理に回るのではなく、屋内施設や温泉、食事、宿で過ごす時間へ切り替えると、雨の日にも違う伊豆大島が見えてきます。</p>
+      </div>
+    </header>
+
+    <section class="bg-white py-10 md:py-14" aria-label="記事の要点">
+      <div class="mx-auto max-w-4xl px-6">
+        <AnswerSummary items={summaryPoints} updated={dateModified} />
+      </div>
+    </section>
+
+    <section class="bg-white py-16 md:py-24" aria-labelledby="rain-plan-title">
+      <div class="mx-auto max-w-6xl px-6">
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">One Day Plan</p>
+          <h2 id="rain-plan-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">雨の日は、「予定を変える」を予定にする。</h2>
+          <p class="mt-5 leading-8 text-gray-600 md:text-lg md:leading-9">屋外の見どころを全部あきらめるのではなく、天候のよい日に回せるものは回して、雨の日に向く時間へ組み替えます。</p>
+        </div>
+
+        <div class="mt-14 space-y-6">
+          {plans.map((plan) => (
+            <article class="grid gap-6 rounded-3xl border border-gray-100 bg-stone-50 p-7 shadow-sm md:grid-cols-[170px_1fr] md:gap-10 md:p-10">
+              <div>
+                <span class="inline-flex rounded-full bg-green-900 px-4 py-2 text-sm font-bold text-white">{plan.label}</span>
+                <p class="mt-4 text-xs font-bold tracking-[0.2em] text-green-700 uppercase">{plan.kicker}</p>
+              </div>
+              <div>
+                <h3 class="font-serif text-2xl font-bold leading-snug text-gray-900 md:text-3xl">{plan.title}</h3>
+                <p class="mt-4 leading-8 text-gray-600 md:text-lg md:leading-9">{plan.text}</p>
+                <a href={plan.href} target={plan.href.startsWith('http') ? '_blank' : undefined} rel={plan.href.startsWith('http') ? 'noopener noreferrer' : undefined} class="mt-5 inline-flex items-center gap-2 font-bold text-green-800 underline decoration-green-200 underline-offset-4 hover:text-green-950">{plan.cta}<span aria-hidden="true">{plan.href.startsWith('http') ? '↗' : '→'}</span></a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-stone-50 py-20 md:py-28" aria-labelledby="weather-tips-title">
+      <div class="mx-auto max-w-6xl px-6">
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="text-xs font-bold tracking-[0.25em] text-orange-700 uppercase">Weather Tips</p>
+          <h2 id="weather-tips-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">雨の日の伊豆大島、3つの考え方。</h2>
+        </div>
+        <div class="mt-12 grid gap-5 md:grid-cols-3">
+          {tips.map((tip) => (
+            <article class="rounded-3xl border border-gray-100 bg-white p-7 shadow-sm">
+              <h3 class="font-serif text-xl font-bold leading-snug text-gray-900 md:text-2xl">{tip.title}</h3>
+              <p class="mt-4 leading-8 text-gray-600">{tip.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white py-20 md:py-28" aria-labelledby="villa-rain-title">
+      <div class="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16">
+        <img src="/sofa-salvia.webp" alt="雨の日にもゆっくり過ごせる大島ニュービラ サルビア棟のリビング" class="aspect-[4/3] w-full rounded-3xl object-cover shadow-sm" width="1108" height="832" loading="lazy" />
+        <div>
+          <p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">Stay Inside</p>
+          <h2 id="villa-rain-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">雨の日こそ、宿で過ごせる余白を。</h2>
+          <p class="mt-6 leading-8 text-gray-600 md:text-lg md:leading-9">観光から早めに戻って、食材を買って料理する。スマートTVを見たり、ボードゲームで遊んだり、旅の写真を見返したりする。ホテルの客室だけではなく、リビングやキッチンを使える一棟貸しなら、宿にいる時間も旅の一部にできます。</p>
+          <div class="mt-7 flex flex-wrap gap-4">
+            <a href="/guide/2nights-3days/" class="inline-flex items-center gap-2 font-bold text-green-800 underline decoration-green-200 underline-offset-4 hover:text-green-950">2泊3日のモデルコースを見る →</a>
+            <a href="/group-stay/" class="inline-flex items-center gap-2 font-bold text-green-800 underline decoration-green-200 underline-offset-4 hover:text-green-950">一棟貸しの過ごし方を見る →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-green-950 py-20 text-white md:py-28" aria-labelledby="official-info-title">
+      <div class="mx-auto max-w-5xl px-6 text-center">
+        <p class="text-xs font-bold tracking-[0.25em] text-green-200 uppercase">Check Before You Go</p>
+        <h2 id="official-info-title" class="mt-3 font-serif text-3xl font-bold md:text-4xl">営業情報と天候は、当日にもう一度確認。</h2>
+        <p class="mx-auto mt-6 max-w-3xl leading-8 text-green-50 md:text-lg md:leading-9">島内施設は臨時休館・営業時間変更になる場合があります。雨天時は風や交通状況も変わりやすいため、出発前に各施設と大島観光協会などの最新情報をご確認ください。</p>
+        <div class="mt-8 flex flex-wrap justify-center gap-4">
+          <a href="https://www.izu-oshima.or.jp/" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-12 items-center justify-center rounded-full border border-white/30 px-6 py-3 font-bold text-white transition-colors hover:bg-white hover:text-green-950">大島観光協会を見る ↗</a>
+          <a href="https://izuoshima-geonous.org/" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-12 items-center justify-center rounded-full border border-white/30 px-6 py-3 font-bold text-white transition-colors hover:bg-white hover:text-green-950">ジオノスを見る ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white py-20 md:py-28" aria-labelledby="rain-faq-title">
+      <div class="mx-auto max-w-4xl px-6">
+        <div class="text-center">
+          <p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">FAQ</p>
+          <h2 id="rain-faq-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">伊豆大島の雨の日、よくある質問</h2>
+        </div>
+        <div class="mt-10 space-y-3">
+          {faqs.map((faq) => (
+            <details class="group rounded-2xl border border-gray-200 bg-white px-6 py-5 shadow-sm">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-5 text-lg font-bold leading-8 text-gray-900 [&::-webkit-details-marker]:hidden"><span>{faq.question}</span><span class="text-2xl text-green-700 transition-transform group-open:rotate-45" aria-hidden="true">＋</span></summary>
+              <p class="mt-4 border-t border-gray-100 pt-5 leading-8 text-gray-700 md:text-lg md:leading-9">{faq.answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="relative overflow-hidden bg-stone-950 py-24 text-white md:py-32" aria-labelledby="rain-booking-title">
+      <img src="/day-salvia.webp" alt="" class="absolute inset-0 h-full w-full object-cover opacity-25" width="1200" height="800" loading="lazy" />
+      <div class="relative mx-auto max-w-4xl px-6 text-center">
+        <p class="text-xs font-bold tracking-[0.25em] text-orange-200 uppercase">Stay in Izu Oshima</p>
+        <h2 id="rain-booking-title" class="mt-3 font-serif text-3xl font-bold leading-tight md:text-5xl">天候が変わっても、<br class="sm:hidden" />自分たちらしく過ごせる宿へ。</h2>
+        <p class="mx-auto mt-6 max-w-2xl leading-8 text-stone-100 md:text-lg md:leading-9">旅の日程が決まったら、大島ニュービラの空室と料金をご確認ください。</p>
+        <a href="https://www.airbnb.jp/rooms/1602063410123886296?guests=2&adults=2&s=67&unique_share_id=a393ba49-61eb-4d8e-a4c9-95935b649d65" data-booking-location="guide_rainy_day_bottom" target="_blank" rel="noopener noreferrer" class="mt-9 inline-flex min-h-14 items-center justify-center rounded-full bg-orange-600 px-9 py-4 text-base font-bold text-white shadow-lg transition-all hover:-translate-y-0.5 hover:bg-orange-500 md:text-lg">空室・料金を見る<span class="ml-2" aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </article>
+</Layout>

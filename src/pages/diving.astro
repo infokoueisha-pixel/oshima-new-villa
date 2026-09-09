@@ -1,8 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import AnswerSummary from '../components/AnswerSummary.astro';
 
 const pageTitle = '伊豆大島のダイビング旅行・宿泊｜一棟貸しの大島ニュービラ';
 const pageDescription = '伊豆大島でダイビング旅行の宿をお探しの方へ。大島ニュービラは最大6名の一棟貸し。キッチン・BBQ・無料駐車場を備え、潜ったあとの時間も仲間だけでゆっくり過ごせます。';
+const datePublished = '2026-08-30';
+const dateModified = '2026-09-09';
+const summaryPoints = [
+  '大島ニュービラは、伊豆大島でダイビングを楽しむ方の宿泊拠点として利用できますが、ダイビングサービス自体は提供していません。',
+  '最大6名の一棟貸しで、キッチン・BBQ・駐車場を使いながら仲間だけのペースで滞在できます。',
+  'ポイントの潜水条件やローカルルール、ショップ情報は大島ダイビング連絡協議会や利用するショップの最新情報を確認してください。',
+];
 
 const stayPoints = [
   {
@@ -108,7 +116,7 @@ const structuredData = {
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
+<Layout title={pageTitle} description={pageDescription} datePublished={datePublished} dateModified={dateModified}>
   <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
   <!-- Hero -->
@@ -167,6 +175,12 @@ const structuredData = {
           ※ ダイビングサービスの提供・予約仲介、器材専用の洗い場・乾燥設備は行っていません。
         </p>
       </aside>
+    </div>
+  </section>
+
+  <section class="bg-white py-10 md:py-14" aria-label="ダイビング旅行の要点">
+    <div class="mx-auto max-w-4xl px-6">
+      <AnswerSummary title="ダイビング旅行で知っておきたいこと" items={summaryPoints} updated={dateModified} />
     </div>
   </section>
 
