@@ -1,0 +1,74 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AnswerSummary from '../../components/AnswerSummary.astro';
+
+const pageTitle = '伊豆大島の温泉ガイド｜御神火温泉・浜の湯と宿泊の組み合わせ方';
+const pageDescription = '伊豆大島の温泉を旅行者向けに整理。愛らんどセンター御神火温泉と元町浜の湯の違い、営業時間・水着・アクセス、2泊3日旅行への組み込み方を紹介します。';
+const datePublished = '2026-09-10';
+const dateModified = '2026-09-10';
+const summaryPoints = [
+  '元町エリアで利用しやすい公共温泉として、屋内型の「愛らんどセンター御神火温泉」と、海を望む露天の「元町浜の湯」があります。',
+  '浜の湯は男女混浴の露天温泉で水着着用が必要です。御神火温泉は入浴施設として天候の影響を受けにくく、雨の日の予定にも組み込みやすい施設です。',
+  '大島ニュービラ自体は温泉宿ではありません。宿では一棟貸しの時間を楽しみ、島内の温泉は観光として外出して利用する組み合わせがおすすめです。',
+];
+
+const baths = [
+  {
+    title: '愛らんどセンター御神火温泉',
+    kicker: 'Indoor Hot Spring',
+    image: '/mihara-mountain-view.webp',
+    alt: '火山島・伊豆大島の三原山の景色',
+    points: ['元町港から徒歩約5分', '夜行便到着日は6:30から、その他の日は9:00から21:00まで（2026年9月確認時）', '毎週木曜日・第2水曜日が基本休館日。2・3・8月は変則あり', '大人710円（2026年9月確認時）'],
+    note: '到着日・雨の日・観光後に利用しやすい屋内型の温泉施設です。営業日や料金は変更される場合があるため公式情報をご確認ください。',
+    href: 'https://www.town.oshima.tokyo.jp/soshiki/kankou/gojinka.html',
+  },
+  {
+    title: '大島温泉 元町浜の湯',
+    kicker: 'Open-air Hot Spring',
+    image: '/sunset-ocean-view.webp',
+    alt: '伊豆大島の海に沈む夕日',
+    points: ['元町港から徒歩約3分', '13:00〜19:00、7・8月は11:00〜19:00（大島町公式案内）', '男女混浴のため水着着用が必要', '内湯はなく、男女別更衣室にシャワーあり'],
+    note: '海と空を感じながら入る露天温泉。天候で休業・時間短縮になる場合があるため、その日の営業状況を確認してください。',
+    href: 'https://www.town.oshima.tokyo.jp/soshiki/kankou/hamanoyu.html',
+  },
+];
+
+const ways = [
+  { title: '到着日の温泉', text: '船で到着した日は観光を詰め込まず、元町エリアで食事や買い物と温泉を組み合わせると、島時間へゆっくり切り替えられます。' },
+  { title: '雨の日の温泉', text: '屋外観光が難しい日は、ジオノスなどの屋内施設と御神火温泉を組み合わせると、天候に左右されにくい一日をつくれます。' },
+  { title: '最終日の温泉', text: '出帆港が元町港の日は、出航時刻と荷物管理に余裕があれば港周辺の温泉を組み込む選択肢があります。乗船手続き時間を優先してください。' },
+];
+
+const faqs = [
+  { question: '大島ニュービラに温泉はありますか？', answer: 'いいえ。大島ニュービラは温泉宿ではありません。サルビア棟には浴室がありますが、温泉ではありません。伊豆大島の温泉を楽しみたい場合は、御神火温泉や浜の湯など島内施設へ外出して利用してください。' },
+  { question: '浜の湯は水着が必要ですか？', answer: 'はい。大島町公式案内では、浜の湯は男女混浴のため水着着用が必要とされています。内湯はなく、更衣室にはシャワーがあります。' },
+  { question: '御神火温泉と浜の湯はどちらがおすすめですか？', answer: '天候の影響を受けにくく入浴設備を重視するなら御神火温泉、海を眺める露天の体験を重視するなら浜の湯が候補です。営業時間・休館・天候を確認して選んでください。' },
+  { question: '両方の温泉を利用できる共通券はありますか？', answer: '大島町公式案内では、購入日から3日間有効で御神火温泉と浜の湯に利用できる3日間パスポートが案内されています。料金・販売条件は最新の公式情報をご確認ください。' },
+];
+
+const structuredData = { '@context': 'https://schema.org', '@graph': [
+  { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '大島ニュービラ', item: 'https://oshima-new-villa.com/' },
+    { '@type': 'ListItem', position: 2, name: '伊豆大島旅行ガイド', item: 'https://oshima-new-villa.com/guide/' },
+    { '@type': 'ListItem', position: 3, name: '伊豆大島の温泉ガイド', item: 'https://oshima-new-villa.com/guide/onsen/' },
+  ]},
+  { '@type': 'FAQPage', mainEntity: faqs.map((faq) => ({ '@type': 'Question', name: faq.question, acceptedAnswer: { '@type': 'Answer', text: faq.answer } })) },
+]};
+---
+
+<Layout title={pageTitle} description={pageDescription} pageType="Article" datePublished={datePublished} dateModified={dateModified}>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <article>
+    <header class="bg-stone-50 pt-28 md:pt-32"><div class="mx-auto max-w-5xl px-6 py-14 md:py-20"><nav class="text-sm text-gray-500" aria-label="パンくずリスト"><a href="/" class="hover:text-green-800">トップ</a><span class="mx-2">/</span><a href="/guide/" class="hover:text-green-800">伊豆大島旅行ガイド</a><span class="mx-2">/</span><span>温泉</span></nav><p class="mt-10 text-xs font-bold tracking-[0.3em] text-orange-700 uppercase">Hot Springs in Izu Oshima</p><h1 class="mt-4 max-w-4xl font-serif text-4xl font-bold leading-tight text-gray-900 sm:text-5xl md:text-6xl">伊豆大島の温泉。<br />宿とは別に、島の体験として楽しむ。</h1><p class="mt-7 max-w-3xl text-base leading-8 text-gray-600 md:text-lg md:leading-9">火山島・伊豆大島には、元町エリアで利用しやすい公共温泉があります。屋内型の御神火温泉と、海を望む露天の浜の湯。違いを知っておくと、晴れの日・雨の日・到着日それぞれに組み込みやすくなります。</p></div><div class="mx-auto max-w-6xl px-6 pb-16 md:pb-20"><img src="/sunset-shore-panorama.webp" alt="伊豆大島の海岸と夕景" class="aspect-[16/8] w-full rounded-3xl object-cover shadow-sm" width="2000" height="1000" fetchpriority="high" /></div></header>
+
+    <section class="bg-white py-10 md:py-14" aria-label="記事の要点"><div class="mx-auto max-w-4xl px-6"><AnswerSummary items={summaryPoints} updated={dateModified} /></div></section>
+
+    <section class="bg-white py-20 md:py-28" aria-labelledby="onsen-compare-title"><div class="mx-auto max-w-7xl px-6"><div class="mx-auto max-w-3xl text-center"><p class="text-xs font-bold tracking-[0.25em] text-orange-700 uppercase">Two Public Hot Springs</p><h2 id="onsen-compare-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">元町エリアで知っておきたい2つの温泉。</h2></div><div class="mt-12 grid gap-7 lg:grid-cols-2">{baths.map((bath) => (<article class="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm"><img src={bath.image} alt={bath.alt} class="aspect-[16/8] w-full object-cover" width="1200" height="600" loading="lazy" /><div class="p-7 md:p-9"><p class="text-xs font-bold tracking-[0.22em] text-orange-700 uppercase">{bath.kicker}</p><h3 class="mt-2 font-serif text-3xl font-bold text-gray-900">{bath.title}</h3><ul class="mt-6 space-y-3 text-sm leading-7 text-gray-600">{bath.points.map((point) => (<li class="flex gap-3"><span class="text-green-700" aria-hidden="true">✓</span><span>{point}</span></li>))}</ul><p class="mt-6 rounded-2xl bg-stone-50 p-5 text-sm leading-7 text-gray-600">{bath.note}</p><a href={bath.href} target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex font-bold text-green-800 underline decoration-green-200 underline-offset-4 hover:text-green-950">大島町公式情報を見る ↗</a></div></article>))}</div></div></section>
+
+    <section class="bg-green-950 py-20 text-white md:py-28" aria-labelledby="onsen-trip-title"><div class="mx-auto max-w-6xl px-6"><div class="mx-auto max-w-3xl text-center"><p class="text-xs font-bold tracking-[0.25em] text-green-200 uppercase">Add to Your Itinerary</p><h2 id="onsen-trip-title" class="mt-3 font-serif text-3xl font-bold md:text-4xl">温泉を旅程に入れる3つのタイミング。</h2></div><div class="mt-12 grid gap-5 md:grid-cols-3">{ways.map((item) => (<article class="rounded-3xl border border-white/10 bg-white/5 p-7"><h3 class="font-serif text-2xl font-bold">{item.title}</h3><p class="mt-4 leading-8 text-green-50">{item.text}</p></article>))}</div><div class="mt-9 text-center"><a href="/guide/rainy-day/" class="inline-flex rounded-full border border-white/30 px-6 py-3 text-sm font-bold hover:bg-white hover:text-green-950">雨の日の過ごし方を見る →</a></div></div></section>
+
+    <section class="bg-stone-50 py-20 md:py-28" aria-labelledby="villa-onsen-title"><div class="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16"><img src="/bath_salvia.jpg" alt="大島ニュービラ サルビア棟の浴室" class="aspect-[4/3] w-full rounded-3xl object-cover shadow-sm" width="1200" height="900" loading="lazy" /><div><p class="text-xs font-bold tracking-[0.25em] text-orange-700 uppercase">Stay + Hot Spring</p><h2 id="villa-onsen-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">ニュービラは温泉宿ではありません。</h2><p class="mt-6 leading-8 text-gray-600 md:text-lg md:leading-9">大島ニュービラの浴室は、宿でゆっくり過ごすための通常の浴室です。温泉を楽しみたい日は島内の温泉へ出かけ、宿へ戻ったら一棟貸しのリビングやキッチンで自分たちの時間を過ごす、という組み合わせになります。</p><p class="mt-4 leading-8 text-gray-600">「宿に温泉がある」ことを期待される方には合いません。一方、温泉施設・食事・観光を自分たちで組み合わせたい旅には、一棟貸しの自由さがあります。</p><div class="mt-7 flex flex-wrap gap-4"><a href="/guide/2nights-3days/" class="font-bold text-green-800 underline decoration-green-200 underline-offset-4">2泊3日モデルコースを見る →</a><a href="/guide/seasons/" class="font-bold text-green-800 underline decoration-green-200 underline-offset-4">季節別の旅を見る →</a></div></div></div></section>
+
+    <section class="bg-white py-20 md:py-28" aria-labelledby="onsen-faq-title"><div class="mx-auto max-w-4xl px-6"><div class="text-center"><p class="text-xs font-bold tracking-[0.25em] text-orange-700 uppercase">FAQ</p><h2 id="onsen-faq-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">伊豆大島の温泉でよくある質問</h2></div><div class="mt-10 space-y-3">{faqs.map((faq) => (<details class="group rounded-2xl border border-gray-200 bg-white px-6 py-5 shadow-sm"><summary class="flex cursor-pointer list-none items-center justify-between gap-5 text-lg font-bold leading-8 text-gray-900 [&::-webkit-details-marker]:hidden"><span>{faq.question}</span><span class="text-2xl text-green-700 transition-transform group-open:rotate-45" aria-hidden="true">＋</span></summary><p class="mt-4 border-t border-gray-100 pt-5 leading-8 text-gray-700">{faq.answer}</p></details>))}</div></div></section>
+  </article>
+</Layout>

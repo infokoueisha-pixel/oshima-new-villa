@@ -1,8 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 
-const pageTitle = '伊豆大島旅行ガイド｜宿選び・モデルコース・ダイビング｜大島ニュービラ';
-const pageDescription = '伊豆大島旅行を計画する方へ。宿の選び方、2泊3日の過ごし方、雨の日観光、ダイビング旅行、グループ旅行など、滞在前に知っておきたい情報を大島ニュービラがまとめています。';
+const pageTitle = '伊豆大島旅行ガイド｜交通・宿・2泊3日・温泉・季節｜大島ニュービラ';
+const pageDescription = '伊豆大島旅行を計画する方へ。宿の選び方、交通、2泊3日、温泉、季節別の楽しみ方、雨の日、グループ旅行、ダイビングまで、滞在前に知っておきたい実用情報を大島ニュービラがまとめています。';
 
 const guides = [
   {
@@ -15,6 +15,15 @@ const guides = [
     tag: '宿・宿泊',
   },
   {
+    href: '/guide/transport/',
+    image: '/sea-of-izu-oshima.webp',
+    alt: '伊豆大島を囲む海',
+    kicker: 'Transport',
+    title: '伊豆大島の交通・アクセス',
+    description: '船・飛行機、元町港と岡田港、レンタカー・バス・タクシー。初めてでも迷いにくい交通の考え方を整理します。',
+    tag: '交通',
+  },
+  {
     href: '/guide/2nights-3days/',
     image: '/mihara-island-view.webp',
     alt: '伊豆大島の三原山から望む景色',
@@ -22,6 +31,24 @@ const guides = [
     title: '伊豆大島2泊3日モデルコース',
     description: '三原山・裏砂漠・波浮港などを、船や天候に合わせて無理なく巡る2泊3日の旅程を紹介します。',
     tag: 'モデルコース',
+  },
+  {
+    href: '/guide/seasons/',
+    image: '/camellia-pink-cluster.webp',
+    alt: '伊豆大島の椿',
+    kicker: 'Four Seasons',
+    title: '伊豆大島はいつ行く？季節別ガイド',
+    description: '椿、海、火山景観、温泉。春夏秋冬で旅の主役がどう変わるかを整理し、自分に合う時期を考えます。',
+    tag: '季節',
+  },
+  {
+    href: '/guide/onsen/',
+    image: '/sunset-shore-panorama.webp',
+    alt: '伊豆大島の海岸と夕景',
+    kicker: 'Hot Springs',
+    title: '伊豆大島の温泉',
+    description: '御神火温泉と元町浜の湯の違い、利用時の注意、旅行日程への組み込み方を旅行者目線で紹介します。',
+    tag: '温泉',
   },
   {
     href: '/guide/rainy-day/',
@@ -33,6 +60,15 @@ const guides = [
     tag: '雨の日観光',
   },
   {
+    href: '/guide/group-trip/',
+    image: '/sofa-salvia.webp',
+    alt: '友人や家族で過ごせる大島ニュービラのリビング',
+    kicker: 'Group Trip',
+    title: '4〜6名のグループ旅行モデル',
+    description: '友人4名・家族5名・趣味仲間6名のモデルケースで、移動・食事・一棟貸しでの過ごし方を具体化します。',
+    tag: 'グループ旅行',
+  },
+  {
     href: '/diving/',
     image: '/sea-of-izu-oshima.webp',
     alt: '伊豆大島の海',
@@ -42,13 +78,13 @@ const guides = [
     tag: 'ダイビング',
   },
   {
-    href: '/group-stay/',
-    image: '/sofa-salvia.webp',
-    alt: '友人や家族で過ごせる大島ニュービラのリビング',
-    kicker: 'Group Stay',
-    title: '家族・友人で泊まる一棟貸し',
-    description: 'ホテルの複数室ではなく、同じリビングで旅の続きを。グループ旅行で一棟貸しを選ぶメリットを紹介します。',
-    tag: 'グループ旅行',
+    href: '/guide/after-diving/',
+    image: '/night-bbq.webp',
+    alt: 'ダイビング後の夜にも使える大島ニュービラのガゼボ庵',
+    kicker: 'After Diving',
+    title: 'ダイビング後の過ごし方',
+    description: '海から戻ってからの着替え・入浴・洗濯・食事・翌朝準備まで、アフターダイブの宿時間を具体的に整理します。',
+    tag: 'ダイビング後',
   },
 ];
 
@@ -77,7 +113,7 @@ const structuredData = {
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription} pageType="CollectionPage" dateModified="2026-09-09">
+<Layout title={pageTitle} description={pageDescription} pageType="CollectionPage" dateModified="2026-09-10">
   <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
   <section class="relative isolate overflow-hidden bg-stone-950 pt-24 text-white md:pt-28" aria-labelledby="guide-title">

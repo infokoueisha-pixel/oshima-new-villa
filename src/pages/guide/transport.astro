@@ -1,0 +1,124 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AnswerSummary from '../../components/AnswerSummary.astro';
+
+const pageTitle = '伊豆大島の交通・アクセス完全ガイド｜船・飛行機・島内移動の考え方';
+const pageDescription = '伊豆大島への船・飛行機、元町港と岡田港、島内のバス・レンタカー・タクシーを整理。大島ニュービラへの移動も含め、初めての伊豆大島旅行で迷いにくい交通の考え方を紹介します。';
+const datePublished = '2026-09-10';
+const dateModified = '2026-09-10';
+
+const summaryPoints = [
+  '伊豆大島の船は元町港・岡田港の2港を使い分け、往路と復路で港が異なる場合があります。利用港と運航状況は当日に東海汽船の公式情報で確認してください。',
+  '東京方面からは船に加え、新中央航空の調布―大島定期便もあります。旅程は「島までの交通」と「島内移動」を分けて考えると組みやすくなります。',
+  '島内を複数スポット巡るグループ旅行はレンタカー、時間に余裕のある旅は路線バス、到着・出発時の荷物移動はタクシーを組み合わせると動きやすくなります。',
+];
+
+const accessModes = [
+  {
+    icon: '🚢',
+    title: '船で行く',
+    kicker: 'Tokyo / Atami to Izu Oshima',
+    text: '東海汽船が東京・竹芝方面や熱海方面などから伊豆大島への船便を運航しています。便・季節でダイヤが変わるため、予約時と出発当日の両方で公式情報を確認してください。',
+    href: 'https://www.tokaikisen.co.jp/schedule/',
+    cta: '東海汽船の運航状況を見る',
+  },
+  {
+    icon: '✈️',
+    title: '飛行機で行く',
+    kicker: 'Chofu to Oshima',
+    text: '新中央航空が調布飛行場と大島空港を結ぶ定期便を運航しています。ダイヤ上の飛行時間はおおむね25分ですが、便数・時刻・運航状況は日程ごとに確認してください。',
+    href: 'https://central-air.co.jp/schedule-fee.html',
+    cta: '新中央航空の時刻表を見る',
+  },
+];
+
+const mobility = [
+  {
+    title: 'レンタカー',
+    fit: '三原山・島南部・買い出しなどを1日で組み合わせたい旅',
+    text: '島内の複数スポットを自分たちのペースで巡りたい場合に便利です。グループ旅行では人数と荷物量に合う車種を早めに確保すると安心です。',
+  },
+  {
+    title: '路線バス',
+    fit: '訪問先を絞り、時刻表に合わせてゆっくり巡る旅',
+    text: '大島バスが島内各所を結ぶ路線を運行しています。時刻表は季節で変わるため、旅行日程に対応する最新版を確認して行程を組みましょう。',
+  },
+  {
+    title: 'タクシー',
+    fit: '港・空港から宿までの移動、荷物が多い到着・出発日',
+    text: '公共交通の待ち時間を減らしたいときや、大きな荷物があるときに便利です。台数に限りがあるため、混雑期や早朝・夜間は事前確認をおすすめします。',
+  },
+];
+
+const faqs = [
+  { question: '伊豆大島の港は元町港と岡田港のどちらを使いますか？', answer: '当日の海上・港内状況などにより使い分けられます。往路と復路で異なる港になる場合もあります。必ず当日の東海汽船公式「本日の運航状況」で入出港地を確認してください。' },
+  { question: '伊豆大島ではレンタカーがないと観光できませんか？', answer: 'レンタカーが必須というわけではありません。路線バスやタクシーでも移動できます。ただし、三原山・島南部・買い出しなど複数の場所を短時間で巡りたい場合は車が便利です。' },
+  { question: '大島ニュービラの最寄りのバス停はどこですか？', answer: '最寄りのバス停は「大島高校前」で、施設までは徒歩約12分が目安です。荷物が多い場合や雨天時は、港・空港からタクシーやレンタカーを利用する方が移動しやすくなります。' },
+  { question: '飛行機でも伊豆大島へ行けますか？', answer: 'はい。新中央航空が調布飛行場と大島空港を結ぶ定期便を運航しています。便数・時刻・運航状況は日程により変わるため、公式サイトで最新情報を確認してください。' },
+];
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: '大島ニュービラ', item: 'https://oshima-new-villa.com/' },
+      { '@type': 'ListItem', position: 2, name: '伊豆大島旅行ガイド', item: 'https://oshima-new-villa.com/guide/' },
+      { '@type': 'ListItem', position: 3, name: '伊豆大島の交通・アクセス', item: 'https://oshima-new-villa.com/guide/transport/' },
+    ]},
+    { '@type': 'FAQPage', mainEntity: faqs.map((faq) => ({ '@type': 'Question', name: faq.question, acceptedAnswer: { '@type': 'Answer', text: faq.answer } })) },
+  ],
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} pageType="Article" datePublished={datePublished} dateModified={dateModified}>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <article>
+    <header class="bg-stone-50 pt-28 md:pt-32">
+      <div class="mx-auto max-w-5xl px-6 py-14 md:py-20">
+        <nav class="text-sm text-gray-500" aria-label="パンくずリスト"><a href="/" class="hover:text-green-800">トップ</a><span class="mx-2">/</span><a href="/guide/" class="hover:text-green-800">伊豆大島旅行ガイド</a><span class="mx-2">/</span><span>交通・アクセス</span></nav>
+        <p class="mt-10 text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Getting Around Izu Oshima</p>
+        <h1 class="mt-4 max-w-4xl font-serif text-4xl font-bold leading-tight text-gray-900 sm:text-5xl md:text-6xl">伊豆大島の交通。<br />「港が変わる島」を前提に旅を組む。</h1>
+        <p class="mt-7 max-w-3xl text-base leading-8 text-gray-600 md:text-lg md:leading-9">伊豆大島旅行で最初につまずきやすいのが交通です。船は元町港・岡田港を使い分け、島内移動も旅の人数や行き先で向き不向きがあります。初めてでも迷いにくいよう、島までのアクセスと島内交通を分けて整理します。</p>
+      </div>
+      <div class="mx-auto max-w-6xl px-6 pb-16 md:pb-20"><img src="/sea-of-izu-oshima.webp" alt="伊豆大島を囲む海" class="aspect-[16/8] w-full rounded-3xl object-cover shadow-sm" width="2000" height="1500" fetchpriority="high" /></div>
+    </header>
+
+    <section class="bg-white py-10 md:py-14" aria-label="記事の要点"><div class="mx-auto max-w-4xl px-6"><AnswerSummary items={summaryPoints} updated={dateModified} /></div></section>
+
+    <section class="bg-white py-20 md:py-28" aria-labelledby="to-island-title">
+      <div class="mx-auto max-w-6xl px-6">
+        <div class="mx-auto max-w-3xl text-center"><p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">To Izu Oshima</p><h2 id="to-island-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">まず、「島までどう行くか」。</h2><p class="mt-5 leading-8 text-gray-600 md:text-lg md:leading-9">船と飛行機では、出発地・所要時間・欠航時の考え方が異なります。旅行日ごとの最新ダイヤを公式サイトで確認してください。</p></div>
+        <div class="mt-12 grid gap-6 md:grid-cols-2">
+          {accessModes.map((mode) => (
+            <article class="rounded-3xl border border-stone-200 bg-stone-50 p-7 md:p-9">
+              <div class="text-4xl" aria-hidden="true">{mode.icon}</div><p class="mt-5 text-xs font-bold tracking-[0.22em] text-green-700 uppercase">{mode.kicker}</p><h3 class="mt-2 font-serif text-3xl font-bold text-gray-900">{mode.title}</h3><p class="mt-4 leading-8 text-gray-600">{mode.text}</p>
+              <a href={mode.href} target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex font-bold text-green-800 underline decoration-green-200 underline-offset-4 hover:text-green-950">{mode.cta} <span class="ml-1" aria-hidden="true">↗</span></a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-green-950 py-20 text-white md:py-28" aria-labelledby="two-ports-title">
+      <div class="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-16">
+        <div><p class="text-xs font-bold tracking-[0.25em] text-green-200 uppercase">Two Main Ports</p><h2 id="two-ports-title" class="mt-3 font-serif text-3xl font-bold leading-tight md:text-4xl">元町港か、岡田港か。<br />当日に確認する。</h2></div>
+        <div class="space-y-5 leading-8 text-green-50 md:text-lg md:leading-9"><p>伊豆大島の主要港は元町港と岡田港です。海上・港内状況などにより使われる港が変わり、往路と復路で入出港地が異なる場合もあります。</p><p>「予約した時点で港を固定する」のではなく、乗船日当日に東海汽船の運航状況を確認してから、レンタカー返却や最後の観光場所を決めるのが島旅の基本です。</p><a href="https://www.tokaikisen.co.jp/schedule/" target="_blank" rel="noopener noreferrer" class="inline-flex rounded-full border border-white/30 px-6 py-3 text-sm font-bold hover:bg-white hover:text-green-950">本日の運航状況を確認する ↗</a></div>
+      </div>
+    </section>
+
+    <section class="bg-stone-50 py-20 md:py-28" aria-labelledby="island-mobility-title">
+      <div class="mx-auto max-w-6xl px-6"><div class="mx-auto max-w-3xl text-center"><p class="text-xs font-bold tracking-[0.25em] text-orange-700 uppercase">On the Island</p><h2 id="island-mobility-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">島内移動は、旅のスタイルで選ぶ。</h2></div>
+        <div class="mt-12 grid gap-6 md:grid-cols-3">{mobility.map((item) => (<article class="rounded-3xl border border-stone-200 bg-white p-7 shadow-sm"><h3 class="font-serif text-2xl font-bold text-gray-900">{item.title}</h3><p class="mt-3 text-sm font-bold leading-6 text-green-800">向いている旅：{item.fit}</p><p class="mt-5 text-sm leading-7 text-gray-600">{item.text}</p></article>))}</div>
+        <div class="mt-10 rounded-3xl border border-green-200 bg-green-50 p-7 md:p-9"><h3 class="font-serif text-2xl font-bold text-gray-900">路線バスを使うなら、旅行日の時刻表を確認。</h3><p class="mt-4 leading-8 text-gray-600">大島バスは島内各所を結ぶ路線を運行しており、時刻表は季節によって更新されます。大型客船の早朝入港に合わせた接続バスが設定される時期もあります。</p><a href="https://www.oshima-bus.com/rosen-bus.html" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex font-bold text-green-800 underline decoration-green-200 underline-offset-4 hover:text-green-950">大島バスの最新時刻表を見る ↗</a></div>
+      </div>
+    </section>
+
+    <section class="bg-white py-20 md:py-28" aria-labelledby="villa-access-title">
+      <div class="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16"><div><p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">To Oshima New Villa</p><h2 id="villa-access-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">大島ニュービラまでの考え方。</h2><p class="mt-6 leading-8 text-gray-600 md:text-lg md:leading-9">大島ニュービラは元町エリアにあります。最寄りの「大島高校前」バス停から徒歩約12分が目安です。グループで荷物が多い場合、到着・出発日はレンタカーやタクシーを利用すると移動しやすくなります。</p><p class="mt-4 leading-8 text-gray-600">島内観光もする場合は、宿への移動だけでなく「翌日どこへ行くか」まで含めて交通手段を選ぶのがおすすめです。</p><div class="mt-6 flex flex-wrap gap-4"><a href="/guide/2nights-3days/" class="font-bold text-green-800 underline decoration-green-200 underline-offset-4">2泊3日モデルコースを見る →</a><a href="/guide/group-trip/" class="font-bold text-green-800 underline decoration-green-200 underline-offset-4">グループ旅行の組み方を見る →</a></div></div><img src="/main-optimized.webp" alt="森に囲まれた大島ニュービラ" class="aspect-[4/3] w-full rounded-3xl object-cover shadow-sm" width="1170" height="1171" loading="lazy" /></div>
+    </section>
+
+    <section class="bg-stone-50 py-16 md:py-20" aria-labelledby="transport-sources-title"><div class="mx-auto max-w-5xl px-6"><div class="rounded-3xl border border-stone-200 bg-white p-7 md:p-9"><p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">Official Sources</p><h2 id="transport-sources-title" class="mt-3 font-serif text-2xl font-bold text-gray-900 md:text-3xl">交通情報は、出発前に公式情報で再確認。</h2><ul class="mt-6 space-y-3 leading-7 text-gray-600"><li><a class="font-bold text-green-800 underline underline-offset-4" href="https://www.tokaikisen.co.jp/schedule/" target="_blank" rel="noopener noreferrer">東海汽船「本日の運航状況」↗</a></li><li><a class="font-bold text-green-800 underline underline-offset-4" href="https://www.oshima-bus.com/rosen-bus.html" target="_blank" rel="noopener noreferrer">大島バス「路線バス」↗</a></li><li><a class="font-bold text-green-800 underline underline-offset-4" href="https://central-air.co.jp/schedule-fee.html" target="_blank" rel="noopener noreferrer">新中央航空「時刻表・運賃」↗</a></li></ul><p class="mt-5 text-sm leading-7 text-gray-500">運航・ダイヤ・運賃・入出港地は変更されることがあります。本記事は2026年9月10日に公式情報を確認して更新しています。</p></div></div></section>
+
+    <section class="bg-white py-20 md:py-28" aria-labelledby="transport-faq-title"><div class="mx-auto max-w-4xl px-6"><div class="text-center"><p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">FAQ</p><h2 id="transport-faq-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">伊豆大島の交通でよくある質問</h2></div><div class="mt-10 space-y-3">{faqs.map((faq) => (<details class="group rounded-2xl border border-gray-200 bg-white px-6 py-5 shadow-sm"><summary class="flex cursor-pointer list-none items-center justify-between gap-5 text-lg font-bold leading-8 text-gray-900 [&::-webkit-details-marker]:hidden"><span>{faq.question}</span><span class="text-2xl text-green-700 transition-transform group-open:rotate-45" aria-hidden="true">＋</span></summary><p class="mt-4 border-t border-gray-100 pt-5 leading-8 text-gray-700">{faq.answer}</p></details>))}</div></div></section>
+  </article>
+</Layout>

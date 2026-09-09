@@ -1,0 +1,62 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AnswerSummary from '../../components/AnswerSummary.astro';
+
+const pageTitle = '伊豆大島でダイビングした後の過ごし方｜宿に戻ってからの夜を整える';
+const pageDescription = '伊豆大島でダイビングを楽しんだ後、宿へ戻ってからどう過ごす？着替え、入浴、洗濯、買い出し、BBQ、翌日の準備まで、一棟貸しでのアフターダイブ時間を具体的に紹介します。';
+const datePublished = '2026-09-10';
+const dateModified = '2026-09-10';
+const summaryPoints = [
+  'ダイビング後は「器材の処理」と「人の回復」を分けて考え、器材は利用ショップの案内に従い、宿では着替え・入浴・食事・休息を整えるのが基本です。',
+  '大島ニュービラにはダイビング器材専用の洗い場・干し場はありません。共用洗濯機・乾燥機にもウェットスーツや器材を入れないでください。',
+  '一棟貸しでは夕食時間を固定されないため、帰着時間や翌日の集合時間に合わせて、自炊・BBQ・早めの就寝を柔軟に選べます。',
+];
+
+const flow = [
+  { time: '15:30–16:30', title: 'ショップで器材の指示を確認', text: '器材洗浄・乾燥・保管は、利用したダイビングサービスの案内を優先します。宿に専用設備がある前提で持ち帰らないよう、予約時に確認しておくと安心です。' },
+  { time: '16:30–17:30', title: '宿へ戻り、まず人が整う', text: '着替え、入浴、休憩を先に。濡れた衣類と通常の洗濯物を分け、体を冷やさないようにします。共用洗濯機・乾燥機は衣類向けで、器材・ウェットスーツには使用できません。' },
+  { time: '17:30–19:00', title: '夕食をその日の疲れで決める', text: '元気があればBBQや自炊、疲れていれば買ってきたものを宿でゆっくり。海況や帰着時間で予定が変わる旅だからこそ、夕食を一択にしない方が動きやすくなります。' },
+  { time: '19:00–21:00', title: '写真を見返し、翌日の確認', text: 'リビングで写真を見返しながら、翌日の集合時間・海況・送迎条件を確認。早朝ダイブなら夜更かしせず、朝の準備まで済ませて休みます。' },
+];
+
+const prep = [
+  { title: '買い出しは「潜る前」に済ませる選択肢も', text: '帰着後に店へ寄る前提だと、海況やダイビング終了時刻で慌ただしくなることがあります。朝や前日に飲み物・朝食・簡単な夕食を確保しておくと安心です。' },
+  { title: '濡れ物と着替えを分ける', text: 'ショップから宿へ移動するバッグと、乾いた衣類・宿用の荷物を分けておくと、車内や室内で荷物が混ざりにくくなります。' },
+  { title: '翌朝の出発時刻を夜に共有', text: 'グループ全員が同じ時間に起きる必要はありません。朝食・身支度・車への荷物積み込みを逆算し、集合時刻だけ共有します。' },
+];
+
+const faqs = [
+  { question: '大島ニュービラでダイビング器材を洗えますか？', answer: '現在、ダイビング器材・ウェットスーツ専用の洗い場や乾燥スペースはありません。器材の洗浄・保管方法は利用するダイビングサービスへ確認してください。' },
+  { question: 'ウェットスーツを洗濯機や乾燥機に入れてもいいですか？', answer: '入れないでください。同じ敷地内の共用洗濯機・ガス乾燥機は衣類用です。ダイビング器材やウェットスーツには使用できません。' },
+  { question: 'ダイビング後にBBQできますか？', answer: 'サルビア棟では屋外のガゼボ庵を利用したBBQが可能です。利用方法・必要な持ち物・炭などは最新の宿泊案内を確認してください。海から戻る時間と体力に合わせ、自炊や簡単な夕食へ変更するのもおすすめです。' },
+  { question: 'ダイビングショップの送迎はありますか？', answer: '送迎条件はショップごとに異なります。予約時に宿泊先が大島ニュービラであることを伝え、送迎可否と集合場所を直接確認してください。' },
+];
+
+const structuredData = { '@context': 'https://schema.org', '@graph': [
+  { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '大島ニュービラ', item: 'https://oshima-new-villa.com/' },
+    { '@type': 'ListItem', position: 2, name: '伊豆大島旅行ガイド', item: 'https://oshima-new-villa.com/guide/' },
+    { '@type': 'ListItem', position: 3, name: 'ダイビング後の過ごし方', item: 'https://oshima-new-villa.com/guide/after-diving/' },
+  ]},
+  { '@type': 'FAQPage', mainEntity: faqs.map((faq) => ({ '@type': 'Question', name: faq.question, acceptedAnswer: { '@type': 'Answer', text: faq.answer } })) },
+]};
+---
+
+<Layout title={pageTitle} description={pageDescription} pageType="Article" datePublished={datePublished} dateModified={dateModified}>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <article>
+    <header class="relative isolate overflow-hidden bg-slate-950 pt-28 text-white md:pt-32"><img src="/sea-of-izu-oshima.webp" alt="伊豆大島の海" class="absolute inset-0 -z-20 h-full w-full object-cover" width="2000" height="1500" fetchpriority="high" /><div class="absolute inset-0 -z-10 bg-gradient-to-r from-slate-950 via-slate-950/85 to-slate-900/35" aria-hidden="true"></div><div class="mx-auto max-w-5xl px-6 py-14 md:py-20"><nav class="text-sm text-slate-300" aria-label="パンくずリスト"><a href="/" class="hover:text-white">トップ</a><span class="mx-2">/</span><a href="/guide/" class="hover:text-white">伊豆大島旅行ガイド</a><span class="mx-2">/</span><span>ダイビング後の過ごし方</span></nav><p class="mt-10 text-xs font-bold tracking-[0.3em] text-cyan-300 uppercase">After Diving</p><h1 class="mt-4 max-w-4xl font-serif text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">潜ったあと、<br />宿へ戻ってからの夜を整える。</h1><p class="mt-7 max-w-3xl text-base leading-8 text-slate-100 md:text-lg md:leading-9">ダイビング旅行は、海から上がったら終わりではありません。濡れ物、着替え、夕食、翌朝の集合。アフターダイブの流れを先に決めておくと、仲間全員がゆっくり休めます。</p></div></header>
+
+    <section class="bg-white py-10 md:py-14" aria-label="記事の要点"><div class="mx-auto max-w-4xl px-6"><AnswerSummary title="ダイビング後の宿時間で知っておきたいこと" items={summaryPoints} updated={dateModified} /></div></section>
+
+    <section class="bg-white py-20 md:py-28" aria-labelledby="after-flow-title"><div class="mx-auto max-w-6xl px-6"><div class="mx-auto max-w-3xl text-center"><p class="text-xs font-bold tracking-[0.25em] text-cyan-700 uppercase">Evening Flow</p><h2 id="after-flow-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">海から戻ったあとの4ステップ。</h2><p class="mt-5 leading-8 text-gray-600">時間は一例です。ショップの終了時刻・送迎・海況に合わせて前後させてください。</p></div><ol class="mt-12 grid gap-5 md:grid-cols-2">{flow.map((item, index) => (<li class="relative rounded-3xl border border-sky-100 bg-sky-50/50 p-7 md:p-8"><span class="absolute right-6 top-5 font-serif text-5xl font-bold text-cyan-100" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><p class="text-xs font-bold tracking-[0.2em] text-cyan-700 uppercase">{item.time}</p><h3 class="mt-3 pr-12 font-serif text-2xl font-bold text-gray-900">{item.title}</h3><p class="mt-4 text-sm leading-7 text-gray-600">{item.text}</p></li>))}</ol></div></section>
+
+    <section class="bg-slate-950 py-20 text-white md:py-28" aria-labelledby="after-villa-title"><div class="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:gap-16"><div><p class="text-xs font-bold tracking-[0.25em] text-cyan-300 uppercase">Private Villa Night</p><h2 id="after-villa-title" class="mt-3 font-serif text-3xl font-bold md:text-4xl">「何時に夕食」が決まっていないのが、一棟貸しの強み。</h2><p class="mt-6 leading-8 text-slate-100 md:text-lg">海況によって終わる時間がずれたり、疲れ具合が日によって違ったりするダイビング旅行では、夕食時間を自分たちで動かせることが便利です。</p><p class="mt-4 leading-8 text-slate-200">BBQを予定していても、疲れていたらキッチンで簡単に済ませる。翌朝が早ければ早めに寝る。宿泊そのものをイベント化しすぎず、海を中心に調整できます。</p><a href="/diving/" class="mt-7 inline-flex rounded-full border border-white/30 px-6 py-3 text-sm font-bold hover:bg-white hover:text-slate-950">ダイビング旅行・宿泊ページを見る →</a></div><div class="grid grid-cols-2 gap-4"><img src="/sofa-salvia.webp" alt="ダイビング後に休めるサルビア棟のリビング" class="col-span-2 aspect-[16/9] w-full rounded-3xl object-cover" width="1108" height="832" loading="lazy" /><img src="/day-bbq.webp" alt="ダイビング後の夕食に使えるガゼボ庵" class="aspect-square w-full rounded-3xl object-cover" width="1376" height="2000" loading="lazy" /><img src="/night-bbq.webp" alt="夜のガゼボ庵" class="aspect-square w-full rounded-3xl object-cover" width="1500" height="2000" loading="lazy" /></div></div></section>
+
+    <section class="bg-stone-50 py-20 md:py-28" aria-labelledby="after-prep-title"><div class="mx-auto max-w-6xl px-6"><div class="mx-auto max-w-3xl text-center"><p class="text-xs font-bold tracking-[0.25em] text-orange-700 uppercase">Prepare Before Diving</p><h2 id="after-prep-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">潜る前にやっておくと楽なこと。</h2></div><div class="mt-12 grid gap-6 md:grid-cols-3">{prep.map((item) => (<article class="rounded-3xl border border-stone-200 bg-white p-7 shadow-sm"><h3 class="font-serif text-2xl font-bold text-gray-900">{item.title}</h3><p class="mt-4 text-sm leading-7 text-gray-600">{item.text}</p></article>))}</div></div></section>
+
+    <section class="bg-white py-16 md:py-20" aria-labelledby="diving-source-title"><div class="mx-auto max-w-5xl px-6"><div class="rounded-3xl border border-cyan-200 bg-cyan-50/60 p-7 md:p-9"><p class="text-xs font-bold tracking-[0.25em] text-cyan-800 uppercase">Safety & Local Rules</p><h2 id="diving-source-title" class="mt-3 font-serif text-2xl font-bold text-gray-900 md:text-3xl">海のルールは専門サービスの最新案内を優先。</h2><p class="mt-5 leading-8 text-gray-600">ポイントの潜水条件、海況、器材の扱いは宿泊施設では判断できません。利用するダイビングサービスの指示と、大島ダイビング連絡協議会が公開するローカルルールをご確認ください。</p><a href="https://www.oshima-diving.org/" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex font-bold text-cyan-900 underline decoration-cyan-300 underline-offset-4">大島ダイビング連絡協議会 公式サイト ↗</a></div></div></section>
+
+    <section class="bg-white py-20 md:py-28" aria-labelledby="after-faq-title"><div class="mx-auto max-w-4xl px-6"><div class="text-center"><p class="text-xs font-bold tracking-[0.25em] text-cyan-700 uppercase">FAQ</p><h2 id="after-faq-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">ダイビング後の宿泊でよくある質問</h2></div><div class="mt-10 space-y-3">{faqs.map((faq) => (<details class="group rounded-2xl border border-gray-200 bg-white px-6 py-5 shadow-sm"><summary class="flex cursor-pointer list-none items-center justify-between gap-5 text-lg font-bold leading-8 text-gray-900 [&::-webkit-details-marker]:hidden"><span>{faq.question}</span><span class="text-2xl text-cyan-700 transition-transform group-open:rotate-45" aria-hidden="true">＋</span></summary><p class="mt-4 border-t border-gray-100 pt-5 leading-8 text-gray-700">{faq.answer}</p></details>))}</div></div></section>
+  </article>
+</Layout>

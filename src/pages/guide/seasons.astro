@@ -1,0 +1,92 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AnswerSummary from '../../components/AnswerSummary.astro';
+
+const pageTitle = '伊豆大島はいつ行く？季節別旅行ガイド｜春夏秋冬の楽しみ方';
+const pageDescription = '伊豆大島旅行は何月がおすすめ？春・夏・秋・冬それぞれの楽しみ方を、椿、海、火山景観、温泉、イベント、天候への備えから整理。季節別の2泊3日モデルも紹介します。';
+const datePublished = '2026-09-10';
+const dateModified = '2026-09-10';
+const summaryPoints = [
+  '伊豆大島に「絶対のベストシーズン」はなく、椿・海・火山歩き・イベントなど、何をしたいかでおすすめ時期が変わります。',
+  '夏は海のシーズン、秋は歩く旅や島内イベントを組みやすく、冬〜早春は椿まつりが代表的です。春は火山景観と新緑をゆっくり巡る旅に向きます。',
+  '島では季節を問わず船の運航・入出港地・山の天候が旅程に影響します。季節別の魅力と同時に、予定を動かせる余白を持つことが大切です。',
+];
+
+const seasons = [
+  {
+    name: '冬〜早春',
+    months: '1〜3月',
+    kicker: 'Camellia Season',
+    image: '/camellia-pink-cluster.webp',
+    alt: '伊豆大島を彩る椿の花',
+    color: 'rose',
+    highlights: ['椿まつりを中心に島を巡る', '温泉と組み合わせてゆっくり過ごす', '風や海況を見ながら屋外予定を調整'],
+    text: '伊豆大島を代表する椿の季節。大島町の令和8年度イベントカレンダーでは、第72回伊豆大島椿まつりが2027年1月31日〜3月21日に予定されています。日程は変更される場合があるため公式情報を確認してください。',
+  },
+  {
+    name: '春',
+    months: '4〜6月',
+    kicker: 'Green & Volcano',
+    image: '/mihara-island-view.webp',
+    alt: '春の伊豆大島で楽しみたい三原山周辺の景色',
+    color: 'green',
+    highlights: ['三原山・裏砂漠など火山景観を旅の主役に', '2泊3日で天候のよい日に屋外観光', '温泉・港町と組み合わせる'],
+    text: '火山景観を中心に、島を歩く旅を組みやすい時期。山頂部と海辺では体感が異なるため、重ね着できる服装と天候確認を前提にすると安心です。',
+  },
+  {
+    name: '夏',
+    months: '7〜8月',
+    kicker: 'Sea & Summer',
+    image: '/sea-of-izu-oshima.webp',
+    alt: '夏に楽しみたい伊豆大島の海',
+    color: 'cyan',
+    highlights: ['海水浴・ダイビングなど海の予定を中心に', '日中の屋外予定と休憩時間を分ける', '繁忙期は船・宿・レンタカーを早めに確保'],
+    text: '海のアクティビティを目的にしやすい季節です。遊泳場の開設期間は年度ごとに大島町から案内されます。海況や高温を考え、観光を詰め込みすぎない旅程がおすすめです。',
+  },
+  {
+    name: '秋',
+    months: '9〜11月',
+    kicker: 'Walk & Explore',
+    image: '/urasabaku-sea-view.webp',
+    alt: '秋の旅行で巡りたい裏砂漠と海の景色',
+    color: 'orange',
+    highlights: ['火山景観や島内ドライブをゆっくり楽しむ', '釣り・ロゲイニング・スポーツイベントなどを目的に', '日没時刻を考えて屋外観光を組む'],
+    text: '歩く旅や島内ドライブを中心に組みやすく、2026年度の大島町イベントカレンダーでも秋には釣り・ロゲイニング・マラソン等の行事が予定されています。開催有無は公式情報を確認してください。',
+  },
+];
+
+const faqs = [
+  { question: '伊豆大島旅行のベストシーズンはいつですか？', answer: '目的によって異なります。椿なら冬〜早春、海水浴やマリンアクティビティなら夏、火山景観を歩く旅なら春・秋を候補にできます。ダイビングなどは季節ごとに魅力が異なるため、利用サービスの情報も確認してください。' },
+  { question: '冬でも伊豆大島へ旅行できますか？', answer: '旅行できます。椿まつりや温泉など冬〜早春ならではの楽しみがあります。一方、風や海況により船へ影響が出る場合があるため、当日の運航情報を確認し、予定に余裕を持つことが大切です。' },
+  { question: '夏は海水浴できますか？', answer: '大島町が年度ごとに遊泳場の開設期間を案内しています。指定期間・監視体制・当日の海況を確認し、安全な場所で楽しんでください。' },
+  { question: '季節によって宿の過ごし方は変わりますか？', answer: '夏は海から戻った後の休憩、秋冬は温泉や早めの夕食、雨や風が強い日は宿で過ごす時間を多めにするなど、天候に合わせて一棟貸しの時間を調整できます。' },
+];
+
+const structuredData = { '@context': 'https://schema.org', '@graph': [
+  { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '大島ニュービラ', item: 'https://oshima-new-villa.com/' },
+    { '@type': 'ListItem', position: 2, name: '伊豆大島旅行ガイド', item: 'https://oshima-new-villa.com/guide/' },
+    { '@type': 'ListItem', position: 3, name: '伊豆大島の季節別旅行ガイド', item: 'https://oshima-new-villa.com/guide/seasons/' },
+  ]},
+  { '@type': 'FAQPage', mainEntity: faqs.map((faq) => ({ '@type': 'Question', name: faq.question, acceptedAnswer: { '@type': 'Answer', text: faq.answer } })) },
+]};
+---
+
+<Layout title={pageTitle} description={pageDescription} pageType="Article" datePublished={datePublished} dateModified={dateModified}>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <article>
+    <header class="bg-stone-950 pt-28 text-white md:pt-32"><div class="mx-auto max-w-5xl px-6 py-14 md:py-20"><nav class="text-sm text-stone-300" aria-label="パンくずリスト"><a href="/" class="hover:text-white">トップ</a><span class="mx-2">/</span><a href="/guide/" class="hover:text-white">伊豆大島旅行ガイド</a><span class="mx-2">/</span><span>季節別旅行</span></nav><p class="mt-10 text-xs font-bold tracking-[0.3em] text-orange-200 uppercase">Seasons in Izu Oshima</p><h1 class="mt-4 max-w-4xl font-serif text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">伊豆大島は、いつ行く？<br />季節から旅を選ぶ。</h1><p class="mt-7 max-w-3xl text-base leading-8 text-stone-100 md:text-lg md:leading-9">椿を見たい。海で遊びたい。三原山を歩きたい。人が少ない時期にゆっくりしたい。伊豆大島は季節によって旅の主役が変わります。「何月が正解？」ではなく、「何をしたい？」から選ぶためのガイドです。</p></div><div class="mx-auto max-w-6xl px-6 pb-16 md:pb-20"><img src="/camellia-red-white.webp" alt="伊豆大島の椿" class="aspect-[16/8] w-full rounded-3xl object-cover shadow-sm" width="1200" height="600" fetchpriority="high" /></div></header>
+
+    <section class="bg-white py-10 md:py-14" aria-label="記事の要点"><div class="mx-auto max-w-4xl px-6"><AnswerSummary items={summaryPoints} updated={dateModified} /></div></section>
+
+    <section class="bg-stone-50 py-20 md:py-28" aria-labelledby="season-list-title"><div class="mx-auto max-w-7xl px-6"><div class="mx-auto max-w-3xl text-center"><p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">Four Seasons</p><h2 id="season-list-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">季節ごとの「旅の主役」。</h2></div><div class="mt-14 grid gap-7 lg:grid-cols-2">{seasons.map((season) => (<article class="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm"><img src={season.image} alt={season.alt} class="aspect-[16/8] w-full object-cover" width="1200" height="600" loading="lazy" /><div class="p-7 md:p-9"><div class="flex flex-wrap items-center justify-between gap-3"><p class="text-xs font-bold tracking-[0.22em] text-green-700 uppercase">{season.kicker}</p><span class="rounded-full bg-stone-100 px-4 py-2 text-sm font-bold text-stone-700">{season.months}</span></div><h3 class="mt-3 font-serif text-3xl font-bold text-gray-900">{season.name}</h3><p class="mt-5 leading-8 text-gray-600">{season.text}</p><ul class="mt-6 space-y-3 text-sm leading-7 text-gray-600">{season.highlights.map((item) => (<li class="flex gap-3"><span class="text-green-700">✓</span><span>{item}</span></li>))}</ul></div></article>))}</div></div></section>
+
+    <section class="bg-green-950 py-20 text-white md:py-28" aria-labelledby="season-plan-title"><div class="mx-auto max-w-6xl px-6"><div class="mx-auto max-w-3xl text-center"><p class="text-xs font-bold tracking-[0.25em] text-green-200 uppercase">Plan Flexibly</p><h2 id="season-plan-title" class="mt-3 font-serif text-3xl font-bold md:text-4xl">どの季節でも、「予定を動かせる2泊3日」が強い。</h2><p class="mt-6 leading-8 text-green-50 md:text-lg">海、山、船。島旅は天候の影響を受けます。1日目は到着に余白、2日目を屋外観光の本命、3日目は出港地に合わせて調整する基本形なら、季節が変わっても組み替えやすくなります。</p><div class="mt-8 flex flex-wrap justify-center gap-4"><a href="/guide/2nights-3days/" class="rounded-full border border-white/30 px-6 py-3 font-bold hover:bg-white hover:text-green-950">2泊3日モデルコース →</a><a href="/guide/transport/" class="rounded-full border border-white/30 px-6 py-3 font-bold hover:bg-white hover:text-green-950">交通・港の考え方 →</a></div></div></div></section>
+
+    <section class="bg-white py-16 md:py-20" aria-labelledby="season-source-title"><div class="mx-auto max-w-5xl px-6"><div class="rounded-3xl border border-stone-200 bg-stone-50 p-7 md:p-9"><p class="text-xs font-bold tracking-[0.25em] text-orange-700 uppercase">Official Calendar</p><h2 id="season-source-title" class="mt-3 font-serif text-2xl font-bold text-gray-900 md:text-3xl">イベント・海水浴期間は毎年変わります。</h2><p class="mt-5 leading-8 text-gray-600">椿まつり、夏の遊泳場、島内イベントの開催日程は年度ごとに更新されます。本記事では季節の傾向を整理していますが、具体的な日程は大島町の最新観光イベントカレンダーを優先してください。</p><a href="https://www.town.oshima.tokyo.jp/soshiki/kankou/kankou-event-calendar-reiwa8.html" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex font-bold text-green-800 underline decoration-green-200 underline-offset-4">大島町 令和8年度観光イベントカレンダー ↗</a></div></div></section>
+
+    <section class="bg-stone-50 py-20 md:py-28" aria-labelledby="season-links-title"><div class="mx-auto max-w-6xl px-6"><div class="grid gap-6 md:grid-cols-3"><a href="/guide/onsen/" class="rounded-3xl border border-stone-200 bg-white p-7 transition hover:-translate-y-1 hover:shadow-lg"><p class="text-xs font-bold tracking-[0.2em] text-orange-700 uppercase">Hot Spring</p><h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">温泉を旅に入れる</h3><p class="mt-3 text-sm leading-7 text-gray-600">御神火温泉・浜の湯の違いを確認。</p></a><a href="/diving/" class="rounded-3xl border border-stone-200 bg-white p-7 transition hover:-translate-y-1 hover:shadow-lg"><p class="text-xs font-bold tracking-[0.2em] text-cyan-700 uppercase">Diving</p><h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">海を目的にする</h3><p class="mt-3 text-sm leading-7 text-gray-600">ダイビング旅行と宿泊の組み立て方へ。</p></a><a href="/guide/rainy-day/" class="rounded-3xl border border-stone-200 bg-white p-7 transition hover:-translate-y-1 hover:shadow-lg"><p class="text-xs font-bold tracking-[0.2em] text-green-700 uppercase">Weather</p><h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">雨の日も考えておく</h3><p class="mt-3 text-sm leading-7 text-gray-600">天候が崩れた日の代替プランへ。</p></a></div></div></section>
+
+    <section class="bg-white py-20 md:py-28" aria-labelledby="season-faq-title"><div class="mx-auto max-w-4xl px-6"><div class="text-center"><p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">FAQ</p><h2 id="season-faq-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">伊豆大島の季節でよくある質問</h2></div><div class="mt-10 space-y-3">{faqs.map((faq) => (<details class="group rounded-2xl border border-gray-200 bg-white px-6 py-5 shadow-sm"><summary class="flex cursor-pointer list-none items-center justify-between gap-5 text-lg font-bold leading-8 text-gray-900 [&::-webkit-details-marker]:hidden"><span>{faq.question}</span><span class="text-2xl text-green-700 transition-transform group-open:rotate-45" aria-hidden="true">＋</span></summary><p class="mt-4 border-t border-gray-100 pt-5 leading-8 text-gray-700">{faq.answer}</p></details>))}</div></div></section>
+  </article>
+</Layout>

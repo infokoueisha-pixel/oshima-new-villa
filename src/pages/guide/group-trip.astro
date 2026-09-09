@@ -1,0 +1,86 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AnswerSummary from '../../components/AnswerSummary.astro';
+
+const pageTitle = '伊豆大島のグループ旅行｜4〜6名で一棟貸しを楽しむモデルケース';
+const pageDescription = '伊豆大島へ4〜6名で旅行する方向けに、友人4名・家族5名・趣味仲間6名のモデルケースを紹介。移動、買い出し、宿での過ごし方、役割分担まで具体的に整理します。';
+const datePublished = '2026-09-10';
+const dateModified = '2026-09-10';
+const summaryPoints = [
+  '4〜6名の伊豆大島旅行では、移動手段・買い出し・夕食を先に決めると、現地で全員が迷いにくくなります。',
+  'ホテルの複数室より「夜も全員で集まりたい」旅なら、一棟貸しのリビング・キッチンを活かしやすくなります。',
+  '以下は実在の宿泊者の体験談ではなく、大島ニュービラの設備と伊豆大島の移動事情をもとにした旅行モデルケースです。',
+];
+
+const cases = [
+  {
+    people: '友人4名',
+    kicker: 'Friends Trip',
+    title: '観光も夜も、4人で同じテンポに。',
+    image: '/sofa-salvia.webp',
+    alt: '4〜6名で集まれるサルビア棟のリビング',
+    plan: ['到着港でレンタカーを受け取り、昼食と買い出し', '午後は三原山や裏砂漠など、その日の天候に合うスポットへ', 'チェックイン後は全員で夕食。外食か自炊・BBQを当日の気分で選ぶ', '夜はリビングで写真を見返し、翌日の予定を相談'],
+    point: '「2部屋に分かれて夜は各自」ではなく、観光後も4人で一緒に過ごしたい旅行と相性があります。',
+  },
+  {
+    people: '家族5名',
+    kicker: 'Family Trip',
+    title: '荷物も食事も、家族のペースで。',
+    image: '/day-salvia.webp',
+    alt: '家族旅行で利用できる大島ニュービラ サルビア棟',
+    plan: ['港・空港から車で移動し、初日は予定を詰め込みすぎない', '子どもや家族の体力に合わせ、観光スポットを1〜2か所に絞る', '食事時間を固定せず、外食・買い出し・自炊を組み合わせる', '2泊以上なら、天候を見て屋外観光の日を入れ替える'],
+    point: '家族全員が同じリビングへ戻れるため、早く休みたい人と話を続けたい人がいても一棟の中で調整しやすくなります。',
+  },
+  {
+    people: '趣味仲間6名',
+    kicker: 'Activity Group',
+    title: 'ダイビング・釣り・イベント遠征の拠点に。',
+    image: '/night-bbq.webp',
+    alt: 'グループで使える夜のガゼボ庵',
+    plan: ['アクティビティの集合時間を最優先にし、朝食・出発を各自で調整', '帰宿後は入浴・着替え・休憩を済ませる', '夕食はBBQやキッチン利用で、全員の帰着時間に合わせる', '翌日の天候・集合時間を確認して早めに休む'],
+    point: '6名では荷物量が増えやすいため、車種・買い出し・荷物の置き場所まで事前に共有しておくとスムーズです。',
+  },
+];
+
+const roles = [
+  { title: '交通担当', text: '船・飛行機の運航確認、レンタカーやタクシーの手配を担当。港が変わる可能性も全員へ共有します。' },
+  { title: '食事・買い出し担当', text: '外食か自炊か、BBQをするかを先に決め、必要な食材・飲み物・炭などを確認します。' },
+  { title: '予定担当', text: '三原山など天候に左右される予定を「固定しすぎない」役。雨天時の代替案も1つ持っておきます。' },
+  { title: '宿ルール共有担当', text: 'チェックイン方法、BBQ、ゴミ、駐車などの案内をグループチャットで共有し、代表者だけが知っている状態を避けます。' },
+];
+
+const faqs = [
+  { question: '大島ニュービラは何人まで泊まれますか？', answer: '現在営業中のサルビア棟は最大6名です。このページでは4〜6名の旅行を想定しています。最新の空室・料金・宿泊条件は予約ページでご確認ください。' },
+  { question: 'グループ旅行ではレンタカーがおすすめですか？', answer: '三原山、島南部、買い出しなど複数の場所を巡る場合は便利です。人数だけでなく荷物量も考えて車種を選ぶと安心です。車を使わない場合は、路線バスとタクシーを組み合わせて行程を絞る方法があります。' },
+  { question: '一棟貸しとホテルの複数室はどちらが向いていますか？', answer: '夜まで全員で集まりたい、自炊やBBQをしたい場合は一棟貸しと相性があります。個室ごとのプライバシーや館内サービスを優先する場合はホテルの複数室も候補です。' },
+  { question: 'このページのモデルケースは実際のお客様の事例ですか？', answer: 'いいえ。個人を特定する実在ゲストの体験談ではなく、大島ニュービラの設備と伊豆大島旅行の移動・観光事情から作成したモデルケースです。' },
+];
+
+const structuredData = { '@context': 'https://schema.org', '@graph': [
+  { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '大島ニュービラ', item: 'https://oshima-new-villa.com/' },
+    { '@type': 'ListItem', position: 2, name: '伊豆大島旅行ガイド', item: 'https://oshima-new-villa.com/guide/' },
+    { '@type': 'ListItem', position: 3, name: '伊豆大島のグループ旅行', item: 'https://oshima-new-villa.com/guide/group-trip/' },
+  ]},
+  { '@type': 'FAQPage', mainEntity: faqs.map((faq) => ({ '@type': 'Question', name: faq.question, acceptedAnswer: { '@type': 'Answer', text: faq.answer } })) },
+]};
+---
+
+<Layout title={pageTitle} description={pageDescription} pageType="Article" datePublished={datePublished} dateModified={dateModified}>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <article>
+    <header class="bg-stone-50 pt-28 md:pt-32"><div class="mx-auto max-w-5xl px-6 py-14 md:py-20"><nav class="text-sm text-gray-500" aria-label="パンくずリスト"><a href="/" class="hover:text-green-800">トップ</a><span class="mx-2">/</span><a href="/guide/" class="hover:text-green-800">伊豆大島旅行ガイド</a><span class="mx-2">/</span><span>グループ旅行</span></nav><p class="mt-10 text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Group Trip in Izu Oshima</p><h1 class="mt-4 max-w-4xl font-serif text-4xl font-bold leading-tight text-gray-900 sm:text-5xl md:text-6xl">4〜6名で行く伊豆大島。<br />グループ旅行を具体的に組んでみる。</h1><p class="mt-7 max-w-3xl text-base leading-8 text-gray-600 md:text-lg md:leading-9">人数が増えるほど「どこへ行くか」より、移動・食事・宿でどう集まるかが旅行の満足度を左右します。友人4名、家族5名、趣味仲間6名という3つのモデルケースで、一棟貸しを使う旅を具体化します。</p></div><div class="mx-auto max-w-6xl px-6 pb-16 md:pb-20"><img src="/sofa-salvia.webp" alt="伊豆大島のグループ旅行で集まれる大島ニュービラのリビング" class="aspect-[16/8] w-full rounded-3xl object-cover shadow-sm" width="1108" height="832" fetchpriority="high" /></div></header>
+
+    <section class="bg-white py-10 md:py-14" aria-label="記事の要点"><div class="mx-auto max-w-4xl px-6"><AnswerSummary items={summaryPoints} updated={dateModified} /></div></section>
+
+    <section class="bg-stone-50 py-20 md:py-28" aria-labelledby="group-cases-title"><div class="mx-auto max-w-7xl px-6"><div class="mx-auto max-w-3xl text-center"><p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">Model Cases</p><h2 id="group-cases-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">人数と目的で、旅の組み方は変わる。</h2><p class="mt-5 leading-8 text-gray-600">以下は実在ゲストの口コミではなく、旅程を考えるためのモデルケースです。</p></div><div class="mt-14 space-y-8">{cases.map((item, index) => (<article class="grid overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm lg:grid-cols-[0.9fr_1.1fr]"><img src={item.image} alt={item.alt} class={`h-full min-h-72 w-full object-cover ${index % 2 === 1 ? 'lg:order-2' : ''}`} width="1200" height="900" loading="lazy" /><div class={`p-7 md:p-10 ${index % 2 === 1 ? 'lg:order-1' : ''}`}><div class="flex flex-wrap items-center gap-3"><span class="rounded-full bg-green-900 px-4 py-2 text-sm font-bold text-white">{item.people}</span><span class="text-xs font-bold tracking-[0.2em] text-green-700 uppercase">{item.kicker}</span></div><h3 class="mt-5 font-serif text-2xl font-bold text-gray-900 md:text-3xl">{item.title}</h3><ol class="mt-6 space-y-3">{item.plan.map((step, i) => (<li class="flex gap-4 leading-7 text-gray-700"><span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-stone-100 text-sm font-bold text-green-800">{i + 1}</span><span>{step}</span></li>))}</ol><p class="mt-7 rounded-2xl bg-green-50 p-5 text-sm leading-7 text-gray-700"><strong>このケースのポイント：</strong>{item.point}</p></div></article>))}</div></div></section>
+
+    <section class="bg-green-950 py-20 text-white md:py-28" aria-labelledby="group-role-title"><div class="mx-auto max-w-6xl px-6"><div class="mx-auto max-w-3xl text-center"><p class="text-xs font-bold tracking-[0.25em] text-green-200 uppercase">Before the Trip</p><h2 id="group-role-title" class="mt-3 font-serif text-3xl font-bold md:text-4xl">全員で決めない。4つだけ担当を分ける。</h2><p class="mt-5 leading-8 text-green-50">大人数ほど全員で毎回相談すると決まりません。担当を軽く分け、重要事項だけ共有すると旅が進みやすくなります。</p></div><div class="mt-12 grid gap-5 md:grid-cols-2">{roles.map((item) => (<article class="rounded-3xl border border-white/10 bg-white/5 p-7"><h3 class="font-serif text-2xl font-bold">{item.title}</h3><p class="mt-4 leading-8 text-green-50">{item.text}</p></article>))}</div></div></section>
+
+    <section class="bg-white py-20 md:py-28" aria-labelledby="group-links-title"><div class="mx-auto max-w-6xl px-6"><div class="grid gap-6 md:grid-cols-3"><a href="/guide/transport/" class="rounded-3xl border border-stone-200 bg-stone-50 p-7 transition hover:-translate-y-1 hover:shadow-lg"><p class="text-xs font-bold tracking-[0.2em] text-green-700 uppercase">Transport</p><h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">交通を先に決める</h3><p class="mt-3 text-sm leading-7 text-gray-600">港・レンタカー・バスの考え方を確認。</p></a><a href="/guide/2nights-3days/" class="rounded-3xl border border-stone-200 bg-stone-50 p-7 transition hover:-translate-y-1 hover:shadow-lg"><p class="text-xs font-bold tracking-[0.2em] text-green-700 uppercase">Itinerary</p><h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">2泊3日を組む</h3><p class="mt-3 text-sm leading-7 text-gray-600">天候に合わせて余白のあるモデルコースへ。</p></a><a href="/group-stay/" class="rounded-3xl border border-green-200 bg-green-50 p-7 transition hover:-translate-y-1 hover:shadow-lg"><p class="text-xs font-bold tracking-[0.2em] text-green-700 uppercase">Stay</p><h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">一棟貸しの詳細を見る</h3><p class="mt-3 text-sm leading-7 text-gray-600">サルビア棟の設備・グループ宿泊を確認。</p></a></div></div></section>
+
+    <section class="bg-stone-50 py-20 md:py-28" aria-labelledby="group-faq-title"><div class="mx-auto max-w-4xl px-6"><div class="text-center"><p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">FAQ</p><h2 id="group-faq-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">伊豆大島のグループ旅行でよくある質問</h2></div><div class="mt-10 space-y-3">{faqs.map((faq) => (<details class="group rounded-2xl border border-gray-200 bg-white px-6 py-5 shadow-sm"><summary class="flex cursor-pointer list-none items-center justify-between gap-5 text-lg font-bold leading-8 text-gray-900 [&::-webkit-details-marker]:hidden"><span>{faq.question}</span><span class="text-2xl text-green-700 transition-transform group-open:rotate-45" aria-hidden="true">＋</span></summary><p class="mt-4 border-t border-gray-100 pt-5 leading-8 text-gray-700">{faq.answer}</p></details>))}</div></div></section>
+
+    <section class="relative overflow-hidden bg-stone-950 py-24 text-white md:py-32" aria-labelledby="group-booking-title"><img src="/forest-optimized.webp" alt="" class="absolute inset-0 h-full w-full object-cover opacity-25" width="1170" height="1171" loading="lazy" /><div class="relative mx-auto max-w-4xl px-6 text-center"><p class="text-xs font-bold tracking-[0.25em] text-orange-200 uppercase">Stay Together</p><h2 id="group-booking-title" class="mt-3 font-serif text-3xl font-bold md:text-5xl">4〜6名の島旅を、一棟から。</h2><p class="mx-auto mt-6 max-w-2xl leading-8 text-stone-100 md:text-lg">日程と人数が決まったら、現在の空室と料金をご確認ください。</p><a href="https://www.airbnb.jp/rooms/1602063410123886296?guests=6&adults=6&s=67&unique_share_id=a393ba49-61eb-4d8e-a4c9-95935b649d65" data-booking-location="guide_group_trip_bottom" target="_blank" rel="noopener noreferrer" class="mt-9 inline-flex min-h-14 items-center justify-center rounded-full bg-orange-600 px-9 py-4 text-base font-bold text-white shadow-lg transition-all hover:-translate-y-0.5 hover:bg-orange-500">空室・料金を見る<span class="ml-2" aria-hidden="true">↗</span></a></div></section>
+  </article>
+</Layout>

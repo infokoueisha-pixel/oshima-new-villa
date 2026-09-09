@@ -5,7 +5,7 @@ import AnswerSummary from '../../components/AnswerSummary.astro';
 const pageTitle = '伊豆大島2泊3日モデルコース｜初めての島旅をゆっくり楽しむ';
 const pageDescription = '伊豆大島を2泊3日で巡るモデルコース。元町港・岡田港への到着から、三原山・裏砂漠、地層大切断面、波浮港まで、天候や船の時間に合わせて無理なく楽しむ旅程を紹介します。';
 const datePublished = '2026-09-07';
-const dateModified = '2026-09-09';
+const dateModified = '2026-09-10';
 const summaryPoints = ["初めての伊豆大島は2泊3日にすると、船・天候に合わせて予定を入れ替える余白をつくりやすくなります。", "2日目を三原山・裏砂漠など屋外観光の中心日にし、1日目と3日目は入出港地に合わせて柔軟に組むのがおすすめです。", "元町港・岡田港の利用港は変わることがあるため、船の運航と入出港地は当日に東海汽船の公式情報で確認してください。"];
 
 const days = [
@@ -217,8 +217,11 @@ const structuredData = {
             </article>
           ))}
         </div>
-        <div class="mt-9 text-center">
-          <a href="/guide/rainy-day/" class="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 font-bold text-white transition-colors hover:bg-white hover:text-green-950">雨予報の日の過ごし方を見る →</a>
+        <div class="mt-9 flex flex-wrap justify-center gap-4">
+          <a href="/guide/rainy-day/" class="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 font-bold text-white transition-colors hover:bg-white hover:text-green-950">雨予報の日の過ごし方 →</a>
+          <a href="/guide/transport/" class="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 font-bold text-white transition-colors hover:bg-white hover:text-green-950">交通・港の考え方 →</a>
+          <a href="/guide/onsen/" class="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 font-bold text-white transition-colors hover:bg-white hover:text-green-950">温泉を旅程に入れる →</a>
+          <a href="/guide/seasons/" class="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 font-bold text-white transition-colors hover:bg-white hover:text-green-950">季節別の楽しみ方 →</a>
         </div>
       </div>
     </section>
