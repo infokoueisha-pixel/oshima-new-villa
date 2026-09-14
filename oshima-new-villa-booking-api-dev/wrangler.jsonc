@@ -1,0 +1,37 @@
+{
+  "name": "oshima-new-villa-booking-api-dev",
+  "main": "src/worker.js",
+  "workers_dev": true,
+  "preview_urls": false,
+  "compatibility_date": "2026-08-31",
+  "triggers": {
+    "crons": [
+      "*/5 * * * *"
+    ]
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "redact_query_string": false,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "persist": true,
+      "invocation_logs": true
+    },
+    "traces": {
+      "enabled": false,
+      "persist": true,
+      "head_sampling_rate": 1
+    }
+  },
+  "vars": {
+    "ADMIN_NOTIFICATION_EMAIL": "info.koueisha@gmail.com"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_id": "8d19ddf9-0dba-4757-98cd-eaf3028097f5"
+    }
+  ]
+}
