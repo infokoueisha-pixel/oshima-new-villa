@@ -21,7 +21,7 @@ const configs = {
     defaultDescription: 'Stay in a private villa on Izu Oshima, a volcanic island of Tokyo. Oshima New Villa sleeps up to 6 guests and offers a kitchen, BBQ space, free Wi-Fi and self check-in.',
     nav: ['Why Oshima', 'The Villa', 'Things to Do', 'Getting Here', 'Before You Book'],
     checkAvailability: 'Check availability',
-    checkAirbnb: 'Check Airbnb availability',
+    checkRates: 'Check availability & rates',
     book: 'Book',
     language: 'Language',
     mainNavLabel: 'Main navigation',
@@ -46,7 +46,7 @@ const configs = {
     defaultDescription: '도쿄의 화산섬 이즈오시마에서 즐기는 독채 빌라. 최대 6명 숙박, 주방, BBQ 공간, 무료 Wi-Fi, 주차장, 셀프 체크인을 제공합니다.',
     nav: ['오시마의 매력', '빌라', '즐길 거리', '오시는 길', '예약 전 확인'],
     checkAvailability: '예약 가능 여부 확인',
-    checkAirbnb: 'Airbnb에서 공실·요금 확인',
+    checkRates: '공실・요금 확인',
     book: '예약',
     language: '언어',
     mainNavLabel: '메인 내비게이션',
@@ -71,7 +71,7 @@ const configs = {
     defaultDescription: '入住東京火山島伊豆大島的整棟包棟 Villa。最多可住 6 人，備有廚房、BBQ 空間、免費 Wi-Fi、停車場與自助入住。',
     nav: ['大島的魅力', 'Villa 介紹', '島上體驗', '交通方式', '預訂前須知'],
     checkAvailability: '查看空房',
-    checkAirbnb: '在 Airbnb 查看空房與價格',
+    checkRates: '查看空房與價格',
     book: '預訂',
     language: '語言',
     mainNavLabel: '主要導覽',
@@ -96,7 +96,7 @@ const configs = {
     defaultDescription: '入住东京火山岛伊豆大岛的整栋包租 Villa。最多可住 6 人，配有厨房、BBQ 空间、免费 Wi-Fi、停车场和自助入住。',
     nav: ['大岛的魅力', 'Villa 介绍', '岛上体验', '交通方式', '预订前须知'],
     checkAvailability: '查看空房',
-    checkAirbnb: '在 Airbnb 查看空房与价格',
+    checkRates: '查看空房和价格',
     book: '预订',
     language: '语言',
     mainNavLabel: '主要导航',
@@ -124,7 +124,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 const isGuestGuide = Astro.url.pathname.includes('/guest-guide');
 const ogImageUrl = new URL('/ogp-oshima-new-villa.jpg', siteUrl).href;
 const propertyImageUrl = new URL('/main-optimized.webp', siteUrl).href;
-const bookingUrl = 'https://www.airbnb.com/rooms/1602063410123886296';
+const bookingUrl = 'https://www.booking.com/hotel/jp/salvia.ja.html';
 const navBase = isGuestGuide ? `/${config.slug}/` : '';
 const bookingLocation = `${config.slug.replace('-', '_')}_header`;
 const fontVars = `--font-sans:'${config.fontSans}';--font-serif:'${config.fontSerif}';`;
@@ -201,7 +201,7 @@ const structuredData = {
       petsAllowed: false,
       smokingAllowed: false,
       foundingDate: SITE.foundingDate,
-      sameAs: [SITE.instagram, SITE.airbnbIntl],
+      sameAs: [SITE.instagram, SITE.airbnbIntl, SITE.bookingUrl],
       amenityFeature: config.structuredAmenities.map((name) => ({ '@type': 'LocationFeatureSpecification', name, value: true })),
     },
   ],
@@ -371,7 +371,7 @@ const structuredData = {
                   rel="noopener noreferrer"
                   class="mt-7 flex w-full items-center justify-center rounded-full bg-white px-6 py-3.5 text-sm font-bold text-green-900 shadow-sm transition-colors hover:bg-green-50"
                 >
-                  {config.checkAirbnb}
+                  {config.checkRates}
                 </a>
               </nav>
             </div>

@@ -19,7 +19,8 @@ export const SITE = {
   instagram: 'https://www.instagram.com/oshima.new.villa/',
   airbnbJa: 'https://www.airbnb.jp/rooms/1602063410123886296',
   airbnbIntl: 'https://www.airbnb.com/rooms/1602063410123886296',
-  lastReviewed: '2026-09-09',
+  bookingUrl: 'https://www.booking.com/hotel/jp/salvia.ja.html',
+  lastReviewed: '2026-09-14',
 } as const;
 
 export const AMENITIES = [
