@@ -612,6 +612,21 @@ const productId = 'salvia-standard';
           currency: 'JPY',
         });
 
+        sessionStorage.setItem(
+          'onv_pending_booking',
+          JSON.stringify({
+            bookingCode,
+            productName: 'SALVIA｜集まる家',
+            checkIn: selectedStay.checkIn,
+            checkOut: selectedStay.checkOut,
+            guestCount: selectedStay.guestCount,
+            nights: selectedStay.nights,
+            totalPrice: selectedStay.totalPrice,
+            customerEmail,
+            checkoutUrl,
+          })
+        );
+
         sessionStorage.removeItem('onv_booking_idempotency_key');
         sessionStorage.removeItem('onv_booking_payload');
         window.location.assign(checkoutUrl);

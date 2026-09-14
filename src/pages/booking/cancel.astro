@@ -1,0 +1,79 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="お支払いは完了していません｜大島ニュービラ"
+  description="大島ニュービラ公式予約のお支払い中断ページです。"
+  noindex={true}
+>
+  <main class="min-h-[72vh] bg-orange-50 pt-28 pb-16 md:pt-36 md:pb-24">
+    <div class="mx-auto max-w-3xl px-6">
+      <section class="overflow-hidden rounded-3xl border border-amber-200 bg-white shadow-sm">
+        <div class="bg-amber-50 px-6 py-10 md:px-10 md:py-12">
+          <div class="flex h-14 w-14 items-center justify-center rounded-full bg-amber-100 text-2xl text-amber-900" aria-hidden="true">!</div>
+          <p class="mt-6 text-xs font-bold tracking-[0.24em] text-amber-800 uppercase">Payment Incomplete</p>
+          <h1 class="mt-2 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">お支払いは完了していません</h1>
+          <p class="mt-4 max-w-2xl text-sm leading-7 text-gray-700 md:text-base">
+            決済を途中で終了したため、予約はまだ確定していません。
+          </p>
+        </div>
+
+        <div class="p-6 md:p-10">
+          <div id="retry-box" class="hidden rounded-2xl border border-green-200 bg-green-50 p-5 md:p-6">
+            <p class="font-bold text-green-950">同じ内容でお支払いを再開できます</p>
+            <p class="mt-2 text-sm leading-6 text-green-900/80">
+              仮押さえの有効時間内であれば、下のボタンからStripeの決済画面へ戻れます。
+            </p>
+            <a
+              id="retry-payment"
+              href="#"
+              class="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-green-800 px-7 py-3.5 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-green-700 sm:w-auto"
+            >
+              支払いを再開する
+            </a>
+          </div>
+
+          <div class="mt-6 rounded-2xl bg-stone-50 p-5 text-sm leading-7 text-gray-700">
+            <p class="font-bold text-gray-900">日程や人数を変更したい場合</p>
+            <p class="mt-1">
+              仮押さえ中は同じ日程を一時的に選べない場合があります。仮押さえは一定時間後に自動で解放されます。
+            </p>
+          </div>
+
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a
+              href="/booking/"
+              class="inline-flex min-h-12 items-center justify-center rounded-full border border-stone-300 bg-white px-7 py-3.5 text-sm font-bold text-gray-800 transition hover:bg-stone-50"
+            >
+              予約画面へ戻る
+            </a>
+            <a
+              href="/"
+              class="inline-flex min-h-12 items-center justify-center rounded-full border border-stone-300 bg-white px-7 py-3.5 text-sm font-bold text-gray-800 transition hover:bg-stone-50"
+            >
+              公式サイトへ戻る
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    try {
+      const raw = sessionStorage.getItem('onv_pending_booking');
+      if (raw) {
+        const booking = JSON.parse(raw);
+        if (booking?.checkoutUrl) {
+          const retryBox = document.getElementById('retry-box');
+          const retryPayment = document.getElementById('retry-payment');
+          retryPayment.href = booking.checkoutUrl;
+          retryBox.classList.remove('hidden');
+        }
+      }
+    } catch (error) {
+      console.error('Checkout retry restore failed:', error);
+    }
+  </script>
+</Layout>

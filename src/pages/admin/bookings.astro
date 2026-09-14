@@ -1,0 +1,885 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="大島ニュービラ｜予約管理（開発環境）"
+  description="大島ニュービラ自社予約システムの管理者向け予約一覧です。"
+  noindex={true}
+>
+  <main class="min-h-screen bg-stone-50 pt-28 pb-20 md:pt-32">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <div class="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-bold text-amber-800">
+            <span class="h-2 w-2 rounded-full bg-amber-500" aria-hidden="true"></span>
+            開発環境
+          </div>
+          <p class="mt-5 text-xs font-bold tracking-[0.2em] text-green-700 uppercase">Booking Admin</p>
+          <h1 class="mt-2 font-serif text-3xl font-bold text-gray-950 md:text-4xl">予約一覧</h1>
+          <p class="mt-3 max-w-2xl text-sm leading-7 text-gray-600">
+            自社予約システムに入った予約を確認できます。管理者トークンはブラウザのこのタブを閉じるまでだけ保持します。
+          </p>
+        </div>
+        <div class="flex shrink-0 flex-wrap items-center gap-2 md:justify-end">
+          <button
+            id="refresh-button"
+            type="button"
+            class="hidden h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-green-200 bg-green-50 px-4 py-2 text-sm font-bold leading-none text-green-800 transition hover:border-green-300 hover:bg-green-100 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M20 11a8.1 8.1 0 0 0-15.5-2M4 4v5h5" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M4 13a8.1 8.1 0 0 0 15.5 2M20 20v-5h-5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <span>更新</span>
+          </button>
+          <button
+            id="logout-button"
+            type="button"
+            class="hidden h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-stone-300 bg-white px-4 py-2 text-sm font-bold leading-none text-gray-700 transition hover:border-red-300 hover:bg-red-50 hover:text-red-700"
+          >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M3 6h18" stroke-linecap="round"></path>
+              <path d="M8 6V4h8v2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M19 6l-1 14H6L5 6" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M10 11v5M14 11v5" stroke-linecap="round"></path>
+            </svg>
+            <span>トークンを破棄</span>
+          </button>
+        </div>
+      </div>
+
+      <section id="auth-panel" class="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm md:p-8">
+        <div class="max-w-2xl">
+          <h2 class="font-serif text-2xl font-bold text-gray-950">管理者認証</h2>
+          <p class="mt-2 text-sm leading-7 text-gray-600">
+            Cloudflare の <strong>ADMIN_DASHBOARD_TOKEN</strong> に登録した値を入力してください。値はページのソースには保存されません。
+          </p>
+          <form id="auth-form" class="mt-6 flex flex-col gap-3 sm:flex-row">
+            <label class="sr-only" for="admin-token">管理者トークン</label>
+            <input
+              id="admin-token"
+              type="password"
+              autocomplete="off"
+              spellcheck="false"
+              required
+              placeholder="ADMIN_DASHBOARD_TOKEN"
+              class="min-h-12 min-w-0 flex-1 rounded-xl border border-stone-300 bg-white px-4 py-3 text-base text-gray-900 outline-none transition focus:border-green-700 focus:ring-4 focus:ring-green-100"
+            />
+            <button
+              id="auth-submit"
+              type="submit"
+              class="min-h-12 rounded-full bg-green-800 px-7 py-3 text-sm font-bold text-white shadow-md transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              予約一覧を表示
+            </button>
+          </form>
+          <p id="auth-message" class="mt-4 hidden rounded-xl px-4 py-3 text-sm leading-6" role="alert"></p>
+        </div>
+      </section>
+
+      <section id="dashboard" class="hidden space-y-6">
+        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <article class="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
+            <p class="text-xs font-bold tracking-wider text-gray-500">確定予約</p>
+            <p id="summary-confirmed" class="mt-2 text-3xl font-bold text-gray-950">0</p>
+          </article>
+          <article class="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
+            <p class="text-xs font-bold tracking-wider text-gray-500">支払待ち</p>
+            <p id="summary-pending" class="mt-2 text-3xl font-bold text-amber-700">0</p>
+          </article>
+          <article class="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
+            <p class="text-xs font-bold tracking-wider text-gray-500">期限切れ</p>
+            <p id="summary-expired" class="mt-2 text-3xl font-bold text-gray-500">0</p>
+          </article>
+          <article class="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
+            <p class="text-xs font-bold tracking-wider text-gray-500">確定売上（一覧内）</p>
+            <p id="summary-sales" class="mt-2 text-3xl font-bold text-green-800">¥0</p>
+          </article>
+        </div>
+
+        <section class="rounded-3xl border border-stone-200 bg-white p-5 shadow-sm md:p-6">
+          <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+            <label class="block">
+              <span class="mb-2 block text-xs font-bold tracking-wider text-gray-500">検索</span>
+              <input
+                id="search-input"
+                type="search"
+                placeholder="予約番号・氏名・メール・電話番号"
+                class="min-h-11 w-full rounded-xl border border-stone-300 px-4 py-2.5 text-sm outline-none transition focus:border-green-700 focus:ring-4 focus:ring-green-100"
+              />
+            </label>
+            <div class="flex flex-wrap gap-2" aria-label="予約ステータス絞り込み">
+              <button data-filter="all" class="filter-button rounded-full bg-green-800 px-4 py-2.5 text-xs font-bold text-white">すべて</button>
+              <button data-filter="confirmed" class="filter-button rounded-full border border-stone-300 bg-white px-4 py-2.5 text-xs font-bold text-gray-700">確定</button>
+              <button data-filter="pending_payment" class="filter-button rounded-full border border-stone-300 bg-white px-4 py-2.5 text-xs font-bold text-gray-700">支払待ち</button>
+              <button data-filter="expired" class="filter-button rounded-full border border-stone-300 bg-white px-4 py-2.5 text-xs font-bold text-gray-700">期限切れ</button>
+              <button data-filter="cancelled" class="filter-button rounded-full border border-stone-300 bg-white px-4 py-2.5 text-xs font-bold text-gray-700">キャンセル</button>
+            </div>
+          </div>
+          <p id="result-count" class="mt-4 text-xs text-gray-500"></p>
+        </section>
+
+        <section class="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm">
+          <div id="loading-state" class="hidden px-6 py-16 text-center text-sm text-gray-500">予約一覧を読み込んでいます…</div>
+          <div id="empty-state" class="hidden px-6 py-16 text-center text-sm text-gray-500">条件に一致する予約はありません。</div>
+
+          <div id="desktop-table-wrap" class="hidden overflow-x-auto lg:block">
+            <table class="min-w-[1180px] w-full border-collapse text-left text-sm">
+              <thead class="bg-stone-50 text-xs font-bold text-gray-600">
+                <tr>
+                  <th class="px-5 py-4">予約番号</th>
+                  <th class="px-5 py-4">宿泊日</th>
+                  <th class="px-5 py-4">予約者</th>
+                  <th class="px-5 py-4">人数</th>
+                  <th class="px-5 py-4">金額</th>
+                  <th class="px-5 py-4">予約状態</th>
+                  <th class="px-5 py-4">決済</th>
+                  <th class="px-5 py-4">在庫</th>
+                  <th class="px-5 py-4">作成日時</th>
+                  <th class="px-5 py-4">操作</th>
+                </tr>
+              </thead>
+              <tbody id="booking-table-body" class="divide-y divide-stone-100"></tbody>
+            </table>
+          </div>
+
+          <div id="mobile-cards" class="divide-y divide-stone-100 lg:hidden"></div>
+        </section>
+
+        <p class="text-xs leading-6 text-gray-500">
+          ※ 現在は開発用APIの最新100件を表示しています。本番公開時は管理画面の認証方式をCloudflare Access等へ切り替える予定です。
+        </p>
+
+        <div id="cancellation-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/45 p-4" aria-hidden="true">
+          <div class="w-full max-w-xl overflow-hidden rounded-3xl bg-white shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="cancellation-modal-title">
+            <div class="border-b border-stone-200 px-6 py-5 md:px-7">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="text-xs font-bold uppercase tracking-[0.18em] text-green-700">Cancellation Preview</p>
+                  <h2 id="cancellation-modal-title" class="mt-1 font-serif text-2xl font-bold text-gray-950">キャンセル・返金額を確認</h2>
+                  <p id="cancellation-booking-summary" class="mt-2 text-sm leading-6 text-gray-600"></p>
+                </div>
+                <button id="cancellation-modal-close" type="button" class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-stone-200 text-xl text-gray-500 transition hover:bg-stone-50" aria-label="閉じる">×</button>
+              </div>
+            </div>
+
+            <div class="space-y-5 px-6 py-6 md:px-7">
+              <label class="block">
+                <span class="mb-2 block text-sm font-bold text-gray-800">キャンセル理由</span>
+                <select id="cancellation-reason" class="min-h-12 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-green-700 focus:ring-4 focus:ring-green-100">
+                  <option value="guest_request">お客様都合</option>
+                  <option value="transport_cancellation">船・航空便の正式欠航</option>
+                  <option value="facility_reason">施設都合</option>
+                  <option value="other">その他</option>
+                </select>
+              </label>
+
+              <div class="rounded-2xl border border-stone-200 bg-stone-50 p-5">
+                <div id="cancellation-preview-placeholder" class="text-sm leading-6 text-gray-600">理由を選び、「返金額を計算」を押してください。まだ返金は実行されません。</div>
+                <div id="cancellation-preview-result" class="hidden">
+                  <div class="grid grid-cols-2 gap-x-5 gap-y-4 text-sm">
+                    <div>
+                      <p class="text-xs font-bold text-gray-500">チェックインまで</p>
+                      <p id="preview-days" class="mt-1 font-bold text-gray-950"></p>
+                    </div>
+                    <div>
+                      <p class="text-xs font-bold text-gray-500">キャンセル料率</p>
+                      <p id="preview-rate" class="mt-1 font-bold text-gray-950"></p>
+                    </div>
+                    <div>
+                      <p class="text-xs font-bold text-gray-500">キャンセル料</p>
+                      <p id="preview-fee" class="mt-1 font-bold text-gray-950"></p>
+                    </div>
+                    <div>
+                      <p class="text-xs font-bold text-gray-500">返金予定額</p>
+                      <p id="preview-refund" class="mt-1 text-xl font-bold text-green-800"></p>
+                    </div>
+                  </div>
+                  <p id="preview-policy-note" class="mt-4 rounded-xl bg-white px-4 py-3 text-xs leading-6 text-gray-600"></p>
+                </div>
+              </div>
+
+              <p id="cancellation-preview-error" class="hidden rounded-xl bg-red-50 px-4 py-3 text-sm leading-6 text-red-700" role="alert"></p>
+
+              <label class="block">
+                <span class="mb-2 block text-sm font-bold text-gray-800">管理者メモ <span class="font-normal text-gray-400">（任意）</span></span>
+                <textarea id="cancellation-admin-note" rows="3" maxlength="500" placeholder="例：9/14 お客様より電話でキャンセル依頼" class="w-full resize-y rounded-xl border border-stone-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-green-700 focus:ring-4 focus:ring-green-100"></textarea>
+              </label>
+
+              <div id="cancellation-execute-panel" class="hidden rounded-2xl border border-red-200 bg-red-50 p-5">
+                <p class="text-sm font-bold text-red-800">この操作は取り消せません</p>
+                <p id="cancellation-execute-summary" class="mt-2 text-sm leading-6 text-red-700"></p>
+                <label class="mt-4 flex cursor-pointer items-start gap-3 rounded-xl bg-white px-4 py-3 text-sm text-gray-800">
+                  <input id="cancellation-final-confirm" type="checkbox" class="mt-0.5 h-4 w-4 rounded border-stone-300 text-red-700 focus:ring-red-200" />
+                  <span>予約番号・返金額・キャンセル理由を確認しました。</span>
+                </label>
+
+                <label class="mt-3 block rounded-xl bg-white px-4 py-3">
+                  <span class="block text-xs font-bold text-red-800">最終確認：予約番号を入力してください</span>
+                  <span id="cancellation-confirm-code-guide" class="mt-1 block text-xs leading-5 text-gray-500"></span>
+                  <input
+                    id="cancellation-confirm-code"
+                    type="text"
+                    autocomplete="off"
+                    spellcheck="false"
+                    placeholder="ONV-XXXXXXXXXX"
+                    class="mt-3 min-h-11 w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm font-bold tracking-wide text-gray-900 outline-none transition focus:border-red-500 focus:ring-4 focus:ring-red-100"
+                  />
+                </label>
+
+                <button id="cancellation-execute-button" type="button" disabled aria-disabled="true" class="mt-4 min-h-12 w-full rounded-xl border border-stone-300 bg-stone-200 px-5 py-3 text-sm font-bold text-stone-500 shadow-sm transition">返金して予約をキャンセル</button>
+              </div>
+
+              <div id="cancellation-success" class="hidden rounded-2xl border border-green-200 bg-green-50 p-5" role="status">
+                <p class="text-sm font-bold text-green-900">返金・キャンセルが完了しました</p>
+                <p id="cancellation-success-detail" class="mt-2 text-sm leading-6 text-green-800"></p>
+              </div>
+
+              <div class="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+                <button id="cancellation-cancel-button" type="button" class="min-h-11 rounded-xl border border-stone-300 bg-white px-5 py-2.5 text-sm font-bold text-gray-700 hover:bg-stone-50">閉じる</button>
+                <button id="cancellation-preview-button" type="button" class="min-h-11 rounded-xl bg-green-800 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60">返金額を計算</button>
+              </div>
+
+              <div id="cancellation-safety-note" class="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs leading-6 text-amber-900">
+                「返金額を計算」だけでは返金されません。金額確認後、赤い確認欄で明示的に実行した場合のみStripe返金・予約キャンセル・在庫解放を行います。
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script is:inline>
+    (() => {
+      const API_URL = 'https://oshima-new-villa-booking-api-dev.info-koueisha.workers.dev/api/admin/bookings';
+      const CANCELLATION_PREVIEW_URL = 'https://oshima-new-villa-booking-api-dev.info-koueisha.workers.dev/api/admin/cancellation-preview';
+      const CANCEL_REFUND_URL = 'https://oshima-new-villa-booking-api-dev.info-koueisha.workers.dev/api/admin/cancel-refund';
+      const TOKEN_KEY = 'onv_admin_dashboard_token';
+
+      const authPanel = document.getElementById('auth-panel');
+      const authForm = document.getElementById('auth-form');
+      const tokenInput = document.getElementById('admin-token');
+      const authSubmit = document.getElementById('auth-submit');
+      const authMessage = document.getElementById('auth-message');
+      const dashboard = document.getElementById('dashboard');
+      const refreshButton = document.getElementById('refresh-button');
+      const logoutButton = document.getElementById('logout-button');
+      const loadingState = document.getElementById('loading-state');
+      const emptyState = document.getElementById('empty-state');
+      const tableBody = document.getElementById('booking-table-body');
+      const mobileCards = document.getElementById('mobile-cards');
+      const searchInput = document.getElementById('search-input');
+      const resultCount = document.getElementById('result-count');
+      const filterButtons = Array.from(document.querySelectorAll('.filter-button'));
+      const cancellationModal = document.getElementById('cancellation-modal');
+      const cancellationModalClose = document.getElementById('cancellation-modal-close');
+      const cancellationCancelButton = document.getElementById('cancellation-cancel-button');
+      const cancellationPreviewButton = document.getElementById('cancellation-preview-button');
+      const cancellationReason = document.getElementById('cancellation-reason');
+      const cancellationBookingSummary = document.getElementById('cancellation-booking-summary');
+      const cancellationPreviewPlaceholder = document.getElementById('cancellation-preview-placeholder');
+      const cancellationPreviewResult = document.getElementById('cancellation-preview-result');
+      const cancellationPreviewError = document.getElementById('cancellation-preview-error');
+      const previewDays = document.getElementById('preview-days');
+      const previewRate = document.getElementById('preview-rate');
+      const previewFee = document.getElementById('preview-fee');
+      const previewRefund = document.getElementById('preview-refund');
+      const previewPolicyNote = document.getElementById('preview-policy-note');
+      const cancellationAdminNote = document.getElementById('cancellation-admin-note');
+      const cancellationExecutePanel = document.getElementById('cancellation-execute-panel');
+      const cancellationExecuteSummary = document.getElementById('cancellation-execute-summary');
+      const cancellationFinalConfirm = document.getElementById('cancellation-final-confirm');
+      const cancellationConfirmCodeGuide = document.getElementById('cancellation-confirm-code-guide');
+      const cancellationConfirmCode = document.getElementById('cancellation-confirm-code');
+      const cancellationExecuteButton = document.getElementById('cancellation-execute-button');
+      const cancellationSuccess = document.getElementById('cancellation-success');
+      const cancellationSuccessDetail = document.getElementById('cancellation-success-detail');
+      const cancellationSafetyNote = document.getElementById('cancellation-safety-note');
+           
+      let bookings = [];
+      let activeFilter = 'all';
+      let cancellationTarget = null;
+      let cancellationPreviewData = null;
+
+      function syncCancellationExecuteButton() {
+        const expectedCode = cancellationTarget?.public_booking_code || '';
+        const enteredCode = cancellationConfirmCode.value.trim();
+        const canExecute = Boolean(
+          cancellationFinalConfirm.checked &&
+          cancellationPreviewData?.cancellation &&
+          !cancellationExecutePanel.classList.contains('hidden') &&
+          expectedCode &&
+          enteredCode === expectedCode
+        );
+
+        cancellationExecuteButton.disabled = !canExecute;
+        cancellationExecuteButton.setAttribute('aria-disabled', String(!canExecute));
+
+        // 金銭操作なので、有効・無効を色でも明確に区別する。
+        if (canExecute) {
+          cancellationExecuteButton.style.backgroundColor = '#b91c1c';
+          cancellationExecuteButton.style.borderColor = '#991b1b';
+          cancellationExecuteButton.style.color = '#ffffff';
+          cancellationExecuteButton.style.cursor = 'pointer';
+          cancellationExecuteButton.style.opacity = '1';
+        } else {
+          cancellationExecuteButton.style.backgroundColor = '#e7e5e4';
+          cancellationExecuteButton.style.borderColor = '#d6d3d1';
+          cancellationExecuteButton.style.color = '#78716c';
+          cancellationExecuteButton.style.cursor = 'not-allowed';
+          cancellationExecuteButton.style.opacity = '1';
+        }
+      }
+
+      const yen = new Intl.NumberFormat('ja-JP', {
+        style: 'currency',
+        currency: 'JPY',
+        maximumFractionDigits: 0,
+      });
+
+      const dateFormatter = new Intl.DateTimeFormat('ja-JP', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      });
+
+      function escapeHtml(value) {
+        return String(value ?? '')
+          .replaceAll('&', '&amp;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;')
+          .replaceAll('"', '&quot;')
+          .replaceAll("'", '&#039;');
+      }
+
+      function formatDate(value) {
+        if (!value) return '—';
+        const date = new Date(`${value}T00:00:00`);
+        return Number.isNaN(date.getTime()) ? value : dateFormatter.format(date);
+      }
+
+      function formatDateTime(value) {
+        if (!value) return '—';
+        return String(value).replace('T', ' ').slice(0, 16);
+      }
+
+      function statusLabel(status) {
+        const labels = {
+          confirmed: '確定',
+          pending_payment: '支払待ち',
+          expired: '期限切れ',
+          cancelled: 'キャンセル',
+        };
+        return labels[status] || status || '—';
+      }
+
+      function statusClass(status) {
+        if (status === 'confirmed') return 'bg-green-50 text-green-800 border-green-200';
+        if (status === 'pending_payment') return 'bg-amber-50 text-amber-800 border-amber-200';
+        if (status === 'expired') return 'bg-stone-100 text-stone-600 border-stone-200';
+        if (status === 'cancelled') return 'bg-red-50 text-red-700 border-red-200';
+        return 'bg-stone-50 text-stone-700 border-stone-200';
+      }
+
+      function paymentLabel(status) {
+        const labels = {
+          paid: '支払済み',
+          unpaid: '未払い',
+          refunded: '返金済み',
+          partially_refunded: '一部返金',
+        };
+        return labels[status] || status || '—';
+      }
+
+      function inventoryLabel(type) {
+        if (type === 'booking') return '本予約';
+        if (type === 'hold') return '仮押さえ';
+        return '—';
+      }
+
+      function reasonLabel(reason) {
+        const labels = {
+          guest_request: 'お客様都合',
+          transport_cancellation: '船・航空便の正式欠航',
+          facility_reason: '施設都合',
+          other: 'その他',
+        };
+        return labels[reason] || reason;
+      }
+
+      function canPreviewCancellation(booking) {
+        return booking?.status === 'confirmed' && booking?.payment_status === 'paid';
+      }
+
+      function closeCancellationModal() {
+        cancellationTarget = null;
+        cancellationPreviewData = null;
+        cancellationModal.classList.add('hidden');
+        cancellationModal.classList.remove('flex');
+        cancellationModal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('overflow-hidden');
+      }
+
+      function openCancellationModal(bookingCode) {
+        const booking = bookings.find((item) => item.public_booking_code === bookingCode);
+        if (!booking || !canPreviewCancellation(booking)) return;
+
+        cancellationTarget = booking;
+        cancellationReason.value = 'guest_request';
+        cancellationBookingSummary.textContent = `${booking.public_booking_code} / ${booking.customer_name} / ${formatDate(booking.check_in_date)}〜${formatDate(booking.check_out_date)} / ${yen.format(Number(booking.total_jpy || 0))}`;
+        cancellationPreviewPlaceholder.classList.remove('hidden');
+        cancellationPreviewResult.classList.add('hidden');
+        cancellationPreviewError.classList.add('hidden');
+        cancellationPreviewError.textContent = '';
+        cancellationPreviewButton.disabled = false;
+        cancellationPreviewButton.classList.remove('hidden');
+        cancellationPreviewButton.textContent = '返金額を計算';
+        cancellationAdminNote.value = '';
+        cancellationPreviewData = null;
+        cancellationExecutePanel.classList.add('hidden');
+        cancellationFinalConfirm.checked = false;
+        cancellationConfirmCode.value = '';
+        cancellationConfirmCodeGuide.textContent = `「${booking.public_booking_code}」と入力したときだけ実行できます。`;
+        cancellationExecuteButton.textContent = '返金して予約をキャンセル';
+        syncCancellationExecuteButton();
+        cancellationSuccess.classList.add('hidden');
+        cancellationSuccessDetail.textContent = '';
+        cancellationSafetyNote.classList.remove('hidden');
+
+        cancellationModal.classList.remove('hidden');
+        cancellationModal.classList.add('flex');
+        cancellationModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('overflow-hidden');
+        cancellationReason.focus();
+      }
+
+      function setAuthMessage(message, type = 'error') {
+        authMessage.textContent = message;
+        authMessage.className = `mt-4 rounded-xl px-4 py-3 text-sm leading-6 ${
+          type === 'error'
+            ? 'bg-red-50 text-red-700'
+            : 'bg-green-50 text-green-800'
+        }`;
+        authMessage.classList.remove('hidden');
+      }
+
+      function updateSummary() {
+        const confirmed = bookings.filter((b) => b.status === 'confirmed');
+        const pending = bookings.filter((b) => b.status === 'pending_payment');
+        const expired = bookings.filter((b) => b.status === 'expired');
+        const sales = confirmed
+          .filter((b) => b.payment_status === 'paid')
+          .reduce((sum, b) => sum + Number(b.total_jpy || 0), 0);
+
+        document.getElementById('summary-confirmed').textContent = String(confirmed.length);
+        document.getElementById('summary-pending').textContent = String(pending.length);
+        document.getElementById('summary-expired').textContent = String(expired.length);
+        document.getElementById('summary-sales').textContent = yen.format(sales);
+      }
+
+      function filteredBookings() {
+        const query = searchInput.value.trim().toLowerCase();
+        return bookings.filter((booking) => {
+          if (activeFilter !== 'all' && booking.status !== activeFilter) return false;
+          if (!query) return true;
+          const haystack = [
+            booking.public_booking_code,
+            booking.customer_name,
+            booking.customer_email,
+            booking.customer_phone,
+            booking.check_in_date,
+            booking.check_out_date,
+          ]
+            .filter(Boolean)
+            .join(' ')
+            .toLowerCase();
+          return haystack.includes(query);
+        });
+      }
+
+      function render() {
+        const rows = filteredBookings();
+        resultCount.textContent = `${rows.length}件表示 / 全${bookings.length}件`;
+        emptyState.classList.toggle('hidden', rows.length !== 0);
+
+        tableBody.innerHTML = rows
+          .map((b) => `
+            <tr class="align-top hover:bg-stone-50/70">
+              <td class="px-5 py-4">
+                <div class="font-bold text-gray-950">${escapeHtml(b.public_booking_code)}</div>
+                <div class="mt-1 text-xs text-gray-400">${escapeHtml(b.product_id)}</div>
+              </td>
+              <td class="px-5 py-4 whitespace-nowrap">
+                <div class="font-medium text-gray-900">${escapeHtml(formatDate(b.check_in_date))}</div>
+                <div class="mt-1 text-xs text-gray-500">〜 ${escapeHtml(formatDate(b.check_out_date))} / ${escapeHtml(b.nights)}泊</div>
+              </td>
+              <td class="px-5 py-4 min-w-[230px]">
+                <div class="font-bold text-gray-900">${escapeHtml(b.customer_name)}</div>
+                <a class="mt-1 block text-xs text-blue-700 hover:underline" href="mailto:${encodeURIComponent(b.customer_email || '')}">${escapeHtml(b.customer_email)}</a>
+                <a class="mt-1 block text-xs text-gray-500 hover:underline" href="tel:${escapeHtml(b.customer_phone || '')}">${escapeHtml(b.customer_phone)}</a>
+              </td>
+              <td class="px-5 py-4 whitespace-nowrap font-medium text-gray-900">${escapeHtml(b.guest_count)}名</td>
+              <td class="px-5 py-4 whitespace-nowrap font-bold text-gray-950">${yen.format(Number(b.total_jpy || 0))}</td>
+              <td class="px-5 py-4"><span class="inline-flex rounded-full border px-2.5 py-1 text-xs font-bold ${statusClass(b.status)}">${escapeHtml(statusLabel(b.status))}</span></td>
+              <td class="px-5 py-4 whitespace-nowrap text-gray-700">${escapeHtml(paymentLabel(b.payment_status))}</td>
+              <td class="px-5 py-4 whitespace-nowrap text-gray-700">${escapeHtml(inventoryLabel(b.inventory_type))}</td>
+              <td class="px-5 py-4 whitespace-nowrap text-xs text-gray-500">${escapeHtml(formatDateTime(b.created_at))}</td>
+              <td class="px-5 py-4 whitespace-nowrap">
+                ${canPreviewCancellation(b) ? `
+                  <button type="button" data-cancellation-preview="${escapeHtml(b.public_booking_code)}" class="rounded-lg border border-red-200 bg-white px-3 py-2 text-xs font-bold text-red-700 transition hover:bg-red-50">キャンセル・返金</button>
+                ` : '<span class="text-xs text-gray-400">—</span>'}
+              </td>
+            </tr>
+          `)
+          .join('');
+
+        mobileCards.innerHTML = rows
+          .map((b) => `
+            <article class="p-6 md:p-7">
+              <div class="flex items-start justify-between gap-5 pr-1">
+                <div>
+                  <p class="text-xs font-bold text-green-700">${escapeHtml(b.public_booking_code)}</p>
+                  <h3 class="mt-1 font-serif text-xl font-bold text-gray-950">${escapeHtml(b.customer_name)}</h3>
+                </div>
+                <span class="mt-1 mr-1 inline-flex shrink-0 whitespace-nowrap rounded-full border px-3 py-1.5 text-xs font-bold ${statusClass(b.status)}">${escapeHtml(statusLabel(b.status))}</span>
+              </div>
+              <dl class="mt-5 grid grid-cols-2 gap-x-4 gap-y-4 text-sm">
+                <div class="col-span-2">
+                  <dt class="text-xs font-bold text-gray-500">宿泊日</dt>
+                  <dd class="mt-1 font-medium text-gray-900">${escapeHtml(formatDate(b.check_in_date))} 〜 ${escapeHtml(formatDate(b.check_out_date))} / ${escapeHtml(b.nights)}泊</dd>
+                </div>
+                <div>
+                  <dt class="text-xs font-bold text-gray-500">人数</dt>
+                  <dd class="mt-1 font-medium text-gray-900">${escapeHtml(b.guest_count)}名</dd>
+                </div>
+                <div>
+                  <dt class="text-xs font-bold text-gray-500">金額</dt>
+                  <dd class="mt-1 font-bold text-gray-950">${yen.format(Number(b.total_jpy || 0))}</dd>
+                </div>
+                <div>
+                  <dt class="text-xs font-bold text-gray-500">決済</dt>
+                  <dd class="mt-1 text-gray-800">${escapeHtml(paymentLabel(b.payment_status))}</dd>
+                </div>
+                <div>
+                  <dt class="text-xs font-bold text-gray-500">在庫</dt>
+                  <dd class="mt-1 text-gray-800">${escapeHtml(inventoryLabel(b.inventory_type))}</dd>
+                </div>
+                <div class="col-span-2 border-t border-stone-100 pt-4">
+                  <dt class="text-xs font-bold text-gray-500">連絡先</dt>
+                  <dd class="mt-1 break-all">
+                    <a class="text-blue-700 hover:underline" href="mailto:${encodeURIComponent(b.customer_email || '')}">${escapeHtml(b.customer_email)}</a><br />
+                    <a class="text-gray-700 hover:underline" href="tel:${escapeHtml(b.customer_phone || '')}">${escapeHtml(b.customer_phone)}</a>
+                  </dd>
+                </div>
+              </dl>
+              ${canPreviewCancellation(b) ? `
+                <div class="mt-5 border-t border-stone-100 pt-5">
+                  <button type="button" data-cancellation-preview="${escapeHtml(b.public_booking_code)}" class="w-full rounded-xl border border-red-200 bg-white px-4 py-3 text-sm font-bold text-red-700 transition hover:bg-red-50">キャンセル・返金を確認</button>
+                </div>
+              ` : ''}
+            </article>
+          `)
+          .join('');
+      }
+
+      async function loadCancellationPreview() {
+        if (!cancellationTarget) return;
+        const token = sessionStorage.getItem(TOKEN_KEY);
+        if (!token) {
+          closeCancellationModal();
+          setAuthMessage('管理者トークンを再入力してください。');
+          authPanel.classList.remove('hidden');
+          dashboard.classList.add('hidden');
+          return;
+        }
+
+        cancellationPreviewButton.disabled = true;
+        cancellationPreviewButton.textContent = '計算中…';
+        cancellationPreviewError.classList.add('hidden');
+
+        try {
+          const response = await fetch(CANCELLATION_PREVIEW_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              booking_code: cancellationTarget.public_booking_code,
+              reason_code: cancellationReason.value,
+            }),
+          });
+
+          const data = await response.json().catch(() => null);
+
+          if (response.status === 401) {
+            sessionStorage.removeItem(TOKEN_KEY);
+            throw new Error('管理者トークンが一致しません。');
+          }
+
+          if (!response.ok || !data?.ok || !data.cancellation) {
+            if (data?.error === 'booking_not_cancellable') {
+              throw new Error('この予約は現在キャンセル・返金対象ではありません。');
+            }
+            throw new Error('キャンセル料を計算できませんでした。');
+          }
+
+          const cancellation = data.cancellation;
+          cancellationPreviewData = data;
+          previewDays.textContent = `${cancellation.days_until_check_in}日`;
+          previewRate.textContent = `${cancellation.policy_rate}%`;
+          previewFee.textContent = yen.format(Number(cancellation.cancellation_fee_jpy || 0));
+          previewRefund.textContent = yen.format(Number(cancellation.refund_amount_jpy || 0));
+          previewPolicyNote.textContent = `${reasonLabel(cancellation.reason_code)}として計算。宿泊料金 ${yen.format(Number(data.booking?.total_jpy || cancellationTarget.total_jpy || 0))} に対し、キャンセル料 ${cancellation.policy_rate}% を適用しています。`;
+          cancellationPreviewPlaceholder.classList.add('hidden');
+          cancellationPreviewResult.classList.remove('hidden');
+          cancellationExecuteSummary.textContent = `${cancellationTarget.public_booking_code} をキャンセルし、${yen.format(Number(cancellation.refund_amount_jpy || 0))} をStripeで返金します。キャンセル料は ${yen.format(Number(cancellation.cancellation_fee_jpy || 0))}（${cancellation.policy_rate}%）です。`;
+          cancellationFinalConfirm.checked = false;
+          cancellationConfirmCode.value = '';
+          cancellationConfirmCodeGuide.textContent = `「${cancellationTarget.public_booking_code}」と入力したときだけ実行できます。`;
+          cancellationExecuteButton.textContent = Number(cancellation.refund_amount_jpy || 0) > 0
+            ? `${yen.format(Number(cancellation.refund_amount_jpy || 0))}を返金して予約をキャンセル`
+            : '返金なしで予約をキャンセル';
+          cancellationExecutePanel.classList.remove('hidden');
+          syncCancellationExecuteButton();
+          cancellationSuccess.classList.add('hidden');
+        } catch (error) {
+          cancellationPreviewError.textContent = error instanceof Error ? error.message : 'キャンセル料を計算できませんでした。';
+          cancellationPreviewError.classList.remove('hidden');
+          cancellationPreviewResult.classList.add('hidden');
+          cancellationPreviewPlaceholder.classList.remove('hidden');
+          cancellationPreviewData = null;
+          cancellationExecutePanel.classList.add('hidden');
+          cancellationFinalConfirm.checked = false;
+          cancellationConfirmCode.value = '';
+          syncCancellationExecuteButton();
+        } finally {
+          cancellationPreviewButton.disabled = false;
+          cancellationPreviewButton.textContent = '返金額を再計算';
+        }
+      }
+
+      async function executeCancellationRefund() {
+        if (!cancellationTarget || !cancellationPreviewData?.cancellation) return;
+        if (!cancellationFinalConfirm.checked) return;
+        if (cancellationConfirmCode.value.trim() !== cancellationTarget.public_booking_code) return;
+
+        const refundAmount = Number(cancellationPreviewData.cancellation.refund_amount_jpy || 0);
+        const finalMessage = refundAmount > 0
+          ? `${yen.format(refundAmount)}をStripeで返金し、予約 ${cancellationTarget.public_booking_code} をキャンセルします。\n\nこの操作は取り消せません。実行しますか？`
+          : `返金なしで予約 ${cancellationTarget.public_booking_code} をキャンセルします。\n\nこの操作は取り消せません。実行しますか？`;
+
+        if (!window.confirm(finalMessage)) return;
+
+        const token = sessionStorage.getItem(TOKEN_KEY);
+        if (!token) {
+          closeCancellationModal();
+          setAuthMessage('管理者トークンを再入力してください。');
+          authPanel.classList.remove('hidden');
+          dashboard.classList.add('hidden');
+          return;
+        }
+
+        cancellationExecuteButton.disabled = true;
+        cancellationPreviewButton.disabled = true;
+        cancellationCancelButton.disabled = true;
+        cancellationModalClose.disabled = true;
+        cancellationExecuteButton.textContent = '返金処理中…';
+        cancellationPreviewError.classList.add('hidden');
+
+        try {
+          const response = await fetch(CANCEL_REFUND_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              booking_code: cancellationTarget.public_booking_code,
+              reason_code: cancellationReason.value,
+              admin_note: cancellationAdminNote.value.trim(),
+              confirm: true,
+            }),
+          });
+
+          const data = await response.json().catch(() => null);
+
+          if (response.status === 401) {
+            sessionStorage.removeItem(TOKEN_KEY);
+            throw new Error('管理者トークンが一致しません。');
+          }
+
+          if (!response.ok || !data?.ok) {
+            if (data?.error === 'already_cancelled') {
+              throw new Error('この予約はすでにキャンセル・返金処理済みです。');
+            }
+            if (data?.error === 'stripe_refund_failed') {
+              throw new Error('Stripe返金に失敗しました。予約はキャンセル確定していません。Stripeと履歴を確認してください。');
+            }
+            if (data?.error === 'booking_not_cancellable') {
+              throw new Error('この予約は現在キャンセル・返金対象ではありません。');
+            }
+            throw new Error('返金・キャンセル処理を完了できませんでした。');
+          }
+
+          const refund = Number(data.cancellation?.refund_amount_jpy || 0);
+          cancellationExecutePanel.classList.add('hidden');
+          cancellationPreviewButton.classList.add('hidden');
+          cancellationSafetyNote.classList.add('hidden');
+          cancellationSuccessDetail.textContent = refund > 0
+            ? `${yen.format(refund)} のStripe返金が ${data.stripe?.refund_status === 'succeeded' ? '完了' : '受付'}されました。予約はキャンセル済みとなり、在庫も解放されました。${data.stripe?.refund_id ? ` 返金ID: ${data.stripe.refund_id}` : ''}`
+            : '予約をキャンセルし、在庫を解放しました。今回の返金額は¥0です。';
+          cancellationSuccess.classList.remove('hidden');
+
+          await loadBookings(token);
+        } catch (error) {
+          cancellationPreviewError.textContent = error instanceof Error ? error.message : '返金・キャンセル処理を完了できませんでした。';
+          cancellationPreviewError.classList.remove('hidden');
+          syncCancellationExecuteButton();
+          cancellationExecuteButton.textContent = cancellationPreviewData?.cancellation?.refund_amount_jpy > 0
+            ? `${yen.format(Number(cancellationPreviewData.cancellation.refund_amount_jpy))}を返金して予約をキャンセル`
+            : '返金なしで予約をキャンセル';
+        } finally {
+          cancellationPreviewButton.disabled = false;
+          cancellationCancelButton.disabled = false;
+          cancellationModalClose.disabled = false;
+          syncCancellationExecuteButton();
+        }
+      }
+
+      async function loadBookings(token) {
+        loadingState.classList.remove('hidden');
+        emptyState.classList.add('hidden');
+        authSubmit.disabled = true;
+        refreshButton.disabled = true;
+
+        try {
+          const response = await fetch(API_URL, {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          const data = await response.json().catch(() => null);
+
+          if (response.status === 401) {
+            sessionStorage.removeItem(TOKEN_KEY);
+            throw new Error('管理者トークンが一致しません。');
+          }
+
+          if (!response.ok || !data?.ok || !Array.isArray(data.bookings)) {
+            throw new Error('予約一覧を取得できませんでした。');
+          }
+
+          bookings = data.bookings;
+          sessionStorage.setItem(TOKEN_KEY, token);
+          authPanel.classList.add('hidden');
+          dashboard.classList.remove('hidden');
+          refreshButton.classList.remove('hidden');
+          refreshButton.classList.add('inline-flex');
+          logoutButton.classList.remove('hidden');
+          logoutButton.classList.add('inline-flex');
+          updateSummary();
+          render();
+        } catch (error) {
+          dashboard.classList.add('hidden');
+          authPanel.classList.remove('hidden');
+          setAuthMessage(error instanceof Error ? error.message : '予約一覧を取得できませんでした。');
+        } finally {
+          loadingState.classList.add('hidden');
+          authSubmit.disabled = false;
+          refreshButton.disabled = false;
+        }
+      }
+
+      authForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        authMessage.classList.add('hidden');
+        const token = tokenInput.value.trim();
+        if (!token) return;
+        loadBookings(token);
+      });
+
+      refreshButton.addEventListener('click', () => {
+        const token = sessionStorage.getItem(TOKEN_KEY);
+        if (token) loadBookings(token);
+      });
+
+      logoutButton.addEventListener('click', () => {
+        sessionStorage.removeItem(TOKEN_KEY);
+        tokenInput.value = '';
+        bookings = [];
+        dashboard.classList.add('hidden');
+        refreshButton.classList.add('hidden');
+        refreshButton.classList.remove('inline-flex');
+        logoutButton.classList.add('hidden');
+        logoutButton.classList.remove('inline-flex');
+        authPanel.classList.remove('hidden');
+        authMessage.classList.add('hidden');
+        tokenInput.focus();
+      });
+
+      searchInput.addEventListener('input', render);
+
+      filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          activeFilter = button.dataset.filter || 'all';
+          filterButtons.forEach((item) => {
+            const active = item === button;
+            item.classList.toggle('bg-green-800', active);
+            item.classList.toggle('text-white', active);
+            item.classList.toggle('border', !active);
+            item.classList.toggle('border-stone-300', !active);
+            item.classList.toggle('bg-white', !active);
+            item.classList.toggle('text-gray-700', !active);
+          });
+          render();
+        });
+      });
+
+      dashboard.addEventListener('click', (event) => {
+        const target = event.target.closest('[data-cancellation-preview]');
+        if (!target) return;
+        const bookingCode = target.getAttribute('data-cancellation-preview');
+        if (bookingCode) openCancellationModal(bookingCode);
+      });
+
+      cancellationPreviewButton.addEventListener('click', loadCancellationPreview);
+      cancellationReason.addEventListener('change', () => {
+        cancellationPreviewPlaceholder.classList.remove('hidden');
+        cancellationPreviewResult.classList.add('hidden');
+        cancellationPreviewError.classList.add('hidden');
+        cancellationPreviewData = null;
+        cancellationExecutePanel.classList.add('hidden');
+        cancellationFinalConfirm.checked = false;
+        cancellationConfirmCode.value = '';
+        syncCancellationExecuteButton();
+        cancellationPreviewButton.textContent = '返金額を計算';
+      });
+      cancellationFinalConfirm.addEventListener('input', syncCancellationExecuteButton);
+      cancellationFinalConfirm.addEventListener('change', syncCancellationExecuteButton);
+      cancellationConfirmCode.addEventListener('input', syncCancellationExecuteButton);
+      cancellationConfirmCode.addEventListener('change', syncCancellationExecuteButton);
+      cancellationExecuteButton.addEventListener('click', executeCancellationRefund);
+      cancellationModalClose.addEventListener('click', closeCancellationModal);
+      cancellationCancelButton.addEventListener('click', closeCancellationModal);
+      cancellationModal.addEventListener('click', (event) => {
+        if (event.target === cancellationModal) closeCancellationModal();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !cancellationModal.classList.contains('hidden')) {
+          closeCancellationModal();
+        }
+      });
+
+      const existingToken = sessionStorage.getItem(TOKEN_KEY);
+      if (existingToken) {
+        tokenInput.value = existingToken;
+        loadBookings(existingToken);
+      }
+    })();
+  </script>
+</Layout>
