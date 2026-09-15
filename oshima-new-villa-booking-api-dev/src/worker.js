@@ -199,6 +199,470 @@ function getCancellationPolicyRate(
   return 100;
 }
 
+
+function getCancellationReasonLabel(
+  reasonCode
+) {
+  const labels = {
+    guest_request: "お客様都合",
+    transport_cancellation:
+      "船・航空便の正式欠航",
+    facility_reason: "施設都合",
+    other: "その他",
+  };
+
+  return labels[reasonCode] || "その他";
+}
+
+function escapeEmailHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+/*
+ * お客様へキャンセル・返金完了メールを送信する。
+ *
+ * メール障害では予約キャンセル・Stripe返金を失敗扱いにしない。
+ * cancellation_email_deliveries で二重送信を防止する。
+ */
+async function sendCancellationCompletionEmail(
+  env,
+  bookingId
+) {
+  const emailBooking =
+    await env.DB
+      .prepare(`
+        SELECT
+          b.id,
+          b.public_booking_code,
+          b.customer_name,
+          b.customer_email,
+          b.check_in_date,
+          b.check_out_date,
+          b.guest_count,
+          b.total_jpy,
+
+          p.name AS product_name,
+
+          c.reason_code,
+          c.policy_rate,
+          c.cancellation_fee_jpy,
+          c.refund_amount_jpy,
+          c.stripe_refund_id,
+          c.stripe_refund_status
+
+        FROM bookings b
+
+        JOIN products p
+          ON p.id = b.product_id
+
+        JOIN booking_cancellations c
+          ON c.booking_id = b.id
+
+        WHERE b.id = ?
+        LIMIT 1
+      `)
+      .bind(bookingId)
+      .first();
+
+  if (!emailBooking?.customer_email) {
+    return "skipped";
+  }
+
+  const existingDelivery =
+    await env.DB
+      .prepare(`
+        SELECT
+          id,
+          status
+        FROM cancellation_email_deliveries
+        WHERE booking_id = ?
+        LIMIT 1
+      `)
+      .bind(bookingId)
+      .first();
+
+  if (existingDelivery?.status === "sent") {
+    return "already_sent";
+  }
+
+  const deliveryId =
+    existingDelivery?.id ||
+    crypto.randomUUID();
+
+  if (!existingDelivery) {
+    await env.DB
+      .prepare(`
+        INSERT INTO cancellation_email_deliveries (
+          id,
+          booking_id,
+          recipient_email,
+          status
+        )
+        VALUES (?, ?, ?, 'pending')
+      `)
+      .bind(
+        deliveryId,
+        bookingId,
+        emailBooking.customer_email
+      )
+      .run();
+  } else {
+    await env.DB
+      .prepare(`
+        UPDATE cancellation_email_deliveries
+        SET
+          recipient_email = ?,
+          status = 'pending',
+          last_error = NULL,
+          updated_at = CURRENT_TIMESTAMP
+        WHERE id = ?
+      `)
+      .bind(
+        emailBooking.customer_email,
+        deliveryId
+      )
+      .run();
+  }
+
+  const formattedTotal =
+    Number(
+      emailBooking.total_jpy || 0
+    ).toLocaleString("ja-JP");
+
+  const formattedFee =
+    Number(
+      emailBooking.cancellation_fee_jpy || 0
+    ).toLocaleString("ja-JP");
+
+  const formattedRefund =
+    Number(
+      emailBooking.refund_amount_jpy || 0
+    ).toLocaleString("ja-JP");
+
+  const reasonLabel =
+    getCancellationReasonLabel(
+      emailBooking.reason_code
+    );
+
+  let refundMessageText = "";
+
+  let refundMessageHtml = "";
+
+  if (
+    Number(
+      emailBooking.refund_amount_jpy || 0
+    ) <= 0
+  ) {
+    refundMessageText =
+      "今回の返金額は0円です。";
+
+    refundMessageHtml =
+      "今回の返金額は<strong>0円</strong>です。";
+  } else if (
+    emailBooking.stripe_refund_status ===
+    "succeeded"
+  ) {
+    refundMessageText =
+      "Stripeで返金処理は完了しています。カード会社側での返金反映時期は、ご利用のカード会社によって異なります。";
+
+    refundMessageHtml =
+      "Stripeで<strong>返金処理は完了しています。</strong><br>カード会社側での返金反映時期は、ご利用のカード会社によって異なります。";
+  } else {
+    refundMessageText =
+      "Stripeで返金処理を受け付けています。カード会社側への反映まで時間がかかる場合があります。";
+
+    refundMessageHtml =
+      "Stripeで<strong>返金処理を受け付けています。</strong><br>カード会社側への反映まで時間がかかる場合があります。";
+  }
+
+  const subject =
+    `【大島ニュービラ】ご予約キャンセルのお知らせ｜${emailBooking.public_booking_code}`;
+
+  const textBody = `
+${emailBooking.customer_name} 様
+
+大島ニュービラをご予約いただき、ありがとうございました。
+以下のご予約について、キャンセル手続きが完了しました。
+
+■ 予約番号
+${emailBooking.public_booking_code}
+
+■ 宿泊施設
+${emailBooking.product_name}
+
+■ チェックイン
+${emailBooking.check_in_date}
+
+■ チェックアウト
+${emailBooking.check_out_date}
+
+■ 宿泊人数
+${emailBooking.guest_count}名
+
+■ キャンセル理由
+${reasonLabel}
+
+■ お支払い済み金額
+¥${formattedTotal}
+
+■ キャンセル料率
+${emailBooking.policy_rate}%
+
+■ キャンセル料
+¥${formattedFee}
+
+■ 返金額
+¥${formattedRefund}
+
+${refundMessageText}
+
+ご不明な点がございましたら、大島ニュービラまでお問い合わせください。
+
+大島ニュービラ
+https://oshima-new-villa.com/
+
+※このメールは自社予約システムより自動送信されています。
+  `.trim();
+
+  const htmlBody = `
+<div style="
+  max-width:640px;
+  margin:0 auto;
+  font-family:
+    Arial,
+    'Hiragino Kaku Gothic ProN',
+    'Yu Gothic',
+    sans-serif;
+  color:#222;
+  line-height:1.8;
+">
+
+  <h2 style="margin-bottom:8px;">
+    大島ニュービラ
+  </h2>
+
+  <p>
+    ${escapeEmailHtml(
+      emailBooking.customer_name
+    )} 様
+  </p>
+
+  <p>
+    大島ニュービラをご予約いただき、
+    ありがとうございました。<br>
+    以下のご予約について、
+    <strong>キャンセル手続きが完了しました。</strong>
+  </p>
+
+  <div style="
+    background:#f7f7f7;
+    padding:20px;
+    margin:24px 0;
+    border-radius:8px;
+  ">
+
+    <p>
+      <strong>予約番号</strong><br>
+      ${escapeEmailHtml(
+        emailBooking.public_booking_code
+      )}
+    </p>
+
+    <p>
+      <strong>宿泊施設</strong><br>
+      ${escapeEmailHtml(
+        emailBooking.product_name
+      )}
+    </p>
+
+    <p>
+      <strong>宿泊日</strong><br>
+      ${escapeEmailHtml(
+        emailBooking.check_in_date
+      )}
+      ～
+      ${escapeEmailHtml(
+        emailBooking.check_out_date
+      )}
+    </p>
+
+    <p>
+      <strong>宿泊人数</strong><br>
+      ${emailBooking.guest_count}名
+    </p>
+
+    <p>
+      <strong>キャンセル理由</strong><br>
+      ${escapeEmailHtml(
+        reasonLabel
+      )}
+    </p>
+
+  </div>
+
+  <div style="
+    border:1px solid #ddd;
+    padding:20px;
+    margin:24px 0;
+    border-radius:8px;
+  ">
+
+    <p>
+      <strong>お支払い済み金額</strong><br>
+      ¥${formattedTotal}
+    </p>
+
+    <p>
+      <strong>キャンセル料率</strong><br>
+      ${emailBooking.policy_rate}%
+    </p>
+
+    <p>
+      <strong>キャンセル料</strong><br>
+      ¥${formattedFee}
+    </p>
+
+    <p style="margin-bottom:8px;">
+      <strong>返金額</strong><br>
+      <span style="
+        font-size:22px;
+        font-weight:bold;
+      ">
+        ¥${formattedRefund}
+      </span>
+    </p>
+
+    <p style="
+      margin-top:16px;
+      margin-bottom:0;
+      font-size:14px;
+    ">
+      ${refundMessageHtml}
+    </p>
+
+  </div>
+
+  <p>
+    ご不明な点がございましたら、
+    大島ニュービラまでお問い合わせください。
+  </p>
+
+  <p>
+    <a href="https://oshima-new-villa.com/">
+      大島ニュービラ公式サイト
+    </a>
+  </p>
+
+  <p style="
+    margin-top:32px;
+    font-size:13px;
+    color:#666;
+  ">
+    ※このメールは大島ニュービラ
+    自社予約システムより
+    自動送信されています。
+  </p>
+
+</div>
+  `.trim();
+
+  const resendResponse =
+    await fetch(
+      "https://api.resend.com/emails",
+      {
+        method: "POST",
+
+        headers: {
+          Authorization:
+            `Bearer ${env.RESEND_API_KEY}`,
+
+          "Content-Type":
+            "application/json",
+
+          "Idempotency-Key":
+            `onv-cancellation-email-${bookingId}`,
+        },
+
+        body: JSON.stringify({
+          from:
+            "大島ニュービラ <booking@oshima-new-villa.com>",
+
+          to: [
+            emailBooking.customer_email,
+          ],
+
+          subject,
+
+          text: textBody,
+
+          html: htmlBody,
+        }),
+      }
+    );
+
+  if (resendResponse.ok) {
+    const resendResult =
+      await resendResponse.json();
+
+    await env.DB
+      .prepare(`
+        UPDATE cancellation_email_deliveries
+        SET
+          resend_email_id = ?,
+          status = 'sent',
+          last_error = NULL,
+          sent_at = CURRENT_TIMESTAMP,
+          updated_at = CURRENT_TIMESTAMP
+        WHERE id = ?
+      `)
+      .bind(
+        resendResult.id,
+        deliveryId
+      )
+      .run();
+
+    return "sent";
+  }
+
+  const resendError =
+    await resendResponse.json()
+      .catch(() => null);
+
+  const errorMessage =
+    String(
+      resendError?.message ||
+      resendError?.name ||
+      "resend_error"
+    ).slice(0, 500);
+
+  await env.DB
+    .prepare(`
+      UPDATE cancellation_email_deliveries
+      SET
+        status = 'failed',
+        last_error = ?,
+        updated_at = CURRENT_TIMESTAMP
+      WHERE id = ?
+    `)
+    .bind(
+      errorMessage,
+      deliveryId
+    )
+    .run();
+
+  console.error(
+    "Cancellation completion email failed:",
+    errorMessage
+  );
+
+  return "failed";
+}
+
 async function sha256(value) {
   const encoded = new TextEncoder().encode(value);
 
@@ -4220,6 +4684,32 @@ if (
         ),
     ]);
 
+    /*
+     * お客様へキャンセル・返金完了メール。
+     *
+     * 送信失敗でも、すでに完了した
+     * Stripe返金・予約キャンセル・在庫解放は
+     * 取り消さない。
+     */
+    let cancellationEmailStatus =
+      "skipped";
+
+    try {
+      cancellationEmailStatus =
+        await sendCancellationCompletionEmail(
+          env,
+          booking.id
+        );
+    } catch (emailError) {
+      cancellationEmailStatus =
+        "failed";
+
+      console.error(
+        "Cancellation completion email error:",
+        emailError
+      );
+    }
+
     return withCors(
       Response.json({
         ok: true,
@@ -4254,6 +4744,9 @@ if (
           refund_status:
             stripeRefundStatus,
         },
+
+        cancellation_email:
+          cancellationEmailStatus,
       }),
       request
     );
