@@ -11,15 +11,63 @@ import Layout from '../../layouts/Layout.astro';
     <div class="mx-auto max-w-3xl px-6">
       <section class="overflow-hidden rounded-3xl border border-green-200 bg-white shadow-sm">
         <div class="bg-green-950 px-6 py-10 text-white md:px-10 md:py-12">
-          <div class="flex h-14 w-14 items-center justify-center rounded-full bg-white/10 text-2xl" aria-hidden="true">✓</div>
-          <p class="mt-6 text-xs font-bold tracking-[0.24em] text-green-200 uppercase">Booking Complete</p>
-          <h1 class="mt-2 font-serif text-3xl font-bold leading-tight md:text-4xl">ご予約ありがとうございます</h1>
-          <p class="mt-4 max-w-2xl text-sm leading-7 text-green-50/90 md:text-base">
-            お支払いを受け付けました。予約確定メールをお送りしていますので、内容をご確認ください。
+          <div
+            id="status-icon"
+            class="flex h-14 w-14 items-center justify-center rounded-full bg-white/10 text-2xl"
+            aria-hidden="true"
+          >…</div>
+
+          <p
+            id="status-kicker"
+            class="mt-6 text-xs font-bold tracking-[0.24em] text-green-200 uppercase"
+          >
+            Booking Verification
+          </p>
+
+          <h1
+            id="status-title"
+            class="mt-2 font-serif text-3xl font-bold leading-tight md:text-4xl"
+          >
+            ご予約を確認しています
+          </h1>
+
+          <p
+            id="status-message"
+            class="mt-4 max-w-2xl text-sm leading-7 text-green-50/90 md:text-base"
+          >
+            お支払い状況と予約確定処理を確認しています。このまま少しお待ちください。
           </p>
         </div>
 
         <div class="p-6 md:p-10">
+          <div
+            id="verification-state"
+            class="rounded-2xl border border-green-100 bg-green-50 p-5 text-sm leading-7 text-green-900"
+            role="status"
+            aria-live="polite"
+          >
+            <div class="flex items-center gap-3">
+              <span
+                class="inline-block h-5 w-5 shrink-0 animate-spin rounded-full border-2 border-green-700 border-r-transparent"
+                aria-hidden="true"
+              ></span>
+              <span id="verification-text">予約確定処理を確認しています…</span>
+            </div>
+          </div>
+
+          <div
+            id="verification-error"
+            class="hidden rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-7 text-amber-950"
+            role="alert"
+          >
+            <p id="verification-error-title" class="font-bold">
+              予約状況を確認できませんでした
+            </p>
+            <p id="verification-error-message" class="mt-2">
+              予約確定メールをご確認ください。数分経ってもメールが届かない場合は、大島ニュービラまでお問い合わせください。
+            </p>
+          </div>
+
           <div id="booking-summary" class="hidden">
             <div class="rounded-2xl bg-stone-50 p-5 md:p-6">
               <dl class="grid gap-5 text-sm sm:grid-cols-2">
@@ -51,25 +99,36 @@ import Layout from '../../layouts/Layout.astro';
             </div>
           </div>
 
-          <div id="booking-summary-fallback" class="rounded-2xl border border-stone-200 bg-stone-50 p-5 text-sm leading-7 text-gray-700">
-            ご予約内容の詳細は、予約確定メールをご確認ください。
-          </div>
+          <div id="after-booking" class="hidden">
+            <div class="mt-8 border-t border-stone-200 pt-7">
+              <h2 class="font-serif text-xl font-bold text-gray-900">このあとについて</h2>
+              <p class="mt-3 text-sm leading-7 text-gray-600">
+                チェックイン方法・アクセス・ご滞在にあたっての重要事項は、宿泊前に改めてご案内します。
+                予約確定メールが届かない場合は、迷惑メールフォルダもご確認ください。
+              </p>
+            </div>
 
-          <div class="mt-8 border-t border-stone-200 pt-7">
-            <h2 class="font-serif text-xl font-bold text-gray-900">このあとについて</h2>
-            <p class="mt-3 text-sm leading-7 text-gray-600">
-              チェックイン方法・アクセス・ご滞在にあたっての重要事項は、宿泊前に改めてご案内します。
-              予約確定メールが届かない場合は、迷惑メールフォルダもご確認ください。
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a
+                href="/guest-guide/"
+                class="inline-flex min-h-12 items-center justify-center rounded-full bg-green-800 px-7 py-3.5 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-green-700"
+              >
+                宿泊ガイドを見る
+              </a>
+              <a
+                href="/"
+                class="inline-flex min-h-12 items-center justify-center rounded-full border border-stone-300 bg-white px-7 py-3.5 text-sm font-bold text-gray-800 transition hover:bg-stone-50"
+              >
+                公式サイトへ戻る
+              </a>
+            </div>
+
+            <p class="mt-8 text-xs leading-6 text-gray-500">
+              ※予約確定メールの送信には、数秒程度かかる場合があります。
             </p>
           </div>
 
-          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a
-              href="/guest-guide/"
-              class="inline-flex min-h-12 items-center justify-center rounded-full bg-green-800 px-7 py-3.5 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-green-700"
-            >
-              宿泊ガイドを見る
-            </a>
+          <div id="fallback-actions" class="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
               href="/"
               class="inline-flex min-h-12 items-center justify-center rounded-full border border-stone-300 bg-white px-7 py-3.5 text-sm font-bold text-gray-800 transition hover:bg-stone-50"
@@ -77,61 +136,333 @@ import Layout from '../../layouts/Layout.astro';
               公式サイトへ戻る
             </a>
           </div>
-
-          <p class="mt-8 text-xs leading-6 text-gray-500">
-            ※決済処理と予約確定メールの送信には、数秒程度かかる場合があります。
-          </p>
         </div>
       </section>
     </div>
   </main>
 
   <script>
-    const formatYen = (value) => {
-      const amount = Number(value);
-      return Number.isFinite(amount) ? `¥${amount.toLocaleString('ja-JP')}` : '—';
-    };
+    (() => {
+      const API_URL =
+        'https://oshima-new-villa-booking-api-dev.info-koueisha.workers.dev/api/booking-confirmation';
 
-    const formatDate = (value) => {
-      if (!value) return '';
-      const [year, month, day] = value.split('-').map(Number);
-      if (!year || !month || !day) return value;
-      return new Intl.DateTimeFormat('ja-JP', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        weekday: 'short',
-      }).format(new Date(year, month - 1, day));
-    };
+      const SESSION_KEY = 'onv_success_checkout_session_id';
+      const MAX_ATTEMPTS = 15;
+      const RETRY_DELAY_MS = 2000;
 
-    try {
-      const raw = sessionStorage.getItem('onv_pending_booking');
-      if (raw) {
-        const booking = JSON.parse(raw);
-        document.getElementById('summary-code').textContent = booking.bookingCode || '—';
-        document.getElementById('summary-product').textContent = booking.productName || 'SALVIA｜集まる家';
-        document.getElementById('summary-dates').textContent = `${formatDate(booking.checkIn)} 〜 ${formatDate(booking.checkOut)} ／ ${booking.nights ?? '—'}泊`;
-        document.getElementById('summary-guests').textContent = `${booking.guestCount ?? '—'}名`;
-        document.getElementById('summary-price').textContent = formatYen(booking.totalPrice);
-        document.getElementById('summary-email').textContent = booking.customerEmail || '—';
-        document.getElementById('booking-summary').classList.remove('hidden');
-        document.getElementById('booking-summary-fallback').classList.add('hidden');
+      const statusIcon = document.getElementById('status-icon');
+      const statusKicker = document.getElementById('status-kicker');
+      const statusTitle = document.getElementById('status-title');
+      const statusMessage = document.getElementById('status-message');
 
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          event: 'booking_complete_page_view',
-          booking_code: booking.bookingCode,
-          booking_product: 'salvia-standard',
-          check_in: booking.checkIn,
-          check_out: booking.checkOut,
-          guest_count: booking.guestCount,
-          nights: booking.nights,
-          value: booking.totalPrice,
-          currency: 'JPY',
-        });
+      const verificationState = document.getElementById('verification-state');
+      const verificationText = document.getElementById('verification-text');
+      const verificationError = document.getElementById('verification-error');
+      const verificationErrorTitle = document.getElementById('verification-error-title');
+      const verificationErrorMessage = document.getElementById('verification-error-message');
+
+      const bookingSummary = document.getElementById('booking-summary');
+      const afterBooking = document.getElementById('after-booking');
+      const fallbackActions = document.getElementById('fallback-actions');
+
+      const formatYen = (value) => {
+        const amount = Number(value);
+        return Number.isFinite(amount)
+          ? `¥${amount.toLocaleString('ja-JP')}`
+          : '—';
+      };
+
+      const formatDate = (value) => {
+        if (!value) return '';
+
+        const [year, month, day] =
+          String(value).split('-').map(Number);
+
+        if (!year || !month || !day) {
+          return String(value);
+        }
+
+        return new Intl.DateTimeFormat('ja-JP', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          weekday: 'short',
+        }).format(
+          new Date(year, month - 1, day)
+        );
+      };
+
+      const wait = (ms) =>
+        new Promise((resolve) =>
+          window.setTimeout(resolve, ms)
+        );
+
+      const showError = (title, message) => {
+        verificationState.classList.add('hidden');
+        verificationError.classList.remove('hidden');
+
+        verificationErrorTitle.textContent = title;
+        verificationErrorMessage.textContent = message;
+
+        statusIcon.textContent = '!';
+        statusKicker.textContent = 'Booking Status';
+        statusTitle.textContent = title;
+        statusMessage.textContent = message;
+      };
+
+      const showCancelled = (bookingCode) => {
+        verificationState.classList.add('hidden');
+        verificationError.classList.remove('hidden');
+
+        verificationErrorTitle.textContent =
+          'この予約はキャンセル済みです';
+
+        verificationErrorMessage.textContent =
+          bookingCode
+            ? `予約番号 ${bookingCode} はキャンセル済みです。返金内容はキャンセル完了メールをご確認ください。`
+            : 'この予約はキャンセル済みです。返金内容はキャンセル完了メールをご確認ください。';
+
+        statusIcon.textContent = '!';
+        statusKicker.textContent = 'Booking Cancelled';
+        statusTitle.textContent = 'この予約はキャンセル済みです';
+        statusMessage.textContent =
+          '返金内容はキャンセル完了メールをご確認ください。';
+      };
+
+      const showConfirmed = (booking) => {
+        verificationState.classList.add('hidden');
+        verificationError.classList.add('hidden');
+
+        document.getElementById('summary-code').textContent =
+          booking.booking_code || '—';
+
+        document.getElementById('summary-product').textContent =
+          booking.product_name || '—';
+
+        document.getElementById('summary-dates').textContent =
+          `${formatDate(booking.check_in)} 〜 ${formatDate(booking.check_out)} ／ ${booking.nights ?? '—'}泊`;
+
+        document.getElementById('summary-guests').textContent =
+          `${booking.guest_count ?? '—'}名`;
+
+        document.getElementById('summary-price').textContent =
+          formatYen(booking.total_jpy);
+
+        document.getElementById('summary-email').textContent =
+          booking.customer_email || '—';
+
+        bookingSummary.classList.remove('hidden');
+        afterBooking.classList.remove('hidden');
+        fallbackActions.classList.add('hidden');
+
+        statusIcon.textContent = '✓';
+        statusKicker.textContent = 'Booking Complete';
+        statusTitle.textContent = 'ご予約ありがとうございます';
+        statusMessage.textContent =
+          'お支払いと予約確定を確認しました。予約確定メールをお送りしていますので、内容をご確認ください。';
+
+        sessionStorage.removeItem('onv_pending_booking');
+
+        const trackingKey =
+          `onv_booking_complete_tracked_${booking.booking_code}`;
+
+        if (
+          booking.booking_code &&
+          !sessionStorage.getItem(trackingKey)
+        ) {
+          window.dataLayer =
+            window.dataLayer || [];
+
+          window.dataLayer.push({
+            event: 'booking_complete_page_view',
+            transaction_id:
+              booking.booking_code,
+            booking_code:
+              booking.booking_code,
+            booking_product:
+              booking.product_id,
+            check_in:
+              booking.check_in,
+            check_out:
+              booking.check_out,
+            guest_count:
+              booking.guest_count,
+            nights:
+              booking.nights,
+            value:
+              booking.total_jpy,
+            currency: 'JPY',
+          });
+
+          sessionStorage.setItem(
+            trackingKey,
+            '1'
+          );
+        }
+      };
+
+      const verifyBooking = async (
+        sessionId,
+        attempt = 1
+      ) => {
+        try {
+          verificationText.textContent =
+            attempt <= 1
+              ? '予約確定処理を確認しています…'
+              : `予約確定処理を確認しています…（${attempt}/${MAX_ATTEMPTS}）`;
+
+          const response =
+            await fetch(API_URL, {
+              method: 'POST',
+              headers: {
+                'Content-Type':
+                  'application/json',
+              },
+              body: JSON.stringify({
+                session_id: sessionId,
+              }),
+            });
+
+          const data =
+            await response
+              .json()
+              .catch(() => null);
+
+          if (
+            response.ok &&
+            data?.ok &&
+            data.state === 'confirmed' &&
+            data.booking
+          ) {
+            showConfirmed(data.booking);
+            return;
+          }
+
+          if (
+            response.ok &&
+            data?.ok &&
+            data.state === 'cancelled'
+          ) {
+            showCancelled(
+              data.booking_code
+            );
+            return;
+          }
+
+          if (
+            response.ok &&
+            data?.ok &&
+            data.state === 'processing'
+          ) {
+            if (attempt < MAX_ATTEMPTS) {
+              await wait(RETRY_DELAY_MS);
+
+              await verifyBooking(
+                sessionId,
+                attempt + 1
+              );
+
+              return;
+            }
+
+            showError(
+              '予約確定処理に時間がかかっています',
+              '決済後の予約確定処理に通常より時間がかかっています。予約確定メールをご確認ください。数分経ってもメールが届かない場合は、大島ニュービラまでお問い合わせください。'
+            );
+
+            return;
+          }
+
+          if (
+            response.status === 404 ||
+            data?.error ===
+              'booking_not_found'
+          ) {
+            showError(
+              '予約情報を確認できませんでした',
+              'この決済情報に対応する予約を確認できませんでした。予約確定メールをご確認いただき、メールが届いていない場合は大島ニュービラまでお問い合わせください。'
+            );
+
+            return;
+          }
+
+          if (
+            data?.state ===
+              'not_confirmed'
+          ) {
+            showError(
+              '予約が確定していません',
+              'この予約は現在、確定済みとして確認できません。予約確定メールをご確認ください。'
+            );
+
+            return;
+          }
+
+          throw new Error(
+            'booking_verification_failed'
+          );
+        } catch (error) {
+          console.error(
+            'Booking verification failed:',
+            error
+          );
+
+          if (attempt < 3) {
+            await wait(RETRY_DELAY_MS);
+
+            await verifyBooking(
+              sessionId,
+              attempt + 1
+            );
+
+            return;
+          }
+
+          showError(
+            '予約状況を確認できませんでした',
+            '通信状況などにより予約状況を確認できませんでした。予約確定メールをご確認ください。数分経ってもメールが届かない場合は、大島ニュービラまでお問い合わせください。'
+          );
+        }
+      };
+
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+      const sessionIdFromUrl =
+        params.get('session_id');
+
+      if (sessionIdFromUrl) {
+        sessionStorage.setItem(
+          SESSION_KEY,
+          sessionIdFromUrl
+        );
+
+        window.history.replaceState(
+          {},
+          '',
+          '/booking/success/'
+        );
       }
-    } catch (error) {
-      console.error('Booking summary restore failed:', error);
-    }
+
+      const sessionId =
+        sessionIdFromUrl ||
+        sessionStorage.getItem(
+          SESSION_KEY
+        );
+
+      if (
+        !sessionId ||
+        !sessionId.startsWith('cs_')
+      ) {
+        showError(
+          '決済情報を確認できませんでした',
+          'このページを直接開いた場合、予約内容は表示されません。予約確定メールをご確認ください。'
+        );
+      } else {
+        verifyBooking(sessionId);
+      }
+    })();
   </script>
 </Layout>
