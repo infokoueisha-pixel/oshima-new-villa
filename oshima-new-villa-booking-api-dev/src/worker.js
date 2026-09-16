@@ -1106,15 +1106,21 @@ if (
     try {
       body = await request.json();
     } catch {
-      return jsonError("invalid_json");
+      return withCors(
+        jsonError("invalid_json"),
+        request
+      );
     }
 
     const bookingCode =
       String(body.booking_code || "").trim();
 
     if (!bookingCode) {
-      return jsonError(
-        "booking_code_required"
+      return withCors(
+        jsonError(
+          "booking_code_required"
+        ),
+        request
       );
     }
 
@@ -1154,9 +1160,12 @@ if (
       .first();
 
     if (!booking) {
-      return jsonError(
-        "booking_not_found",
-        404
+      return withCors(
+        jsonError(
+          "booking_not_found",
+          404
+        ),
+        request
       );
     }
 
@@ -1167,9 +1176,12 @@ if (
       booking.status === "confirmed" ||
       booking.payment_status === "paid"
     ) {
-      return jsonError(
-        "booking_already_paid",
-        409
+      return withCors(
+        jsonError(
+          "booking_already_paid",
+          409
+        ),
+        request
       );
     }
 
@@ -1180,9 +1192,12 @@ if (
       booking.status !== "pending_payment" ||
       booking.payment_status !== "unpaid"
     ) {
-      return jsonError(
-        "booking_not_payable",
-        409
+      return withCors(
+        jsonError(
+          "booking_not_payable",
+          409
+        ),
+        request
       );
     }
 
@@ -1212,44 +1227,50 @@ if (
           existingSession.status === "open" &&
           existingSession.url
         ) {
-          return Response.json({
-            ok: true,
+          return withCors(
+            Response.json({
+              ok: true,
 
-            booking_code:
-              booking.public_booking_code,
+              booking_code:
+                booking.public_booking_code,
 
-            checkout_session_id:
-              existingSession.id,
+              checkout_session_id:
+                existingSession.id,
 
-            checkout_url:
-              existingSession.url,
+              checkout_url:
+                existingSession.url,
 
-            checkout_status:
-              existingSession.status,
+              checkout_status:
+                existingSession.status,
 
-            expires_at:
-              existingSession.expires_at,
+              expires_at:
+                existingSession.expires_at,
 
-            checkout_replayed: true,
-          });
+              checkout_replayed: true,
+            }),
+            request
+          );
         }
 
         if (
           existingSession.status === "complete"
         ) {
-          return Response.json({
-            ok: true,
+          return withCors(
+            Response.json({
+              ok: true,
 
-            booking_code:
-              booking.public_booking_code,
+              booking_code:
+                booking.public_booking_code,
 
-            checkout_session_id:
-              existingSession.id,
+              checkout_session_id:
+                existingSession.id,
 
-            checkout_status: "complete",
+              checkout_status: "complete",
 
-            checkout_replayed: true,
-          });
+              checkout_replayed: true,
+            }),
+            request
+          );
         }
       }
     }
@@ -1258,9 +1279,12 @@ if (
      * 仮押さえ期限を確認
      */
     if (!booking.hold_expires_at) {
-      return jsonError(
-        "hold_expired",
-        409
+      return withCors(
+        jsonError(
+          "hold_expired",
+          409
+        ),
+        request
       );
     }
 
@@ -1276,9 +1300,12 @@ if (
       ) ||
       holdExpiresAt.getTime() <= Date.now()
     ) {
-      return jsonError(
-        "hold_expired",
-        409
+      return withCors(
+        jsonError(
+          "hold_expired",
+          409
+        ),
+        request
       );
     }
 
@@ -1431,9 +1458,12 @@ stripeBody.set(
         stripeError?.error?.code
       );
 
-      return jsonError(
-        "stripe_checkout_creation_failed",
-        502
+      return withCors(
+        jsonError(
+          "stripe_checkout_creation_failed",
+          502
+        ),
+        request
       );
     }
 
@@ -1513,9 +1543,12 @@ stripeBody.set(
       error
     );
 
-    return jsonError(
-      "internal_server_error",
-      500
+    return withCors(
+      jsonError(
+        "internal_server_error",
+        500
+      ),
+      request
     );
   }
 }
@@ -2898,6 +2931,174 @@ Stripe決済および予約確定処理は完了しています。
   }
 }
 
+
+
+/*
+ * 公開用：決済中断後の予約状態確認
+ *
+ * booking_code を受け取り、
+ * 再決済できる状態かどうかだけを返す。
+ * 個人情報・金額・Stripe URLは返さない。
+ */
+if (
+  url.pathname === "/api/booking-payment-status" &&
+  request.method === "POST"
+) {
+  try {
+    let body;
+
+    try {
+      body = await request.json();
+    } catch {
+      return withCors(
+        jsonError("invalid_json", 400),
+        request
+      );
+    }
+
+    const bookingCode =
+      String(body.booking_code || "").trim();
+
+    if (
+      !bookingCode ||
+      !/^ONV-[A-Z0-9]{10}$/.test(bookingCode)
+    ) {
+      return withCors(
+        jsonError(
+          "invalid_booking_code",
+          400
+        ),
+        request
+      );
+    }
+
+    const booking =
+      await env.DB
+        .prepare(`
+          SELECT
+            id,
+            public_booking_code,
+            status,
+            payment_status,
+            hold_expires_at
+          FROM bookings
+          WHERE public_booking_code = ?
+          LIMIT 1
+        `)
+        .bind(bookingCode)
+        .first();
+
+    if (!booking) {
+      return withCors(
+        jsonError(
+          "booking_not_found",
+          404
+        ),
+        request
+      );
+    }
+
+    if (
+      booking.status === "confirmed" &&
+      booking.payment_status === "paid"
+    ) {
+      return withCors(
+        Response.json({
+          ok: true,
+          state: "confirmed",
+        }),
+        request
+      );
+    }
+
+    if (booking.status === "cancelled") {
+      return withCors(
+        Response.json({
+          ok: true,
+          state: "cancelled",
+        }),
+        request
+      );
+    }
+
+    if (booking.status === "expired") {
+      return withCors(
+        Response.json({
+          ok: true,
+          state: "expired",
+        }),
+        request
+      );
+    }
+
+    if (
+      booking.status === "pending_payment" &&
+      booking.payment_status === "unpaid"
+    ) {
+      if (!booking.hold_expires_at) {
+        return withCors(
+          Response.json({
+            ok: true,
+            state: "expired",
+          }),
+          request
+        );
+      }
+
+      const holdExpiresAt =
+        new Date(
+          booking.hold_expires_at
+            .replace(" ", "T") + "Z"
+        );
+
+      if (
+        Number.isNaN(
+          holdExpiresAt.getTime()
+        ) ||
+        holdExpiresAt.getTime() <= Date.now()
+      ) {
+        return withCors(
+          Response.json({
+            ok: true,
+            state: "expired",
+          }),
+          request
+        );
+      }
+
+      return withCors(
+        Response.json({
+          ok: true,
+          state: "retryable",
+          hold_expires_at:
+            booking.hold_expires_at,
+        }),
+        request
+      );
+    }
+
+    return withCors(
+      Response.json({
+        ok: true,
+        state: "not_payable",
+      }),
+      request
+    );
+  } catch (error) {
+    console.error(
+      "Booking payment status API error:",
+      error
+    );
+
+    return withCors(
+      jsonError(
+        "internal_server_error",
+        500
+      ),
+      request
+    );
+  }
+}
 
 /*
  * 公開用：決済完了後の予約確定確認

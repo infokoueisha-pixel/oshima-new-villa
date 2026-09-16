@@ -11,33 +11,103 @@ import Layout from '../../layouts/Layout.astro';
     <div class="mx-auto max-w-3xl px-6">
       <section class="overflow-hidden rounded-3xl border border-amber-200 bg-white shadow-sm">
         <div class="bg-amber-50 px-6 py-10 md:px-10 md:py-12">
-          <div class="flex h-14 w-14 items-center justify-center rounded-full bg-amber-100 text-2xl text-amber-900" aria-hidden="true">!</div>
-          <p class="mt-6 text-xs font-bold tracking-[0.24em] text-amber-800 uppercase">Payment Incomplete</p>
-          <h1 class="mt-2 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">お支払いは完了していません</h1>
-          <p class="mt-4 max-w-2xl text-sm leading-7 text-gray-700 md:text-base">
-            決済を途中で終了したため、予約はまだ確定していません。
+          <div
+            id="status-icon"
+            class="flex h-14 w-14 items-center justify-center rounded-full bg-amber-100 text-2xl text-amber-900"
+            aria-hidden="true"
+          >
+            …
+          </div>
+
+          <p
+            id="status-kicker"
+            class="mt-6 text-xs font-bold tracking-[0.24em] text-amber-800 uppercase"
+          >
+            Payment Status
+          </p>
+
+          <h1
+            id="status-title"
+            class="mt-2 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl"
+          >
+            お支払い状況を確認しています
+          </h1>
+
+          <p
+            id="status-message"
+            class="mt-4 max-w-2xl text-sm leading-7 text-gray-700 md:text-base"
+          >
+            予約の最新状態を確認しています。このまま少しお待ちください。
           </p>
         </div>
 
         <div class="p-6 md:p-10">
-          <div id="retry-box" class="hidden rounded-2xl border border-green-200 bg-green-50 p-5 md:p-6">
-            <p class="font-bold text-green-950">同じ内容でお支払いを再開できます</p>
-            <p class="mt-2 text-sm leading-6 text-green-900/80">
-              仮押さえの有効時間内であれば、下のボタンからStripeの決済画面へ戻れます。
-            </p>
-            <a
-              id="retry-payment"
-              href="#"
-              class="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-green-800 px-7 py-3.5 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-green-700 sm:w-auto"
-            >
-              支払いを再開する
-            </a>
+          <div
+            id="checking-box"
+            class="rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-7 text-amber-950"
+            role="status"
+            aria-live="polite"
+          >
+            <div class="flex items-center gap-3">
+              <span
+                class="inline-block h-5 w-5 shrink-0 animate-spin rounded-full border-2 border-amber-700 border-r-transparent"
+                aria-hidden="true"
+              ></span>
+              <span>予約状態を確認しています…</span>
+            </div>
           </div>
 
-          <div class="mt-6 rounded-2xl bg-stone-50 p-5 text-sm leading-7 text-gray-700">
+          <div
+            id="retry-box"
+            class="hidden rounded-2xl border border-green-200 bg-green-50 p-5 md:p-6"
+          >
+            <p class="font-bold text-green-950">同じ内容でお支払いを再開できます</p>
+            <p class="mt-2 text-sm leading-6 text-green-900/80">
+              仮押さえはまだ有効です。下のボタンからStripeの決済画面へ戻れます。
+            </p>
+            <p
+              id="hold-time-message"
+              class="mt-2 text-xs font-bold text-green-800"
+            ></p>
+
+            <button
+              id="retry-payment"
+              type="button"
+              class="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-green-800 px-7 py-3.5 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+            >
+              支払いを再開する
+            </button>
+
+            <p
+              id="retry-error"
+              class="mt-4 hidden rounded-xl bg-red-50 px-4 py-3 text-sm leading-6 text-red-700"
+              role="alert"
+            ></p>
+          </div>
+
+          <div
+            id="state-message-box"
+            class="hidden rounded-2xl border border-stone-200 bg-stone-50 p-5 text-sm leading-7 text-gray-700"
+            role="status"
+          >
+            <p
+              id="state-message-title"
+              class="font-bold text-gray-900"
+            ></p>
+            <p
+              id="state-message-text"
+              class="mt-2"
+            ></p>
+          </div>
+
+          <div
+            id="change-booking-box"
+            class="mt-6 rounded-2xl bg-stone-50 p-5 text-sm leading-7 text-gray-700"
+          >
             <p class="font-bold text-gray-900">日程や人数を変更したい場合</p>
             <p class="mt-1">
-              仮押さえ中は同じ日程を一時的に選べない場合があります。仮押さえは一定時間後に自動で解放されます。
+              仮押さえが有効な間は、同じ日程を一時的に選べない場合があります。
+              有効期限を過ぎると自動的に解放されます。
             </p>
           </div>
 
@@ -48,6 +118,7 @@ import Layout from '../../layouts/Layout.astro';
             >
               予約画面へ戻る
             </a>
+
             <a
               href="/"
               class="inline-flex min-h-12 items-center justify-center rounded-full border border-stone-300 bg-white px-7 py-3.5 text-sm font-bold text-gray-800 transition hover:bg-stone-50"
@@ -61,19 +132,557 @@ import Layout from '../../layouts/Layout.astro';
   </main>
 
   <script>
-    try {
-      const raw = sessionStorage.getItem('onv_pending_booking');
-      if (raw) {
-        const booking = JSON.parse(raw);
-        if (booking?.checkoutUrl) {
-          const retryBox = document.getElementById('retry-box');
-          const retryPayment = document.getElementById('retry-payment');
-          retryPayment.href = booking.checkoutUrl;
-          retryBox.classList.remove('hidden');
+    (() => {
+      const STATUS_API_URL =
+        'https://oshima-new-villa-booking-api-dev.info-koueisha.workers.dev/api/booking-payment-status';
+
+      const CHECKOUT_API_URL =
+        'https://oshima-new-villa-booking-api-dev.info-koueisha.workers.dev/api/checkout';
+
+      const STORAGE_KEY =
+        'onv_cancel_booking_code';
+
+      const statusIcon =
+        document.getElementById('status-icon');
+
+      const statusKicker =
+        document.getElementById('status-kicker');
+
+      const statusTitle =
+        document.getElementById('status-title');
+
+      const statusMessage =
+        document.getElementById('status-message');
+
+      const checkingBox =
+        document.getElementById('checking-box');
+
+      const retryBox =
+        document.getElementById('retry-box');
+
+      const retryPayment =
+        document.getElementById('retry-payment');
+
+      const retryError =
+        document.getElementById('retry-error');
+
+      const holdTimeMessage =
+        document.getElementById('hold-time-message');
+
+      const stateMessageBox =
+        document.getElementById('state-message-box');
+
+      const stateMessageTitle =
+        document.getElementById('state-message-title');
+
+      const stateMessageText =
+        document.getElementById('state-message-text');
+
+      const changeBookingBox =
+        document.getElementById('change-booking-box');
+
+      let activeBookingCode = null;
+      let countdownTimer = null;
+
+      const stopCountdown = () => {
+        if (countdownTimer) {
+          window.clearInterval(
+            countdownTimer
+          );
+          countdownTimer = null;
         }
+      };
+
+      const hideAllStates = () => {
+        checkingBox.classList.add('hidden');
+        retryBox.classList.add('hidden');
+        stateMessageBox.classList.add('hidden');
+        retryError.classList.add('hidden');
+        retryError.textContent = '';
+        stopCountdown();
+      };
+
+      const setHeader = ({
+        icon,
+        kicker,
+        title,
+        message,
+      }) => {
+        statusIcon.textContent = icon;
+        statusKicker.textContent = kicker;
+        statusTitle.textContent = title;
+        statusMessage.textContent = message;
+      };
+
+      const showMessageState = ({
+        icon = '!',
+        kicker = 'Payment Status',
+        title,
+        message,
+        boxTitle,
+        boxMessage,
+      }) => {
+        hideAllStates();
+
+        setHeader({
+          icon,
+          kicker,
+          title,
+          message,
+        });
+
+        stateMessageTitle.textContent =
+          boxTitle || title;
+
+        stateMessageText.textContent =
+          boxMessage || message;
+
+        stateMessageBox.classList.remove(
+          'hidden'
+        );
+      };
+
+      const parseSqlUtc = (value) => {
+        if (!value) return null;
+
+        const date =
+          new Date(
+            String(value)
+              .replace(' ', 'T') + 'Z'
+          );
+
+        return Number.isNaN(date.getTime())
+          ? null
+          : date;
+      };
+
+      const updateCountdown = (
+        expiresAt
+      ) => {
+        const expiry =
+          parseSqlUtc(expiresAt);
+
+        if (!expiry) {
+          holdTimeMessage.textContent = '';
+          return;
+        }
+
+        const renderRemaining = () => {
+          const remainingMs =
+            expiry.getTime() - Date.now();
+
+          if (remainingMs <= 0) {
+            stopCountdown();
+
+            holdTimeMessage.textContent =
+              '仮押さえの有効期限を過ぎました。';
+
+            retryPayment.disabled = true;
+
+            window.setTimeout(
+              () => {
+                if (activeBookingCode) {
+                  checkBookingStatus(
+                    activeBookingCode
+                  );
+                }
+              },
+              300
+            );
+
+            return;
+          }
+
+          const totalSeconds =
+            Math.ceil(
+              remainingMs / 1000
+            );
+
+          const minutes =
+            Math.floor(
+              totalSeconds / 60
+            );
+
+          const seconds =
+            totalSeconds % 60;
+
+          holdTimeMessage.textContent =
+            `仮押さえ残り時間：約${minutes}分${String(
+              seconds
+            ).padStart(2, '0')}秒`;
+        };
+
+        renderRemaining();
+
+        countdownTimer =
+          window.setInterval(
+            renderRemaining,
+            1000
+          );
+      };
+
+      const showRetryable = (
+        holdExpiresAt
+      ) => {
+        hideAllStates();
+
+        setHeader({
+          icon: '!',
+          kicker: 'Payment Incomplete',
+          title:
+            'お支払いは完了していません',
+          message:
+            '決済を途中で終了したため、予約はまだ確定していません。',
+        });
+
+        retryPayment.disabled = false;
+        retryPayment.textContent =
+          '支払いを再開する';
+
+        retryBox.classList.remove('hidden');
+
+        updateCountdown(
+          holdExpiresAt
+        );
+      };
+
+      const checkBookingStatus = async (
+        bookingCode
+      ) => {
+        activeBookingCode =
+          bookingCode;
+
+        hideAllStates();
+
+        checkingBox.classList.remove(
+          'hidden'
+        );
+
+        setHeader({
+          icon: '…',
+          kicker: 'Payment Status',
+          title:
+            'お支払い状況を確認しています',
+          message:
+            '予約の最新状態を確認しています。このまま少しお待ちください。',
+        });
+
+        try {
+          const response =
+            await fetch(
+              STATUS_API_URL,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type':
+                    'application/json',
+                },
+                body: JSON.stringify({
+                  booking_code:
+                    bookingCode,
+                }),
+              }
+            );
+
+          const data =
+            await response
+              .json()
+              .catch(() => null);
+
+          if (
+            response.ok &&
+            data?.ok &&
+            data.state === 'retryable'
+          ) {
+            showRetryable(
+              data.hold_expires_at
+            );
+            return;
+          }
+
+          if (
+            response.ok &&
+            data?.ok &&
+            data.state === 'confirmed'
+          ) {
+            sessionStorage.removeItem(
+              STORAGE_KEY
+            );
+
+            showMessageState({
+              icon: '✓',
+              kicker: 'Payment Complete',
+              title:
+                'お支払いは完了しています',
+              message:
+                'この予約はすでに決済・予約確定済みです。',
+              boxTitle:
+                '新たにお支払いいただく必要はありません',
+              boxMessage:
+                '予約確定メールをご確認ください。二重決済を防ぐため、このページから決済を再開することはできません。',
+            });
+
+            changeBookingBox.classList.add(
+              'hidden'
+            );
+
+            return;
+          }
+
+          if (
+            response.ok &&
+            data?.ok &&
+            data.state === 'expired'
+          ) {
+            sessionStorage.removeItem(
+              STORAGE_KEY
+            );
+
+            showMessageState({
+              icon: '!',
+              kicker: 'Hold Expired',
+              title:
+                '仮押さえの有効期限が切れました',
+              message:
+                'この予約のお支払いは再開できません。',
+              boxTitle:
+                'もう一度、空室・料金をご確認ください',
+              boxMessage:
+                '仮押さえの有効期限を過ぎたため、この予約は確定していません。予約画面からあらためてお申し込みください。',
+            });
+
+            return;
+          }
+
+          if (
+            response.ok &&
+            data?.ok &&
+            data.state === 'cancelled'
+          ) {
+            sessionStorage.removeItem(
+              STORAGE_KEY
+            );
+
+            showMessageState({
+              icon: '!',
+              kicker: 'Booking Cancelled',
+              title:
+                'この予約はキャンセル済みです',
+              message:
+                'この予約のお支払いを再開することはできません。',
+              boxTitle:
+                'キャンセル済みの予約です',
+              boxMessage:
+                '返金がある場合は、キャンセル完了メールをご確認ください。',
+            });
+
+            changeBookingBox.classList.add(
+              'hidden'
+            );
+
+            return;
+          }
+
+          if (
+            response.status === 404 ||
+            data?.error ===
+              'booking_not_found'
+          ) {
+            sessionStorage.removeItem(
+              STORAGE_KEY
+            );
+
+            showMessageState({
+              title:
+                '予約情報を確認できませんでした',
+              message:
+                'このページに対応する予約情報を確認できませんでした。',
+              boxTitle:
+                '予約番号をご確認ください',
+              boxMessage:
+                '予約確定メールが届いている場合は、その内容をご確認ください。心当たりがない場合は予約画面へ戻ってください。',
+            });
+
+            return;
+          }
+
+          showMessageState({
+            title:
+              'お支払いを再開できません',
+            message:
+              '現在の予約状態では、このページからお支払いを再開できません。',
+            boxTitle:
+              '予約状態をご確認ください',
+            boxMessage:
+              '予約確定メールをご確認いただくか、予約画面からあらためてお申し込みください。',
+          });
+        } catch (error) {
+          console.error(
+            'Booking payment status check failed:',
+            error
+          );
+
+          showMessageState({
+            title:
+              '予約状況を確認できませんでした',
+            message:
+              '通信状況などにより予約状態を確認できませんでした。',
+            boxTitle:
+              '時間をおいてもう一度お試しください',
+            boxMessage:
+              '予約確定メールが届いていないかもご確認ください。',
+          });
+        }
+      };
+
+      const restartCheckout = async () => {
+        if (
+          !activeBookingCode ||
+          retryPayment.disabled
+        ) {
+          return;
+        }
+
+        retryPayment.disabled = true;
+        retryPayment.textContent =
+          '決済画面を準備しています…';
+
+        retryError.classList.add('hidden');
+        retryError.textContent = '';
+
+        try {
+          const response =
+            await fetch(
+              CHECKOUT_API_URL,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type':
+                    'application/json',
+                },
+                body: JSON.stringify({
+                  booking_code:
+                    activeBookingCode,
+                }),
+              }
+            );
+
+          const data =
+            await response
+              .json()
+              .catch(() => null);
+
+          if (
+            response.ok &&
+            data?.ok &&
+            data.checkout_url
+          ) {
+            window.location.assign(
+              data.checkout_url
+            );
+
+            return;
+          }
+
+          /*
+           * 状態が変わった可能性があるため、
+           * エラー内容をブラウザ側だけで判断せず
+           * DBの最新状態を再確認する。
+           */
+          await checkBookingStatus(
+            activeBookingCode
+          );
+        } catch (error) {
+          console.error(
+            'Checkout restart failed:',
+            error
+          );
+
+          /*
+           * checkout APIのエラー応答が
+           * CORS等で読めない場合も、
+           * 状態確認APIで安全に再判定する。
+           */
+          try {
+            await checkBookingStatus(
+              activeBookingCode
+            );
+          } catch {
+            retryPayment.disabled = false;
+            retryPayment.textContent =
+              '支払いを再開する';
+
+            retryError.textContent =
+              '決済画面を開けませんでした。時間をおいてもう一度お試しください。';
+
+            retryError.classList.remove(
+              'hidden'
+            );
+          }
+        }
+      };
+
+      retryPayment.addEventListener(
+        'click',
+        restartCheckout
+      );
+
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+      const bookingCodeFromUrl =
+        params.get('booking_code');
+
+      if (bookingCodeFromUrl) {
+        sessionStorage.setItem(
+          STORAGE_KEY,
+          bookingCodeFromUrl
+        );
+
+        /*
+         * 予約番号をアドレスバーに
+         * 残し続けない。
+         */
+        window.history.replaceState(
+          {},
+          '',
+          '/booking/cancel/'
+        );
       }
-    } catch (error) {
-      console.error('Checkout retry restore failed:', error);
-    }
+
+      const bookingCode =
+        bookingCodeFromUrl ||
+        sessionStorage.getItem(
+          STORAGE_KEY
+        );
+
+      if (
+        !bookingCode ||
+        !/^ONV-[A-Z0-9]{10}$/.test(
+          bookingCode
+        )
+      ) {
+        sessionStorage.removeItem(
+          STORAGE_KEY
+        );
+
+        showMessageState({
+          title:
+            '決済情報を確認できませんでした',
+          message:
+            'このページを直接開いた場合、お支払いを再開することはできません。',
+          boxTitle:
+            '予約画面からお手続きください',
+          boxMessage:
+            '予約確定メールが届いている場合は、その内容をご確認ください。',
+        });
+      } else {
+        checkBookingStatus(
+          bookingCode
+        );
+      }
+    })();
   </script>
 </Layout>
