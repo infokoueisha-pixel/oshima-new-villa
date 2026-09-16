@@ -2,7 +2,63 @@ import { HOLD_MINUTES } from "../config.js";
 import { isValidDate, getStayDates, toSqlUtc, getTokyoToday, getCancellationPolicyRate } from "../lib/dates.js";
 import { withCors, jsonError } from "../lib/http.js";
 import { sendCancellationCompletionEmail, sendAdminCancellationNotificationEmail } from "../services/emails.js";
+import { sendBookingConfirmationEmail } from "../services/booking-confirmation-email.js";
 import { createPublicBookingCode, sha256, createFingerprint, getAvailability, getBookingByIdempotencyKey, existingBookingResponse } from "../services/booking.js";
+
+
+const ADMIN_EMAIL_TYPES = {
+  booking_confirmation: {
+    table: "email_deliveries",
+    where: "booking_id = ? AND email_type = 'booking_confirmation'",
+  },
+  cancellation_completion: {
+    table: "cancellation_email_deliveries",
+    where: "booking_id = ?",
+  },
+  admin_cancellation_notification: {
+    table: "admin_cancellation_email_deliveries",
+    where: "booking_id = ?",
+  },
+};
+
+function normalizeEmailDelivery(
+  row,
+  applicable
+) {
+  return {
+    applicable,
+    status:
+      row?.status || null,
+    recipient_email:
+      row?.recipient_email || null,
+    resend_email_id:
+      row?.resend_email_id || null,
+    last_error:
+      row?.last_error || null,
+    sent_at:
+      row?.sent_at || null,
+    updated_at:
+      row?.updated_at || null,
+  };
+}
+
+function isAdminAuthorized(
+  request,
+  env
+) {
+  const authorization =
+    request.headers.get(
+      "Authorization"
+    );
+
+  const expectedAuthorization =
+    `Bearer ${env.ADMIN_DASHBOARD_TOKEN}`;
+
+  return Boolean(
+    env.ADMIN_DASHBOARD_TOKEN &&
+    authorization === expectedAuthorization
+  );
+}
 
 export async function handleAdminRoutes(request, env, url) {
 /*
@@ -99,6 +155,526 @@ if (
     );
   }
 }    
+
+
+/*
+ * 管理者用：予約メール送信状況
+ */
+if (
+  url.pathname ===
+    "/api/admin/email-status" &&
+  request.method === "GET"
+) {
+  if (
+    !isAdminAuthorized(
+      request,
+      env
+    )
+  ) {
+    return withCors(
+      Response.json(
+        {
+          ok: false,
+          error: "unauthorized",
+        },
+        { status: 401 }
+      ),
+      request
+    );
+  }
+
+  try {
+    const bookingCode =
+      String(
+        url.searchParams.get(
+          "booking_code"
+        ) || ""
+      ).trim();
+
+    if (!bookingCode) {
+      return withCors(
+        jsonError(
+          "booking_code_required"
+        ),
+        request
+      );
+    }
+
+    const booking =
+      await env.DB
+        .prepare(`
+          SELECT
+            id,
+            public_booking_code,
+            status,
+            payment_status,
+            confirmed_at,
+            cancelled_at
+          FROM bookings
+          WHERE public_booking_code = ?
+          LIMIT 1
+        `)
+        .bind(bookingCode)
+        .first();
+
+    if (!booking) {
+      return withCors(
+        jsonError(
+          "booking_not_found",
+          404
+        ),
+        request
+      );
+    }
+
+    const results =
+      await env.DB.batch([
+        env.DB
+          .prepare(`
+            SELECT
+              recipient_email,
+              resend_email_id,
+              status,
+              last_error,
+              sent_at,
+              updated_at
+            FROM email_deliveries
+            WHERE booking_id = ?
+              AND email_type =
+                'booking_confirmation'
+            LIMIT 1
+          `)
+          .bind(booking.id),
+
+        env.DB
+          .prepare(`
+            SELECT
+              recipient_email,
+              resend_email_id,
+              status,
+              last_error,
+              sent_at,
+              updated_at
+            FROM cancellation_email_deliveries
+            WHERE booking_id = ?
+            LIMIT 1
+          `)
+          .bind(booking.id),
+
+        env.DB
+          .prepare(`
+            SELECT
+              recipient_email,
+              resend_email_id,
+              status,
+              last_error,
+              sent_at,
+              updated_at
+            FROM admin_cancellation_email_deliveries
+            WHERE booking_id = ?
+            LIMIT 1
+          `)
+          .bind(booking.id),
+      ]);
+
+    const bookingConfirmation =
+      results[0]?.results?.[0] ||
+      null;
+
+    const cancellationCompletion =
+      results[1]?.results?.[0] ||
+      null;
+
+    const adminCancellation =
+      results[2]?.results?.[0] ||
+      null;
+
+    return withCors(
+      Response.json({
+        ok: true,
+
+        booking: {
+          booking_code:
+            booking.public_booking_code,
+
+          status:
+            booking.status,
+
+          payment_status:
+            booking.payment_status,
+        },
+
+        emails: {
+          booking_confirmation:
+            normalizeEmailDelivery(
+              bookingConfirmation,
+              Boolean(
+                booking.confirmed_at
+              )
+            ),
+
+          cancellation_completion:
+            normalizeEmailDelivery(
+              cancellationCompletion,
+              booking.status ===
+                "cancelled"
+            ),
+
+          admin_cancellation_notification:
+            normalizeEmailDelivery(
+              adminCancellation,
+              booking.status ===
+                "cancelled"
+            ),
+        },
+      }),
+      request
+    );
+  } catch (error) {
+    console.error(
+      "Admin email status API error:",
+      error
+    );
+
+    return withCors(
+      jsonError(
+        "internal_server_error",
+        500
+      ),
+      request
+    );
+  }
+}
+
+/*
+ * 管理者用：失敗したメールの手動再送
+ *
+ * failed の送信履歴だけ再送できる。
+ * sent / pending は二重送信防止のため拒否する。
+ */
+if (
+  url.pathname ===
+    "/api/admin/email-resend" &&
+  request.method === "POST"
+) {
+  if (
+    !isAdminAuthorized(
+      request,
+      env
+    )
+  ) {
+    return withCors(
+      Response.json(
+        {
+          ok: false,
+          error: "unauthorized",
+        },
+        { status: 401 }
+      ),
+      request
+    );
+  }
+
+  try {
+    let body;
+
+    try {
+      body =
+        await request.json();
+    } catch {
+      return withCors(
+        jsonError(
+          "invalid_json"
+        ),
+        request
+      );
+    }
+
+    const bookingCode =
+      String(
+        body.booking_code || ""
+      ).trim();
+
+    const emailType =
+      String(
+        body.email_type || ""
+      ).trim();
+
+    const config =
+      ADMIN_EMAIL_TYPES[
+        emailType
+      ];
+
+    if (
+      !bookingCode ||
+      !config
+    ) {
+      return withCors(
+        jsonError(
+          "invalid_request"
+        ),
+        request
+      );
+    }
+
+    const booking =
+      await env.DB
+        .prepare(`
+          SELECT
+            id,
+            public_booking_code
+          FROM bookings
+          WHERE public_booking_code = ?
+          LIMIT 1
+        `)
+        .bind(bookingCode)
+        .first();
+
+    if (!booking) {
+      return withCors(
+        jsonError(
+          "booking_not_found",
+          404
+        ),
+        request
+      );
+    }
+
+    const delivery =
+      await env.DB
+        .prepare(`
+          SELECT
+            id,
+            status,
+            recipient_email
+          FROM ${config.table}
+          WHERE ${config.where}
+          LIMIT 1
+        `)
+        .bind(booking.id)
+        .first();
+
+    if (!delivery) {
+      return withCors(
+        jsonError(
+          "email_delivery_not_found",
+          404
+        ),
+        request
+      );
+    }
+
+    if (
+      delivery.status !== "failed"
+    ) {
+      return withCors(
+        Response.json(
+          {
+            ok: false,
+            error:
+              "email_not_failed",
+            current_status:
+              delivery.status,
+          },
+          { status: 409 }
+        ),
+        request
+      );
+    }
+
+    /*
+     * failed → pending を条件付きで変更して
+     * 二重クリック・同時実行を防ぐ。
+     */
+    const claimResult =
+      await env.DB
+        .prepare(`
+          UPDATE ${config.table}
+          SET
+            status = 'pending',
+            last_error = NULL,
+            updated_at =
+              CURRENT_TIMESTAMP
+          WHERE id = ?
+            AND status = 'failed'
+        `)
+        .bind(delivery.id)
+        .run();
+
+    if (
+      Number(
+        claimResult?.meta?.changes ||
+        0
+      ) !== 1
+    ) {
+      return withCors(
+        Response.json(
+          {
+            ok: false,
+            error:
+              "email_retry_in_progress",
+          },
+          { status: 409 }
+        ),
+        request
+      );
+    }
+
+    const retryIdempotencyKey =
+      `onv-manual-retry-${emailType}-${booking.id}-${crypto.randomUUID()}`;
+
+    let result = "failed";
+
+    try {
+      if (
+        emailType ===
+        "booking_confirmation"
+      ) {
+        result =
+          await sendBookingConfirmationEmail(
+            env,
+            booking.id,
+            {
+              idempotencyKey:
+                retryIdempotencyKey,
+            }
+          );
+      } else if (
+        emailType ===
+        "cancellation_completion"
+      ) {
+        result =
+          await sendCancellationCompletionEmail(
+            env,
+            booking.id,
+            {
+              idempotencyKey:
+                retryIdempotencyKey,
+            }
+          );
+      } else if (
+        emailType ===
+        "admin_cancellation_notification"
+      ) {
+        result =
+          await sendAdminCancellationNotificationEmail(
+            env,
+            booking.id,
+            {
+              idempotencyKey:
+                retryIdempotencyKey,
+            }
+          );
+      }
+    } catch (sendError) {
+      const errorMessage =
+        String(
+          sendError?.message ||
+          "email_retry_error"
+        ).slice(0, 500);
+
+      await env.DB
+        .prepare(`
+          UPDATE ${config.table}
+          SET
+            status = 'failed',
+            last_error = ?,
+            updated_at =
+              CURRENT_TIMESTAMP
+          WHERE id = ?
+        `)
+        .bind(
+          errorMessage,
+          delivery.id
+        )
+        .run();
+
+      console.error(
+        "Admin email retry error:",
+        sendError
+      );
+
+      return withCors(
+        Response.json(
+          {
+            ok: false,
+            error:
+              "email_retry_failed",
+          },
+          { status: 502 }
+        ),
+        request
+      );
+    }
+
+    if (result !== "sent") {
+      if (
+        result !== "failed"
+      ) {
+        await env.DB
+          .prepare(`
+            UPDATE ${config.table}
+            SET
+              status = 'failed',
+              last_error = ?,
+              updated_at =
+                CURRENT_TIMESTAMP
+            WHERE id = ?
+          `)
+          .bind(
+            `retry_result:${result}`,
+            delivery.id
+          )
+          .run();
+      }
+
+      return withCors(
+        Response.json(
+          {
+            ok: false,
+            error:
+              "email_retry_failed",
+            result,
+          },
+          { status: 502 }
+        ),
+        request
+      );
+    }
+
+    return withCors(
+      Response.json({
+        ok: true,
+
+        booking_code:
+          booking.public_booking_code,
+
+        email_type:
+          emailType,
+
+        recipient_email:
+          delivery.recipient_email,
+
+        status:
+          "sent",
+      }),
+      request
+    );
+  } catch (error) {
+    console.error(
+      "Admin email resend API error:",
+      error
+    );
+
+    return withCors(
+      jsonError(
+        "internal_server_error",
+        500
+      ),
+      request
+    );
+  }
+}
 
 /*
  * 管理者用：キャンセル・返金額プレビュー

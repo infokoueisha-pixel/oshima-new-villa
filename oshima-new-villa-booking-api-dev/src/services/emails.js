@@ -8,7 +8,8 @@ import { getCancellationReasonLabel, escapeEmailHtml } from "../lib/format.js";
  */
 async function sendCancellationCompletionEmail(
   env,
-  bookingId
+  bookingId,
+  options = {}
 ) {
   const emailBooking =
     await env.DB
@@ -362,6 +363,7 @@ https://oshima-new-villa.com/
             "application/json",
 
           "Idempotency-Key":
+            options.idempotencyKey ||
             `onv-cancellation-email-${bookingId}`,
         },
 
@@ -450,7 +452,8 @@ https://oshima-new-villa.com/
  */
 async function sendAdminCancellationNotificationEmail(
   env,
-  bookingId
+  bookingId,
+  options = {}
 ) {
   const adminEmail =
     String(
@@ -809,6 +812,7 @@ ${cancellation.stripe_refund_id || "なし"}
             "application/json",
 
           "Idempotency-Key":
+            options.idempotencyKey ||
             `onv-admin-cancellation-${bookingId}`,
         },
 
