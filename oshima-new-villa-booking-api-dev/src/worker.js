@@ -5,6 +5,7 @@ import { handleWebhookRoutes } from "./routes/webhook.js";
 import { handlePublicRoutes } from "./routes/public.js";
 import { handleBookingRoutes } from "./routes/booking.js";
 import { handleAdminRoutes } from "./routes/admin.js";
+import { handleRateAdminRoutes } from "./routes/rates.js";
 import { handleScheduled } from "./scheduled.js";
 
 const ROUTE_HANDLERS = [
@@ -13,6 +14,7 @@ const ROUTE_HANDLERS = [
   handlePublicRoutes,
   handleBookingRoutes,
   handleAdminRoutes,
+  handleRateAdminRoutes,
 ];
 
 export default {

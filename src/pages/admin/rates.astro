@@ -1,0 +1,664 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="大島ニュービラ｜料金・販売管理（開発環境）"
+  description="大島ニュービラ自社予約システムの料金・販売管理です。"
+  noindex={true}
+>
+  <main class="min-h-screen bg-stone-50 pt-28 pb-20 md:pt-32">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <div class="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-bold text-amber-800">
+            <span class="h-2 w-2 rounded-full bg-amber-500" aria-hidden="true"></span>
+            開発環境
+          </div>
+          <p class="mt-5 text-xs font-bold uppercase tracking-[0.2em] text-green-700">Rate Admin</p>
+          <h1 class="mt-2 font-serif text-3xl font-bold text-gray-950 md:text-4xl">料金・販売管理</h1>
+          <p class="mt-3 max-w-3xl text-sm leading-7 text-gray-600">
+            SALVIAの日別料金・販売中/停止・最低泊数を管理します。既存予約の宿泊料金や予約状態は変更しません。
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-2 md:justify-end">
+          <a
+            href="/admin/bookings/"
+            class="inline-flex min-h-10 items-center justify-center rounded-lg border border-stone-300 bg-white px-4 py-2 text-sm font-bold text-gray-700 transition hover:bg-stone-50"
+          >
+            予約一覧へ戻る
+          </a>
+          <button
+            id="logout-button"
+            type="button"
+            class="hidden min-h-10 items-center justify-center rounded-lg border border-stone-300 bg-white px-4 py-2 text-sm font-bold text-gray-700 transition hover:border-red-300 hover:bg-red-50 hover:text-red-700"
+          >
+            トークンを破棄
+          </button>
+        </div>
+      </div>
+
+      <section id="auth-panel" class="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm md:p-8">
+        <div class="max-w-2xl">
+          <h2 class="font-serif text-2xl font-bold text-gray-950">管理者認証</h2>
+          <p class="mt-2 text-sm leading-7 text-gray-600">
+            予約管理と同じ <strong>ADMIN_DASHBOARD_TOKEN</strong> を入力してください。
+          </p>
+          <form id="auth-form" class="mt-6 flex flex-col gap-3 sm:flex-row">
+            <label class="sr-only" for="admin-token">管理者トークン</label>
+            <input
+              id="admin-token"
+              type="password"
+              autocomplete="off"
+              spellcheck="false"
+              required
+              placeholder="ADMIN_DASHBOARD_TOKEN"
+              class="min-h-12 min-w-0 flex-1 rounded-xl border border-stone-300 bg-white px-4 py-3 text-base text-gray-900 outline-none transition focus:border-green-700 focus:ring-4 focus:ring-green-100"
+            />
+            <button
+              id="auth-submit"
+              type="submit"
+              class="min-h-12 rounded-full bg-green-800 px-7 py-3 text-sm font-bold text-white shadow-md transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              料金カレンダーを表示
+            </button>
+          </form>
+          <p id="auth-message" class="mt-4 hidden rounded-xl px-4 py-3 text-sm leading-6" role="alert"></p>
+        </div>
+      </section>
+
+      <section id="dashboard" class="hidden space-y-6">
+        <section class="rounded-3xl border border-stone-200 bg-white p-5 shadow-sm md:p-6">
+          <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p class="text-xs font-bold uppercase tracking-[0.16em] text-green-700">Product</p>
+              <h2 id="product-name" class="mt-1 font-serif text-2xl font-bold text-gray-950">SALVIA｜集まる家</h2>
+              <p id="product-meta" class="mt-2 text-sm text-gray-600"></p>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              <button id="previous-period" type="button" class="min-h-10 rounded-lg border border-stone-300 bg-white px-4 py-2 text-sm font-bold text-gray-700 hover:bg-stone-50">← 前の30日</button>
+              <button id="today-period" type="button" class="min-h-10 rounded-lg border border-green-200 bg-green-50 px-4 py-2 text-sm font-bold text-green-800 hover:bg-green-100">今日から</button>
+              <button id="next-period" type="button" class="min-h-10 rounded-lg border border-stone-300 bg-white px-4 py-2 text-sm font-bold text-gray-700 hover:bg-stone-50">次の30日 →</button>
+            </div>
+          </div>
+
+          <div class="mt-5 grid gap-4 lg:grid-cols-[minmax(0,260px)_auto] lg:items-end">
+            <label class="block">
+              <span class="mb-2 block text-xs font-bold tracking-wider text-gray-500">表示開始日</span>
+              <input
+                id="start-date"
+                type="date"
+                class="min-h-11 w-full rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm text-gray-900 outline-none transition focus:border-green-700 focus:ring-4 focus:ring-green-100"
+              />
+            </label>
+            <div class="flex flex-wrap gap-2">
+              <button id="load-rates" type="button" class="min-h-11 rounded-xl bg-green-800 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60">表示を更新</button>
+              <span class="self-center text-xs leading-6 text-gray-500">31日分を表示します。</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm leading-7 text-amber-950">
+          <strong>安全仕様：</strong> この画面が変更するのは <code>rate_calendar</code> のみです。予約済みの日を販売停止したり料金変更しても、既存予約の金額・予約状態・在庫割当は変更しません。
+        </section>
+
+        <section class="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm">
+          <div id="loading-state" class="hidden px-6 py-16 text-center text-sm text-gray-500">料金カレンダーを読み込んでいます…</div>
+          <p id="rate-error" class="hidden m-6 rounded-xl bg-red-50 px-4 py-3 text-sm leading-6 text-red-700" role="alert"></p>
+
+          <div class="hidden overflow-x-auto lg:block" id="desktop-table-wrap">
+            <table class="min-w-[1050px] w-full border-collapse text-left text-sm">
+              <thead class="bg-stone-50 text-xs font-bold text-gray-600">
+                <tr>
+                  <th class="px-5 py-4">日付</th>
+                  <th class="px-5 py-4">料金</th>
+                  <th class="px-5 py-4">販売</th>
+                  <th class="px-5 py-4">最低泊数</th>
+                  <th class="px-5 py-4">在庫</th>
+                  <th class="px-5 py-4">メモ</th>
+                  <th class="px-5 py-4">更新日時</th>
+                  <th class="px-5 py-4">操作</th>
+                </tr>
+              </thead>
+              <tbody id="rate-table-body" class="divide-y divide-stone-100"></tbody>
+            </table>
+          </div>
+
+          <div id="mobile-cards" class="divide-y divide-stone-100 lg:hidden"></div>
+        </section>
+      </section>
+
+      <div id="edit-modal" class="fixed inset-0 z-[130] hidden items-center justify-center bg-black/45 p-4" aria-hidden="true">
+        <div class="flex max-h-[92vh] w-full max-w-2xl flex-col overflow-hidden rounded-3xl bg-white shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="edit-modal-title">
+          <div class="shrink-0 border-b border-stone-200 px-6 py-5 md:px-7">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.18em] text-green-700">Rate Edit</p>
+                <h2 id="edit-modal-title" class="mt-1 font-serif text-2xl font-bold text-gray-950">日別料金を編集</h2>
+                <p id="edit-date-summary" class="mt-2 text-sm leading-6 text-gray-600"></p>
+              </div>
+              <button id="edit-modal-close" type="button" class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-stone-200 text-xl text-gray-500 transition hover:bg-stone-50" aria-label="閉じる">×</button>
+            </div>
+          </div>
+
+          <div class="min-h-0 flex-1 space-y-5 overflow-y-auto px-6 py-6 md:px-7">
+            <div id="occupancy-warning" class="hidden rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-950"></div>
+
+            <div class="grid gap-4 sm:grid-cols-2">
+              <label class="block">
+                <span class="mb-2 block text-sm font-bold text-gray-800">宿泊料金（税込）</span>
+                <div class="relative">
+                  <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">¥</span>
+                  <input id="edit-price" type="number" min="1000" max="1000000" step="1000" class="min-h-12 w-full rounded-xl border border-stone-300 bg-white py-3 pl-8 pr-4 text-base font-bold text-gray-900 outline-none transition focus:border-green-700 focus:ring-4 focus:ring-green-100" />
+                </div>
+              </label>
+
+              <label class="block">
+                <span class="mb-2 block text-sm font-bold text-gray-800">販売状態</span>
+                <select id="edit-open" class="min-h-12 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-sm font-bold text-gray-900 outline-none transition focus:border-green-700 focus:ring-4 focus:ring-green-100">
+                  <option value="true">販売中</option>
+                  <option value="false">販売停止</option>
+                </select>
+              </label>
+            </div>
+
+            <label class="block">
+              <span class="mb-2 block text-sm font-bold text-gray-800">最低泊数の上書き <span class="font-normal text-gray-400">（空欄＝商品標準）</span></span>
+              <input id="edit-min-nights" type="number" min="1" max="30" step="1" placeholder="例：2" class="min-h-12 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-green-700 focus:ring-4 focus:ring-green-100" />
+              <p id="min-nights-help" class="mt-2 text-xs leading-6 text-gray-500"></p>
+            </label>
+
+            <div class="rounded-xl bg-stone-50 px-4 py-3 text-xs leading-6 text-gray-600">
+              既存のメモはこの画面では変更しません。料金・販売状態・最低泊数だけを更新します。
+            </div>
+
+            <p id="edit-error" class="hidden rounded-xl bg-red-50 px-4 py-3 text-sm leading-6 text-red-700" role="alert"></p>
+            <div id="edit-success" class="hidden rounded-xl bg-green-50 px-4 py-3 text-sm leading-6 text-green-800" role="status"></div>
+
+            <div id="preview-panel" class="hidden rounded-2xl border border-red-200 bg-red-50 p-5">
+              <p class="text-sm font-bold text-red-900">変更内容を確認してください</p>
+              <div id="preview-content" class="mt-4 grid gap-3 text-sm"></div>
+
+              <label class="mt-5 flex cursor-pointer items-start gap-3 rounded-xl bg-white px-4 py-3 text-sm text-gray-800">
+                <input id="final-confirm" type="checkbox" class="mt-0.5 h-4 w-4 rounded border-stone-300 text-red-700 focus:ring-red-200" />
+                <span>変更内容を確認し、既存予約の料金・予約状態には影響しないことを確認しました。</span>
+              </label>
+
+              <button id="save-button" type="button" disabled class="mt-4 min-h-12 w-full rounded-xl border border-stone-300 bg-stone-200 px-5 py-3 text-sm font-bold text-stone-500">この内容で保存</button>
+            </div>
+          </div>
+
+          <div class="shrink-0 border-t border-stone-200 bg-white px-6 py-4 md:px-7">
+            <div class="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+              <button id="edit-cancel" type="button" class="min-h-11 rounded-xl border border-stone-300 bg-white px-5 py-2.5 text-sm font-bold text-gray-700 hover:bg-stone-50">閉じる</button>
+              <button id="preview-button" type="button" class="min-h-11 rounded-xl bg-green-800 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60">変更内容を確認</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script is:inline>
+    (() => {
+      const API_BASE = 'https://oshima-new-villa-booking-api-dev.info-koueisha.workers.dev';
+      const RATES_URL = `${API_BASE}/api/admin/rates`;
+      const RATE_UPDATE_URL = `${API_BASE}/api/admin/rates/update`;
+      const PRODUCT_ID = 'salvia-standard';
+      const TOKEN_KEY = 'onv_admin_dashboard_token';
+      const DISPLAY_DAYS = 31;
+
+      const authPanel = document.getElementById('auth-panel');
+      const authForm = document.getElementById('auth-form');
+      const tokenInput = document.getElementById('admin-token');
+      const authSubmit = document.getElementById('auth-submit');
+      const authMessage = document.getElementById('auth-message');
+      const dashboard = document.getElementById('dashboard');
+      const logoutButton = document.getElementById('logout-button');
+      const productName = document.getElementById('product-name');
+      const productMeta = document.getElementById('product-meta');
+      const startDateInput = document.getElementById('start-date');
+      const loadRatesButton = document.getElementById('load-rates');
+      const previousPeriodButton = document.getElementById('previous-period');
+      const todayPeriodButton = document.getElementById('today-period');
+      const nextPeriodButton = document.getElementById('next-period');
+      const loadingState = document.getElementById('loading-state');
+      const rateError = document.getElementById('rate-error');
+      const rateTableBody = document.getElementById('rate-table-body');
+      const mobileCards = document.getElementById('mobile-cards');
+      const editModal = document.getElementById('edit-modal');
+      const editModalClose = document.getElementById('edit-modal-close');
+      const editCancel = document.getElementById('edit-cancel');
+      const editDateSummary = document.getElementById('edit-date-summary');
+      const editPrice = document.getElementById('edit-price');
+      const editOpen = document.getElementById('edit-open');
+      const editMinNights = document.getElementById('edit-min-nights');
+      const minNightsHelp = document.getElementById('min-nights-help');
+      const occupancyWarning = document.getElementById('occupancy-warning');
+      const previewButton = document.getElementById('preview-button');
+      const previewPanel = document.getElementById('preview-panel');
+      const previewContent = document.getElementById('preview-content');
+      const finalConfirm = document.getElementById('final-confirm');
+      const saveButton = document.getElementById('save-button');
+      const editError = document.getElementById('edit-error');
+      const editSuccess = document.getElementById('edit-success');
+
+      let rows = [];
+      let product = null;
+      let editTarget = null;
+      let pendingChange = null;
+
+      const yen = new Intl.NumberFormat('ja-JP', {
+        style: 'currency',
+        currency: 'JPY',
+        maximumFractionDigits: 0,
+      });
+
+      function escapeHtml(value) {
+        return String(value ?? '')
+          .replaceAll('&', '&amp;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;')
+          .replaceAll('"', '&quot;')
+          .replaceAll("'", '&#039;');
+      }
+
+      function localToday() {
+        const parts = new Intl.DateTimeFormat('en-US', {
+          timeZone: 'Asia/Tokyo',
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        }).formatToParts(new Date());
+        const values = {};
+        parts.forEach((part) => {
+          if (part.type === 'year' || part.type === 'month' || part.type === 'day') {
+            values[part.type] = part.value;
+          }
+        });
+        return `${values.year}-${values.month}-${values.day}`;
+      }
+
+      function addDays(dateString, amount) {
+        const date = new Date(`${dateString}T00:00:00Z`);
+        date.setUTCDate(date.getUTCDate() + amount);
+        return date.toISOString().slice(0, 10);
+      }
+
+      function dateLabel(dateString) {
+        const date = new Date(`${dateString}T00:00:00Z`);
+        return new Intl.DateTimeFormat('ja-JP', {
+          timeZone: 'UTC',
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          weekday: 'short',
+        }).format(date);
+      }
+
+      function formatDateTime(value) {
+        if (!value) return '—';
+        return String(value).replace('T', ' ').slice(0, 16);
+      }
+
+      function occupancyLabel(value) {
+        if (value === 'booking') return '予約あり';
+        if (value === 'hold') return '仮押さえ';
+        return '空き';
+      }
+
+      function occupancyClass(value) {
+        if (value === 'booking') return 'border-blue-200 bg-blue-50 text-blue-800';
+        if (value === 'hold') return 'border-amber-200 bg-amber-50 text-amber-800';
+        return 'border-stone-200 bg-stone-50 text-stone-600';
+      }
+
+      function saleLabel(row) {
+        if (!row.rate_exists) return '未設定';
+        return row.is_open ? '販売中' : '販売停止';
+      }
+
+      function saleClass(row) {
+        if (!row.rate_exists) return 'border-stone-200 bg-stone-100 text-stone-600';
+        if (row.is_open) return 'border-green-200 bg-green-50 text-green-800';
+        return 'border-red-200 bg-red-50 text-red-700';
+      }
+
+      function minNightsLabel(row) {
+        if (row.min_nights_override) return `${row.min_nights_override}泊`;
+        return `標準 ${product?.min_nights || 1}泊`;
+      }
+
+      function setAuthMessage(message, type = 'error') {
+        authMessage.textContent = message;
+        authMessage.className = `mt-4 rounded-xl px-4 py-3 text-sm leading-6 ${
+          type === 'error' ? 'bg-red-50 text-red-700' : 'bg-green-50 text-green-800'
+        }`;
+        authMessage.classList.remove('hidden');
+      }
+
+      function renderRows() {
+        rateTableBody.innerHTML = rows.map((row) => `
+          <tr class="align-top hover:bg-stone-50/70">
+            <td class="px-5 py-4 whitespace-nowrap font-bold text-gray-950">${escapeHtml(dateLabel(row.stay_date))}</td>
+            <td class="px-5 py-4 whitespace-nowrap font-bold ${row.rate_exists ? 'text-gray-950' : 'text-gray-400'}">${row.rate_exists ? yen.format(Number(row.price_jpy || 0)) : '料金未設定'}</td>
+            <td class="px-5 py-4"><span class="inline-flex rounded-full border px-2.5 py-1 text-xs font-bold ${saleClass(row)}">${escapeHtml(saleLabel(row))}</span></td>
+            <td class="px-5 py-4 whitespace-nowrap text-gray-700">${escapeHtml(minNightsLabel(row))}</td>
+            <td class="px-5 py-4"><span class="inline-flex rounded-full border px-2.5 py-1 text-xs font-bold ${occupancyClass(row.occupancy)}">${escapeHtml(occupancyLabel(row.occupancy))}</span></td>
+            <td class="px-5 py-4 max-w-[240px] text-xs leading-5 text-gray-500">${escapeHtml(row.note || '—')}</td>
+            <td class="px-5 py-4 whitespace-nowrap text-xs text-gray-500">${escapeHtml(formatDateTime(row.updated_at))}</td>
+            <td class="px-5 py-4"><button type="button" data-edit-rate="${escapeHtml(row.stay_date)}" class="rounded-lg border border-green-200 bg-white px-3 py-2 text-xs font-bold text-green-800 transition hover:bg-green-50">編集</button></td>
+          </tr>
+        `).join('');
+
+        mobileCards.innerHTML = rows.map((row) => `
+          <article class="p-6">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p class="font-bold text-gray-950">${escapeHtml(dateLabel(row.stay_date))}</p>
+                <p class="mt-1 text-xl font-bold ${row.rate_exists ? 'text-gray-950' : 'text-gray-400'}">${row.rate_exists ? yen.format(Number(row.price_jpy || 0)) : '料金未設定'}</p>
+              </div>
+              <span class="inline-flex rounded-full border px-2.5 py-1 text-xs font-bold ${saleClass(row)}">${escapeHtml(saleLabel(row))}</span>
+            </div>
+            <dl class="mt-4 grid grid-cols-2 gap-4 text-sm">
+              <div><dt class="text-xs font-bold text-gray-500">最低泊数</dt><dd class="mt-1 text-gray-900">${escapeHtml(minNightsLabel(row))}</dd></div>
+              <div><dt class="text-xs font-bold text-gray-500">在庫</dt><dd class="mt-1"><span class="inline-flex rounded-full border px-2.5 py-1 text-xs font-bold ${occupancyClass(row.occupancy)}">${escapeHtml(occupancyLabel(row.occupancy))}</span></dd></div>
+              <div class="col-span-2"><dt class="text-xs font-bold text-gray-500">メモ</dt><dd class="mt-1 text-gray-700">${escapeHtml(row.note || '—')}</dd></div>
+            </dl>
+            <button type="button" data-edit-rate="${escapeHtml(row.stay_date)}" class="mt-5 w-full rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-bold text-green-800 transition hover:bg-green-50">編集</button>
+          </article>
+        `).join('');
+      }
+
+      async function loadRates(token) {
+        loadingState.classList.remove('hidden');
+        rateError.classList.add('hidden');
+        loadRatesButton.disabled = true;
+
+        try {
+          const start = startDateInput.value || localToday();
+          const response = await fetch(`${RATES_URL}?product_id=${encodeURIComponent(PRODUCT_ID)}&start=${encodeURIComponent(start)}&days=${DISPLAY_DAYS}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const data = await response.json().catch(() => null);
+
+          if (response.status === 401) {
+            sessionStorage.removeItem(TOKEN_KEY);
+            throw new Error('管理者トークンが一致しません。');
+          }
+          if (!response.ok || !data?.ok || !Array.isArray(data.rows)) {
+            throw new Error('料金カレンダーを取得できませんでした。');
+          }
+
+          rows = data.rows;
+          product = data.product;
+          sessionStorage.setItem(TOKEN_KEY, token);
+          authPanel.classList.add('hidden');
+          dashboard.classList.remove('hidden');
+          logoutButton.classList.remove('hidden');
+          logoutButton.classList.add('inline-flex');
+          productName.textContent = product?.name || 'SALVIA｜集まる家';
+          productMeta.textContent = `標準最低泊数 ${product?.min_nights || 1}泊 / 最大 ${product?.max_guests || 6}名 / 商品状態 ${product?.status || '—'}`;
+          renderRows();
+        } catch (error) {
+          if (dashboard.classList.contains('hidden')) {
+            authPanel.classList.remove('hidden');
+            setAuthMessage(error instanceof Error ? error.message : '料金カレンダーを取得できませんでした。');
+          } else {
+            rateError.textContent = error instanceof Error ? error.message : '料金カレンダーを取得できませんでした。';
+            rateError.classList.remove('hidden');
+          }
+        } finally {
+          loadingState.classList.add('hidden');
+          loadRatesButton.disabled = false;
+          authSubmit.disabled = false;
+        }
+      }
+
+      function syncSaveButton() {
+        const enabled = Boolean(finalConfirm.checked && pendingChange);
+        saveButton.disabled = !enabled;
+        saveButton.style.backgroundColor = enabled ? '#b91c1c' : '#e7e5e4';
+        saveButton.style.borderColor = enabled ? '#991b1b' : '#d6d3d1';
+        saveButton.style.color = enabled ? '#ffffff' : '#78716c';
+        saveButton.style.cursor = enabled ? 'pointer' : 'not-allowed';
+      }
+
+      function clearPreview() {
+        pendingChange = null;
+        previewPanel.classList.add('hidden');
+        finalConfirm.checked = false;
+        syncSaveButton();
+        editError.classList.add('hidden');
+        editSuccess.classList.add('hidden');
+      }
+
+      function openEditModal(stayDate) {
+        const row = rows.find((item) => item.stay_date === stayDate);
+        if (!row) return;
+        editTarget = row;
+        editDateSummary.textContent = `${dateLabel(row.stay_date)} / ${product?.name || 'SALVIA'}`;
+        editPrice.value = row.rate_exists ? String(row.price_jpy ?? '') : '';
+        editOpen.value = row.rate_exists && row.is_open ? 'true' : 'false';
+        editMinNights.value = row.min_nights_override == null ? '' : String(row.min_nights_override);
+        minNightsHelp.textContent = `空欄の場合は商品標準の ${product?.min_nights || 1}泊を使用します。`;
+
+        if (row.occupancy) {
+          occupancyWarning.textContent = row.occupancy === 'booking'
+            ? 'この宿泊日はすでに本予約があります。ここで料金や販売状態を変更しても、その既存予約の請求額・予約状態・在庫は変更されません。'
+            : 'この宿泊日は現在仮押さえ中です。変更は新しい空室検索に反映されますが、現在の仮押さえ自体は解除しません。';
+          occupancyWarning.classList.remove('hidden');
+        } else {
+          occupancyWarning.classList.add('hidden');
+        }
+
+        clearPreview();
+        editModal.classList.remove('hidden');
+        editModal.classList.add('flex');
+        editModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('overflow-hidden');
+        editPrice.focus();
+      }
+
+      function closeEditModal() {
+        editTarget = null;
+        pendingChange = null;
+        editModal.classList.add('hidden');
+        editModal.classList.remove('flex');
+        editModal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('overflow-hidden');
+      }
+
+      function buildPreview() {
+        if (!editTarget) return;
+        editError.classList.add('hidden');
+        editSuccess.classList.add('hidden');
+
+        const price = Number(editPrice.value);
+        const isOpen = editOpen.value === 'true';
+        const minNightsRaw = editMinNights.value.trim();
+        const minNights = minNightsRaw === '' ? null : Number(minNightsRaw);
+
+        if (!Number.isInteger(price) || price < 1000 || price > 1000000) {
+          editError.textContent = '料金は¥1,000〜¥1,000,000の整数で入力してください。';
+          editError.classList.remove('hidden');
+          return;
+        }
+        if (minNights !== null && (!Number.isInteger(minNights) || minNights < 1 || minNights > 30)) {
+          editError.textContent = '最低泊数は1〜30泊で入力するか、商品標準を使う場合は空欄にしてください。';
+          editError.classList.remove('hidden');
+          return;
+        }
+
+        const oldPrice = editTarget.rate_exists ? yen.format(Number(editTarget.price_jpy || 0)) : '未設定';
+        const oldOpen = editTarget.rate_exists ? (editTarget.is_open ? '販売中' : '販売停止') : '未設定';
+        const oldMin = minNightsLabel(editTarget);
+        const newMin = minNights == null ? `標準 ${product?.min_nights || 1}泊` : `${minNights}泊`;
+
+        pendingChange = {
+          product_id: PRODUCT_ID,
+          stay_date: editTarget.stay_date,
+          price_jpy: price,
+          is_open: isOpen,
+          min_nights_override: minNights,
+          expected_updated_at: editTarget.updated_at,
+          confirm: true,
+        };
+
+        previewContent.innerHTML = `
+          <div class="grid grid-cols-[100px_1fr] gap-3 rounded-xl bg-white px-4 py-3"><span class="font-bold text-gray-500">料金</span><span><strong>${escapeHtml(oldPrice)}</strong> → <strong>${escapeHtml(yen.format(price))}</strong></span></div>
+          <div class="grid grid-cols-[100px_1fr] gap-3 rounded-xl bg-white px-4 py-3"><span class="font-bold text-gray-500">販売</span><span><strong>${escapeHtml(oldOpen)}</strong> → <strong>${isOpen ? '販売中' : '販売停止'}</strong></span></div>
+          <div class="grid grid-cols-[100px_1fr] gap-3 rounded-xl bg-white px-4 py-3"><span class="font-bold text-gray-500">最低泊数</span><span><strong>${escapeHtml(oldMin)}</strong> → <strong>${escapeHtml(newMin)}</strong></span></div>
+        `;
+
+        previewPanel.classList.remove('hidden');
+        finalConfirm.checked = false;
+        syncSaveButton();
+      }
+
+      async function saveRate() {
+        if (!pendingChange || !editTarget || !finalConfirm.checked) return;
+        const token = sessionStorage.getItem(TOKEN_KEY);
+        if (!token) return;
+
+        const message = `${dateLabel(editTarget.stay_date)} の料金・販売設定を保存します。\n\n料金: ${yen.format(pendingChange.price_jpy)}\n販売: ${pendingChange.is_open ? '販売中' : '販売停止'}\n最低泊数: ${pendingChange.min_nights_override == null ? `標準 ${product?.min_nights || 1}泊` : `${pendingChange.min_nights_override}泊`}\n\n実行しますか？`;
+        if (!window.confirm(message)) return;
+
+        saveButton.disabled = true;
+        previewButton.disabled = true;
+        editCancel.disabled = true;
+        editModalClose.disabled = true;
+        editError.classList.add('hidden');
+        editSuccess.classList.add('hidden');
+        saveButton.textContent = '保存中…';
+
+        try {
+          const response = await fetch(RATE_UPDATE_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(pendingChange),
+          });
+          const data = await response.json().catch(() => null);
+
+          if (response.status === 401) {
+            sessionStorage.removeItem(TOKEN_KEY);
+            throw new Error('管理者トークンが一致しません。');
+          }
+          if (response.status === 409 && data?.error === 'rate_changed') {
+            throw new Error('この日付の設定が別操作で更新されました。画面を更新してからもう一度編集してください。');
+          }
+          if (!response.ok || !data?.ok) {
+            const labels = {
+              past_date_not_editable: '過去の日付は編集できません。',
+              invalid_price: '料金の値が不正です。',
+              invalid_min_nights_override: '最低泊数の値が不正です。',
+            };
+            throw new Error(labels[data?.error] || '料金・販売設定を保存できませんでした。');
+          }
+
+          editSuccess.textContent = `${dateLabel(editTarget.stay_date)} の料金・販売設定を保存しました。`;
+          editSuccess.classList.remove('hidden');
+          previewPanel.classList.add('hidden');
+          pendingChange = null;
+          await loadRates(token);
+          const refreshed = rows.find((item) => item.stay_date === editTarget.stay_date);
+          if (refreshed) editTarget = refreshed;
+          saveButton.textContent = 'この内容で保存';
+        } catch (error) {
+          editError.textContent = error instanceof Error ? error.message : '料金・販売設定を保存できませんでした。';
+          editError.classList.remove('hidden');
+        } finally {
+          previewButton.disabled = false;
+          editCancel.disabled = false;
+          editModalClose.disabled = false;
+          saveButton.textContent = 'この内容で保存';
+          syncSaveButton();
+        }
+      }
+
+      authForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        authMessage.classList.add('hidden');
+        const token = tokenInput.value.trim();
+        if (!token) return;
+        authSubmit.disabled = true;
+        loadRates(token);
+      });
+
+      logoutButton.addEventListener('click', () => {
+        sessionStorage.removeItem(TOKEN_KEY);
+        tokenInput.value = '';
+        rows = [];
+        product = null;
+        dashboard.classList.add('hidden');
+        logoutButton.classList.add('hidden');
+        logoutButton.classList.remove('inline-flex');
+        authPanel.classList.remove('hidden');
+        authMessage.classList.add('hidden');
+        tokenInput.focus();
+      });
+
+      loadRatesButton.addEventListener('click', () => {
+        const token = sessionStorage.getItem(TOKEN_KEY);
+        if (token) loadRates(token);
+      });
+
+      todayPeriodButton.addEventListener('click', () => {
+        startDateInput.value = localToday();
+        const token = sessionStorage.getItem(TOKEN_KEY);
+        if (token) loadRates(token);
+      });
+
+      previousPeriodButton.addEventListener('click', () => {
+        startDateInput.value = addDays(startDateInput.value || localToday(), -30);
+        const token = sessionStorage.getItem(TOKEN_KEY);
+        if (token) loadRates(token);
+      });
+
+      nextPeriodButton.addEventListener('click', () => {
+        startDateInput.value = addDays(startDateInput.value || localToday(), 30);
+        const token = sessionStorage.getItem(TOKEN_KEY);
+        if (token) loadRates(token);
+      });
+
+      dashboard.addEventListener('click', (event) => {
+        const target = event.target.closest('[data-edit-rate]');
+        if (!target) return;
+        const stayDate = target.getAttribute('data-edit-rate');
+        if (stayDate) openEditModal(stayDate);
+      });
+
+      [editPrice, editOpen, editMinNights].forEach((input) => {
+        input.addEventListener('input', clearPreview);
+        input.addEventListener('change', clearPreview);
+      });
+
+      previewButton.addEventListener('click', buildPreview);
+      finalConfirm.addEventListener('change', syncSaveButton);
+      saveButton.addEventListener('click', saveRate);
+      editModalClose.addEventListener('click', closeEditModal);
+      editCancel.addEventListener('click', closeEditModal);
+      editModal.addEventListener('click', (event) => {
+        if (event.target === editModal) closeEditModal();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !editModal.classList.contains('hidden')) {
+          closeEditModal();
+        }
+      });
+
+      startDateInput.value = localToday();
+      const existingToken = sessionStorage.getItem(TOKEN_KEY);
+      if (existingToken) {
+        tokenInput.value = existingToken;
+        loadRates(existingToken);
+      }
+    })();
+  </script>
+</Layout>
