@@ -157,6 +157,303 @@ if (
 }    
 
 
+
+/*
+ * 管理者用：予約詳細
+ *
+ * 予約本体・キャンセル/返金・現在の在庫割当・
+ * メール送信履歴を1画面で確認するための読取専用API。
+ */
+if (
+  url.pathname ===
+    "/api/admin/booking-detail" &&
+  request.method === "GET"
+) {
+  if (
+    !isAdminAuthorized(
+      request,
+      env
+    )
+  ) {
+    return withCors(
+      Response.json(
+        {
+          ok: false,
+          error: "unauthorized",
+        },
+        { status: 401 }
+      ),
+      request
+    );
+  }
+
+  try {
+    const bookingCode =
+      String(
+        url.searchParams.get(
+          "booking_code"
+        ) || ""
+      ).trim();
+
+    if (!bookingCode) {
+      return withCors(
+        jsonError(
+          "booking_code_required"
+        ),
+        request
+      );
+    }
+
+    const booking =
+      await env.DB
+        .prepare(`
+          SELECT
+            b.id,
+            b.public_booking_code,
+            b.product_id,
+            p.name AS product_name,
+
+            b.check_in_date,
+            b.check_out_date,
+            CAST(
+              julianday(b.check_out_date) -
+              julianday(b.check_in_date)
+              AS INTEGER
+            ) AS nights,
+
+            b.guest_count,
+            b.subtotal_jpy,
+            b.discount_jpy,
+            b.total_jpy,
+
+            b.status,
+            b.payment_status,
+
+            b.customer_name,
+            b.customer_email,
+            b.customer_phone,
+
+            b.stripe_checkout_session_id,
+            b.stripe_payment_intent_id,
+
+            b.cancellation_policy_version,
+            b.cancellation_policy_snapshot,
+
+            b.hold_expires_at,
+            b.terms_accepted_at,
+            b.cancellation_policy_accepted_at,
+
+            b.created_at,
+            b.confirmed_at,
+            b.cancelled_at,
+            b.updated_at
+
+          FROM bookings b
+          JOIN products p
+            ON p.id = b.product_id
+
+          WHERE b.public_booking_code = ?
+          LIMIT 1
+        `)
+        .bind(bookingCode)
+        .first();
+
+    if (!booking) {
+      return withCors(
+        jsonError(
+          "booking_not_found",
+          404
+        ),
+        request
+      );
+    }
+
+    const results =
+      await env.DB.batch([
+        env.DB
+          .prepare(`
+            SELECT
+              reason_code,
+              policy_rate,
+              cancellation_fee_jpy,
+              refund_amount_jpy,
+              stripe_refund_id,
+              stripe_refund_status,
+              admin_note,
+              created_at,
+              updated_at
+            FROM booking_cancellations
+            WHERE booking_id = ?
+            LIMIT 1
+          `)
+          .bind(booking.id),
+
+        env.DB
+          .prepare(`
+            SELECT
+              stay_date,
+              allocation_type,
+              expires_at,
+              created_at,
+              updated_at
+            FROM inventory_nights
+            WHERE allocation_ref = ?
+            ORDER BY stay_date
+          `)
+          .bind(booking.id),
+
+        env.DB
+          .prepare(`
+            SELECT
+              email_type,
+              recipient_email,
+              resend_email_id,
+              status,
+              last_error,
+              sent_at,
+              created_at,
+              updated_at
+            FROM email_deliveries
+            WHERE booking_id = ?
+            ORDER BY datetime(created_at)
+          `)
+          .bind(booking.id),
+
+        env.DB
+          .prepare(`
+            SELECT
+              'cancellation_completion' AS email_type,
+              recipient_email,
+              resend_email_id,
+              status,
+              last_error,
+              sent_at,
+              created_at,
+              updated_at
+            FROM cancellation_email_deliveries
+            WHERE booking_id = ?
+            LIMIT 1
+          `)
+          .bind(booking.id),
+
+        env.DB
+          .prepare(`
+            SELECT
+              'admin_cancellation_notification' AS email_type,
+              recipient_email,
+              resend_email_id,
+              status,
+              last_error,
+              sent_at,
+              created_at,
+              updated_at
+            FROM admin_cancellation_email_deliveries
+            WHERE booking_id = ?
+            LIMIT 1
+          `)
+          .bind(booking.id),
+      ]);
+
+    const cancellation =
+      results[0]?.results?.[0] ||
+      null;
+
+    const inventory =
+      results[1]?.results || [];
+
+    const emailDeliveries = [
+      ...(results[2]?.results || []),
+      ...(results[3]?.results || []),
+      ...(results[4]?.results || []),
+    ].sort((a, b) =>
+      String(a.created_at || "")
+        .localeCompare(
+          String(b.created_at || "")
+        )
+    );
+
+    return withCors(
+      Response.json({
+        ok: true,
+
+        booking: {
+          booking_code:
+            booking.public_booking_code,
+          product_id:
+            booking.product_id,
+          product_name:
+            booking.product_name,
+          check_in:
+            booking.check_in_date,
+          check_out:
+            booking.check_out_date,
+          nights:
+            booking.nights,
+          guest_count:
+            booking.guest_count,
+          subtotal_jpy:
+            booking.subtotal_jpy,
+          discount_jpy:
+            booking.discount_jpy,
+          total_jpy:
+            booking.total_jpy,
+          status:
+            booking.status,
+          payment_status:
+            booking.payment_status,
+          customer_name:
+            booking.customer_name,
+          customer_email:
+            booking.customer_email,
+          customer_phone:
+            booking.customer_phone,
+          stripe_checkout_session_id:
+            booking.stripe_checkout_session_id,
+          stripe_payment_intent_id:
+            booking.stripe_payment_intent_id,
+          cancellation_policy_version:
+            booking.cancellation_policy_version,
+          cancellation_policy_snapshot:
+            booking.cancellation_policy_snapshot,
+          hold_expires_at:
+            booking.hold_expires_at,
+          terms_accepted_at:
+            booking.terms_accepted_at,
+          cancellation_policy_accepted_at:
+            booking.cancellation_policy_accepted_at,
+          created_at:
+            booking.created_at,
+          confirmed_at:
+            booking.confirmed_at,
+          cancelled_at:
+            booking.cancelled_at,
+          updated_at:
+            booking.updated_at,
+        },
+
+        cancellation,
+        inventory,
+        email_deliveries:
+          emailDeliveries,
+      }),
+      request
+    );
+  } catch (error) {
+    console.error(
+      "Admin booking detail API error:",
+      error
+    );
+
+    return withCors(
+      jsonError(
+        "internal_server_error",
+        500
+      ),
+      request
+    );
+  }
+}
+
 /*
  * 管理者用：予約メール送信状況
  */

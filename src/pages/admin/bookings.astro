@@ -151,6 +151,38 @@ import Layout from '../../layouts/Layout.astro';
           ※ 現在は開発用APIの最新100件を表示しています。本番公開時は管理画面の認証方式をCloudflare Access等へ切り替える予定です。
         </p>
 
+
+        <div id="detail-modal" class="fixed inset-0 z-[120] hidden items-center justify-center bg-black/45 p-4" aria-hidden="true">
+          <div class="flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-3xl bg-white shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="detail-modal-title">
+            <div class="shrink-0 border-b border-stone-200 px-6 py-5 md:px-7">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="text-xs font-bold uppercase tracking-[0.18em] text-green-700">Booking Detail</p>
+                  <h2 id="detail-modal-title" class="mt-1 font-serif text-2xl font-bold text-gray-950">予約詳細</h2>
+                  <p id="detail-booking-summary" class="mt-2 text-sm leading-6 text-gray-600"></p>
+                </div>
+                <button id="detail-modal-close" type="button" class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-stone-200 text-xl text-gray-500 transition hover:bg-stone-50" aria-label="閉じる">×</button>
+              </div>
+            </div>
+
+            <div class="min-h-0 flex-1 overflow-y-auto px-6 py-6 md:px-7">
+              <div id="detail-loading" class="rounded-2xl bg-stone-50 px-5 py-10 text-center text-sm text-gray-500">
+                予約詳細を読み込んでいます…
+              </div>
+
+              <p id="detail-error" class="hidden rounded-xl bg-red-50 px-4 py-3 text-sm leading-6 text-red-700" role="alert"></p>
+
+              <div id="detail-content" class="hidden space-y-6"></div>
+            </div>
+
+            <div class="shrink-0 border-t border-stone-200 bg-white px-6 py-4 md:px-7">
+              <div class="flex justify-end">
+                <button id="detail-modal-close-bottom" type="button" class="min-h-11 rounded-xl border border-stone-300 bg-white px-5 py-2.5 text-sm font-bold text-gray-700 hover:bg-stone-50">閉じる</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div id="email-modal" class="fixed inset-0 z-[110] hidden items-center justify-center bg-black/45 p-4" aria-hidden="true">
           <div class="w-full max-w-2xl overflow-hidden rounded-3xl bg-white shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="email-modal-title">
             <div class="border-b border-stone-200 px-6 py-5 md:px-7">
@@ -291,6 +323,7 @@ import Layout from '../../layouts/Layout.astro';
       const CANCEL_REFUND_URL = 'https://oshima-new-villa-booking-api-dev.info-koueisha.workers.dev/api/admin/cancel-refund';
       const EMAIL_STATUS_URL = 'https://oshima-new-villa-booking-api-dev.info-koueisha.workers.dev/api/admin/email-status';
       const EMAIL_RESEND_URL = 'https://oshima-new-villa-booking-api-dev.info-koueisha.workers.dev/api/admin/email-resend';
+      const BOOKING_DETAIL_URL = 'https://oshima-new-villa-booking-api-dev.info-koueisha.workers.dev/api/admin/booking-detail';
       const TOKEN_KEY = 'onv_admin_dashboard_token';
 
       const authPanel = document.getElementById('auth-panel');
@@ -339,6 +372,13 @@ import Layout from '../../layouts/Layout.astro';
       const emailStatusLoading = document.getElementById('email-status-loading');
       const emailStatusMessage = document.getElementById('email-status-message');
       const emailStatusList = document.getElementById('email-status-list');
+      const detailModal = document.getElementById('detail-modal');
+      const detailModalClose = document.getElementById('detail-modal-close');
+      const detailModalCloseBottom = document.getElementById('detail-modal-close-bottom');
+      const detailBookingSummary = document.getElementById('detail-booking-summary');
+      const detailLoading = document.getElementById('detail-loading');
+      const detailError = document.getElementById('detail-error');
+      const detailContent = document.getElementById('detail-content');
            
       let bookings = [];
       let activeFilter = 'all';
@@ -450,6 +490,247 @@ import Layout from '../../layouts/Layout.astro';
           other: 'その他',
         };
         return labels[reason] || reason;
+      }
+
+      function emailTypeLabel(type) {
+        const labels = {
+          booking_confirmation: '予約確定メール（お客様）',
+          admin_booking_notification: '新規予約通知（管理者）',
+          cancellation_completion: 'キャンセル・返金完了メール（お客様）',
+          admin_cancellation_notification: 'キャンセル通知（管理者）',
+        };
+        return labels[type] || type || 'メール';
+      }
+
+      function emailDeliveryStatusLabel(status) {
+        const labels = {
+          sent: '送信済み',
+          failed: '送信失敗',
+          pending: '送信中',
+        };
+        return labels[status] || status || '未記録';
+      }
+
+      function emailDeliveryStatusClass(status) {
+        if (status === 'sent') return 'border-green-200 bg-green-50 text-green-800';
+        if (status === 'failed') return 'border-red-200 bg-red-50 text-red-700';
+        if (status === 'pending') return 'border-amber-200 bg-amber-50 text-amber-800';
+        return 'border-stone-200 bg-stone-50 text-stone-600';
+      }
+
+      function refundStatusLabel(status) {
+        const labels = {
+          succeeded: '返金完了',
+          pending: '返金処理中',
+          failed: '返金失敗',
+          not_required: '返金なし',
+        };
+        return labels[status] || status || '—';
+      }
+
+      function valueOrDash(value) {
+        return value == null || value === '' ? '—' : String(value);
+      }
+
+      function closeDetailModal() {
+        detailModal.classList.add('hidden');
+        detailModal.classList.remove('flex');
+        detailModal.setAttribute('aria-hidden', 'true');
+        detailBookingSummary.textContent = '';
+        detailLoading.classList.remove('hidden');
+        detailError.classList.add('hidden');
+        detailError.textContent = '';
+        detailContent.classList.add('hidden');
+        detailContent.innerHTML = '';
+        document.body.classList.remove('overflow-hidden');
+      }
+
+      function renderBookingDetail(data) {
+        const booking = data.booking || {};
+        const cancellation = data.cancellation || null;
+        const inventory = Array.isArray(data.inventory) ? data.inventory : [];
+        const emailDeliveries = Array.isArray(data.email_deliveries) ? data.email_deliveries : [];
+
+        const inventoryHtml = inventory.length > 0
+          ? inventory.map((item) => `
+              <div class="rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <span class="font-bold text-gray-900">${escapeHtml(formatDate(item.stay_date))}</span>
+                  <span class="rounded-full border border-stone-200 bg-stone-50 px-2.5 py-1 text-xs font-bold text-gray-700">${escapeHtml(inventoryLabel(item.allocation_type))}</span>
+                </div>
+                ${item.expires_at ? `<p class="mt-2 text-xs text-gray-500">有効期限: ${escapeHtml(formatDateTime(item.expires_at))}</p>` : ''}
+              </div>
+            `).join('')
+          : '<p class="rounded-xl bg-stone-50 px-4 py-3 text-sm text-gray-500">現在の在庫割当はありません。キャンセル済みの場合は解放済みです。</p>';
+
+        const emailHtml = emailDeliveries.length > 0
+          ? emailDeliveries.map((item) => `
+              <div class="rounded-xl border border-stone-200 bg-white px-4 py-4">
+                <div class="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <p class="text-sm font-bold text-gray-950">${escapeHtml(emailTypeLabel(item.email_type))}</p>
+                    <p class="mt-1 break-all text-xs text-gray-500">送信先: ${escapeHtml(valueOrDash(item.recipient_email))}</p>
+                  </div>
+                  <span class="inline-flex rounded-full border px-2.5 py-1 text-xs font-bold ${emailDeliveryStatusClass(item.status)}">${escapeHtml(emailDeliveryStatusLabel(item.status))}</span>
+                </div>
+                <dl class="mt-3 grid gap-2 text-xs text-gray-600 sm:grid-cols-2">
+                  <div><dt class="font-bold text-gray-500">送信日時</dt><dd class="mt-0.5">${escapeHtml(formatDateTime(item.sent_at))}</dd></div>
+                  <div><dt class="font-bold text-gray-500">Resend ID</dt><dd class="mt-0.5 break-all">${escapeHtml(valueOrDash(item.resend_email_id))}</dd></div>
+                </dl>
+                ${item.last_error ? `<p class="mt-3 rounded-lg bg-red-50 px-3 py-2 text-xs leading-5 text-red-700">${escapeHtml(item.last_error)}</p>` : ''}
+              </div>
+            `).join('')
+          : '<p class="rounded-xl bg-stone-50 px-4 py-3 text-sm text-gray-500">メール送信履歴はまだありません。</p>';
+
+        const cancellationHtml = cancellation
+          ? `
+              <section class="rounded-2xl border border-red-100 bg-red-50/40 p-5">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                  <h3 class="font-serif text-xl font-bold text-gray-950">キャンセル・返金履歴</h3>
+                  <span class="rounded-full border border-red-200 bg-white px-3 py-1 text-xs font-bold text-red-700">${escapeHtml(reasonLabel(cancellation.reason_code))}</span>
+                </div>
+                <dl class="mt-4 grid gap-4 text-sm sm:grid-cols-2 lg:grid-cols-4">
+                  <div><dt class="text-xs font-bold text-gray-500">キャンセル料率</dt><dd class="mt-1 font-bold text-gray-950">${escapeHtml(valueOrDash(cancellation.policy_rate))}%</dd></div>
+                  <div><dt class="text-xs font-bold text-gray-500">キャンセル料</dt><dd class="mt-1 font-bold text-gray-950">${yen.format(Number(cancellation.cancellation_fee_jpy || 0))}</dd></div>
+                  <div><dt class="text-xs font-bold text-gray-500">返金額</dt><dd class="mt-1 font-bold text-green-800">${yen.format(Number(cancellation.refund_amount_jpy || 0))}</dd></div>
+                  <div><dt class="text-xs font-bold text-gray-500">Stripe返金状況</dt><dd class="mt-1 font-bold text-gray-950">${escapeHtml(refundStatusLabel(cancellation.stripe_refund_status))}</dd></div>
+                  <div class="sm:col-span-2"><dt class="text-xs font-bold text-gray-500">Stripe返金ID</dt><dd class="mt-1 break-all font-mono text-xs text-gray-800">${escapeHtml(valueOrDash(cancellation.stripe_refund_id))}</dd></div>
+                  <div class="sm:col-span-2"><dt class="text-xs font-bold text-gray-500">処理日時</dt><dd class="mt-1 text-gray-800">${escapeHtml(formatDateTime(cancellation.updated_at || cancellation.created_at))}</dd></div>
+                  <div class="sm:col-span-2 lg:col-span-4"><dt class="text-xs font-bold text-gray-500">管理者メモ</dt><dd class="mt-1 whitespace-pre-wrap text-gray-800">${escapeHtml(valueOrDash(cancellation.admin_note))}</dd></div>
+                </dl>
+              </section>
+            `
+          : '';
+
+        detailContent.innerHTML = `
+          <section class="grid gap-4 md:grid-cols-2">
+            <div class="rounded-2xl border border-stone-200 bg-stone-50 p-5">
+              <p class="text-xs font-bold tracking-wider text-gray-500">予約</p>
+              <h3 class="mt-2 font-serif text-xl font-bold text-gray-950">${escapeHtml(valueOrDash(booking.product_name))}</h3>
+              <dl class="mt-4 grid gap-4 text-sm sm:grid-cols-2">
+                <div class="sm:col-span-2"><dt class="text-xs font-bold text-gray-500">予約番号</dt><dd class="mt-1 font-bold text-gray-950">${escapeHtml(valueOrDash(booking.booking_code))}</dd></div>
+                <div><dt class="text-xs font-bold text-gray-500">チェックイン</dt><dd class="mt-1 text-gray-900">${escapeHtml(formatDate(booking.check_in))}</dd></div>
+                <div><dt class="text-xs font-bold text-gray-500">チェックアウト</dt><dd class="mt-1 text-gray-900">${escapeHtml(formatDate(booking.check_out))}</dd></div>
+                <div><dt class="text-xs font-bold text-gray-500">泊数</dt><dd class="mt-1 text-gray-900">${escapeHtml(valueOrDash(booking.nights))}泊</dd></div>
+                <div><dt class="text-xs font-bold text-gray-500">人数</dt><dd class="mt-1 text-gray-900">${escapeHtml(valueOrDash(booking.guest_count))}名</dd></div>
+                <div><dt class="text-xs font-bold text-gray-500">予約状態</dt><dd class="mt-1"><span class="inline-flex rounded-full border px-2.5 py-1 text-xs font-bold ${statusClass(booking.status)}">${escapeHtml(statusLabel(booking.status))}</span></dd></div>
+                <div><dt class="text-xs font-bold text-gray-500">決済</dt><dd class="mt-1 font-medium text-gray-900">${escapeHtml(paymentLabel(booking.payment_status))}</dd></div>
+              </dl>
+            </div>
+
+            <div class="rounded-2xl border border-stone-200 bg-white p-5">
+              <p class="text-xs font-bold tracking-wider text-gray-500">予約者</p>
+              <dl class="mt-4 grid gap-4 text-sm">
+                <div><dt class="text-xs font-bold text-gray-500">氏名</dt><dd class="mt-1 font-bold text-gray-950">${escapeHtml(valueOrDash(booking.customer_name))}</dd></div>
+                <div><dt class="text-xs font-bold text-gray-500">メール</dt><dd class="mt-1 break-all"><a class="text-blue-700 hover:underline" href="mailto:${encodeURIComponent(booking.customer_email || '')}">${escapeHtml(valueOrDash(booking.customer_email))}</a></dd></div>
+                <div><dt class="text-xs font-bold text-gray-500">電話番号</dt><dd class="mt-1"><a class="text-gray-800 hover:underline" href="tel:${escapeHtml(booking.customer_phone || '')}">${escapeHtml(valueOrDash(booking.customer_phone))}</a></dd></div>
+              </dl>
+            </div>
+          </section>
+
+          <section class="rounded-2xl border border-stone-200 bg-white p-5">
+            <h3 class="font-serif text-xl font-bold text-gray-950">金額・Stripe</h3>
+            <dl class="mt-4 grid gap-4 text-sm sm:grid-cols-2 lg:grid-cols-4">
+              <div><dt class="text-xs font-bold text-gray-500">小計</dt><dd class="mt-1 font-bold text-gray-950">${yen.format(Number(booking.subtotal_jpy || 0))}</dd></div>
+              <div><dt class="text-xs font-bold text-gray-500">割引</dt><dd class="mt-1 font-bold text-gray-950">${yen.format(Number(booking.discount_jpy || 0))}</dd></div>
+              <div><dt class="text-xs font-bold text-gray-500">支払総額</dt><dd class="mt-1 text-lg font-bold text-green-800">${yen.format(Number(booking.total_jpy || 0))}</dd></div>
+              <div><dt class="text-xs font-bold text-gray-500">商品ID</dt><dd class="mt-1 text-gray-800">${escapeHtml(valueOrDash(booking.product_id))}</dd></div>
+              <div class="sm:col-span-2"><dt class="text-xs font-bold text-gray-500">Checkout Session ID</dt><dd class="mt-1 break-all font-mono text-xs text-gray-700">${escapeHtml(valueOrDash(booking.stripe_checkout_session_id))}</dd></div>
+              <div class="sm:col-span-2"><dt class="text-xs font-bold text-gray-500">Payment Intent ID</dt><dd class="mt-1 break-all font-mono text-xs text-gray-700">${escapeHtml(valueOrDash(booking.stripe_payment_intent_id))}</dd></div>
+            </dl>
+          </section>
+
+          ${cancellationHtml}
+
+          <section class="rounded-2xl border border-stone-200 bg-white p-5">
+            <h3 class="font-serif text-xl font-bold text-gray-950">在庫割当</h3>
+            <div class="mt-4 grid gap-3 sm:grid-cols-2">${inventoryHtml}</div>
+          </section>
+
+          <section class="rounded-2xl border border-stone-200 bg-white p-5">
+            <h3 class="font-serif text-xl font-bold text-gray-950">メール送信履歴</h3>
+            <div class="mt-4 space-y-3">${emailHtml}</div>
+          </section>
+
+          <section class="rounded-2xl border border-stone-200 bg-stone-50 p-5">
+            <h3 class="font-serif text-xl font-bold text-gray-950">システム履歴</h3>
+            <dl class="mt-4 grid gap-4 text-sm sm:grid-cols-2 lg:grid-cols-4">
+              <div><dt class="text-xs font-bold text-gray-500">予約作成</dt><dd class="mt-1 text-gray-800">${escapeHtml(formatDateTime(booking.created_at))}</dd></div>
+              <div><dt class="text-xs font-bold text-gray-500">予約確定</dt><dd class="mt-1 text-gray-800">${escapeHtml(formatDateTime(booking.confirmed_at))}</dd></div>
+              <div><dt class="text-xs font-bold text-gray-500">キャンセル</dt><dd class="mt-1 text-gray-800">${escapeHtml(formatDateTime(booking.cancelled_at))}</dd></div>
+              <div><dt class="text-xs font-bold text-gray-500">最終更新</dt><dd class="mt-1 text-gray-800">${escapeHtml(formatDateTime(booking.updated_at))}</dd></div>
+              <div><dt class="text-xs font-bold text-gray-500">仮押さえ期限</dt><dd class="mt-1 text-gray-800">${escapeHtml(formatDateTime(booking.hold_expires_at))}</dd></div>
+              <div><dt class="text-xs font-bold text-gray-500">利用規約同意</dt><dd class="mt-1 text-gray-800">${escapeHtml(formatDateTime(booking.terms_accepted_at))}</dd></div>
+              <div><dt class="text-xs font-bold text-gray-500">キャンセルポリシー同意</dt><dd class="mt-1 text-gray-800">${escapeHtml(formatDateTime(booking.cancellation_policy_accepted_at))}</dd></div>
+              <div><dt class="text-xs font-bold text-gray-500">ポリシー版</dt><dd class="mt-1 text-gray-800">${escapeHtml(valueOrDash(booking.cancellation_policy_version))}</dd></div>
+            </dl>
+            ${booking.cancellation_policy_snapshot ? `
+              <details class="mt-5 rounded-xl border border-stone-200 bg-white px-4 py-3">
+                <summary class="cursor-pointer text-sm font-bold text-gray-800">予約時のキャンセルポリシーを表示</summary>
+                <p class="mt-3 whitespace-pre-wrap text-xs leading-6 text-gray-600">${escapeHtml(booking.cancellation_policy_snapshot)}</p>
+              </details>
+            ` : ''}
+          </section>
+        `;
+      }
+
+      async function openDetailModal(bookingCode) {
+        const booking = bookings.find((item) => item.public_booking_code === bookingCode);
+        if (!booking) return;
+
+        const token = sessionStorage.getItem(TOKEN_KEY);
+        if (!token) {
+          setAuthMessage('管理者トークンを再入力してください。');
+          authPanel.classList.remove('hidden');
+          dashboard.classList.add('hidden');
+          return;
+        }
+
+        detailBookingSummary.textContent = `${booking.public_booking_code} / ${booking.customer_name} / ${formatDate(booking.check_in_date)}〜${formatDate(booking.check_out_date)}`;
+        detailLoading.classList.remove('hidden');
+        detailError.classList.add('hidden');
+        detailError.textContent = '';
+        detailContent.classList.add('hidden');
+        detailContent.innerHTML = '';
+        detailModal.classList.remove('hidden');
+        detailModal.classList.add('flex');
+        detailModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('overflow-hidden');
+
+        try {
+          const response = await fetch(
+            `${BOOKING_DETAIL_URL}?booking_code=${encodeURIComponent(booking.public_booking_code)}`,
+            {
+              method: 'GET',
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          const data = await response.json().catch(() => null);
+
+          if (response.status === 401) {
+            sessionStorage.removeItem(TOKEN_KEY);
+            closeDetailModal();
+            setAuthMessage('管理者トークンが一致しません。再入力してください。');
+            authPanel.classList.remove('hidden');
+            dashboard.classList.add('hidden');
+            return;
+          }
+
+          if (!response.ok || !data?.ok || !data.booking) {
+            throw new Error('予約詳細を取得できませんでした。');
+          }
+
+          renderBookingDetail(data);
+          detailLoading.classList.add('hidden');
+          detailContent.classList.remove('hidden');
+        } catch (error) {
+          detailLoading.classList.add('hidden');
+          detailError.textContent = error instanceof Error ? error.message : '予約詳細を取得できませんでした。';
+          detailError.classList.remove('hidden');
+        }
       }
 
       function canPreviewCancellation(booking) {
@@ -818,6 +1099,7 @@ import Layout from '../../layouts/Layout.astro';
               <td class="px-5 py-4 whitespace-nowrap text-xs text-gray-500">${escapeHtml(formatDateTime(b.created_at))}</td>
               <td class="px-5 py-4 whitespace-nowrap">
                 <div class="flex items-center gap-2">
+                  <button type="button" data-booking-detail="${escapeHtml(b.public_booking_code)}" class="rounded-lg border border-stone-300 bg-white px-3 py-2 text-xs font-bold text-gray-800 transition hover:bg-stone-50">詳細</button>
                   <button type="button" data-email-status="${escapeHtml(b.public_booking_code)}" class="rounded-lg border border-green-200 bg-white px-3 py-2 text-xs font-bold text-green-800 transition hover:bg-green-50">メール</button>
                   ${canPreviewCancellation(b) ? `
                     <button type="button" data-cancellation-preview="${escapeHtml(b.public_booking_code)}" class="rounded-lg border border-red-200 bg-white px-3 py-2 text-xs font-bold text-red-700 transition hover:bg-red-50">キャンセル・返金</button>
@@ -868,6 +1150,7 @@ import Layout from '../../layouts/Layout.astro';
                 </div>
               </dl>
               <div class="mt-5 grid gap-3 border-t border-stone-100 pt-5">
+                <button type="button" data-booking-detail="${escapeHtml(b.public_booking_code)}" class="w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-sm font-bold text-gray-800 transition hover:bg-stone-50">予約詳細</button>
                 <button type="button" data-email-status="${escapeHtml(b.public_booking_code)}" class="w-full rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-bold text-green-800 transition hover:bg-green-50">メール送信状況</button>
                 ${canPreviewCancellation(b) ? `
                   <button type="button" data-cancellation-preview="${escapeHtml(b.public_booking_code)}" class="w-full rounded-xl border border-red-200 bg-white px-4 py-3 text-sm font-bold text-red-700 transition hover:bg-red-50">キャンセル・返金を確認</button>
@@ -1135,6 +1418,13 @@ import Layout from '../../layouts/Layout.astro';
       });
 
       dashboard.addEventListener('click', (event) => {
+        const detailTarget = event.target.closest('[data-booking-detail]');
+        if (detailTarget) {
+          const bookingCode = detailTarget.getAttribute('data-booking-detail');
+          if (bookingCode) openDetailModal(bookingCode);
+          return;
+        }
+
         const emailStatusTarget = event.target.closest('[data-email-status]');
         if (emailStatusTarget) {
           const bookingCode = emailStatusTarget.getAttribute('data-email-status');
@@ -1153,6 +1443,12 @@ import Layout from '../../layouts/Layout.astro';
         if (!cancellationTargetButton) return;
         const bookingCode = cancellationTargetButton.getAttribute('data-cancellation-preview');
         if (bookingCode) openCancellationModal(bookingCode);
+      });
+
+      detailModalClose.addEventListener('click', closeDetailModal);
+      detailModalCloseBottom.addEventListener('click', closeDetailModal);
+      detailModal.addEventListener('click', (event) => {
+        if (event.target === detailModal) closeDetailModal();
       });
 
       emailModalClose.addEventListener('click', closeEmailModal);
@@ -1185,6 +1481,11 @@ import Layout from '../../layouts/Layout.astro';
       });
       document.addEventListener('keydown', (event) => {
         if (event.key !== 'Escape') return;
+
+        if (!detailModal.classList.contains('hidden')) {
+          closeDetailModal();
+          return;
+        }
 
         if (!emailModal.classList.contains('hidden')) {
           closeEmailModal();
