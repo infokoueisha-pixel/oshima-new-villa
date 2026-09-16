@@ -1,0 +1,856 @@
+import { HOLD_MINUTES } from "../config.js";
+import { isValidDate, getStayDates, toSqlUtc, getTokyoToday, getCancellationPolicyRate } from "../lib/dates.js";
+import { withCors, jsonError } from "../lib/http.js";
+import { sendCancellationCompletionEmail, sendAdminCancellationNotificationEmail } from "../services/emails.js";
+import { createPublicBookingCode, sha256, createFingerprint, getAvailability, getBookingByIdempotencyKey, existingBookingResponse } from "../services/booking.js";
+
+export async function handleAdminRoutes(request, env, url) {
+/*
+ * 管理者用：予約一覧
+ */
+if (
+  url.pathname === "/api/admin/bookings" &&
+  request.method === "GET"
+) {
+  const authorization =
+    request.headers.get("Authorization");
+
+  const expectedAuthorization =
+    `Bearer ${env.ADMIN_DASHBOARD_TOKEN}`;
+
+  if (
+    !env.ADMIN_DASHBOARD_TOKEN ||
+    authorization !== expectedAuthorization
+  ) {
+    return withCors(
+      Response.json(
+        {
+          ok: false,
+          error: "unauthorized",
+        },
+        { status: 401 }
+      ),
+      request
+    );
+  }
+
+  try {
+    const result = await env.DB
+      .prepare(`
+        SELECT
+          b.id,
+          b.public_booking_code,
+          b.product_id,
+          b.check_in_date,
+          b.check_out_date,
+          CAST(
+            julianday(b.check_out_date) -
+            julianday(b.check_in_date)
+            AS INTEGER
+          ) AS nights,
+          b.guest_count,
+          b.customer_name,
+          b.customer_email,
+          b.customer_phone,
+          b.total_jpy,
+          b.status,
+          b.payment_status,
+          b.confirmed_at,
+          b.hold_expires_at,
+          b.created_at,
+          b.updated_at,
+
+          (
+            SELECT GROUP_CONCAT(
+              DISTINCT i.allocation_type
+            )
+            FROM inventory_nights i
+            WHERE i.allocation_ref = b.id
+          ) AS inventory_type
+
+        FROM bookings b
+        ORDER BY datetime(b.created_at) DESC
+        LIMIT 100
+      `)
+      .all();
+
+    return withCors(
+      Response.json({
+        ok: true,
+        bookings: result.results,
+      }),
+      request
+    );
+  } catch (error) {
+    console.error(
+      "Admin bookings API error:",
+      error
+    );
+
+    return withCors(
+      Response.json(
+        {
+          ok: false,
+          error: "internal_server_error",
+        },
+        { status: 500 }
+      ),
+      request
+    );
+  }
+}    
+
+/*
+ * 管理者用：キャンセル・返金額プレビュー
+ * このAPIではまだStripe返金を実行しない。
+ */
+if (
+  url.pathname ===
+    "/api/admin/cancellation-preview" &&
+  request.method === "POST"
+) {
+  const authorization =
+    request.headers.get("Authorization");
+
+  const expectedAuthorization =
+    `Bearer ${env.ADMIN_DASHBOARD_TOKEN}`;
+
+  if (
+    !env.ADMIN_DASHBOARD_TOKEN ||
+    authorization !== expectedAuthorization
+  ) {
+    return withCors(
+      Response.json(
+        {
+          ok: false,
+          error: "unauthorized",
+        },
+        { status: 401 }
+      ),
+      request
+    );
+  }
+
+  try {
+    const body = await request.json();
+
+    const bookingCode =
+      body.booking_code;
+
+    const reasonCode =
+      body.reason_code;
+
+    const allowedReasons = new Set([
+      "guest_request",
+      "transport_cancellation",
+      "facility_reason",
+      "other",
+    ]);
+
+    if (
+      !bookingCode ||
+      !allowedReasons.has(reasonCode)
+    ) {
+      return withCors(
+        Response.json(
+          {
+            ok: false,
+            error: "invalid_request",
+          },
+          { status: 400 }
+        ),
+        request
+      );
+    }
+
+    const booking = await env.DB
+      .prepare(`
+        SELECT
+          id,
+          public_booking_code,
+          check_in_date,
+          check_out_date,
+          guest_count,
+          total_jpy,
+          status,
+          payment_status,
+          customer_name
+        FROM bookings
+        WHERE public_booking_code = ?
+        LIMIT 1
+      `)
+      .bind(bookingCode)
+      .first();
+
+    if (!booking) {
+      return withCors(
+        Response.json(
+          {
+            ok: false,
+            error: "booking_not_found",
+          },
+          { status: 404 }
+        ),
+        request
+      );
+    }
+
+    if (
+      booking.status !== "confirmed" ||
+      booking.payment_status !== "paid"
+    ) {
+      return withCors(
+        Response.json(
+          {
+            ok: false,
+            error:
+              "booking_not_cancellable",
+            booking_status:
+              booking.status,
+            payment_status:
+              booking.payment_status,
+          },
+          { status: 409 }
+        ),
+        request
+      );
+    }
+
+    const policyRate =
+      getCancellationPolicyRate(
+        booking.check_in_date,
+        reasonCode
+      );
+
+    const cancellationFeeJpy =
+      Math.floor(
+        booking.total_jpy *
+          (policyRate / 100)
+      );
+
+    const refundAmountJpy =
+      booking.total_jpy -
+      cancellationFeeJpy;
+
+    const today = getTokyoToday();
+
+    const toUtc = (dateString) => {
+      const [year, month, day] =
+        dateString.split("-").map(Number);
+
+      return Date.UTC(
+        year,
+        month - 1,
+        day
+      );
+    };
+
+    const daysUntilCheckIn =
+      Math.floor(
+        (
+          toUtc(booking.check_in_date) -
+          toUtc(today)
+        ) /
+          86400000
+      );
+
+    return withCors(
+      Response.json({
+        ok: true,
+
+        booking: {
+          booking_code:
+            booking.public_booking_code,
+
+          customer_name:
+            booking.customer_name,
+
+          check_in:
+            booking.check_in_date,
+
+          check_out:
+            booking.check_out_date,
+
+          guest_count:
+            booking.guest_count,
+
+          total_jpy:
+            booking.total_jpy,
+        },
+
+        cancellation: {
+          reason_code:
+            reasonCode,
+
+          days_until_check_in:
+            daysUntilCheckIn,
+
+          policy_rate:
+            policyRate,
+
+          cancellation_fee_jpy:
+            cancellationFeeJpy,
+
+          refund_amount_jpy:
+            refundAmountJpy,
+        },
+      }),
+      request
+    );
+  } catch (error) {
+    console.error(
+      "Cancellation preview API error:",
+      error
+    );
+
+    return withCors(
+      Response.json(
+        {
+          ok: false,
+          error: "internal_server_error",
+        },
+        { status: 500 }
+      ),
+      request
+    );
+  }
+}
+
+/*
+ * 管理者用：予約キャンセル・Stripe返金実行
+ */
+if (
+  url.pathname === "/api/admin/cancel-refund" &&
+  request.method === "POST"
+) {
+  const authorization =
+    request.headers.get("Authorization");
+
+  const expectedAuthorization =
+    `Bearer ${env.ADMIN_DASHBOARD_TOKEN}`;
+
+  if (
+    !env.ADMIN_DASHBOARD_TOKEN ||
+    authorization !== expectedAuthorization
+  ) {
+    return withCors(
+      Response.json(
+        {
+          ok: false,
+          error: "unauthorized",
+        },
+        { status: 401 }
+      ),
+      request
+    );
+  }
+
+  try {
+    const body = await request.json();
+
+    const bookingCode =
+      body.booking_code;
+
+    const reasonCode =
+      body.reason_code;
+
+    const adminNote =
+      typeof body.admin_note === "string"
+        ? body.admin_note.trim()
+        : null;
+
+    /*
+     * 誤操作防止。
+     * confirm:true がない限り実行しない。
+     */
+    if (body.confirm !== true) {
+      return withCors(
+        Response.json(
+          {
+            ok: false,
+            error: "confirmation_required",
+          },
+          { status: 400 }
+        ),
+        request
+      );
+    }
+
+    const allowedReasons = new Set([
+      "guest_request",
+      "transport_cancellation",
+      "facility_reason",
+      "other",
+    ]);
+
+    if (
+      !bookingCode ||
+      !allowedReasons.has(reasonCode)
+    ) {
+      return withCors(
+        Response.json(
+          {
+            ok: false,
+            error: "invalid_request",
+          },
+          { status: 400 }
+        ),
+        request
+      );
+    }
+
+    const booking = await env.DB
+      .prepare(`
+        SELECT
+          id,
+          public_booking_code,
+          check_in_date,
+          check_out_date,
+          guest_count,
+          total_jpy,
+          status,
+          payment_status,
+          customer_name,
+          customer_email,
+          stripe_payment_intent_id
+        FROM bookings
+        WHERE public_booking_code = ?
+        LIMIT 1
+      `)
+      .bind(bookingCode)
+      .first();
+
+    if (!booking) {
+      return withCors(
+        Response.json(
+          {
+            ok: false,
+            error: "booking_not_found",
+          },
+          { status: 404 }
+        ),
+        request
+      );
+    }
+
+    /*
+     * 二重キャンセル防止
+     */
+    const existingCancellation =
+      await env.DB
+        .prepare(`
+          SELECT
+            id,
+            reason_code,
+            refund_amount_jpy,
+            stripe_refund_id,
+            stripe_refund_status
+          FROM booking_cancellations
+          WHERE booking_id = ?
+          LIMIT 1
+        `)
+        .bind(booking.id)
+        .first();
+
+    if (
+      existingCancellation &&
+      (
+        existingCancellation
+          .stripe_refund_status ===
+            "succeeded" ||
+        existingCancellation
+          .stripe_refund_status ===
+            "not_required"
+      )
+    ) {
+      return withCors(
+        Response.json(
+          {
+            ok: false,
+            error: "already_cancelled",
+          },
+          { status: 409 }
+        ),
+        request
+      );
+    }
+
+    if (
+      booking.status !== "confirmed" ||
+      booking.payment_status !== "paid"
+    ) {
+      return withCors(
+        Response.json(
+          {
+            ok: false,
+            error: "booking_not_cancellable",
+            booking_status:
+              booking.status,
+            payment_status:
+              booking.payment_status,
+          },
+          { status: 409 }
+        ),
+        request
+      );
+    }
+
+    if (
+      !booking.stripe_payment_intent_id
+    ) {
+      return withCors(
+        Response.json(
+          {
+            ok: false,
+            error:
+              "stripe_payment_intent_missing",
+          },
+          { status: 409 }
+        ),
+        request
+      );
+    }
+
+    /*
+     * 金額はブラウザから受け取らず、
+     * サーバー側で再計算する。
+     */
+    const policyRate =
+      getCancellationPolicyRate(
+        booking.check_in_date,
+        reasonCode
+      );
+
+    const cancellationFeeJpy =
+      Math.floor(
+        booking.total_jpy *
+          (policyRate / 100)
+      );
+
+    const refundAmountJpy =
+      booking.total_jpy -
+      cancellationFeeJpy;
+
+    const cancellationId =
+      existingCancellation?.id ??
+      crypto.randomUUID();
+
+    /*
+     * まずキャンセル処理を pending として記録。
+     */
+    await env.DB
+      .prepare(`
+        INSERT INTO booking_cancellations (
+          id,
+          booking_id,
+          reason_code,
+          policy_rate,
+          cancellation_fee_jpy,
+          refund_amount_jpy,
+          stripe_refund_status,
+          admin_note
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+
+        ON CONFLICT(booking_id)
+        DO UPDATE SET
+          reason_code = excluded.reason_code,
+          policy_rate = excluded.policy_rate,
+          cancellation_fee_jpy =
+            excluded.cancellation_fee_jpy,
+          refund_amount_jpy =
+            excluded.refund_amount_jpy,
+          stripe_refund_status =
+            excluded.stripe_refund_status,
+          admin_note = excluded.admin_note,
+          updated_at = CURRENT_TIMESTAMP
+      `)
+      .bind(
+        cancellationId,
+        booking.id,
+        reasonCode,
+        policyRate,
+        cancellationFeeJpy,
+        refundAmountJpy,
+        refundAmountJpy > 0
+          ? "pending"
+          : "not_required",
+        adminNote
+      )
+      .run();
+
+    let stripeRefundId = null;
+    let stripeRefundStatus =
+      refundAmountJpy > 0
+        ? "pending"
+        : "not_required";
+
+    /*
+     * 返金額が0円ならStripeには送らない。
+     */
+    if (refundAmountJpy > 0) {
+      const stripeBody =
+        new URLSearchParams();
+
+      stripeBody.set(
+        "payment_intent",
+        booking.stripe_payment_intent_id
+      );
+
+      /*
+       * JPYはゼロ小数通貨なので
+       * ¥50,000 = amount 50000
+       */
+      stripeBody.set(
+        "amount",
+        String(refundAmountJpy)
+      );
+
+      const stripeResponse =
+        await fetch(
+          "https://api.stripe.com/v1/refunds",
+          {
+            method: "POST",
+
+            headers: {
+              Authorization:
+                `Bearer ${env.STRIPE_SECRET_KEY}`,
+
+              "Content-Type":
+                "application/x-www-form-urlencoded",
+
+              /*
+               * 再送されても二重返金しない。
+               */
+              "Idempotency-Key":
+                `booking-cancel-${booking.id}`,
+            },
+
+            body:
+              stripeBody.toString(),
+          }
+        );
+
+      const stripeRefund =
+        await stripeResponse.json();
+
+      if (!stripeResponse.ok) {
+        console.error(
+          "Stripe refund failed:",
+          stripeRefund
+        );
+
+        await env.DB
+          .prepare(`
+            UPDATE booking_cancellations
+            SET
+              stripe_refund_status = 'failed',
+              updated_at = CURRENT_TIMESTAMP
+            WHERE booking_id = ?
+          `)
+          .bind(booking.id)
+          .run();
+
+        return withCors(
+          Response.json(
+            {
+              ok: false,
+              error: "stripe_refund_failed",
+            },
+            { status: 502 }
+          ),
+          request
+        );
+      }
+
+      stripeRefundId =
+        stripeRefund.id;
+
+      stripeRefundStatus =
+        stripeRefund.status === "succeeded"
+          ? "succeeded"
+          : "pending";
+    }
+
+    /*
+     * payment_status
+     *
+     * 全額返金 → refunded
+     * 一部返金 → partially_refunded
+     * 返金なし → paidのまま
+     * Stripe処理中 → paidのまま
+     */
+    let nextPaymentStatus =
+      booking.payment_status;
+
+    if (
+      stripeRefundStatus === "succeeded"
+    ) {
+      nextPaymentStatus =
+        refundAmountJpy ===
+          booking.total_jpy
+          ? "refunded"
+          : "partially_refunded";
+    }
+
+    /*
+     * 予約キャンセル・在庫解放・履歴確定
+     */
+    await env.DB.batch([
+      env.DB
+        .prepare(`
+          UPDATE bookings
+          SET
+            status = 'cancelled',
+            payment_status = ?,
+            cancelled_at =
+              CURRENT_TIMESTAMP,
+            updated_at =
+              CURRENT_TIMESTAMP
+          WHERE id = ?
+        `)
+        .bind(
+          nextPaymentStatus,
+          booking.id
+        ),
+
+      env.DB
+        .prepare(`
+          DELETE FROM inventory_nights
+          WHERE allocation_ref = ?
+        `)
+        .bind(booking.id),
+
+      env.DB
+        .prepare(`
+          UPDATE booking_cancellations
+          SET
+            stripe_refund_id = ?,
+            stripe_refund_status = ?,
+            updated_at =
+              CURRENT_TIMESTAMP
+          WHERE booking_id = ?
+        `)
+        .bind(
+          stripeRefundId,
+          stripeRefundStatus,
+          booking.id
+        ),
+    ]);
+
+    /*
+     * お客様へキャンセル・返金完了メール。
+     *
+     * 送信失敗でも、すでに完了した
+     * Stripe返金・予約キャンセル・在庫解放は
+     * 取り消さない。
+     */
+    let cancellationEmailStatus =
+      "skipped";
+
+    try {
+      cancellationEmailStatus =
+        await sendCancellationCompletionEmail(
+          env,
+          booking.id
+        );
+    } catch (emailError) {
+      cancellationEmailStatus =
+        "failed";
+
+      console.error(
+        "Cancellation completion email error:",
+        emailError
+      );
+    }
+
+    /*
+     * 管理者へキャンセル・返金通知メール。
+     *
+     * 通知失敗でもキャンセル処理自体は
+     * 成功のまま維持する。
+     */
+    let adminCancellationNotificationStatus =
+      "skipped";
+
+    try {
+      adminCancellationNotificationStatus =
+        await sendAdminCancellationNotificationEmail(
+          env,
+          booking.id
+        );
+    } catch (adminEmailError) {
+      adminCancellationNotificationStatus =
+        "failed";
+
+      console.error(
+        "Admin cancellation notification error:",
+        adminEmailError
+      );
+    }
+
+    return withCors(
+      Response.json({
+        ok: true,
+
+        booking_code:
+          booking.public_booking_code,
+
+        status:
+          "cancelled",
+
+        payment_status:
+          nextPaymentStatus,
+
+        cancellation: {
+          reason_code:
+            reasonCode,
+
+          policy_rate:
+            policyRate,
+
+          cancellation_fee_jpy:
+            cancellationFeeJpy,
+
+          refund_amount_jpy:
+            refundAmountJpy,
+        },
+
+        stripe: {
+          refund_id:
+            stripeRefundId,
+
+          refund_status:
+            stripeRefundStatus,
+        },
+
+        cancellation_email:
+          cancellationEmailStatus,
+
+        admin_cancellation_notification:
+          adminCancellationNotificationStatus,
+      }),
+      request
+    );
+  } catch (error) {
+    console.error(
+      "Cancel refund API error:",
+      error
+    );
+
+    return withCors(
+      Response.json(
+        {
+          ok: false,
+          error:
+            "internal_server_error",
+        },
+        { status: 500 }
+      ),
+      request
+    );
+  }
+}
+
+  return null;
+}
