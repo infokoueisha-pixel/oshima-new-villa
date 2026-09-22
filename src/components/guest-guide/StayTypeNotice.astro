@@ -1,0 +1,74 @@
+---
+type StayType = 'salvia' | 'freesia' | 'combined';
+type Lang = 'ja' | 'en' | 'ko' | 'zh-Hant' | 'zh-Hans';
+
+interface Props {
+  stayType: StayType;
+  lang: Lang;
+}
+
+const { stayType, lang } = Astro.props as Props;
+
+const copy = {
+  ja: {
+    eyebrow: 'Your Reservation',
+    salvia: {
+      title: 'SALVIAをご予約のお客様',
+      body: 'ご利用いただける宿泊棟はSALVIAです。BBQはガゼボ庵をご利用いただけます。FREESIAには立ち入らず、設備の利用もご遠慮ください。',
+    },
+    freesia: {
+      title: 'FREESIAをご予約のお客様',
+      body: 'ご利用いただける宿泊棟はFREESIAです。BBQはFREESIAのウッドデッキをご利用ください。ガゼボ庵はSALVIAまたは2棟同時予約のお客様向けのため、FREESIA単独予約ではご利用いただけません。',
+    },
+    combined: {
+      title: 'SALVIA＋FREESIAを同時予約のお客様',
+      body: 'SALVIA・FREESIAの両棟をご利用いただけます。ガゼボ庵もご利用可能です。大人数でのBBQはガゼボ庵をメインにご利用いただき、FREESIAのウッドデッキはくつろぎスペースとしてもお使いいただけます。',
+    },
+    back: '予約タイプを選び直す',
+  },
+  en: {
+    eyebrow: 'Your Reservation',
+    salvia: { title: 'For SALVIA guests', body: 'Your reserved villa is SALVIA. You may use the Gazebo An for BBQ. Please do not enter or use FREESIA unless it is included in your reservation.' },
+    freesia: { title: 'For FREESIA guests', body: 'Your reserved villa is FREESIA. Please use the FREESIA wooden deck for BBQ. The Gazebo An is reserved for SALVIA guests or guests who booked both villas, so it is not available with a FREESIA-only booking.' },
+    combined: { title: 'For SALVIA + FREESIA guests', body: 'You may use both SALVIA and FREESIA, including the Gazebo An. For a larger-group BBQ, please use the Gazebo An as the main BBQ area. The FREESIA deck can also be enjoyed as a relaxing outdoor space.' },
+    back: 'Choose a different reservation type',
+  },
+  ko: {
+    eyebrow: '예약 유형',
+    salvia: { title: 'SALVIA 예약 고객', body: '이용 가능한 숙박동은 SALVIA입니다. BBQ는 가제보를 이용할 수 있습니다. 예약에 FREESIA가 포함되지 않은 경우 FREESIA 출입 및 시설 이용은 삼가 주세요.' },
+    freesia: { title: 'FREESIA 예약 고객', body: '이용 가능한 숙박동은 FREESIA입니다. BBQ는 FREESIA 우드데크를 이용해 주세요. 가제보는 SALVIA 또는 두 동 동시 예약 고객용이므로 FREESIA 단독 예약 시에는 이용할 수 없습니다.' },
+    combined: { title: 'SALVIA + FREESIA 동시 예약 고객', body: 'SALVIA와 FREESIA 두 동 모두 이용할 수 있으며 가제보도 이용 가능합니다. 인원이 많은 BBQ는 가제보를 중심으로 이용해 주세요. FREESIA 우드데크는 휴식 공간으로도 이용할 수 있습니다.' },
+    back: '예약 유형 다시 선택',
+  },
+  'zh-Hant': {
+    eyebrow: '您的預訂',
+    salvia: { title: '預訂 SALVIA 的旅客', body: '您可使用的住宿棟為 SALVIA，BBQ 可使用 Gazebo An 涼亭。若預訂未包含 FREESIA，請勿進入或使用 FREESIA 的設備。' },
+    freesia: { title: '預訂 FREESIA 的旅客', body: '您可使用的住宿棟為 FREESIA，BBQ 請使用 FREESIA 的木質露台。Gazebo An 涼亭僅供 SALVIA 或兩棟同時預訂的旅客使用，FREESIA 單獨預訂不可使用。' },
+    combined: { title: '同時預訂 SALVIA + FREESIA 的旅客', body: '您可使用 SALVIA、FREESIA 兩棟及 Gazebo An 涼亭。多人 BBQ 建議以涼亭為主要使用區域，FREESIA 木質露台也可作為戶外休憩空間。' },
+    back: '重新選擇預訂類型',
+  },
+  'zh-Hans': {
+    eyebrow: '您的预订',
+    salvia: { title: '预订 SALVIA 的客人', body: '您可使用的住宿楼为 SALVIA，BBQ 可使用 Gazebo An 凉亭。如预订未包含 FREESIA，请勿进入或使用 FREESIA 的设施。' },
+    freesia: { title: '预订 FREESIA 的客人', body: '您可使用的住宿楼为 FREESIA，BBQ 请使用 FREESIA 的木质露台。Gazebo An 凉亭仅供 SALVIA 或两栋同时预订的客人使用，FREESIA 单独预订不可使用。' },
+    combined: { title: '同时预订 SALVIA + FREESIA 的客人', body: '您可使用 SALVIA、FREESIA 两栋及 Gazebo An 凉亭。多人 BBQ 建议以凉亭为主要使用区域，FREESIA 木质露台也可作为户外休闲空间。' },
+    back: '重新选择预订类型',
+  },
+} as const;
+
+const c = copy[lang];
+const item = c[stayType];
+const roots = { ja: '/guest-guide/', en: '/en/guest-guide/', ko: '/ko/guest-guide/', 'zh-Hant': '/zh-tw/guest-guide/', 'zh-Hans': '/zh-cn/guest-guide/' } as const;
+---
+
+<div class="mt-6 rounded-3xl border-2 border-green-200 bg-green-50 p-6 md:p-7">
+  <div class="flex gap-4">
+    <div class="shrink-0 text-3xl" aria-hidden="true">🏡</div>
+    <div>
+      <p class="text-xs font-bold tracking-[0.18em] text-green-700 uppercase">{c.eyebrow}</p>
+      <h3 class="mt-2 font-serif text-xl font-bold text-gray-900">{item.title}</h3>
+      <p class="mt-3 text-sm leading-7 text-gray-700">{item.body}</p>
+      <a href={roots[lang]} class="mt-4 inline-flex text-xs font-bold text-green-800 underline underline-offset-4">{c.back}</a>
+    </div>
+  </div>
+</div>

@@ -3,12 +3,12 @@ import Layout from '../layouts/Layout.astro';
 import AnswerSummary from '../components/AnswerSummary.astro';
 
 const pageTitle = '伊豆大島のダイビング旅行・宿泊｜一棟貸しの大島ニュービラ';
-const pageDescription = '伊豆大島でダイビング旅行の宿をお探しの方へ。大島ニュービラは最大6名の一棟貸し。キッチン・BBQ・無料駐車場を備え、潜ったあとの時間も仲間だけでゆっくり過ごせます。';
+const pageDescription = '伊豆大島でダイビング旅行の宿をお探しの方へ。大島ニュービラはSALVIA（最大6名）とFREESIA（最大3名）の2棟。少人数から最大9名のグループまで滞在できます。';
 const datePublished = '2026-08-30';
-const dateModified = '2026-09-10';
+const dateModified = '2026-09-22';
 const summaryPoints = [
   '大島ニュービラは、伊豆大島でダイビングを楽しむ方の宿泊拠点として利用できますが、ダイビングサービス自体は提供していません。',
-  '最大6名の一棟貸しで、キッチン・BBQ・駐車場を使いながら仲間だけのペースで滞在できます。',
+  'SALVIA（最大6名）とFREESIA（最大3名）から人数に合わせて選び、2棟利用なら最大9名まで滞在できます。',
   'ポイントの潜水条件やローカルルール、ショップ情報は大島ダイビング連絡協議会や利用するショップの最新情報を確認してください。',
 ];
 
@@ -16,8 +16,8 @@ const stayPoints = [
   {
     icon: '🏡',
     kicker: 'Private Stay',
-    title: '最大6名の一棟貸し',
-    description: 'ホテルの客室に分かれず、仲間だけでリビング・キッチンを使えます。ダイビング後も同じ空間でゆっくり過ごせます。',
+    title: '人数で選べる2つのヴィラ',
+    description: '2〜3名ならFREESIA、4〜6名ならSALVIA、7〜9名なら2棟利用。ダイビング仲間の人数に合わせて宿泊棟を選べます。',
   },
   {
     icon: '🍳',
@@ -87,7 +87,7 @@ const faqs = [
   },
   {
     question: '何人まで宿泊できますか？',
-    answer: '現在営業中のサルビア棟は最大6名の一棟貸しです。友人同士やダイビング仲間など、複数人で同じ空間に泊まりたい旅行に向いています。',
+    answer: 'SALVIAは最大6名、FREESIAは最大3名です。2棟を組み合わせれば最大9名まで宿泊できます。友人同士やダイビング仲間の人数に合わせてお選びください。',
   },
 ];
 
@@ -142,11 +142,11 @@ const structuredData = {
           伊豆大島で潜って、<br />仲間だけの一棟へ。
         </h1>
         <p class="mt-6 max-w-2xl text-base leading-8 text-slate-100 md:text-lg md:leading-9">
-          海から戻ったあとも、ダイビング旅行は続きます。最大6名の一棟貸しで、料理をしたり、BBQを囲んだり、翌日の海の話をしたり。潜ったあとの時間まで、自分たちのペースで楽しめる宿です。
+          海から戻ったあとも、ダイビング旅行は続きます。2〜3名のFREESIA、最大6名のSALVIA、2棟利用なら最大9名まで。潜ったあとの時間まで、仲間の人数に合わせて自分たちのペースで楽しめる宿です。
         </p>
 
         <div class="mt-8 flex flex-wrap gap-2 text-xs font-bold text-slate-50">
-          <span class="rounded-full border border-white/25 bg-slate-950/35 px-4 py-2 backdrop-blur-sm">最大6名・一棟貸し</span>
+          <span class="rounded-full border border-white/25 bg-slate-950/35 px-4 py-2 backdrop-blur-sm">2棟利用で最大9名</span>
           <span class="rounded-full border border-white/25 bg-slate-950/35 px-4 py-2 backdrop-blur-sm">キッチン</span>
           <span class="rounded-full border border-white/25 bg-slate-950/35 px-4 py-2 backdrop-blur-sm">BBQ</span>
           <span class="rounded-full border border-white/25 bg-slate-950/35 px-4 py-2 backdrop-blur-sm">無料駐車場</span>

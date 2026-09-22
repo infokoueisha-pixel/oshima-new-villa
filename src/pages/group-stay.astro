@@ -1,8 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const pageTitle = '伊豆大島の一棟貸し｜グループ・友人旅行に｜大島ニュービラ';
-const pageDescription = '伊豆大島で一棟貸しの宿をお探しの家族・友人・グループへ。最大6名の大島ニュービラは、Wi-Fi・キッチン・BBQ設備を備え、観光・オフサイト・釣り・ダイビングの拠点に使えます。';
+const pageTitle = '伊豆大島の一棟貸し｜4〜9名のグループ旅行・2棟利用｜大島ニュービラ';
+const pageDescription = '伊豆大島で4〜9名のグループ旅行なら大島ニュービラ。SALVIA（最大6名）とFREESIA（最大3名）の2棟を組み合わせ、家族・友人・2家族旅行にも対応。';
 
 const useCases: Array<{ icon: string; kicker: string; title: string; description: string; href?: string }> = [
   {
@@ -21,7 +21,7 @@ const useCases: Array<{ icon: string; kicker: string; title: string; description
     icon: '🧑‍💻',
     kicker: 'Team Camp',
     title: '開発・チーム合宿',
-    description: '最大6名の一棟貸し。仕事が終わったあとも、料理やBBQを囲みながらチームだけで過ごせます。',
+    description: 'SALVIAとFREESIAの2棟利用で最大9名。仕事や観光のあとも、料理やBBQを囲みながらチームだけで過ごせます。',
   },
   {
     icon: '🤿',
@@ -45,7 +45,7 @@ const useCases: Array<{ icon: string; kicker: string; title: string; description
 ];
 
 const amenities = [
-  '最大6名・一棟貸切',
+  '2棟利用で最大9名',
   '無料Wi-Fi（通信品質・常時接続の保証なし）',
   'キッチン・調理器具',
   '屋外炊事場「ガゼボ庵」',
@@ -58,7 +58,7 @@ const amenities = [
 const faqs = [
   {
     question: '会社やチームで利用できますか？',
-    answer: 'はい。少人数のオフサイト、ワーケーション、チーム合宿などの宿泊先としてご利用いただけます。最大6名の一棟貸しです。',
+    answer: 'はい。少人数のオフサイト、ワーケーション、チーム合宿などの宿泊先としてご利用いただけます。SALVIAは最大6名、FREESIAは最大3名で、2棟利用なら最大9名まで宿泊できます。',
   },
   {
     question: 'Wi-Fiはありますか？',
@@ -119,11 +119,11 @@ const structuredData = {
           伊豆大島の一棟貸しで、<br />グループの時間をもっと特別に。
         </h1>
         <p class="mt-6 max-w-2xl text-base leading-8 text-green-50/90 md:text-lg md:leading-9">
-          家族や友人の旅行、オフサイト、ワーケーション、ダイビング、釣り旅行まで。最大6名で一棟まるごと使えるから、仕事も遊びも、仲間との時間も、自分たちのペースで楽しめます。
+          家族や友人の旅行、オフサイト、ワーケーション、ダイビング、釣り旅行まで。人数に合わせてSALVIA・FREESIAを選べ、2棟利用なら最大9名まで泊まれるから、仕事も遊びも、仲間との時間も、自分たちのペースで楽しめます。
         </p>
 
         <div class="mt-8 flex flex-wrap gap-2 text-xs font-bold text-green-50">
-          <span class="rounded-full border border-white/20 bg-white/10 px-4 py-2">最大6名</span>
+          <span class="rounded-full border border-white/20 bg-white/10 px-4 py-2">2棟利用で最大9名</span>
           <span class="rounded-full border border-white/20 bg-white/10 px-4 py-2">無料Wi-Fi</span>
           <span class="rounded-full border border-white/20 bg-white/10 px-4 py-2">BBQ・自炊</span>
           <span class="rounded-full border border-white/20 bg-white/10 px-4 py-2">元町港から車約5分</span>
@@ -188,6 +188,20 @@ const structuredData = {
     </div>
   </section>
 
+  <section class="bg-white py-20 md:py-28" aria-labelledby="two-villa-title">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="rounded-3xl border border-green-100 bg-green-50/60 p-7 md:p-10">
+        <p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">Two Villas</p>
+        <h2 id="two-villa-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">7〜9名なら、SALVIA＋FREESIAの2棟利用。</h2>
+        <p class="mt-5 max-w-3xl leading-8 text-gray-600 md:text-lg">2棟は同じ敷地内にあります。寝る場所や水回りを2棟に分けつつ、食事や観光は一緒に楽しめるので、2家族旅行や友人グループにも使いやすい構成です。</p>
+        <div class="mt-8 grid gap-5 md:grid-cols-2">
+          <div class="overflow-hidden rounded-2xl bg-white shadow-sm"><img src="/day-salvia.webp" alt="SALVIA サルビア棟" class="aspect-[16/9] w-full object-cover" width="1500" height="844" loading="lazy" /><div class="p-6"><p class="text-xs font-bold text-green-700">SALVIA</p><h3 class="mt-2 font-serif text-2xl font-bold">最大6名</h3><p class="mt-3 text-sm leading-7 text-gray-600">69.27㎡。家族・友人グループの中心棟として使いやすい一棟貸し。</p></div></div>
+          <div class="overflow-hidden rounded-2xl bg-white shadow-sm"><img src="/freesia-exterior.webp" alt="FREESIA フリージア棟" class="aspect-[16/9] w-full object-cover" width="1102" height="1102" loading="lazy" /><div class="p-6"><p class="text-xs font-bold text-orange-700">FREESIA</p><h3 class="mt-2 font-serif text-2xl font-bold">最大3名</h3><p class="mt-3 text-sm leading-7 text-gray-600">30㎡。浴室・キッチン・ウッドデッキ付きの少人数向け独立棟。</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Why private villa -->
   <section class="bg-green-50/60 py-20 md:py-28" aria-labelledby="private-title">
     <div class="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2 lg:items-center lg:gap-14">
@@ -209,7 +223,7 @@ const structuredData = {
           ホテルの客室ではなく、<br class="hidden sm:block" />一棟まるごと自分たちの空間に。
         </h2>
         <p class="mt-6 leading-8 text-gray-600 md:text-lg md:leading-9">
-          大島ニュービラは最大6名の一棟貸し。家族や友人、チームだけで、話す時間も、料理する時間も、夜にBBQを囲む時間も、同じ場所で過ごせます。
+          大島ニュービラはSALVIA（最大6名）とFREESIA（最大3名）の2棟。4〜6名ならSALVIA、7〜9名なら2棟利用など、人数に合わせて宿泊棟を組み合わせられます。
         </p>
         <p class="mt-4 leading-8 text-gray-600">
           4〜6名の旅行では、ホテルだと複数の客室に分かれることがあります。一棟貸しなら、観光から戻ったあともリビングやダイニングに集まり、食事や翌日の予定をみんなで話しながら過ごせます。

@@ -1,6 +1,6 @@
 # Oshima New Villa
 
-> Oshima New Villa is a private villa-style accommodation on Izu Oshima, Tokyo, Japan. Originally opened in 1975, it reopened after renovation in 2026. The official website provides accommodation information, group-stay guidance, weekday-stay ideas, diving-trip information, and practical Izu Oshima travel guides.
+> Oshima New Villa is a private villa-style accommodation on Izu Oshima, Tokyo, Japan. It currently operates two independent villas: SALVIA (up to 6 guests) and FREESIA (up to 3 guests). Both villas can be booked together for groups of up to 9. Originally opened in 1975, it reopened after renovation in 2026. The official website provides accommodation information, group-stay guidance, weekday-stay ideas, diving-trip information, and practical Izu Oshima travel guides.
 
 This file helps AI agents and language models identify the official public pages of Oshima New Villa.
 

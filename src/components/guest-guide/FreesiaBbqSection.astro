@@ -1,0 +1,68 @@
+---
+type Lang = 'ja' | 'en' | 'ko' | 'zh-Hant' | 'zh-Hans';
+interface Props { lang: Lang; }
+const { lang } = Astro.props as Props;
+
+const copy = {
+  ja: {
+    eyebrow: 'FREESIA Deck BBQ', title: 'FREESIAは、ウッドデッキでBBQ。', intro: '森を眺める専用ウッドデッキで、少人数のBBQをお楽しみください。',
+    important: 'ガゼボ庵はご利用いただけません', importantBody: 'ガゼボ庵はSALVIAをご予約のお客様、またはSALVIA＋FREESIAを同時予約されたお客様向けです。FREESIA単独予約ではウッドデッキをご利用ください。',
+    prepTitle: 'ご用意いただくもの', prep: '炭・着火剤・着火ライター・食材・飲み物はご用意していません。BBQをされる場合は必要なものをご準備ください。',
+    rulesTitle: '安全にお楽しみいただくために', rules: ['火が点いている間はその場を離れないでください。','建物内・森の中など、ウッドデッキ以外の場所では火を使用しないでください。','強風・荒天時は安全のためBBQの利用をお控えください。','使用後は火が完全に消えていることを確認し、道具の扱いは現地案内に従ってください。','ゴミはFREESIA棟内の指定場所へ分別して捨ててください。'],
+  },
+  en: {
+    eyebrow: 'FREESIA Deck BBQ', title: 'BBQ on the FREESIA wooden deck.', intro: 'Enjoy a small-group BBQ on the private wooden deck overlooking the surrounding forest.',
+    important: 'The Gazebo An is not included', importantBody: 'The Gazebo An is for SALVIA guests or guests who booked both SALVIA and FREESIA. FREESIA-only guests should use the FREESIA deck.',
+    prepTitle: 'What to bring', prep: 'Charcoal, fire starters, a lighter, food and drinks are not provided. Please bring what you need if you plan to BBQ.',
+    rulesTitle: 'For a safe BBQ', rules: ['Never leave the fire unattended.','Do not use fire inside the villa, in the forest, or anywhere other than the designated deck BBQ area.','Do not use the BBQ in strong winds or severe weather.','Make sure the fire is completely out after use and follow the on-site instructions for equipment.','Sort and dispose of rubbish in the designated area inside FREESIA.'],
+  },
+  ko: {
+    eyebrow: 'FREESIA Deck BBQ', title: 'FREESIA에서는 우드데크에서 BBQ를 즐겨 주세요.', intro: '숲을 바라보는 전용 우드데크에서 소규모 BBQ를 즐기실 수 있습니다.',
+    important: '가제보는 이용할 수 없습니다', importantBody: '가제보는 SALVIA 예약 고객 또는 SALVIA＋FREESIA 동시 예약 고객용입니다. FREESIA 단독 예약 고객은 FREESIA 우드데크를 이용해 주세요.',
+    prepTitle: '준비해 주세요', prep: '숯, 착화제, 점화 라이터, 식재료, 음료는 제공되지 않습니다. BBQ를 하실 경우 필요한 물품을 준비해 주세요.',
+    rulesTitle: '안전한 이용을 위해', rules: ['불이 켜져 있는 동안 자리를 비우지 마세요.','빌라 내부, 숲 등 지정된 우드데크 BBQ 공간 이외에서는 불을 사용하지 마세요.','강풍이나 악천후 시에는 BBQ 이용을 삼가 주세요.','사용 후 불이 완전히 꺼졌는지 확인하고 장비는 현장 안내에 따라 정리해 주세요.','쓰레기는 FREESIA 내부 지정 장소에 분리 배출해 주세요.'],
+  },
+  'zh-Hant': {
+    eyebrow: 'FREESIA Deck BBQ', title: 'FREESIA 的 BBQ 請在木質露台享用。', intro: '可在面向森林的專用木質露台享受小團體 BBQ。',
+    important: '不可使用 Gazebo An 涼亭', importantBody: 'Gazebo An 涼亭僅供 SALVIA 或同時預訂 SALVIA＋FREESIA 的旅客使用。FREESIA 單獨預訂請使用 FREESIA 木質露台。',
+    prepTitle: '請自行準備', prep: '不提供木炭、點火劑、點火器、食材與飲料。如要 BBQ，請自行準備所需物品。',
+    rulesTitle: '安全使用須知', rules: ['有火時請勿離開現場。','請勿在 Villa 室內、森林或指定木質露台 BBQ 區域以外使用火源。','強風或惡劣天候時請停止 BBQ。','使用後請確認火源完全熄滅，器材請依現場指示處理。','垃圾請分類後丟入 FREESIA 棟內指定位置。'],
+  },
+  'zh-Hans': {
+    eyebrow: 'FREESIA Deck BBQ', title: 'FREESIA 的 BBQ 请在木质露台享用。', intro: '可在面向森林的专用木质露台享受小团体 BBQ。',
+    important: '不可使用 Gazebo An 凉亭', importantBody: 'Gazebo An 凉亭仅供 SALVIA 或同时预订 SALVIA＋FREESIA 的客人使用。FREESIA 单独预订请使用 FREESIA 木质露台。',
+    prepTitle: '请自行准备', prep: '不提供木炭、点火剂、点火器、食材和饮料。如要 BBQ，请自行准备所需物品。',
+    rulesTitle: '安全使用须知', rules: ['有火时请勿离开现场。','请勿在 Villa 室内、森林或指定木质露台 BBQ 区域以外使用火源。','强风或恶劣天气时请停止 BBQ。','使用后请确认火源完全熄灭，器材请按现场指示处理。','垃圾请分类后丢入 FREESIA 楼内指定位置。'],
+  },
+} as const;
+const c = copy[lang];
+---
+
+<section id="bbq" class="scroll-mt-28 py-16 md:py-24">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-start">
+      <div>
+        <p class="text-xs font-bold tracking-[0.28em] text-green-700 uppercase">{c.eyebrow}</p>
+        <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">{c.title}</h2>
+        <p class="mt-5 leading-8 text-gray-600">{c.intro}</p>
+        <img src="/freesia-deck.webp" alt="FREESIA wooden deck" class="mt-7 aspect-[4/3] w-full rounded-3xl object-cover shadow-lg" width="1200" height="900" loading="lazy" />
+      </div>
+      <div class="space-y-5">
+        <div class="rounded-3xl border-2 border-red-200 bg-red-50 p-6">
+          <h3 class="font-bold text-red-900">{c.important}</h3>
+          <p class="mt-2 text-sm leading-7 text-red-900/80">{c.importantBody}</p>
+        </div>
+        <div class="rounded-3xl border border-orange-200 bg-orange-50 p-6">
+          <h3 class="font-bold text-gray-900">{c.prepTitle}</h3>
+          <p class="mt-2 text-sm leading-7 text-gray-700">{c.prep}</p>
+        </div>
+        <div class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+          <h3 class="font-bold text-gray-900">{c.rulesTitle}</h3>
+          <ul class="mt-4 space-y-3 text-sm leading-7 text-gray-700">
+            {c.rules.map((rule) => <li class="flex gap-3"><span class="text-green-700" aria-hidden="true">●</span><span>{rule}</span></li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

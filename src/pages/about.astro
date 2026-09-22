@@ -1,19 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { SITE, AMENITIES } from '../data/site';
+import { SITE, AMENITIES, VILLAS } from '../data/site';
 
 const pageTitle = '大島ニュービラについて｜伊豆大島の一棟貸し宿・基本情報';
 const pageDescription = '大島ニュービラの公式基本情報。所在地、宿泊スタイル、定員、チェックイン・チェックアウト、設備、予約方法、情報更新方針をまとめています。';
 const datePublished = '2026-09-09';
-const dateModified = '2026-09-09';
+const dateModified = '2026-09-22';
 
 const facts = [
   ['正式名称', SITE.name],
   ['英語表記', SITE.alternateName],
   ['所在地', `〒${SITE.address.postalCode} ${SITE.address.addressRegion}${SITE.address.addressLocality}${SITE.address.streetAddress}`],
-  ['宿泊スタイル', '一棟貸し'],
-  ['現在公式サイトで案内している棟', `${SITE.publicRoomName}（サルビア）`],
-  ['最大宿泊人数', `${SITE.maxGuests}名`],
+  ['宿泊スタイル', '独立した一棟貸しヴィラ 2棟'],
+  ['宿泊棟', 'SALVIA（最大6名） / FREESIA（最大3名）'],
+  ['最大宿泊人数', `${SITE.maxGuests}名（2棟利用時）`],
   ['チェックイン', `${SITE.checkinTime}以降・セルフチェックイン`],
   ['チェックアウト', `${SITE.checkoutTime}まで`],
   ['予約', '公式サイトの「空室・料金を見る」から最新の空室・料金・予約条件を確認'],
@@ -38,7 +38,7 @@ const structuredData = {
         <p class="mt-10 text-xs font-bold uppercase tracking-[0.3em] text-green-300">Official Facts</p>
         <h1 class="mt-4 font-serif text-4xl font-bold leading-tight sm:text-5xl">大島ニュービラ 基本情報</h1>
         <p class="mt-6 max-w-3xl text-base leading-8 text-green-50/90 md:text-lg md:leading-9">旅行者、検索エンジン、AIサービスが施設情報を正確に確認できるよう、公開中の基本情報を一か所にまとめています。</p>
-        <p class="mt-5 text-sm text-green-100/70"><time datetime={dateModified}>最終確認：2026年9月9日</time></p>
+        <p class="mt-5 text-sm text-green-100/70"><time datetime={dateModified}>最終確認：2026年9月22日</time></p>
       </div>
     </header>
 
@@ -53,6 +53,28 @@ const structuredData = {
             </div>
           ))}
         </dl>
+      </div>
+    </section>
+
+    <section class="bg-white py-16 md:py-24" aria-labelledby="villas-facts-title">
+      <div class="mx-auto max-w-5xl px-6">
+        <h2 id="villas-facts-title" class="font-serif text-3xl font-bold text-gray-900 md:text-4xl">2つの宿泊棟</h2>
+        <div class="mt-8 grid gap-6 md:grid-cols-2">
+          {VILLAS.map((villa) => (
+            <article class="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
+              <img src={villa.image} alt={`${villa.name}（${villa.nameJa}）の外観・客室`} class="aspect-[16/10] w-full object-cover" width="1200" height="750" loading="lazy" />
+              <div class="p-7">
+                <p class="text-xs font-bold tracking-[0.2em] text-green-700 uppercase">{villa.name}</p>
+                <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">{villa.nameJa}｜最大{villa.maxGuests}名</h3>
+                <p class="mt-4 text-sm leading-7 text-gray-600">{villa.description}</p>
+                <dl class="mt-5 grid grid-cols-2 gap-3 text-sm">
+                  <div class="rounded-xl bg-stone-50 p-4"><dt class="text-gray-500">広さ</dt><dd class="mt-1 font-bold text-gray-900">{villa.floorSize}㎡</dd></div>
+                  <div class="rounded-xl bg-stone-50 p-4"><dt class="text-gray-500">寝具</dt><dd class="mt-1 font-bold leading-6 text-gray-900">{villa.beds}</dd></div>
+                </dl>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
 

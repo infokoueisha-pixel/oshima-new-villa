@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { SITE, AMENITIES } from '../data/site';
+import { SITE, AMENITIES, VILLAS } from '../data/site';
 
 interface Props {
   title?: string;
@@ -13,8 +13,8 @@ interface Props {
 }
 
 const {
-  title = '伊豆大島の宿・一棟貸し｜最大6名の森のヴィラ｜大島ニュービラ',
-  description = '伊豆大島で宿泊先をお探しの方へ。元町の一棟貸し宿「大島ニュービラ」は、家族・友人で最大6名、BBQ・自炊を楽しめる森のヴィラです。元町港から車で約5分。',
+  title = '伊豆大島の宿・一棟貸し｜2〜9名で選べる2つのヴィラ｜大島ニュービラ',
+  description = '伊豆大島で宿泊先をお探しの方へ。SALVIA（最大6名）とFREESIA（最大3名）の2つの一棟貸しヴィラから人数に合わせて選べます。2棟利用なら最大9名。元町港から車で約5分。',
   noindex = false,
   pageType = 'WebPage',
   datePublished,
@@ -28,8 +28,10 @@ const ogImageUrl = new URL(image, siteUrl).href;
 const propertyImageUrl = new URL('/main-optimized.webp', siteUrl).href;
 const isHomePage = Astro.url.pathname === '/';
 const isGuestGuide = Astro.url.pathname.startsWith('/guest-guide');
+const guestGuideMatch = Astro.url.pathname.match(/^\/guest-guide(?:\/(salvia|freesia|salvia-freesia))?\/?$/);
+const guestGuideSuffix = guestGuideMatch?.[1] ? `${guestGuideMatch[1]}/` : '';
 const hasLocalizedEquivalent = isHomePage || isGuestGuide;
-const localizedPath = (homePath: string, guidePath: string) => isGuestGuide ? guidePath : homePath;
+const localizedPath = (homePath: string, guidePath: string) => isGuestGuide ? `${guidePath}${guestGuideSuffix}` : homePath;
 const languageLinks = [
   { label: '日本語', short: 'JP', lang: 'ja', href: localizedPath('/', '/guest-guide/') },
   { label: 'English', short: 'EN', lang: 'en', href: localizedPath('/en/', '/en/guest-guide/') },
@@ -100,6 +102,8 @@ const structuredData = {
       image: [
         propertyImageUrl,
         new URL('/day-salvia.webp', siteUrl).href,
+        new URL('/freesia-exterior.webp', siteUrl).href,
+        new URL('/freesia-room.webp', siteUrl).href,
         new URL('/sofa-salvia.webp', siteUrl).href,
         new URL('/night-bbq.webp', siteUrl).href,
       ],
@@ -114,8 +118,17 @@ const structuredData = {
       smokingAllowed: false,
       sameAs: [SITE.instagram, SITE.airbnbJa, SITE.bookingUrl],
       amenityFeature: AMENITIES.map((name) => ({ '@type': 'LocationFeatureSpecification', name, value: true })),
+      containsPlace: VILLAS.map((villa) => ({
+        '@type': 'Accommodation',
+        name: `${villa.name}（${villa.nameJa}）`,
+        description: villa.description,
+        image: new URL(villa.image, siteUrl).href,
+        occupancy: { '@type': 'QuantitativeValue', maxValue: villa.maxGuests, unitText: '名' },
+        floorSize: { '@type': 'QuantitativeValue', value: villa.floorSize, unitCode: 'MTK' },
+        additionalProperty: [{ '@type': 'PropertyValue', name: '寝具', value: villa.beds }],
+      })),
       additionalProperty: [
-        { '@type': 'PropertyValue', name: '最大宿泊人数', value: `${SITE.maxGuests}名` },
+        { '@type': 'PropertyValue', name: '最大宿泊人数', value: `${SITE.maxGuests}名（2棟利用時）` },
         { '@type': 'PropertyValue', name: 'リニューアル', value: `${SITE.reopenedYear}年` },
       ],
     },
@@ -126,7 +139,7 @@ const structuredData = {
 
 const desktopNavItems = [
   { label: '宿の魅力', href: homeAnchor('#experience') },
-  { label: '客室', href: homeAnchor('#gallery') },
+  { label: '2つのヴィラ', href: homeAnchor('#villas') },
   { label: '島を楽しむ', href: '/guide/' },
   { label: 'ダイビング', href: '/diving/' },
   { label: 'モデルコース', href: homeAnchor('#itinerary') },
@@ -140,6 +153,7 @@ const mobileNavGroups = [
     title: '宿泊する',
     items: [
       { label: '大島ニュービラの魅力', href: homeAnchor('#experience') },
+      { label: '2つのヴィラ', href: homeAnchor('#villas') },
       { label: 'サルビア棟・客室', href: homeAnchor('#gallery') },
       { label: '設備・よくある質問', href: homeAnchor('#facilities') },
     ],
@@ -159,6 +173,7 @@ const mobileNavGroups = [
   {
     title: '旅を計画する',
     items: [
+      { label: '伊豆大島の宿・宿泊先ガイド', href: '/guide/stay/' },
       { label: '1泊2日モデルコース', href: homeAnchor('#itinerary') },
       { label: 'スーパー・買い出し', href: homeAnchor('#shopping-guide') },
       { label: 'アクセス・駐車場', href: homeAnchor('#access') },
@@ -177,6 +192,7 @@ const footerNavItems = [
   { label: 'ストーリー', href: homeAnchor('#story') },
   { label: '客室', href: homeAnchor('#gallery') },
   { label: '伊豆大島旅行ガイド', href: '/guide/' },
+  { label: '宿・宿泊先ガイド', href: '/guide/stay/' },
   { label: 'ダイビング旅行', href: '/diving/' },
   { label: 'モデルコース', href: homeAnchor('#itinerary') },
   { label: '設備・FAQ', href: homeAnchor('#facilities') },
