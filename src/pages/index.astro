@@ -316,41 +316,87 @@ const galleryImages = [
     </div>
   </section>
 
-  <!-- Villas -->
+  <!-- Stay options -->
   <section id="villas" class="bg-white py-20 md:py-28" aria-labelledby="villas-title">
     <div class="mx-auto max-w-7xl px-6">
       <div class="mx-auto max-w-3xl text-center">
-        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Choose Your Villa</p>
-        <h2 id="villas-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">人数や旅のスタイルで選べる、2つのヴィラ。</h2>
-        <p class="mx-auto mt-5 max-w-2xl leading-8 text-gray-600 md:text-lg">夫婦・カップル・少人数旅行にはFREESIA、家族・友人グループにはSALVIA。2棟を組み合わせれば最大9名まで宿泊できます。</p>
+        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Izu Oshima Private Villas</p>
+        <h2 id="villas-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">人数で選べる、3つの泊まり方。</h2>
+        <p class="mx-auto mt-5 max-w-2xl leading-8 text-gray-600 md:text-lg">
+          伊豆大島の一棟貸し宿「大島ニュービラ」は、2〜3名向けのFREESIA、最大6名のSALVIA、2棟を組み合わせた最大9名の滞在から選べます。
+        </p>
       </div>
-      <div class="mt-12 grid gap-8 lg:grid-cols-2">
-        <article class="overflow-hidden rounded-3xl border border-gray-100 bg-stone-50 shadow-sm">
-          <div class="grid grid-cols-2 gap-1 bg-white">
-            <img src="/day-salvia.webp" alt="SALVIA サルビア棟の外観" class="col-span-2 aspect-[16/9] w-full object-cover" width="1500" height="844" loading="lazy" />
-            <img src="/sofa-salvia.webp" alt="SALVIAのリビング" class="aspect-[4/3] w-full object-cover" width="1108" height="832" loading="lazy" />
-            <img src="/bed-salvia.webp" alt="SALVIAのベッドスペース" class="aspect-[4/3] w-full object-cover" width="1477" height="994" loading="lazy" />
-          </div>
-          <div class="p-7 md:p-9">
-            <div class="flex flex-wrap items-center justify-between gap-3"><div><p class="text-xs font-bold tracking-[0.2em] text-green-700 uppercase">SALVIA</p><h3 class="mt-2 font-serif text-3xl font-bold text-gray-900">サルビア｜最大6名</h3></div><span class="rounded-full bg-green-100 px-4 py-2 text-sm font-bold text-green-900">グループ向け</span></div>
-            <p class="mt-5 leading-8 text-gray-600">69.27㎡の一棟貸し。シングルベッド4台＋ソファベッド2台、キッチン、浴室、リビングを備え、家族・友人旅行に向いています。</p>
-            <p class="mt-4 text-sm font-bold text-gray-700">Booking.comでは「1ベッドルーム ヴィラ」と表示されます。</p>
+
+      <div class="mt-12 grid gap-6 lg:grid-cols-3">
+        <article class="overflow-hidden rounded-3xl border border-green-100 bg-green-50/50 shadow-sm">
+          <img src="/day-salvia.webp" alt="SALVIA サルビア棟の外観" class="aspect-[16/10] w-full object-cover" width="1500" height="844" loading="lazy" />
+          <div class="p-7">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p class="text-xs font-bold tracking-[0.2em] text-green-700 uppercase">SALVIA</p>
+                <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">4〜6名の家族・友人旅行に</h3>
+              </div>
+              <span class="rounded-full bg-white px-3 py-1.5 text-xs font-bold text-green-900 shadow-sm">最大6名</span>
+            </div>
+            <p class="mt-4 text-sm leading-7 text-gray-600">69.27㎡の一棟貸し。広めのリビングとキッチンを備え、BBQは屋根付きの「ガゼボ庵」で楽しめます。</p>
+            <ul class="mt-5 space-y-2 text-sm font-bold text-gray-700">
+              <li>✓ 家族・友人グループに</li>
+              <li>✓ ガゼボ庵でBBQ</li>
+              <li>✓ シングル4台＋ソファベッド2台</li>
+            </ul>
           </div>
         </article>
-        <article class="overflow-hidden rounded-3xl border border-orange-100 bg-orange-50/40 shadow-sm">
-          <div class="grid grid-cols-2 gap-1 bg-white">
-            <img src="/freesia-exterior.webp" alt="FREESIA フリージア棟の外観" class="col-span-2 aspect-[16/9] w-full object-cover" width="1102" height="1102" loading="lazy" />
-            <img src="/freesia-room.webp" alt="FREESIAのキッチンとリビング" class="aspect-[4/3] w-full object-cover" width="1086" height="1448" loading="lazy" />
-            <img src="/freesia-deck.webp" alt="FREESIAのウッドデッキ" class="aspect-[4/3] w-full object-cover" width="1108" height="1477" loading="lazy" />
+
+        <article class="overflow-hidden rounded-3xl border border-orange-100 bg-orange-50/50 shadow-sm">
+          <img src="/freesia-room.webp" alt="FREESIA フリージア棟の室内" class="aspect-[16/10] w-full object-cover" width="1086" height="1448" loading="lazy" />
+          <div class="p-7">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p class="text-xs font-bold tracking-[0.2em] text-orange-700 uppercase">FREESIA</p>
+                <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">2〜3名の少人数旅行に</h3>
+              </div>
+              <span class="rounded-full bg-white px-3 py-1.5 text-xs font-bold text-orange-900 shadow-sm">最大3名</span>
+            </div>
+            <p class="mt-4 text-sm leading-7 text-gray-600">30㎡のコンパクトヴィラ。夫婦・カップル・友人2〜3名で使いやすく、BBQは専用ウッドデッキで楽しめます。</p>
+            <ul class="mt-5 space-y-2 text-sm font-bold text-gray-700">
+              <li>✓ 夫婦・カップル・少人数旅行に</li>
+              <li>✓ 専用ウッドデッキでBBQ</li>
+              <li>✓ シングル2台＋ソファベッド1台</li>
+            </ul>
           </div>
-          <div class="p-7 md:p-9">
-            <div class="flex flex-wrap items-center justify-between gap-3"><div><p class="text-xs font-bold tracking-[0.2em] text-orange-700 uppercase">FREESIA</p><h3 class="mt-2 font-serif text-3xl font-bold text-gray-900">フリージア｜最大3名</h3></div><span class="rounded-full bg-orange-100 px-4 py-2 text-sm font-bold text-orange-900">少人数向け</span></div>
-            <p class="mt-5 leading-8 text-gray-600">30㎡の独立棟。シングルベッド2台＋ソファベッド1台、キッチン、浴室、トイレ、洗面、ウッドデッキを備え、夫婦・カップル・2〜3名旅行に使いやすいヴィラです。</p>
-            <p class="mt-4 text-sm font-bold text-gray-700">Booking.comでは「ヴィラ」と表示されます。</p>
+        </article>
+
+        <article class="overflow-hidden rounded-3xl border border-emerald-200 bg-emerald-950 text-white shadow-sm">
+          <div class="grid grid-cols-2 gap-1 bg-white/10">
+            <img src="/day-salvia.webp" alt="SALVIA サルビア棟" class="aspect-square w-full object-cover" width="1500" height="844" loading="lazy" />
+            <img src="/freesia-exterior.webp" alt="FREESIA フリージア棟" class="aspect-square w-full object-cover" width="1102" height="1102" loading="lazy" />
+          </div>
+          <div class="p-7">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p class="text-xs font-bold tracking-[0.2em] text-emerald-200 uppercase">SALVIA + FREESIA</p>
+                <h3 class="mt-2 font-serif text-2xl font-bold">7〜9名なら2棟利用</h3>
+              </div>
+              <span class="rounded-full bg-white/15 px-3 py-1.5 text-xs font-bold text-white">最大9名</span>
+            </div>
+            <p class="mt-4 text-sm leading-7 text-emerald-50/85">同じ敷地内の2棟をまとめて利用。寝る場所や水回りを分けながら、食事やBBQはみんなで集まれます。</p>
+            <ul class="mt-5 space-y-2 text-sm font-bold text-emerald-50">
+              <li>✓ 2家族・三世代・大人数旅行に</li>
+              <li>✓ ガゼボ庵を利用可能</li>
+              <li>✓ 2棟それぞれにキッチン・浴室</li>
+            </ul>
           </div>
         </article>
       </div>
-      <div class="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row"><a href="#booking" class="inline-flex min-h-14 items-center justify-center rounded-full bg-green-800 px-8 py-4 font-bold text-white shadow-md transition hover:bg-green-900">2棟の空室・料金を見る<span class="ml-2" aria-hidden="true">→</span></a><a href="/guide/stay/" class="font-bold text-green-800 underline decoration-green-200 underline-offset-4 hover:text-green-950">伊豆大島の宿・宿泊先の選び方 →</a></div>
+
+      <div class="mt-10 text-center">
+        <a href="/group-stay/" class="inline-flex min-h-14 items-center justify-center rounded-full bg-green-800 px-8 py-4 font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-green-900">
+          一棟貸し・3つの泊まり方を詳しく見る<span class="ml-2" aria-hidden="true">→</span>
+        </a>
+        <div class="mt-4">
+          <a href="#booking" class="text-sm font-bold text-green-800 underline decoration-green-200 underline-offset-4 hover:text-green-950">空室・料金を見る →</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1864,7 +1910,7 @@ const galleryImages = [
 
       <dl class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div class="rounded-2xl border border-gray-100 bg-gray-50 p-6">
-          <dt class="font-bold text-gray-900">👥 2〜9名・人数で選べる2棟</dt>
+          <dt class="font-bold text-gray-900">👥 2〜9名・選べる3つの泊まり方</dt>
           <dd class="mt-2 text-sm leading-7 text-gray-600">FREESIAは最大3名、SALVIAは最大6名。2棟利用なら最大9名まで宿泊できます。</dd>
         </div>
         <div class="rounded-2xl border border-gray-100 bg-gray-50 p-6">
@@ -1873,7 +1919,7 @@ const galleryImages = [
         </div>
         <div class="rounded-2xl border border-gray-100 bg-gray-50 p-6">
           <dt class="font-bold text-gray-900">🔥 BBQ設備あり</dt>
-          <dd class="mt-2 text-sm leading-7 text-gray-600">屋根付きの「ガゼボ庵」とBBQコンロ・ベンチ・折りたたみテーブルをご用意しています。炭・着火剤・着火ライター・食材・飲み物はありませんので、BBQをされる方のみ必要なものをご準備ください。強風時は安全のためBBQをお控えください。</dd>
+          <dd class="mt-2 text-sm leading-7 text-gray-600">SALVIAは屋根付きの「ガゼボ庵」、FREESIAは専用ウッドデッキでBBQを楽しめます。2棟利用ではガゼボ庵を利用できます。炭・着火剤・着火ライター・食材・飲み物はご用意していません。強風時は安全のためBBQをお控えください。</dd>
         </div>
         <div class="rounded-2xl border border-gray-100 bg-gray-50 p-6">
           <dt class="font-bold text-gray-900">🚗 島内移動はレンタカー推奨</dt>

@@ -48,8 +48,8 @@ const amenities = [
   '2棟利用で最大9名',
   '無料Wi-Fi（通信品質・常時接続の保証なし）',
   'キッチン・調理器具',
-  '屋外炊事場「ガゼボ庵」',
-  'BBQ設備（コンロ・ベンチ）',
+  'SALVIA・2棟利用：屋外炊事場「ガゼボ庵」',
+  'FREESIA：専用ウッドデッキでBBQ',
   '無人チェックイン',
   '無料駐車場',
   '元町港から車で約5分',
@@ -66,7 +66,7 @@ const faqs = [
   },
   {
     question: '釣った魚を調理できますか？',
-    answer: 'はい。屋外炊事場「ガゼボ庵」で調理していただけます。BBQコンロ・ベンチもあるので、釣りのあとの食事まで仲間と楽しめます。BBQをされる場合、炭・着火剤・着火ライター・食材・飲み物はご用意していませんので、必要なものをご準備ください。',
+    answer: 'SALVIAまたはSALVIA＋FREESIAをご利用の場合は、屋外炊事場「ガゼボ庵」で調理していただけます。FREESIA単独の場合は専用ウッドデッキでBBQをお楽しみください。炭・着火剤・着火ライター・食材・飲み物はご用意していません。',
   },
   {
     question: 'BBQの炭は用意されていますか？',
@@ -82,7 +82,19 @@ const faqs = [
   },
   {
     question: '一棟貸しはどんなグループに向いていますか？',
-    answer: '家族や友人、少人数のチームなど、2〜6名で同じ空間に集まりたいグループに向いています。ホテルの客室のように部屋が分かれず、リビング・キッチン・BBQスペースを一緒に使えます。',
+    answer: '2〜3名ならFREESIA、4〜6名ならSALVIA、7〜9名なら2棟利用がおすすめです。ホテルの客室のように必要以上に分かれず、人数に合わせた一棟貸しを選べます。',
+  },
+  {
+    question: 'SALVIAとFREESIAはどう選べばいいですか？',
+    answer: '目安として、2〜3名はFREESIA、4〜6名はSALVIA、7〜9名はSALVIA＋FREESIAの2棟利用がおすすめです。旅のメンバー構成や、就寝スペースを分けたいかどうかでも選べます。',
+  },
+  {
+    question: 'SALVIAとFREESIAを同時に利用できますか？',
+    answer: 'はい。同じ日程で両棟に空室がある場合は、2棟を利用して最大9名まで宿泊できます。2家族旅行や三世代旅行、友人グループなど、寝る場所や水回りを分けたい旅行に向いています。',
+  },
+  {
+    question: 'BBQはどこでできますか？',
+    answer: 'SALVIAをご利用の場合はガゼボ庵、FREESIA単独の場合はFREESIA専用ウッドデッキをご利用ください。SALVIA＋FREESIAの2棟利用ではガゼボ庵を利用できます。',
   },
   {
     question: '予約方法は？',
@@ -139,8 +151,8 @@ const structuredData = {
           >
             空室・料金を見る<span class="ml-2" aria-hidden="true">↗</span>
           </a>
-          <a href="#uses" class="inline-flex items-center justify-center rounded-full border border-white/35 px-7 py-3.5 text-sm font-bold text-white transition-colors hover:bg-white/10">
-            利用シーンを見る<span class="ml-2" aria-hidden="true">↓</span>
+          <a href="#stay-options" class="inline-flex items-center justify-center rounded-full border border-white/35 px-7 py-3.5 text-sm font-bold text-white transition-colors hover:bg-white/10">
+            人数別の泊まり方を見る<span class="ml-2" aria-hidden="true">↓</span>
           </a>
         </div>
       </div>
@@ -155,6 +167,40 @@ const structuredData = {
         <figure class="overflow-hidden rounded-3xl border border-white/10 bg-white/10 shadow-xl">
           <img src="/night-bbq.webp" alt="夜のガゼボ庵とBBQスペース" class="aspect-square w-full object-cover" width="1500" height="2000" loading="lazy" />
         </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stay options by group size -->
+  <section id="stay-options" class="bg-orange-50/45 py-20 md:py-28" aria-labelledby="stay-options-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Choose by Group Size</p>
+        <h2 id="stay-options-title" class="mt-3 font-serif text-3xl font-bold leading-tight text-gray-900 md:text-4xl">人数に合わせて選べる、3つの一棟貸し。</h2>
+        <p class="mx-auto mt-5 max-w-2xl leading-8 text-gray-600 md:text-lg">少人数から最大9名のグループまで。人数と過ごし方に合わせてSALVIA・FREESIA・2棟利用を選べます。</p>
+      </div>
+
+      <div class="mt-12 grid gap-6 lg:grid-cols-3">
+        <article class="rounded-3xl border border-orange-100 bg-white p-7 shadow-sm">
+          <p class="text-xs font-bold tracking-[0.2em] text-orange-700 uppercase">2〜3名</p>
+          <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">FREESIA</h3>
+          <p class="mt-4 text-sm leading-7 text-gray-600">夫婦・カップル・友人2〜3名なら、コンパクトなFREESIA。必要な設備が1棟にまとまり、少人数でも大きすぎない距離感で過ごせます。</p>
+          <ul class="mt-5 space-y-2 text-sm font-bold text-gray-700"><li>✓ 最大3名</li><li>✓ 専用ウッドデッキでBBQ</li><li>✓ キッチン・浴室・トイレ・洗面</li></ul>
+        </article>
+
+        <article class="rounded-3xl border border-green-100 bg-white p-7 shadow-sm">
+          <p class="text-xs font-bold tracking-[0.2em] text-green-700 uppercase">4〜6名</p>
+          <h3 class="mt-2 font-serif text-2xl font-bold text-gray-900">SALVIA</h3>
+          <p class="mt-4 text-sm leading-7 text-gray-600">家族や友人4〜6名なら、広めのSALVIA。ホテルで複数室に分かれず、リビング・ダイニング・キッチンを一緒に使えます。</p>
+          <ul class="mt-5 space-y-2 text-sm font-bold text-gray-700"><li>✓ 最大6名</li><li>✓ ガゼボ庵でBBQ</li><li>✓ 69.27㎡の一棟貸し</li></ul>
+        </article>
+
+        <article class="rounded-3xl border border-emerald-200 bg-emerald-950 p-7 text-white shadow-sm">
+          <p class="text-xs font-bold tracking-[0.2em] text-emerald-200 uppercase">7〜9名</p>
+          <h3 class="mt-2 font-serif text-2xl font-bold">SALVIA + FREESIA</h3>
+          <p class="mt-4 text-sm leading-7 text-emerald-50/85">2家族・三世代・友人グループなら2棟利用。寝室や水回りを分けられるため、大人数でも生活時間の違いを調整しやすくなります。</p>
+          <ul class="mt-5 space-y-2 text-sm font-bold text-emerald-50"><li>✓ 2棟合計で最大9名</li><li>✓ ガゼボ庵利用可</li><li>✓ 2つのキッチン・浴室</li></ul>
+        </article>
       </div>
     </div>
   </section>
@@ -188,16 +234,39 @@ const structuredData = {
     </div>
   </section>
 
-  <section class="bg-white py-20 md:py-28" aria-labelledby="two-villa-title">
-    <div class="mx-auto max-w-6xl px-6">
-      <div class="rounded-3xl border border-green-100 bg-green-50/60 p-7 md:p-10">
-        <p class="text-xs font-bold tracking-[0.25em] text-green-700 uppercase">Two Villas</p>
-        <h2 id="two-villa-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">7〜9名なら、SALVIA＋FREESIAの2棟利用。</h2>
-        <p class="mt-5 max-w-3xl leading-8 text-gray-600 md:text-lg">2棟は同じ敷地内にあります。寝る場所や水回りを2棟に分けつつ、食事や観光は一緒に楽しめるので、2家族旅行や友人グループにも使いやすい構成です。</p>
-        <div class="mt-8 grid gap-5 md:grid-cols-2">
-          <div class="overflow-hidden rounded-2xl bg-white shadow-sm"><img src="/day-salvia.webp" alt="SALVIA サルビア棟" class="aspect-[16/9] w-full object-cover" width="1500" height="844" loading="lazy" /><div class="p-6"><p class="text-xs font-bold text-green-700">SALVIA</p><h3 class="mt-2 font-serif text-2xl font-bold">最大6名</h3><p class="mt-3 text-sm leading-7 text-gray-600">69.27㎡。家族・友人グループの中心棟として使いやすい一棟貸し。</p></div></div>
-          <div class="overflow-hidden rounded-2xl bg-white shadow-sm"><img src="/freesia-exterior.webp" alt="FREESIA フリージア棟" class="aspect-[16/9] w-full object-cover" width="1102" height="1102" loading="lazy" /><div class="p-6"><p class="text-xs font-bold text-orange-700">FREESIA</p><h3 class="mt-2 font-serif text-2xl font-bold">最大3名</h3><p class="mt-3 text-sm leading-7 text-gray-600">30㎡。浴室・キッチン・ウッドデッキ付きの少人数向け独立棟。</p></div></div>
-        </div>
+  <section id="villa-comparison" class="bg-white py-20 md:py-28" aria-labelledby="villa-comparison-title">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-xs font-bold tracking-[0.3em] text-green-700 uppercase">Compare Your Stay</p>
+        <h2 id="villa-comparison-title" class="mt-3 font-serif text-3xl font-bold text-gray-900 md:text-4xl">設備と過ごし方を比べる。</h2>
+        <p class="mx-auto mt-5 max-w-2xl leading-8 text-gray-600 md:text-lg">同じ敷地内でも、人数とBBQの場所が異なります。予約前に違いを確認して、自分たちに合う泊まり方を選んでください。</p>
+      </div>
+
+      <div class="mt-10 overflow-x-auto rounded-3xl border border-gray-200 bg-white shadow-sm">
+        <table class="min-w-[820px] w-full border-collapse text-left text-sm">
+          <thead class="bg-green-950 text-white">
+            <tr>
+              <th class="px-5 py-4 font-bold">比較項目</th>
+              <th class="px-5 py-4 font-bold">SALVIA</th>
+              <th class="px-5 py-4 font-bold">FREESIA</th>
+              <th class="px-5 py-4 font-bold">SALVIA + FREESIA</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 text-gray-700">
+            <tr><th class="bg-gray-50 px-5 py-4 font-bold text-gray-900">定員</th><td class="px-5 py-4">最大6名</td><td class="px-5 py-4">最大3名</td><td class="px-5 py-4">最大9名</td></tr>
+            <tr><th class="bg-gray-50 px-5 py-4 font-bold text-gray-900">おすすめ人数</th><td class="px-5 py-4">4〜6名</td><td class="px-5 py-4">2〜3名</td><td class="px-5 py-4">7〜9名</td></tr>
+            <tr><th class="bg-gray-50 px-5 py-4 font-bold text-gray-900">向いている旅行</th><td class="px-5 py-4">家族・友人グループ</td><td class="px-5 py-4">夫婦・カップル・少人数</td><td class="px-5 py-4">2家族・三世代・大人数グループ</td></tr>
+            <tr><th class="bg-gray-50 px-5 py-4 font-bold text-gray-900">BBQ</th><td class="px-5 py-4">ガゼボ庵</td><td class="px-5 py-4">専用ウッドデッキ</td><td class="px-5 py-4">ガゼボ庵を利用可</td></tr>
+            <tr><th class="bg-gray-50 px-5 py-4 font-bold text-gray-900">キッチン</th><td class="px-5 py-4">あり</td><td class="px-5 py-4">あり</td><td class="px-5 py-4">2棟それぞれにあり</td></tr>
+            <tr><th class="bg-gray-50 px-5 py-4 font-bold text-gray-900">浴室・トイレ</th><td class="px-5 py-4">あり</td><td class="px-5 py-4">あり</td><td class="px-5 py-4">2棟それぞれにあり</td></tr>
+            <tr><th class="bg-gray-50 px-5 py-4 font-bold text-gray-900">特徴</th><td class="px-5 py-4">みんなで同じリビングに集まりやすい</td><td class="px-5 py-4">少人数でコンパクトに過ごしやすい</td><td class="px-5 py-4">集まる時間と休む時間を分けやすい</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-8 rounded-3xl border border-green-100 bg-green-50/60 p-6 md:p-8">
+        <h3 class="font-serif text-2xl font-bold text-gray-900">2棟同時利用のメリット</h3>
+        <p class="mt-4 max-w-4xl leading-8 text-gray-600">SALVIAとFREESIAは同じ敷地内にあります。日中や食事は一緒に過ごしながら、就寝時は2棟に分かれられるため、家族ごと・世代ごとに休みやすいのが特長です。大人数のBBQはSALVIA側のガゼボ庵を利用できます。</p>
       </div>
     </div>
   </section>
